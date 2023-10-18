@@ -11,7 +11,9 @@ public class Calc {
 		//진하 숫자 하나 더 받아서 더하기 출력하는 기능 만들기
 		
 		//경현 숫자 하나 더 받아서 num1이랑 빼기 해서 출력하는 기능 만들기
-		
+		System.out.println("뺄 숫자 입력하시오");
+		int num123 = sc.nextInt();
+		System.out.println(num1 - num123);
 		// 채화 숫자 하나 더 받아서 num1이랑 곱하기 해서 출력하는 기능 만들기
 	}
 }
