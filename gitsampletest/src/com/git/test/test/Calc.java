@@ -9,6 +9,9 @@ public class Calc {
 		int num1 = sc.nextInt();
 		
 		//진하 숫자 하나 더 받아서 더하기 출력하는 기능 만들기
+		System.out.print("숫자를 하나더 입력하세요");
+		int num21 = sc.nextInt();
+		System.out.println(num1 + num21);
 		
 		//경현 숫자 하나 더 받아서 num1이랑 빼기 해서 출력하는 기능 만들기
 		
