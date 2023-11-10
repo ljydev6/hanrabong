@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+input[type=button]{
+cursor : pointer;
+background-color: rgb(123, 119, 118);
+width: 80px;
+height: 28px;
+border: none;
+color:white;
+border-radius: 10%;
+
+}
+
+input[type=submit]{
+    cursor : pointer;
+    background-color: rgb(218, 106, 65);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+input[type=submit]:hover{
+    cursor : pointer;
+    background-color: rgb(232, 72, 13);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+
+    /* table td{
+        border:1px solid red;
+    }
+    table tr{
+        border:1px solid blue;
+    } */
+    #detail{
+        text-align: left;
+    }
+    .submit-container{
+        /* border:1px solid red; */
+        display: flex;
+        justify-content: end;
+        padding-right:10%;
+    }
+
+    table tr>td:hover{
+        cursor : pointer;
+        color:rgb(250, 112, 61);
+        font-weight: bold;
+    }
+    
+    
+    .selected{
+		color : orange;
+		font-weight : bold;
+	}
