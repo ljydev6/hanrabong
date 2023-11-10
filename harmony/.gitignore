@@ -1,0 +1,3 @@
+/.dbeaver/*
+/src/main/webapp/WEB-INF/build/*
+/src/main/resource/*
