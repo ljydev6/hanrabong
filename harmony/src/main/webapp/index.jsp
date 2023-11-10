@@ -8,5 +8,6 @@
 </head>
 <body>
 임시메인페이지
+<a href="<%=request.getContextPath()%>/loginServlet.do">로그인하기</a>
 </body>
 </html>
