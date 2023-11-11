@@ -11,7 +11,7 @@ import java.util.Properties;
 public class JDBCTemplate {
 	public static Connection getConnection() {
 		Connection con = null;
-		String path = JDBCTemplate.class.getResource("/driver.properties").getPath();
+		String path = JDBCTemplate.class.getResource("/common/driver.properties").getPath();
 		Properties prop = new Properties();
 		try {			
 			prop.load(new FileReader(path));
