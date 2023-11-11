@@ -32,20 +32,29 @@ input[type=submit]:hover{
 }
 
 
-    /* table td{
+  /* table td{
         border:1px solid red;
     }
     table tr{
         border:1px solid blue;
     } */
+    
     #detail{
         text-align: left;
     }
+    
+    .form_container{
+		padding-top : 6%;
+		padding-bottom: 6%;
+	/*	border:1px solid red;*/
+	}
+    
     .submit-container{
-        /* border:1px solid red; */
+      /* border:1px solid blue;*/
         display: flex;
         justify-content: end;
-        padding-right:10%;
+        padding-right:20%;
+        padding-bottom: 5%;
     }
 
     table tr>td:hover{
