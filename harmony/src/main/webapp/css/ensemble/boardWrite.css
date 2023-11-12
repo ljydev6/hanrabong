@@ -32,12 +32,12 @@ input[type=submit]:hover{
 }
 
 
-/*   table td{*/
-/*        border:1px solid red;*/
-/*    }*/
-/*    table tr{*/
-/*        border:1px solid blue;*/
-/*    } */
+  /* table td{
+        border:1px solid red;
+    }
+    table tr{
+        border:1px solid blue;
+    } */
     
     #detail{
         text-align: left;
@@ -57,15 +57,12 @@ input[type=submit]:hover{
         padding-bottom: 5%;
     }
 
-    table tr>td,.inst_chk_span:not(.day):hover{
+    table tr>td:hover{
         cursor : pointer;
         color:rgb(250, 112, 61);
         font-weight: bold;
     }
-
-   
     
-  	.day{letter-spacing:40px}
     
     .selected{
 		color : orange;

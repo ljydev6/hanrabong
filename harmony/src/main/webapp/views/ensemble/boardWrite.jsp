@@ -242,19 +242,31 @@
 </tr>
 <tr>
     <th>요일</th>
-    <td colspan="14" class="day">
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="mon" style="display:none";>
 		<span class="inst_chk_span">월</span>
+    </td>
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="tues" style="display:none";>
 		<span class="inst_chk_span">화</span>
+    </td>
+    <td colspan="2">
 		<input class="inst_chk" type="checkbox" name="inst" value="wedness" style="display:none";>
 		<span class="inst_chk_span">수</span>    
+    </td>
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="thurs" style="display:none";>
 		<span class="inst_chk_span">목</span>
+    </td>
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="fri" style="display:none";>
 		<span class="inst_chk_span">금</span>
+    </td>
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="satur" style="display:none";>
 		<span class="inst_chk_span">토</span>
+    </td>
+    <td colspan="2">
     	<input class="inst_chk" type="checkbox" name="inst" value="sun" style="display:none";>
 		<span class="inst_chk_span">일</span>
     </td>
@@ -272,56 +284,33 @@
 
 <tr>
     <th>멤버 프로필 등록</th>
-    <td colspan="14">
+    <td colspan="2">
         <input type="button" value="추가">
+    </td>
+    <td colspan="2">
         <input type="button" value="삭제">
     </td>
+    <td colspan="10"></td>
 </tr>
 <tr>
     <th>연주 영상 업로드</th>
-    <td colspan="14">
+    <td colspan="2">
         <input type="button" value="추가">
-          <input type="button" value="삭제">
     </td>
-
+    <td colspan="2">
+        <input type="button" value="삭제">
+    </td>
+    <td colspan="10"></td>
 </tr>
 <tr>
     <th>음원 업로드</th>
-    <td colspan="14">
-    	<input type="file" id="upFile" multiple><br><br>
-        <input type="button" value="추가" id="btnupload">
-         <input type="button" value="삭제">
+    <td colspan="2">
+        <input type="button" value="추가">
     </td>
-    <script>
-    	$('#btnupload').click(e=>{
-    		const form=new FormData();
-    		const fileInput=$("#upFile");
-    		console.log(fileInput[0].files);
-    		$.each(fileInput[0].files,(i,f)=>{
-    			/* console.log(f); */
-    			form.append("upfile"+i,f);
-
-    		});
-    		$.ajax({
-    			url:"<%=request.getContextPath()%>/ajax/uploadFile.do",
-    			data: form,
-    			type: "post",
-    			processData: false,
-    			contentType: false,
-    			success: data=>{
-    				alert("업로드 성공");
-    			},
-    			error:(r,e)=>{
-    				alert("업로드 실패");
-    			},
-    			complete: ()=>{
-    				fileInput.val('');
-    			}
-
-    		});
-    	});
-    </script>
-
+    <td colspan="2">
+        <input type="button" value="삭제">
+    </td>
+    <td colspan="10"></td>
 </tr>
 <tr>
     <th>상세 설명</th>
