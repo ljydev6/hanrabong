@@ -2,8 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>  
 <%@ page import="java.util.List, 
-				com.harmony.ensemble.model.dto.EnsembleBoard
-				" %>
+				com.harmony.ensemble.model.dto.EnsembleBoard,
+				com.harmony.ensemble.model.dto.EnsembleTeam,
+				com.harmony.ensemble.model.dto.EnsembleMember,
+				com.harmony.ensemble.model.dto.EnsembleBoardWantPart,
+				com.harmony.ensemble.model.dto.EnsembleTeamTime" %>
 <%
 	List<EnsembleBoard> boards=(List<EnsembleBoard>)request.getAttribute("boards");
 %>   
