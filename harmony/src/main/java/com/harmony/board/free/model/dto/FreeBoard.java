@@ -9,7 +9,7 @@ import lombok.Data;
 @Builder
 public class FreeBoard {
 	private int freBrdNo;
-	private int freBrdWeiter;
+	private String freBrdWriter;
 	private String freBrdTitle;
 	private String freBrdContent;
 	private String freBrdTitleImg;

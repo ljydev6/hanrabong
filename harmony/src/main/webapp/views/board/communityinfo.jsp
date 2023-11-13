@@ -15,7 +15,7 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/board/community.css" type="text/css">
+	href="<%=request.getContextPath()%>/css/board/infoCommunity.css" type="text/css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.css">
 <title>정보 게시판</title>
@@ -26,8 +26,8 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 	<div class="content">
 		<div class="infoboard">
 			<div class="info-container">
-				<h3 class="info">정보게시판</h3>
-				<h3 class="free">자유게시판</h3>
+				<h3 class="info"><a href ="<%=request.getContextPath()%>/communitymain.do">정보게시판</a></h3>
+				<h3 class="free"><a href="<%=request.getContextPath()%>/test2.do">정보게시판</a></h3>
 			</div>
 		</div>
 		<div class="main-sort-container">

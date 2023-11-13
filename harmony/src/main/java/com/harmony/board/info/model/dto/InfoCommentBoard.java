@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CommentBoard {
+public class InfoCommentBoard {
 	private int infComNo;
 	private int infComTitNo;
 	private int infComWriter;
