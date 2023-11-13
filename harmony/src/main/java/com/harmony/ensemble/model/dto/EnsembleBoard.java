@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 public class EnsembleBoard {
 
+	private String ensBoardTitle;
 	private String ensBoardNo; 
 	private String boardDetail;
 	private Date ensBoardDate;

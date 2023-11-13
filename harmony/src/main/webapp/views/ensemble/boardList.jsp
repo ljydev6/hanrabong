@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>  
+<%@ page import="java.util.List, 
+				com.harmony.ensemble.model.dto.EnsembleBoard
+				" %>
+<%
+	List<EnsembleBoard> boards=(List<EnsembleBoard>)request.getAttribute("boards");
+%>   
+
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardList.css" type="text/css">
 <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
@@ -196,27 +203,64 @@
 <section>
 	<article>
       <div class="board">
-        <div class="board_list"></div>
-        <div class="board_list"></div>
+      
+<%--       <%if(!boards.isEmpty()){  --%>
+<%-- 			for(Board b:boards){%> --%>
+      
+        <div class="board_list">
+<%--         <%=b.getEnsBoardTitle() %> --%>
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+       		<h4>얍</h4>
+       		<hr/>
+        </div>
+        <div class="board_list">
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+        </div>
       
       </div>
     </article>
 
     <article>
       <div class="board">
-        <div class="board_list"></div>
-        <div class="board_list"></div>
+        <div class="board_list">
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+       		<h4>얍</h4>
+        </div>
+        <div class="board_list">
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+        </div>
        
       </div>
     </article>
     
      <article>
       <div class="board">
-        <div class="board_list"></div>
-        <div class="board_list"></div>
+        <div class="board_list">
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+       		<h4>얍</h4>
+        </div>
+        <div class="board_list">
+        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
+        	class="profile_img">
+        </div>
       
       </div>
     </article>
+    
+<!--     	<div id="pageBar"> -->
+<%-- 		<%= request.getAttribute("pageBar") %> --%>
+<!-- 	</div> -->
 
 </section>
 </main>
@@ -247,10 +291,8 @@
 		$target.next().toggleClass('selected');
 	});
 
-
-
 	
 </script>
-
+	
 
 <%@ include file="/views/common/footer.jsp" %>  
