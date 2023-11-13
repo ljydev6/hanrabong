@@ -25,7 +25,7 @@
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>">메인페이지</a></li>
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/lesson/findlesson.do">레슨찾기</a></li>
 							<li class="nav-item"><a class="nav-link" href="합주찾기">합주찾기</a></li>
-							<li class="nav-item"><a class="nav-link" href="커뮤니티">커뮤니티</a></li>
+							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/communitymain.do">커뮤니티</a></li>
 						</ul>
 					</div>
 				</div>
