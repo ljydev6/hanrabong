@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.enroll_container{
+	height: 75vh;
+	display: flex;
+	border:1px solid purple; 
+	flex-direction:column;	
+	justify-content: flex-start;
+}
+
+.enroll_container > div{
+	margin: 15px;
+}
+
+.submit_container{
+	border:1px solid blue;
+	display: flex;
+	justify-content: end;
+	padding-right:50%;
+	padding-bottom: 5%;
+}
+
+input[type=submit]{
+    cursor : pointer;
+    background-color: rgb(218, 106, 65);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+input[type=submit]:hover{
+    cursor : pointer;
+    background-color: rgb(232, 72, 13);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+
+.single_chk_span:hover{
+    cursor : pointer;
+    color:rgb(250, 112, 61);
+    font-weight: bold;
+}
+
+.selected{
+	color : orange;
+	font-weight : bold;
+}
