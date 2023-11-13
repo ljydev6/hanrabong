@@ -1,3 +1,4 @@
 /.dbeaver/*
+/.vscode/*
 /src/main/webapp/WEB-INF/build/*
 /src/main/resource/common/driver.properties
