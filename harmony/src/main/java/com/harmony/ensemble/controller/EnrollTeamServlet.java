@@ -1,7 +1,7 @@
 package com.harmony.ensemble.controller;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,25 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-
-import com.google.gson.Gson;
-import com.harmony.ensemble.model.dto.EnsembleBoard;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
+import com.harmony.ensemble.model.dto.Genre;
+import com.harmony.ensemble.model.service.EnsembleService;
 
 /**
- * Servlet implementation class BoardWriteEndServlet
+ * Servlet implementation class EnrollTeam
  */
-@WebServlet("/ensemble/boardWriteEnd.do")
-public class BoardWriteEndServlet extends HttpServlet {
+@WebServlet("/ensemble/enrollTeam.do")
+public class EnrollTeamServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardWriteEndServlet() {
+    public EnrollTeamServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +31,12 @@ public class BoardWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		
+		List<Genre> genre = new EnsembleService().searchAllGenre();
 		
-	
+		request.setAttribute("genre", genre);
+		request.getRequestDispatcher("/views/ensemble/enrollTeam.jsp")
+		.forward(request, response);
 	}
 
 	/**
