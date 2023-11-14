@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
+import com.harmony.ensemble.model.service.EnsembleService;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -38,6 +40,9 @@ public class EnrollTeamEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		EnsembleService es = new EnsembleService(); 
+		
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("노!");
 			
@@ -48,48 +53,77 @@ public class EnrollTeamEndServlet extends HttpServlet {
 															path, 1024*1024*1024, "UTF-8", new DefaultFileRenamePolicy());
 				
 			Enumeration names = mr.getFileNames();
-			List<Map<String,String>> files = new ArrayList<>();
+//			List<Map<String,String>> files = new ArrayList<>();
+			List<EnsembleTeamMusic> musicList = new ArrayList<>();
+			List<EnsembleTeamVideo> videoList = new ArrayList<>();
 			
-			List<Map<String,String>> musicList = new ArrayList<>();
-			List<Map<String,String>> videoList = new ArrayList<>();
 			String msg ="";
+			
+			String ensTeamNo = es.selectSeq();
+			System.out.println(ensTeamNo);
+			
+			EnsembleTeam ensTeam = EnsembleTeam.builder()
+					.ensTeamNo(ensTeamNo)
+					.ensTeamName(mr.getParameter("teamName"))
+					.ensTeamInfo(mr.getParameter("detail"))
+					.ensGenreNo(mr.getParameter("genre"))
+					.ensTeamType(mr.getParameter("type"))
+					.build();
 			
 			while(names.hasMoreElements()) {
 				String name = (String)names.nextElement();
 				String re = mr.getFilesystemName(name);
 				String ori = mr.getOriginalFileName(name);
-				files.add(Map.of("rename",re,"oriName",ori));
 				
 				
 				int index=ori.lastIndexOf(".");
 				if(index>0) {
 					String extension = ori.substring(index +1);
 					if(extension.equals("mp3")) {
-						musicList.add(Map.of("mOri",mr.getOriginalFileName(name),"mRe",mr.getFilesystemName(name)));
+						musicList.add(EnsembleTeamMusic.builder()
+													.teamNo(ensTeamNo)
+													.mOriName(mr.getOriginalFileName(name))
+													.mReName(mr.getFilesystemName(name))
+													.build());
 						}else if(extension.equals("mp4")) {
-							videoList.add(Map.of("vOri",mr.getOriginalFileName(name),"vRe",mr.getFilesystemName(name)));
+							videoList.add(EnsembleTeamVideo.builder()
+														.teamNo(ensTeamNo)
+														.vOriName(mr.getOriginalFileName(name))
+														.vReName(mr.getFilesystemName(name))
+														.build());
 						}else {
 							msg= "잘못된 파일입니다.";
 							System.out.println(msg);
 						}
 				}
+			
+				
 			}
-			files.forEach(e->{System.out.println(e);});
+			
+			
+			int result = es.insertTeam(ensTeam, musicList, videoList);
+			
+			if(result>0) System.out.println("성공!");
+			
+			
+//			files.forEach(e->{System.out.println(e);});
 			
 			//String userId = mr.getParameter("userId");
 			//System.out.println(userId);
 			
 			
-			System.out.println(mr.getParameter("teamName"));
 			
-			String teamName = mr.getParameter("teamName");
-			String genre = mr.getParameter("genre");
-			String type = mr.getParameter("type");
-			String detail = mr.getParameter("detail");
-		
-			System.out.println(teamName+genre+type+detail);
-			
-			
+//			
+//			System.out.println(mr.getParameter("teamName"));
+//			
+//			String teamName = mr.getParameter("teamName");
+//			String genre = mr.getParameter("genre");
+//			String type = mr.getParameter("type");
+//			String detail = mr.getParameter("detail");
+//		
+//			System.out.println(teamName+genre+type+detail);
+//			
+//			
 			
 		}
 	}

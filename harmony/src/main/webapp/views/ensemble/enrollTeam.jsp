@@ -22,7 +22,7 @@
 		<select name="genre" id="genre">
 			<%if(!genre.isEmpty()) {
 				for(Genre g : genre){ %>
-					<option value="<%=g.getGenreName() %>"><%=g.getGenreName() %></option>
+					<option value="<%=g.getGenreCode() %>"><%=g.getGenreName() %></option>
 			
 			<%	} 
 			}%>
