@@ -5,22 +5,12 @@
 <%
 	List<Lesson> lessons = (List<Lesson>)request.getAttribute("lessons");
 %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-	<title>레슨 검색</title>
+<%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
-</head>
-<body>
 	<section class="container w-75">
         <div class="d-flex flex-column">
-            <div style="height: 100px;" class="mt-5 mb-5"><h1>헤더</h1></div>
+            <div style="height: 50px;"></div>
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
                 <div>레슨 검색</div>
             
@@ -147,5 +137,4 @@
       }
       /* menu.addEventListener("click",slide_menu); */
     </script>
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp" %>

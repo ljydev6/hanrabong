@@ -97,7 +97,7 @@ public class EnrollLessonEndServlet extends HttpServlet {
 			request.setAttribute("msg", msg);
 			request.setAttribute("loc", loc);
 			
-			request.getRequestDispatcher("/views/common/msg.jsp")
+			request.getRequestDispatcher("/views/lesson/common/msg.jsp")
 				.forward(request, response);
 		}
 		

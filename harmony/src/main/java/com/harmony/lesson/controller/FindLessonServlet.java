@@ -35,7 +35,7 @@ public class FindLessonServlet extends HttpServlet {
 		System.out.println(lessons);
 		request.setAttribute("lessons", lessons);
 		
-		request.getRequestDispatcher("/views/findLesson.jsp")
+		request.getRequestDispatcher("/views/lesson/findLesson.jsp")
 			.forward(request, response);
 	
 	}

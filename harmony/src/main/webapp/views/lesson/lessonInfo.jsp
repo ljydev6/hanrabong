@@ -5,27 +5,17 @@
 <%
 	Lesson lesson = (Lesson)request.getAttribute("lesson");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>레슨 정보보기</title>
+<%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/lessonInfo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>
-</head>
-<body>
 	<section class="container w-50">
-        <div><h1>header</h1></div>
+        <div style="height: 50px;"></div>
 		<div class="container">
             <!-- 카데고리, 수정, 삭제버튼 -->
 			<div class="upperBar">
                 <h6>악기별 > 기타</h6>
-                <h4><%=lesson.getBoardTitle() %></h4>
+                <h5><%=lesson.getBoardTitle() %></h5>
                 <div class="mb-3">
                 <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do">레슨 등록</a>
                     <button>수정하기</button>
@@ -39,7 +29,7 @@
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
                         <%} else { %>
-                        	<img src="<%=request.getContextPath()%>/images/default.jpg" width="100%">
+                        	<img src="<%=request.getContextPath()%>/image/lesson/default.jpg" width="100%">
                         <%} %>
                         </div>
                     </div>
@@ -160,26 +150,26 @@
                               <div class="detailsContainer_content">
                                   <div> 
                                       <div>레슨 악기</div>
-                                      <input class="btn btn-outline-warning" type="text" value="<%=lesson.getInstNo() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getInstNo() %>">
                                   </div>
                                   <div>
                                       <div>레슨비(회당)</div>
-                                      <input class="btn btn-outline-warning" type="text" value="<%=lesson.getBoardPrice() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getBoardPrice() %>">
                                   </div>
                                   
                                   <div>
                                       <div>시작 시간</div>
-                                      <input class="btn btn-outline-warning" type="text" value="<%=lesson.getLessonStartTime() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getLessonStartTime() %>">
                                   </div>
 
                                   <div>
                                       <div>종료 시간</div>
-                                      <input class="btn btn-outline-warning" type="text" value="<%=lesson.getLessonEndTime() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getLessonEndTime() %>">
                                   </div>
                                   
                                   <div>
                                       희망 요일
-                                      <input class="btn btn-outline-warning" type="text" value="<%=lesson.getDay() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getDay() %>">
                                   </div> 
                               </div>
                           </div>
@@ -204,13 +194,8 @@
                     </div>
                 </div>
             </article>
-            <h1>footer</h1>
 		</div>
 	</section>
-	
-	<script>
-		
-	</script>
 	
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -259,5 +244,4 @@
             }
         })
 	</script>
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp" %>

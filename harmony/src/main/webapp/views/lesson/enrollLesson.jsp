@@ -1,20 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-	<title>레슨 등록</title>
+<%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/enrollLesson.css">
-</head>
-<body>
-   <section class="container w-50">
-        <div><h1>header</h1></div>
+   	<section class="container w-50">
 		<div class="container">
             <form action="<%=request.getContextPath() %>/enroll/enrollEndLesson.do" method="post" enctype="multipart/form-data">
             <!-- 카데고리 상태, 등록버튼 -->
@@ -175,7 +164,6 @@
                     </div>
                 </div>
             </article>
-            <h1>footer</h1>
             </form>
 		</div>
 	</section>
@@ -257,5 +245,4 @@
 		        }).open();
 		    }
 		</script>	
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp" %>
