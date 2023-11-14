@@ -2,6 +2,7 @@ package com.harmony.board.model.dao;
 
 import static com.harmony.common.JDBCTemplate.close;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.harmony.board.info.model.dto.InfoBoard;
+
 
 public class InfoBoardDao {
 	private Properties sql = new Properties();
@@ -70,7 +72,55 @@ public class InfoBoardDao {
 		return result;
 	}
 	//이코드는 게시글 갯수를 카운트하는 코드
+	
+	public List<InfoBoard> selectBoardByCategory(Connection conn, String category, int cPage, int numPerpage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<InfoBoard> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareCall(sql.getProperty("selectBoardByCategory"));
+			pstmt.setString(1, category);
+			pstmt.setInt(2, (cPage - 1) * numPerpage + 1);
+			pstmt.setInt(3, cPage * numPerpage);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result.add(getBoard(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	// pstmt로 sql 명령어로 카테고리를 조건문으로 걸어 특정 카테고리만 result에 담음 
 
+	
+	public int selectBoardCountByCategory(Connection conn, String keyword) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rset = null;
+	    int result = 0;
+
+	    
+	    try {
+	    	pstmt = conn.prepareCall(sql.getProperty("selectBoardCountByCategory"));
+	        pstmt.setString(1, keyword);
+	        rset = pstmt.executeQuery();
+	        if(rset.next()) {
+	            result = rset.getInt(1);
+	        }
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rset);
+	        close(pstmt);
+	    }
+
+	    return result;
+	}
+
+	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
 		return InfoBoard.builder()
 				.infBrdNo(rs.getInt("inf_brd_no"))
@@ -85,5 +135,26 @@ public class InfoBoardDao {
 				.build();
 		
 		//rs에 db에서 가져온 dto를 넣음
+	}
+	
+	public int insertBoard(Connection conn, InfoBoard b) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertBoard"));
+	        pstmt.setString(1, b.getInfBrdWriter());  
+	        pstmt.setString(2, b.getInfBrdTitle());  
+	        pstmt.setString(3, b.getInfBrdContent());  
+	        pstmt.setString(4, b.getInfBrdTitleImg());  
+	        pstmt.setString(5, b.getInfBrdRegion());
+	        pstmt.setString(6, b.getInfBrdCatNo());
+	        pstmt.setString(7, b.getInfBrdTagNo());
+	        
+	        result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
 }

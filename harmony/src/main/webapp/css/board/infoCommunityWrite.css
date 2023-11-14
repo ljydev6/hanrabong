@@ -1,0 +1,56 @@
+
+/* 글쓰기 */
+
+.write-post-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .write-post-container h3 {
+    margin-bottom: 15px;
+  }
+  
+  .form-field {
+    margin-bottom: 10px;
+  }
+  
+  .form-field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* 버튼 */
+  .radio-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.radio-group label {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 5px;
+}
+.pagination {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    margin-right: 5px;
+}
+
+.pagination li a, .pagination li span {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+

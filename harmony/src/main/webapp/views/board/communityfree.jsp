@@ -8,9 +8,8 @@ List<FreeBoard> boards = (List<FreeBoard>) request.getAttribute("boards");
 <%@ include file="/views/common/header.jsp"%>
 
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/board/freeCommunity.css" type="text/css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board/freeCommunity.css" type="text/css">
+
 
     <div class="content">
       <div class="infoboard">
@@ -71,5 +70,6 @@ List<FreeBoard> boards = (List<FreeBoard>) request.getAttribute("boards");
         <div class="write-button-container">
           <button type="button" class="write-button"><a href="자유글쓰기.html">글쓰기</a></button>
         </div>
+    </div>
     </div>
 <%@ include file="/views/common/footer.jsp"%>

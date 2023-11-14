@@ -5,11 +5,13 @@ import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.commit;
 import static com.harmony.common.JDBCTemplate.rollback;
 
+
 import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.board.info.model.dto.InfoBoard;
 import com.harmony.board.model.dao.InfoBoardDao;
+
 
 
 public class InfoBoardService {
@@ -31,7 +33,32 @@ public class InfoBoardService {
 		close(conn);
 		return result;
 	}
+	
+	public List<InfoBoard> selectBoardByCategory(String category, int cPage, int numPerpage){
+		Connection conn = getConnection();
+		List<InfoBoard> result = dao.selectBoardByCategory(conn, category, cPage, numPerpage);
+		close(conn);
+		return result;
+	}
+	
+	public int selectBoardCountByCategory(String keyword) {
+	    Connection conn = getConnection();
+	    int result = new InfoBoardDao().selectBoardCountByCategory(conn, keyword);
+	    close(conn);
+	    return result;
+	}
+	
+	public int insertBoard(InfoBoard b) {
+		Connection conn=getConnection();
+		int result=dao.insertBoard(conn, b);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 }
+
+
 
 
 

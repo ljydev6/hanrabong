@@ -7,22 +7,10 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 %>
 <%@ include file="/views/common/header.jsp"%>
 
-
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoCommunity.css" type="text/css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.css">
-<title>정보 게시판</title>
-<head>
-</head>
 
-<body>
+
 	<div class="content">
 		<div class="infoboard">
 			<div class="info-container">
@@ -35,42 +23,45 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 				<div class="category">
 					<select id="infocategory-select" name="infocategory">
 						<option value="all">카테고리</option>
-						<option value="all">공연</option>
-						<option value="all">입시</option>
-						<option value="all">오디션</option>
-						<option value="all">버스킹</option>
+						<option value="cat1">공연</option>
+						<option value="cat2">입시</option>
+						<option value="cat3">오디션</option>
+						<option value="cat4">버스킹</option>
 					</select>
 				</div>
+				<script>
+				 
+				</script>
 				<div>
 					<select id="infotag-select" name="infotag">
 						<option value="all">태그</option>
-						<option value="all">정보</option>
-						<option value="aall">후기</option>
-						<option value="all">TIP</option>
-						<option value="all">이벤트</option>
+						<option value="tag1">정보</option>
+						<option value="tag2">후기</option>
+						<option value="tag3">TIP</option>
+						<option value="tag4">이벤트</option>
 					</select>
 				</div>
 				<div>
 					<select id="region-select" name="region">
 						<option value="all">지역</option>
-						<option value="all">서울</option>
-						<option value="all">경기도</option>
-						<option value="all">강원도</option>
-						<option value="all">충청북도</option>
-						<option value="all">충청남도</option>
-						<option value="all">전라북도</option>
-						<option value="all">전라남도</option>
-						<option value="all">경상북도</option>
-						<option value="all">경상남도</option>
-						<option value="all">제주도</option>
+						<option value="서울">서울</option>
+						<option value="경기도">경기도</option>
+						<option value="강원도">강원도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="충청남도">충청남도</option>
+						<option value="전라북도">전라북도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="경상남도">경상남도</option>
+						<option value="제주도">제주도</option>
 					</select>
 				</div>
 				<div class="info-sort">
 					<select id="sort-select" name="sort">
-						<option value="all">최신등록순</option>
-						<option value="all">오래된순</option>
-						<option value="all">조회수</option>
-						<option value="all">댓글수</option>
+						<option value="최신등록순">최신등록순</option>
+						<option value="오래된순">오래된순</option>
+						<option value="조회수">조회수</option>
+						<option value="댓글수">댓글수</option>
 					</select>
 				</div>
 			</div>
@@ -99,19 +90,35 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 
 		</div>
 		<div class="write-button-container">
-			<button type="button" class="write-button">
+		<!-- 	<button type="button" class="write-button">
 				<a href="정보글쓰기.html">글쓰기</a>
+			</button> -->
+			<button onclick="location.assign('<%=request.getContextPath() %>/board/boardWrite.do')">
+				글쓰기
 			</button>
+			
 		</div>
 	</div>
-</body>
-
-<script>
-	
-</script>
-
-</body>
-
-</html>
-
+	<script>
+		document.querySelectorAll(".main select").forEach(e=>{
+			// 각 <select> 요소에 'change' 이벤트 리스너를 추가합니다.
+		    // 이 리스너는 사용자가 드롭다운의 옵션을 변경할 때마다 실행됩니다.
+			e.addEventListener("change",e=>{
+			      // e.target은 이벤트가 발생한 <select> 요소를 가리킵니다.
+		        // value는 선택된 옵션의 값을 가져옵니다.
+				const value=e.target.value;
+				 // name은 <select> 요소의 name 속성 값을 가져옵니다.
+				const name=e.target.name;
+				 // location.assign을 사용하여 새 URL로 페이지를 이동시킵니다.
+		        // 여기서 URL은 사용자가 선택한 카테고리와 값을 기반으로 동적으로 생성됩니다.
+				location.assign("<%=request.getContextPath()%>/community/searchcommunity.do?type="+name+"&keyword="+value);
+				
+			});
+		});
+		
+		
+		
+		
+		
+	</script>
 <%@ include file="/views/common/footer.jsp"%>
