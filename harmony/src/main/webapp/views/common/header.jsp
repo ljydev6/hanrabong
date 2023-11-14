@@ -39,7 +39,12 @@
 							<a class="btn nav-link" href="<%=request.getContextPath()%>/loginServlet.do">로그인</a>
 						</li>
 					<%}else{ %>
-					
+						<li class="nav-item">
+							<a class="btn nav-link" href="">내정보보기</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn nav-link btn-warning" href="https://kauth.kakao.com/oauth/logout?client_id=7a71de50fa7db8d6bb2395a8a5fba504&logout_redirect_uri=http://localhost:8080/harmony/logout.do">로그아웃</a>
+						</li>
 					<%} %>
 					</ul>
 				</div>

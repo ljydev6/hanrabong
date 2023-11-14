@@ -2,7 +2,7 @@
 <%@ page import="java.util.List, com.harmony.admin.model.dto.Carousel" %>
 <%@ include file="/views/common/header.jsp" %>
 <% List<Carousel> carouselList = (List<Carousel>)request.getAttribute("carouselList"); %>
-<section>
+<section class="container">
 	<% if(carouselList !=null){ %>
 	<div id="harmonyMainCarousel" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-indicators">

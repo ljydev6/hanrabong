@@ -15,4 +15,6 @@ public class Carousel {
 	private Date crslWriteDate;
 	private Date crslEndDate;
 	private int crslIntervalMs;
+	private int crslViewRank;
+	private String status;
 }

@@ -23,7 +23,14 @@ public class AdminService {
 		close(conn);
 		return result;
 	}
-
+	
+	public List<Carousel> selectAllCarousels(){
+		Connection conn = getConnection();
+		List<Carousel> result = AdminDao.getDao().selectAllCarousels(conn);
+		close(conn);
+		return result;
+	}
+	
 	public AdminMember adminLogin(AdminMember login) {
 		Connection conn = getConnection();
 		AdminMember result = AdminDao.getDao().adminLogin(conn, login);
