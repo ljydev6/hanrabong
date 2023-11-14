@@ -32,16 +32,17 @@
 				<div class="navbar align-self-center d-flex">
 					<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="로그인">로그인</a>
+							<a class="btn nav-link" href="<%=request.getContextPath()%>/loginServlet.do">로그인</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="회원가입">회원가입</a>
+							<a class="btn nav-link" href="회원가입">회원가입</a>
 						</li>
 						<li class="nav-item">
+							<button class="btn btn-warning btn-sm" type="button">강사가입</button>
 						</li>
 					</ul>
 				</div>
-				<button class="btn btn-warning btn-sm" type="button">강사가입</button>
+				
 			</div>
 		</nav>
 	</header>

@@ -13,7 +13,7 @@ header > nav > div.container{
 	text-align: center;
 }
 #harmony_main_nav a { color: #212934;}
-#harmony_main_nav a:hover { color: #69bb7e;}
+#harmony_main_nav a:hover { color: #ffc107;}
 #harmony_main_nav .navbar .nav-icon { margin-right: 20px;}
 @media (min-width: 576px) {
 }
