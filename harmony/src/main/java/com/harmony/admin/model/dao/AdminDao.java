@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
 
 public class AdminDao {
@@ -59,5 +60,31 @@ public class AdminDao {
 								 .crslEndDate(rs.getDate("CRSL_END_DATE"))
 								 .crslIntervalMs(rs.getInt("CRSL_INTERVAL_MS"))
 								 .build();
+	}
+
+	public AdminMember adminLogin(Connection conn, AdminMember login) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		AdminMember member = null;
+		
+		try{
+			pstmt = conn.prepareStatement(sql.getProperty("adminLogin"));
+			pstmt.setString(1, login.getAdminId());
+			pstmt.setString(2, login.getAdminPw());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				member = AdminMember.builder().adminId(rs.getString("ADMIN_ID"))
+											  .adminName(rs.getString("ADMIN_NAME"))
+											  .adminNo(rs.getString("ADMIN_PW"))
+											  .build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return member;
 	}
 }

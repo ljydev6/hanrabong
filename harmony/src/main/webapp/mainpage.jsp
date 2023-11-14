@@ -2,7 +2,6 @@
 <%@ page import="java.util.List, com.harmony.admin.model.dto.Carousel" %>
 <%@ include file="/views/common/header.jsp" %>
 <% List<Carousel> carouselList = (List<Carousel>)request.getAttribute("carouselList"); %>
-<a href="<%=request.getContextPath()%>/loginServlet.do">로그인하기</a>
 <section>
 	<% if(carouselList !=null){ %>
 	<div id="harmonyMainCarousel" class="carousel slide" data-bs-ride="carousel">
