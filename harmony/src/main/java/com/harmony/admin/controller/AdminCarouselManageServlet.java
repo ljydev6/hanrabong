@@ -16,13 +16,13 @@ import com.harmony.admin.service.AdminService;
  * Servlet implementation class AdminCarouselManage
  */
 @WebServlet("/admin/manage/carousel.do")
-public class AdminCarouselManage extends HttpServlet {
+public class AdminCarouselManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminCarouselManage() {
+    public AdminCarouselManageServlet() {
         super();
     }
 
