@@ -151,10 +151,9 @@ margin-top: 150px;
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
-Kakao.init('cc95c9b42927b4f8a48697f198c5594e'); //발급받은 키 중 javascript키를 사용해준다.
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
+
 //카카오로그인
-function kakaoLogin() {
+/* function kakaoLogin() {
     Kakao.Auth.login({
       success: function (response) {
     	  console.log('로그인체크');
@@ -195,7 +194,11 @@ function kakaoLogin() {
         console.log(error)
       },
     })
-  }
+  } */
+
+function kakaoLogin() {
+	location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7a71de50fa7db8d6bb2395a8a5fba504&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do';
+}
 //카카오로그아웃  
 function kakaoLogout() {
     if (Kakao.Auth.getAccessToken()) {

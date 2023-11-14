@@ -4,6 +4,7 @@
 <% List<Carousel> carouselList = (List<Carousel>)request.getAttribute("carouselList"); %>
 <a href="<%=request.getContextPath()%>/loginServlet.do">로그인하기</a>
 <section>
+	<% if(carouselList !=null){ %>
 	<div id="harmonyMainCarousel" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<%for(int i=0; i<carouselList.size(); i++){ %>
@@ -30,5 +31,6 @@
 			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
+	<%} %>
 </section>
 <%@ include file="/views/common/footer.jsp" %>
