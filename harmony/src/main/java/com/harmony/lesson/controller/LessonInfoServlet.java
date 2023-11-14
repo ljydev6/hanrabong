@@ -1,7 +1,6 @@
 package com.harmony.lesson.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +12,16 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.service.LessonService;
 
 /**
- * Servlet implementation class FindLessonServlet
+ * Servlet implementation class LessonInfo
  */
-@WebServlet("/lesson/findLesson.do")
-public class FindLessonServlet extends HttpServlet {
+@WebServlet("/lesson/lessonInfo.do")
+public class LessonInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindLessonServlet() {
+    public LessonInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +30,12 @@ public class FindLessonServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Lesson> lessons = new LessonService().printLessonAll(1, 10);
-		System.out.println(lessons);
-		request.setAttribute("lessons", lessons);
+		int no = Integer.parseInt(request.getParameter("no"));
+		Lesson l = new LessonService().selectLessonByNo(no);
 		
-		request.getRequestDispatcher("/views/findLesson.jsp")
+		request.setAttribute("lesson", l);
+		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
 			.forward(request, response);
-	
 	}
 
 	/**

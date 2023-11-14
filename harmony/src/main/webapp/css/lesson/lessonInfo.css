@@ -1,0 +1,143 @@
+@charset "UTF-8";
+*{
+	box-sizing: border-box;
+}
+.upperBar {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+a{
+	text-decoration: none;
+	color: coral;
+}
+div{
+	border-radius: 5px;
+}
+button:hover{
+    scale: 1.02;
+}
+button{
+	cursor: pointer;
+	background-color: white;
+	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+	border: none;
+	border-radius: 5px;
+}
+.submitContainer input[type=submit]{
+	border-radius: 5px;
+}
+.lessonInfo{
+	
+}
+.form-select{
+	width: 150px;
+	height: 35px;
+}
+.imgSubmitSection{
+	width: 100%;
+	margin: 2px;
+}
+.imgContainer{
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.detailImg{
+	width: 100%;
+	height: 100%;
+}
+.detailImg>img{
+	padding: 5px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+	margin: 5px;
+}
+.upperBar>div>button{
+	width: 100px;
+	height: 40px;
+}
+.submitContainer{
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.labelBox{
+	text-align: center;
+}
+.labelBox>label{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+.lessonSubmit{
+	position : relative;
+	height: 100%;
+}
+select{
+	width: 75px;
+	border: none;
+	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+}
+input[type=submit]{
+	position : absolute;
+	bottom : 0px;
+	width: 100%;
+	border: none;
+	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+	cursor: pointer;
+	background-color: white;
+	height: 50px;
+	color: coral;
+}
+
+.reviewInfo{
+	display: flex;
+	justify-content: center;
+	height: 50px;
+	align-items: center;
+}
+
+.detailInfoBar{
+	height: 50px;
+	align-items: center;
+	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+}
+.detailInfo{
+	height: 500px;
+	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+	align-items: center;
+}
+.detailsContainer{
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+.detailsContainer_title{
+	padding: 20px;
+	width: 20%;
+	height: 100%;
+}
+
+.detailsContainer_content{
+	padding: 20px;
+	width: 80%;
+	height: 100%;
+	display: -webkit-flex;
+	display: flex;
+	flex-wrap: wrap;
+	
+}
+.detailsContainer_content>div{
+	display: flex;
+	justify-content: space-between;
+	margin: 5px;
+	padding: 20px;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	background-color: #FAFAFC;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+.detailsContainer_content-inputpost{
+	display: flex;
+	flex-direction: column;
+}
