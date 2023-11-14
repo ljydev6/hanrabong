@@ -14,7 +14,7 @@ import com.harmony.common.exception.HarmonyException;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/admin/login.do")
+@WebServlet("/adminLogin.do")
 public class AdminLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

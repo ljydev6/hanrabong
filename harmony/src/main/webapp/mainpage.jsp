@@ -12,7 +12,7 @@
 		</div>
 		<div class="carousel-inner">
 			<%for(int i=0;i<carouselList.size(); i++){ %>
-			<div class="carousel-item<%=i==0?" active":"" %>">
+			<div class="carousel-item<%=i==0?" active":"" %>" data-bs-interval="<%=carouselList.get(i).getCrslIntervalMs()%>">
 				<a href="<%=carouselList.get(i).getCrslPageLink()%>">
 					<img src="<%=request.getContextPath() %>/image/carousel/<%=carouselList.get(i).getCrslImgLink() %>" class="d-block w-100" alt="<%=carouselList.get(i).getCrslName()%>">
 				</a>
