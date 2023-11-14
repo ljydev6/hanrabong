@@ -1,6 +1,14 @@
 package com.harmony.model.dto;
 
+import java.util.List;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Builder
+@Data
 public class MemberInfo {
+	private String memNo;
 	private String activityArea;
 	private String introduce;
 	private String profilPhoto;
@@ -11,4 +19,7 @@ public class MemberInfo {
 	private String gender;
 	private int age;
 	private String email;
+	private List<MemberVideo> memberVideo;
+	private List<MemberMusic> memberMusic;
+	private List<MemberCareer> memberCareer;
 }

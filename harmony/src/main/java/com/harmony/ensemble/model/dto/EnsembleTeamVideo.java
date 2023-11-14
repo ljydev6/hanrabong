@@ -7,9 +7,8 @@ import lombok.Data;
 @Builder
 public class EnsembleTeamVideo {
 	
-	private int vNo;
-	private String ensTeamNo;
-	private String vType;
-	private String vAddr;
-	
+	private String vNo;
+	private String teamNo;
+	private String vOriName;
+	private String vReName;
 }
