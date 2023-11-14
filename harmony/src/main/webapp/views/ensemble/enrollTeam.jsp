@@ -12,11 +12,10 @@
 
 <section>
 
-<form action="">
 <div class="enroll_container">
 	<div>
 		<span>팀명</span>
-		<input type="text">
+		<input type="text" id="teamName">
 	</div>
 	<div>	
 		<label for="genre">장르</label>
@@ -31,59 +30,33 @@
 	</div>
 	<div>
 		<p>구분</p>
-		   <input type='radio' class="single_chk" name='type' value='ama' style='display:none'>
+		<label>
+		    <input type='radio' class="single_chk" name='type' value='취미' style="display:none">
 			<span class="single_chk_span">취미</span>
-		  <input type='radio' class="single_chk" name='type' value='pro' style='display:none'>
+		</label>
+		<label>
+		 	<input type='radio' class="single_chk" name='type' value='전문' style="display:none">
 			<span class="single_chk_span">전문</span>
-		
+		</label>
 	</div>
 	<div>
 		<p>한 줄 소개</p>
-		<textarea cols="30" rows="3"></textarea>
+		<textarea cols="30" rows="3" id="detail"></textarea>
 	</div>
 	<div>
 		<p>영상</p>
-		<input type="file" id="upFile" multiple>
-		<button id="btnupload">업로드</button>
-		<script>
-			$("#btnupload").click(e=>{
-				const form = new FormData();
-				const fileInput=$("#upFile");
-				$.each(fileInput[0].files, (i,f)=>{
-					form.append("upfile"+i,f);
-				});
-				// form.append("userId","bsyoo");
-			
-		
-				$.ajax({
-					url: "<%=request.getContextPath()%>/ajax/uploadFile.do",
-					data:form,
-					type:"post",
-					processData:false,
-					contentType:false,
-					success:data=>{
-						alert("업로드 성공");
-					},
-					error:(r,e)=>{
-						alert("업로드 실패");
-					},
-					complete:()=>{
-						fileInput.val('');
-					}
-				});
-			});
-		</script>
+		<input type="file" id="video" multiple accept="video/*">
 	</div>
 	<div>
 		<p>음원</p>
+		<input type="file" id="music" multiple accept="audio/*">
 	</div>
 		<div class="submit_container">
-			<input type="submit" name="submit" id="submit" onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeamEnd.do')">
+			<input type="button" value="등록" id="submit" >
 		</div>
 </div>
 
 
-</form>
 
 
 </section>
@@ -104,13 +77,60 @@
 $(document).ready(function(){
 	$('.single_chk_span').click(function(){
 		$(this).toggleClass('selected');
-	
-	
 	$('.single_chk_span').not(this).removeClass('selected');
 });
 
 
 });
+</script>
+<script>
+		
+	
+	$("#submit").click(e=>{
+
+		const form = new FormData();
+		
+		const teamName = $("#teamName").val();
+		const genre = $("#genre").val();
+		const type = $(".single_chk:checked").val(); 
+		const detail = $("#detail").val();
+		
+		form.append("teamName", teamName);
+		form.append("genre", genre);
+		form.append("type", type);
+		form.append("detail", detail);
+		
+		const videoInput=$("#video");
+		$.each(videoInput[0].files, (i,v)=>{
+			form.append("video"+i,v);
+		});
+			
+		const musicInput=$("#music");
+		$.each(musicInput[0].files, (i,m)=>{
+			form.append("music"+i,m);
+
+		});	
+			
+		$.ajax({
+			url: "<%=request.getContextPath()%>/ensemble/enrollTeamEnd.do",
+			data:form,
+			type:"post",
+			processData:false,
+			contentType:false,
+			success:data=>{
+				alert("등록 성공");
+			},
+			error:(r,e)=>{
+				alert("등록 실패");
+			},
+			complete:()=>{
+				videoInput.val('');
+				musicInput.val('');
+			}
+		});
+	});
+			
+
 </script>
 
 <%@ include file="/views/common/footer.jsp" %>

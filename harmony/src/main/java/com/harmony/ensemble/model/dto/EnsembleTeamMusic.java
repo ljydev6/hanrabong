@@ -7,11 +7,11 @@ import lombok.Data;
 @Builder
 public class EnsembleTeamMusic {
 
-	private String ensTeamNo;
-	private String ensMusTitle;
-	private String ensMusType;
-	private String ensMusAddr;
-	private String ensMusImg;
+	private String mNo;
+	private String teamNo;
+	private String mMusicName;
+	private String mOriName;
+	private String mReName;
 	
 	
 	

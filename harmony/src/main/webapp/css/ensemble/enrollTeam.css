@@ -3,7 +3,7 @@
 .enroll_container{
 	height: 75vh;
 	display: flex;
-	border:1px solid purple; 
+/*	border:1px solid purple; */
 	flex-direction:column;	
 	justify-content: flex-start;
 }
@@ -13,14 +13,14 @@
 }
 
 .submit_container{
-	border:1px solid blue;
+/*	border:1px solid blue;*/
 	display: flex;
 	justify-content: end;
 	padding-right:50%;
 	padding-bottom: 5%;
 }
 
-input[type=submit]{
+input[type=button]{
     cursor : pointer;
     background-color: rgb(218, 106, 65);
     width: 100px;
@@ -30,7 +30,7 @@ input[type=submit]{
     border-radius: 10%;
 }
 
-input[type=submit]:hover{
+input[type=button]:hover{
     cursor : pointer;
     background-color: rgb(232, 72, 13);
     width: 100px;
