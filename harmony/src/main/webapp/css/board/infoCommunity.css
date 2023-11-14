@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif;
     font-size: 9px;
@@ -15,27 +16,33 @@ body {
 
 .infoboard {
     display: flex;
-    width:10%;
+    width:15%;
     flex-direction: column;
-    padding: 20px;
     border-right: 1px solid #ddd;
 }
 
 .info-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    padding-top: 20px;
 }
+
 
 .info-container > h3 {
-    font-size: 18px;
-    transition: all 0.3s ease;
-    padding: 20px 10px 10px; 
+    margin-bottom: 20px;
 }
 
-.info-container > h3:hover {
-    color: #ff6347; 
-    transform: scale(1.1);  
+.info-container > h3 a {
+    text-decoration: none; 
+    color: #333; 
+    font-size: 18px; 
+    transition: all 0.3s ease; 
+}
+
+.info-container > h3 a:hover {
+    color: #ff6347;
+    transform: scale(1.1); 
 }
 
 

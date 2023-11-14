@@ -34,18 +34,18 @@ public class InfoBoardService {
 		return result;
 	}
 	
-	public List<InfoBoard> selectBoardByCategory(String category, int cPage, int numPerpage){
+	public List<InfoBoard> selectBoardByCategoryTagRegion(String category, String tag, String region, int cPage, int numPerpage) {
 		Connection conn = getConnection();
-		List<InfoBoard> result = dao.selectBoardByCategory(conn, category, cPage, numPerpage);
+		List<InfoBoard> result = dao.selectBoardByCategoryTagRegion(conn, category, tag, region, cPage, numPerpage);
 		close(conn);
 		return result;
 	}
 	
-	public int selectBoardCountByCategory(String keyword) {
-	    Connection conn = getConnection();
-	    int result = new InfoBoardDao().selectBoardCountByCategory(conn, keyword);
-	    close(conn);
-	    return result;
+	public int selectBoardCountByCategoryTagRegion(String category, String tag, String region) {
+		Connection conn = getConnection();
+		int result = dao.selectBoardCountByCategoryTagRegion(conn, category, tag, region);
+		close(conn);
+		return result;
 	}
 	
 	public int insertBoard(InfoBoard b) {

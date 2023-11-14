@@ -8,14 +8,14 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 <%@ include file="/views/common/header.jsp"%>
 
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/board/infoCommunity.css" type="text/css">
+	href="<%=request.getContextPath()%>/css/board/infoCommunity.css" type="text/css">	
 
 
 	<div class="content">
 		<div class="infoboard">
 			<div class="info-container">
-				<h3 class="info"><a href ="<%=request.getContextPath()%>/communitymain.do">정보게시판</a></h3>
-				<h3 class="free"><a href="<%=request.getContextPath()%>/test2.do">정보게시판</a></h3>
+				<h3 class="info"><a href ="<%=request.getContextPath()%>/communitymain.do">정보 게시판</a></h3>
+				<h3 class="free"><a href="<%=request.getContextPath()%>/test2.do">자유 게시판</a></h3>
 			</div>
 		</div>
 		<div class="main-sort-container">
@@ -100,7 +100,7 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 		</div>
 	</div>
 	<script>
-		document.querySelectorAll(".main select").forEach(e=>{
+		<%-- document.querySelectorAll(".main select").forEach(e=>{
 			// 각 <select> 요소에 'change' 이벤트 리스너를 추가합니다.
 		    // 이 리스너는 사용자가 드롭다운의 옵션을 변경할 때마다 실행됩니다.
 			e.addEventListener("change",e=>{
@@ -111,14 +111,45 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 				const name=e.target.name;
 				 // location.assign을 사용하여 새 URL로 페이지를 이동시킵니다.
 		        // 여기서 URL은 사용자가 선택한 카테고리와 값을 기반으로 동적으로 생성됩니다.
-				location.assign("<%=request.getContextPath()%>/community/searchcommunity.do?type="+name+"&keyword="+value);
-				
+				location.assign("<%=request.getContextPath()%>/community/searchcommunity.do?" + name + "=" + value);				
+				 
 			});
+			
+		}); --%>
+		<%-- document.querySelectorAll(".main select").forEach(e => {
+		    e.addEventListener("change", event => {
+		        let url = "<%=request.getContextPath()%>/community/searchcommunity.do";
+
+		        const params = new URLSearchParams(window.location.search);
+
+		        const paramName = event.target.id.replace('info', '').replace('-select', '');
+
+		        params.set(paramName, event.target.value);
+		        
+		        url += "?" + params.toString();
+
+		        location.assign(url);
+		    });
 		});
-		
-		
-		
-		
+ --%>
+ document.querySelectorAll(".main select").forEach(e => {
+	    // 페이지 로드 시 URL의 검색 파라미터에 따라 셀렉트 박스의 선택된 옵션 설정
+	    const params = new URLSearchParams(window.location.search);
+	    const paramName = e.id.replace('info', '').replace('-select', '');
+	    if (params.has(paramName)) {
+	        e.value = params.get(paramName);
+	    }
+
+	    // 셀렉트 박스의 선택이 변경되었을 때 URL 업데이트
+	    e.addEventListener("change", event => {
+	        let url = "<%=request.getContextPath()%>/community/searchcommunity.do";
+	        params.set(event.target.id.replace('info', '').replace('-select', ''), event.target.value);
+	        url += "?" + params.toString();
+	        location.assign(url);
+	    });
+	});
+
+
 		
 	</script>
 <%@ include file="/views/common/footer.jsp"%>
