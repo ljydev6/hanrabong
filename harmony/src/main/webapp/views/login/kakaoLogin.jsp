@@ -57,6 +57,27 @@
 <script>
 
 //카카오로그인
+/* function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+      Kakao.API.request({
+      url: '/v2/user/me',
+      success: function (response) {
+    	  console.log(response.kakao_account['email']);
+    	  console.log(response.properties['nickname']);
+    	  
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  } */
+
 function kakaoLogin() {
 	location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7a71de50fa7db8d6bb2395a8a5fba504&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do';
 }
