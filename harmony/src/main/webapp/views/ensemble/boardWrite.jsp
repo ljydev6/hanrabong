@@ -30,11 +30,11 @@
 	<tr>
 		<th>구분</th>
 		    <td colspan="2">
-			    <input type='radio' class="single_chk" name='type' value='ama' style='display:none';>
+			    <input type='radio' class="single_chk" name='type' value='ama' style='display:none'>
 			    <span class="single_chk_span">취미</span>
 			</td>
 		    <td colspan="2">
-			    <input type='radio' class="single_chk" name='type' value='pro' style='display:none';>
+			    <input type='radio' class="single_chk" name='type' value='pro' style='display:none'>
 			    <span class="single_chk_span">전문</span>
 			</td>
 	    
@@ -44,55 +44,55 @@
 	<tr>
 	    <th>모집파트</th>
 		    <td>
-		   		<input class="inst_chk" type="checkbox" name="inst" value="vocal" style="display:none";>
+		   		<input class="inst_chk" type="checkbox" name="inst" value="vocal" style="display:none">
 				<span class="inst_chk_span">보컬</span>
 		    </td>
 		    <td>
-		   		<input class="inst_chk" type="checkbox" name="inst" value="piano" style="display:none";>
+		   		<input class="inst_chk" type="checkbox" name="inst" value="piano" style="display:none">
 				<span class="inst_chk_span">건반</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="drum" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="drum" style="display:none">
 				<span class="inst_chk_span">드럼</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="guitar" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="guitar" style="display:none">
 				<span class="inst_chk_span">기타</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="bass" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="bass" style="display:none">
 				<span class="inst_chk_span">베이스</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="violin" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="violin" style="display:none">
 				<span class="inst_chk_span">바이올린</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="percussion" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="percussion" style="display:none">
 				<span class="inst_chk_span">퍼커션</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="saxophone" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="saxophone" style="display:none">
 				<span class="inst_chk_span">색소폰</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="flute" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="flute" style="display:none">
 				<span class="inst_chk_span">플룻</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="electronic" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="electronic" style="display:none">
 				<span class="inst_chk_span">일렉트로닉</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="contra" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="contra" style="display:none">
 				<span class="inst_chk_span">더블베이스</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="cello" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="cello" style="display:none">
 				<span class="inst_chk_span">첼로</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="trumpet" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="trumpet" style="display:none">
 				<span class="inst_chk_span">트럼펫</span>
 		    </td>
 		    <td colspan="2">
@@ -103,43 +103,43 @@
 	<tr>
 		<th>장르</th>
 			<td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="kpop" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="kpop" style="display:none">
 				<span class="inst_chk_span">가요</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="pop" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="pop" style="display:none">
 				<span class="inst_chk_span">팝</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="jazz" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="jazz" style="display:none">
 				<span class="inst_chk_span">재즈</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="hiphop" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="hiphop" style="display:none">
 				<span class="inst_chk_span">힙합</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="electronic" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="electronic" style="display:none">
 				<span class="inst_chk_span">일렉트로닉</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="rock" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="rock" style="display:none">
 				<span class="inst_chk_span">락</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="modernRock" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="modernRock" style="display:none">
 				<span class="inst_chk_span">모던락</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="funk" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="funk" style="display:none">
 				<span class="inst_chk_span">펑크</span>
 		    </td>
 		    <td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="indie" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="indie" style="display:none">
 				<span class="inst_chk_span">인디</span>
 		    </td>
 			<td>
-		    	<input class="inst_chk" type="checkbox" name="inst" value="trot" style="display:none";>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="trot" style="display:none">
 				<span class="inst_chk_span">트로트</span>
 		    </td>
 		    <td colspan="2">
@@ -150,35 +150,35 @@
 	<tr>
 	    <th>지역</th>
 		    <td>
-			    <input type="radio" class="single_chk" name="location" value="seoul" style="display:none";>
+			    <input type="radio" class="single_chk" name="location" value="seoul" style="display:none">
 			    <span class="single_chk_span">서울</span>
 			</td>
 		 	<td>
-			    <input type='radio' class="single_chk" name='location' value='gyeongi' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='gyeongi' style='display:none'>
 			    <span class="single_chk_span">경기도</span>
 			</td>
 		  	<td>
-			    <input type='radio' class="single_chk" name='location' value='incheon' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='incheon' style='display:none'>
 			    <span class="single_chk_span">인천</span>
 			</td>
 			<td>
-			    <input type='radio' class="single_chk" name='location' value='gangwon' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='gangwon' style='display:none'>
 			    <span class="single_chk_span">강원도</span>
 			</td>
 			<td>
-			    <input type='radio' class="single_chk" name='location' value='chungcheong' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='chungcheong' style='display:none'>
 			    <span class="single_chk_span">충청도</span>
 			</td>
 			<td>
-			    <input type='radio' class="single_chk" name='location' value='jeolla' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='jeolla' style='display:none'>
 			    <span class="single_chk_span">전라도</span>
 			</td>
 			<td>
-			    <input type='radio' class="single_chk" name='location' value='busan' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='busan' style='display:none'>
 			    <span class="single_chk_span">부산</span>
 			</td>
 			<td>
-			    <input type='radio' class="single_chk" name='location' value='jeju' style='display:none';>
+			    <input type='radio' class="single_chk" name='location' value='jeju' style='display:none'>
 			    <span class="single_chk_span">제주</span>
 			</td>
 		    <td colspan="5"></td>
@@ -252,19 +252,19 @@
 	<tr>
 	    <th>요일</th>
 	    <td colspan="14" class="day">
-	    	<input class="inst_chk" type="checkbox" name="inst" value="mon" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="mon" style="display:none">
 			<span class="inst_chk_span">월</span>
-	    	<input class="inst_chk" type="checkbox" name="inst" value="tues" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="tues" style="display:none">
 			<span class="inst_chk_span">화</span>
-			<input class="inst_chk" type="checkbox" name="inst" value="wedness" style="display:none";>
+			<input class="inst_chk" type="checkbox" name="inst" value="wedness" style="display:none">
 			<span class="inst_chk_span">수</span>    
-	    	<input class="inst_chk" type="checkbox" name="inst" value="thurs" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="thurs" style="display:none">
 			<span class="inst_chk_span">목</span>
-	    	<input class="inst_chk" type="checkbox" name="inst" value="fri" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="fri" style="display:none">
 			<span class="inst_chk_span">금</span>
-	    	<input class="inst_chk" type="checkbox" name="inst" value="satur" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="satur" style="display:none">
 			<span class="inst_chk_span">토</span>
-	    	<input class="inst_chk" type="checkbox" name="inst" value="sun" style="display:none";>
+	    	<input class="inst_chk" type="checkbox" name="inst" value="sun" style="display:none">
 			<span class="inst_chk_span">일</span>
 	    </td>
 	</tr>
