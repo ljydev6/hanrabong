@@ -51,9 +51,14 @@
 		<p>음원</p>
 		<input type="file" id="music" multiple accept="audio/*">
 	</div>
+	<div class="add_mem">
+		<input type="button" value="멤버추가">
+	</div>
 		<div class="submit_container">
 			<input type="button" value="등록" id="submit" >
 		</div>
+		
+	
 </div>
 
 
