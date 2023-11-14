@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.harmony.model.dto.Member" %>
+<% Member loginMember = (Member)request.getSession().getAttribute("loginMember"); %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>이제 너에게 음악을 알려줄게 - 이음줄</title>
-	<link rel="stylesheet" href="/harmony/css/bootstrap.css">
-	<link rel="stylesheet" href="/harmony/css/navbarStyle.css">
-	<link rel="stylesheet" href="/harmony/css/footerStyle.css">
-	<script src="/harmony/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/navbarStyle.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/footerStyle.css">
+	<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath() %>/js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 	<header>
@@ -31,18 +34,15 @@
 				</div>
 				<div class="navbar align-self-center d-flex">
 					<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+					<%if(loginMember==null){ %>
 						<li class="nav-item">
 							<a class="btn nav-link" href="<%=request.getContextPath()%>/loginServlet.do">로그인</a>
 						</li>
-						<li class="nav-item">
-							<a class="btn nav-link" href="회원가입">회원가입</a>
-						</li>
-						<li class="nav-item">
-							<button class="btn btn-warning btn-sm" type="button">강사가입</button>
-						</li>
+					<%}else{ %>
+					
+					<%} %>
 					</ul>
 				</div>
-				
 			</div>
 		</nav>
 	</header>

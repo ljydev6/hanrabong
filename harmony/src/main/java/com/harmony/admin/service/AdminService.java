@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.admin.model.dao.AdminDao;
+import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
 
 public class AdminService {
@@ -19,6 +20,13 @@ public class AdminService {
 	public List<Carousel> selectActiveCarousels(){
 		Connection conn = getConnection();
 		List<Carousel> result = AdminDao.getDao().selectActiveCarousels(conn);
+		close(conn);
+		return result;
+	}
+
+	public AdminMember adminLogin(AdminMember login) {
+		Connection conn = getConnection();
+		AdminMember result = AdminDao.getDao().adminLogin(conn, login);
 		close(conn);
 		return result;
 	}
