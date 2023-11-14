@@ -149,11 +149,11 @@ margin-top: 150px;
      </button>
      </div>
 <!-- 카카오 스크립트 -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> -->
 <script>
 
 //카카오로그인
-/* function kakaoLogin() {
+<%--  function kakaoLogin() {
     Kakao.Auth.login({
       success: function (response) {
     	  console.log('로그인체크');
@@ -175,7 +175,7 @@ margin-top: 150px;
     	  console.log(frm);
     	  $('body').first().append(frm);
     	  frm.submit();
-    	  <%-- $.ajax({
+    	  $.ajax({
               url:"<%=request.getContextPath()%>/member/kakaoLogin.do",
               data:{"id":response.id,"email":response.kakao_account['email']},
               Type:"post",
@@ -183,7 +183,7 @@ margin-top: 150px;
                   //성공적으로 하고나면 이동할 url
                   location.href="<%=request.getContextPath()%>/";
               }
-    	  }); --%>
+    	  });
           },
           fail: function (error) {
             console.log(error)
@@ -194,8 +194,8 @@ margin-top: 150px;
         console.log(error)
       },
     })
-  } */
-
+  } 
+ --%>
 function kakaoLogin() {
 	location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7a71de50fa7db8d6bb2395a8a5fba504&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do';
 }
