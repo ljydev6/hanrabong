@@ -27,7 +27,7 @@
 						<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>">메인페이지</a></li>
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/lesson/findLesson.do">레슨찾기</a></li>
-							<li class="nav-item"><a class="nav-link" href="합주찾기">합주찾기</a></li>
+							<li class="nav-item"><a class="nav-link" href="http://localhost:8080/harmony/views/ensemble/boardList.jsp">합주찾기</a></li>
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/communitymain.do">커뮤니티</a></li>
 						</ul>
 					</div>
