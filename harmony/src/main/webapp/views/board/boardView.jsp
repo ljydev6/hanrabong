@@ -31,7 +31,7 @@ InfoBoard board = (InfoBoard) request.getAttribute("InfoBoard");
 	<div id="comment-container">
 		<div class="comment-editor">
 			<form action="<%=request.getContextPath() %>/board/insertComment.do" method="post">
-				<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>">
+				<input type="hidden" name="boardRef" value="<%=InfoCommentBoard.getInfBrdBoa()%>">
 				<input type="hidden" name="level" value="1">
 				<input type="hidden" name="writer" value="<%=loginMember!=null?loginMember.getUserId():"" %>">
 				<input type="hidden" name="boardCommentRef" value="0">
