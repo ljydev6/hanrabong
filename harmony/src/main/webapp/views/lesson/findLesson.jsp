@@ -92,12 +92,17 @@
                    	if(!lessons.isEmpty()) {%>
                       <div class="lessonList" onclick="location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=<%=l.getBoardNo() %>'">
                       <%if(l.getBoardImg()!=null) {%>
-                        <div><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="150px" height="150px"></div>
+                        <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="200px" height="200px"></div>
                         <%} else { %>
-                        <div><img src="<%=request.getContextPath()%>/images/default.jpg" width="150px" height="150px"></div>
+                        <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/images/default.jpg" width="200px" height="200px"></div>
                         <%} %>
-                        <div><%=l.getBoardTitle() %>&nbsp;</div>
-                        <i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
+                        <div class="lessonListTitle"><%=l.getBoardTitle() %>&nbsp;</div>
+                        <div class="lessonView">
+                        	<i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
+                        </div>
+                        <div class="saveLesson">
+                            <i class="fa-solid fa-heart fa-xs"></i>
+                    	</div>
                       </div>
                       		<%} %>
                      	<%} %>

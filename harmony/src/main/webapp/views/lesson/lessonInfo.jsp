@@ -135,13 +135,13 @@
                                 </label>
                                 <label>
                                     <div>요일</div>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="mon" value="1" required> <label class="btn btn-outline-warning" for="mon">월</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="tue" value="2"> <label class="btn btn-outline-warning" for="tue">화</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="wed" value="3"> <label class="btn btn-outline-warning" for="wed">수</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="thur" value="4"> <label class="btn btn-outline-warning" for="thur">목</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="fri" value="5"> <label class="btn btn-outline-warning" for="fri">금</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="6"> <label class="btn btn-outline-warning" for="sat">토</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sun" value="7"> <label class="btn btn-outline-warning" for="sun">일</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="mon" value="월"> <label class="btn btn-outline-warning" for="mon">월</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="tue" value="화"> <label class="btn btn-outline-warning" for="tue">화</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="wed" value="수"> <label class="btn btn-outline-warning" for="wed">수</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="thur" value="목"> <label class="btn btn-outline-warning" for="thur">목</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="fri" value="금"> <label class="btn btn-outline-warning" for="fri">금</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="토"> <label class="btn btn-outline-warning" for="sat">토</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sun" value="일"> <label class="btn btn-outline-warning" for="sun">일</label>
                                 </label>
                                 <label>
                                     <div>회당 레슨시간</div>
@@ -175,7 +175,7 @@
 
                 <div class="detailInfoSection">
                     	<div>
-	                        <div class="reviewInfo"> 리뷰 12건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
+	                        <div class="reviewInfo"> 리뷰 ??건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
 	                        <div class="detailInfoBar d-flex justify-content-center gap-3">
 	                            <a href="#areaInfo">지역정보</a>
 	                            <a href="#lessonInfo">레슨정보</a>
@@ -278,6 +278,14 @@
 	            $("#endTime option:eq("+i+")").attr("disabled", true);
 	        }
 	    })
+	    
+	    function removeCheck() {
+		 if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+		     document.removefrm.submit();
+		 }else{   //취소
+		     return false;
+		 }
+		}
 	</script>
 	
 	<script>

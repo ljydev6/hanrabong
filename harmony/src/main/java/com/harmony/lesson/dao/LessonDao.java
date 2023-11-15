@@ -134,88 +134,6 @@ public class LessonDao {
 			}return result;
 		}
 		
-			// lesson 수정
-			public int updateLesson(Connection conn, Lesson l) {
-				PreparedStatement pstmt=null;
-				int result=0;
-				try {
-					pstmt=conn.prepareStatement(sql.getProperty("updateLesson"));
-					pstmt.setString(1, l.getInstNo());
-					pstmt.setString(2, l.getBoardTitle());
-					pstmt.setString(3, l.getBoardContent());
-					pstmt.setString(4, l.getBoardPlace());
-					pstmt.setString(5, l.getBoardPrice());
-					pstmt.setString(6, l.getBoardImg());
-					pstmt.setInt(7, l.getBoardNo());
-					result=pstmt.executeUpdate();
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}finally {
-					close(pstmt);
-				}return result;
-			}
-			// lesson 시간, 요일정보 수정
-			public int updateLessonTime(Connection conn, Lesson l) {
-				PreparedStatement pstmt=null;
-				int result=0;
-				try {
-					pstmt=conn.prepareStatement(sql.getProperty("updateLessonTime"));
-					pstmt.setTimestamp(1, l.getLessonStartTime());
-					pstmt.setTimestamp(2, l.getLessonEndTime());
-					pstmt.setString(3, String.join(",", l.getDay()));
-					pstmt.setInt(4, l.getBoardNo());
-					result=pstmt.executeUpdate();
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}finally {
-					close(pstmt);
-				}return result;
-			}
-			// lesson 삭제
-			public int deleteLesson(Connection conn, int no) {
-				PreparedStatement pstmt=null;
-				int result=0;
-				try {
-					pstmt=conn.prepareStatement(sql.getProperty("deleteLesson"));
-					pstmt.setInt(1, no);
-					result=pstmt.executeUpdate();
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}finally {
-					close(pstmt);
-				}return result;
-			}
-			// lesson 시간, 요일정보 삭제
-			public int deleteLessonTime(Connection conn, int no) {
-				PreparedStatement pstmt=null;
-				int result=0;
-				try {
-					pstmt=conn.prepareStatement(sql.getProperty("deleteLessonTime"));
-					pstmt.setInt(1, no);
-					result=pstmt.executeUpdate();
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}finally {
-					close(pstmt);
-				}return result;
-			}
-			
-		// lesson 조회수 카운트
-		public int updateLessonReadCount(Connection conn, int no) {
-			PreparedStatement pstmt=null;
-			int result=0;
-			try {
-				pstmt=conn.prepareStatement(sql.getProperty("updateLessonReadCount"));
-				pstmt.setInt(1, no);
-				result=pstmt.executeUpdate();
-				
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}return result;
-		}
-		
 		// 레슨 상담신청
 		public int applyLesson(Connection conn, LessonApply m) {
 			PreparedStatement pstmt=null;
@@ -233,6 +151,104 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
+		public int applyLessonTime(Connection conn, LessonApply m) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("applyLessonTime"));
+				pstmt.setTimestamp(1, m.getLessonStartTime());
+				pstmt.setTimestamp(2, m.getLessonEndTime());
+				pstmt.setString(3, String.join(",", m.getLessonDay()));
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+		
+		// lesson 수정
+		public int updateLesson(Connection conn, Lesson l) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLesson"));
+				pstmt.setString(1, l.getInstNo());
+				pstmt.setString(2, l.getBoardTitle());
+				pstmt.setString(3, l.getBoardContent());
+				pstmt.setString(4, l.getBoardPlace());
+				pstmt.setString(5, l.getBoardPrice());
+				pstmt.setString(6, l.getBoardImg());
+				pstmt.setInt(7, l.getBoardNo());
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+		// lesson 시간, 요일정보 수정
+		public int updateLessonTime(Connection conn, Lesson l) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLessonTime"));
+				pstmt.setTimestamp(1, l.getLessonStartTime());
+				pstmt.setTimestamp(2, l.getLessonEndTime());
+				pstmt.setString(3, String.join(",", l.getDay()));
+				pstmt.setInt(4, l.getBoardNo());
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+		// lesson 삭제
+		public int deleteLesson(Connection conn, int no) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteLesson"));
+				pstmt.setInt(1, no);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+		// lesson 시간, 요일정보 삭제
+		public int deleteLessonTime(Connection conn, int no) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteLessonTime"));
+				pstmt.setInt(1, no);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+			
+		// lesson 조회수 카운트
+		public int updateLessonReadCount(Connection conn, int no) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLessonReadCount"));
+				pstmt.setInt(1, no);
+				result=pstmt.executeUpdate();
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+		
 		
 		
 		
@@ -311,16 +327,16 @@ public class LessonDao {
 					.build();
 		}
 		
-		private LessonApply getLessonApply(ResultSet rs) throws SQLException {
-			return LessonApply.builder()
-					.applyNo(rs.getInt("apply_no"))
-					.boardNo(rs.getInt("board_no"))
-					.memNo(rs.getString("mem_no"))
-					.applyPlace(rs.getString("apply_place"))
-					.applyNumberOfTimes(rs.getInt("apply_number_of_times"))
-					.applyDate(rs.getDate("apply_date"))
-					.applyAccept(rs.getString("apply_accept").charAt(0))
-					.build();
-		}
+//		private LessonApply getLessonApply(ResultSet rs) throws SQLException {
+//			return LessonApply.builder()
+//					.applyNo(rs.getInt("apply_no"))
+//					.boardNo(rs.getInt("board_no"))
+//					.memNo(rs.getString("mem_no"))
+//					.applyPlace(rs.getString("apply_place"))
+//					.applyNumberOfTimes(rs.getInt("apply_number_of_times"))
+//					.applyDate(rs.getDate("apply_date"))
+//					.applyAccept(rs.getString("apply_accept").charAt(0))
+//					.build();
+//		}
 	
 }

@@ -28,12 +28,26 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
-	// 숫자로 레슨정보가져오기
 	public Lesson selectLessonByNo(int no) {
 		Connection conn=getConnection();
-		Lesson result=dao.selectLessonByNo(conn, no);
+		Lesson l = dao.selectLessonByNo(conn, no);
 		close(conn);
-		return result;
+		return l;
+	}
+	// 숫자로 레슨정보가져오기 && 조회수출력
+	public Lesson selectLessonByNo(int no, boolean readResult) {
+		Connection conn=getConnection();
+		Lesson l = dao.selectLessonByNo(conn, no);
+		if(l!=null && !readResult) {
+			int result = dao.updateLessonReadCount(conn, no);
+			
+			if(result>0) {
+				commit(conn);
+				l.setBoardView(l.getBoardView()+1);
+			}
+		}
+		close(conn);
+		return l;
 	}
 	//
 	public Lesson selectTimeByNo(int no) {
@@ -46,27 +60,14 @@ public class LessonService {
 	public int applyLesson(LessonApply member) {
 		Connection conn=getConnection();
 		int result=dao.applyLesson(conn, member);
-		if(result>0) commit(conn);
+		int result2=dao.applyLessonTime(conn, member);
+		
+		if(result>0 && result2>0) commit(conn);
 		else rollback(conn);
 		close(conn);
 		return result;
 	}
-	//조회수
-//	public Lesson selectBoardByNo(int no, boolean readResult) {
-//		Connection conn=getConnection();
-//		Lesson b=dao.selectBoardByNo(conn, no);
-//		if(b!=null&&!readResult) {
-//			int result=dao.updateBoardReadCount(conn,no);
-//			
-//			if(result>0) { 
-//				commit(conn);
-//				b.setBoardReadcount(b.getBoardReadcount()+1);
-//			}
-//			else rollback(conn);
-//		}
-//		close(conn);
-//		return b;
-//	}
+	
 	public int insertLesson(Lesson l) {
 		Connection conn=getConnection();
 		int result=dao.insertLesson(conn, l);

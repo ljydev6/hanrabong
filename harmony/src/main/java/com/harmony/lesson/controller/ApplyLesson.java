@@ -1,6 +1,9 @@
 package com.harmony.lesson.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +33,18 @@ public class ApplyLesson extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("UTF-8");
 		int boardNo = Integer.parseInt(request.getParameter("no"));
 		String memNo = request.getParameter("memNo");
 		String place = request.getParameter("place");
 		int count = Integer.parseInt(request.getParameter("count"));
+		
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date(System.currentTimeMillis());
+		Timestamp startTime = Timestamp.valueOf(formatter.format(date) +" "+ request.getParameter("startTime"));
+		Timestamp endTime = Timestamp.valueOf(formatter.format(date) +" "+ request.getParameter("endTime"));
+		String[] day = request.getParameterValues("hopeDay");
 		
 		LessonApply applyMem = LessonApply
 				.builder()
@@ -41,6 +52,9 @@ public class ApplyLesson extends HttpServlet {
 				.memNo(memNo)
 				.applyPlace(place)
 				.applyNumberOfTimes(count)
+				.lessonStartTime(startTime)
+				.lessonEndTime(endTime)
+				.lessonDay(day)
 				.build();
 		
 		int result = new LessonService().applyLesson(applyMem);
