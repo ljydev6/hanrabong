@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminDao {
 	private static AdminDao dao = new AdminDao();
@@ -297,5 +298,26 @@ public class AdminDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List<NoticeList> selectNoticeList(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<NoticeList> result = new ArrayList<>();
+		String query = sql.getProperty("selectNoticeList");
+		try{
+			pstmt = conn.prepareStatement(null);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getNoticeTotalData(Connection conn, String type, String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

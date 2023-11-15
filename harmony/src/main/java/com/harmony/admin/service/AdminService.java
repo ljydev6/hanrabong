@@ -8,6 +8,7 @@ import java.util.List;
 import com.harmony.admin.model.dao.AdminDao;
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminService {
 	private static AdminService service = new AdminService();
@@ -76,6 +77,21 @@ public class AdminService {
 		}
 		return cResult;
 	}
+
+	public List<NoticeList> selectNoticeList(String type, String keyword) {
+		Connection conn = getConnection();
+		List<NoticeList> result = AdminDao.getDao().selectNoticeList(conn, type, keyword);
+		close(conn);
+		return result;
+	}
+
+	public int getNoticeTotalData(String type, String keyword) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().getNoticeTotalData(conn,type,keyword);
+		close(conn);
+		return result;
+	}
+	
 	
 	
 }
