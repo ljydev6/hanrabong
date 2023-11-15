@@ -19,7 +19,7 @@ import com.harmony.admin.model.dto.AdminMember;
 /**
  * Servlet Filter implementation class AdminLoginFilter
  */
-@WebFilter(servletNames = { "adminMain" })
+@WebFilter(urlPatterns = "/admin/*")
 public class AdminLoginFilter extends HttpFilter implements Filter {
        
     /**
@@ -45,7 +45,7 @@ public class AdminLoginFilter extends HttpFilter implements Filter {
 		AdminMember admin = (AdminMember) session.getAttribute("loginAdmin");
 		if(admin == null) {
 			HttpServletResponse rsp = (HttpServletResponse)response;
-			rsp.sendRedirect(req.getContextPath()+"/admin/login.do");
+			rsp.sendRedirect(req.getContextPath()+"/adminLogin.do");
 			return;
 		}
 		// pass the request along the filter chain
