@@ -59,6 +59,8 @@ public class AdminDao {
 								 .crslWriteDate(rs.getDate("CRSL_WRITE_DATE"))
 								 .crslEndDate(rs.getDate("CRSL_END_DATE"))
 								 .crslIntervalMs(rs.getInt("CRSL_INTERVAL_MS"))
+								 .crslViewRank(rs.getInt("CRSL_VIEW_RANK"))
+								 .status(rs.getString("STATUS"))
 								 .build();
 	}
 
@@ -86,5 +88,24 @@ public class AdminDao {
 		}
 		
 		return member;
+	}
+
+	public List<Carousel> selectAllCarousels(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Carousel> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectAllCarousel"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getCarousel(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }

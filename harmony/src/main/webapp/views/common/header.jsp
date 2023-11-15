@@ -26,8 +26,8 @@
 					<div class="flex-fill">
 						<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>">메인페이지</a></li>
-							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/lesson/findlesson.do">레슨찾기</a></li>
-							<li class="nav-item"><a class="nav-link" href="합주찾기">합주찾기</a></li>
+							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/lesson/findLesson.do">레슨찾기</a></li>
+							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/ensemble/boardList.do">합주찾기</a></li>
 							<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/communitymain.do">커뮤니티</a></li>
 						</ul>
 					</div>
@@ -39,7 +39,12 @@
 							<a class="btn nav-link" href="<%=request.getContextPath()%>/loginServlet.do">로그인</a>
 						</li>
 					<%}else{ %>
-					
+						<li class="nav-item">
+							<a class="btn nav-link" href="">내정보보기</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn nav-link btn-warning" href="https://kauth.kakao.com/oauth/logout?client_id=7a71de50fa7db8d6bb2395a8a5fba504&logout_redirect_uri=http://localhost:8080/harmony/logout.do">로그아웃</a>
+						</li>
 					<%} %>
 					</ul>
 				</div>

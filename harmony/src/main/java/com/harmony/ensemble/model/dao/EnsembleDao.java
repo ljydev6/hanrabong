@@ -12,10 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
+import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
+import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.Member;
+import com.harmony.ensemble.model.service.EnsembleService;
 
 
 public class EnsembleDao {
@@ -30,6 +35,108 @@ private Properties sql=new Properties();
 			e.printStackTrace();
 		}
 	}
+	
+	public Member searchMemberById(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("searchMemberById"));
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+			m=(Member.builder()
+							.memNo(rs.getString("MEM_NO"))
+							.memInfoEmail(rs.getString("MEM_INFO_EMAIL"))
+							.build());
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m; 
+	}
+	
+	public int insertEnsMember(Connection conn, EnsembleMember eMem) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		EnsembleService es = new EnsembleService();
+		String ensTeamNo = es.selectSeq();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
+			pstmt.executeQuery();
+			pstmt.setString(1, ensTeamNo);
+			pstmt.setString(2, eMem.getEnsInstCode());
+			pstmt.setString(3, eMem.getEnsMemNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	public int compareMemNo(Connection conn, String loginMemNo) {
+		PreparedStatement pstmt =null;
+//		ResultSet rs = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("compareMemNo"));
+			pstmt.executeQuery();
+			pstmt.setString(1, loginMemNo);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}
+		return result;
+	}
+	
+	public int insertEnsLeader(Connection conn, EnsembleMember eMem) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		EnsembleService es = new EnsembleService();
+		String ensTeamNo = es.selectSeq();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
+			pstmt.executeQuery();
+			pstmt.setString(1, ensTeamNo);
+			pstmt.setString(2, eMem.getEnsInstCode());
+			pstmt.setString(3, eMem.getEnsMemNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	
+	public List<Inst> searchAllInst(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Inst> result=new ArrayList<>();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchAllInst"));
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result.add(getInst(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
+	
 	
 	public List<Genre> searchAllGenre(Connection conn){
 		PreparedStatement pstmt=null;
@@ -48,6 +155,28 @@ private Properties sql=new Properties();
 			close(pstmt);
 		}return result;
 	}
+	
+	
+	public int insertTime(Connection conn, EnsembleTeamTime time) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertTime"));
+			pstmt.setString(1, time.getEnsTeamNo());
+			pstmt.setString(2, time.getEnsDayOfWeek());
+			pstmt.setTimestamp(3, time.getEnsStarTime());
+			pstmt.setTimestamp(4, time.getEnsEndTime());
+			
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	
 	
 	public int insertTeam(Connection conn, EnsembleTeam ensTeam) {
 		PreparedStatement pstmt=null;
@@ -131,4 +260,10 @@ private Properties sql=new Properties();
 				.build();
 	}
 
+	private Inst getInst(ResultSet rs) throws SQLException{
+		return Inst.builder()
+				.instCode(rs.getString("inst_Code"))
+				.instName(rs.getString("inst_Name"))
+				.build();
+	}
 }
