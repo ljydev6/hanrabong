@@ -24,7 +24,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 /**
  * Servlet implementation class AddIntroduceServlet
  */
-@WebServlet("/member/addIntroduce.do")
+@WebServlet("/member/addIntroduceServlet.do")
 public class AddIntroduceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,7 +44,7 @@ public class AddIntroduceServlet extends HttpServlet {
 		if(!ServletFileUpload.isMultipartContent(request)){
 			throw new BadAccessException("잘못된접근입니다. 관리자에게 문의하세요");
 		}else {
-			String path= getServletContext().getRealPath("/upload/video/");
+			String path= getServletContext().getRealPath("/upload//");
 			int maxSize=1024*1024*300;//300mb
 			String encoding ="UTF-8";
 			DefaultFileRenamePolicy dfr = new DefaultFileRenamePolicy();
@@ -64,6 +64,7 @@ public class AddIntroduceServlet extends HttpServlet {
 		String introduce = mr.getParameter("introduce");
 		String videolink =mr.getParameter("videolink");
 		String musiclink = mr.getParameter("musiclink");
+		String memCareer = mr.getParameter("memcareer");
 			List<MemberVideo> memberVideo =new ArrayList<>();
 			List<MemberMusic> memberMusic =new ArrayList<>();
 			
@@ -74,6 +75,7 @@ public class AddIntroduceServlet extends HttpServlet {
 			String rename=mr.getFilesystemName(filename);
 			String oriname=mr.getOriginalFileName(filename);
 			String filetype=filename.substring(0,5);
+		
 			if(filetype.equals("video")){
 			memberVideo.add(MemberVideo.builder().videoType("FILE").videoLink(rename).build());
 			}else if(filetype.equals("music")) {
@@ -94,11 +96,13 @@ public class AddIntroduceServlet extends HttpServlet {
 							.gender(gender)
 							.age(age)
 							.email(email)
+							.memCareer(memCareer)
 							.memberVideo(memberVideo)
 							.memberMusic(memberMusic)
-//							.memberCareer(memberCareer)
 							.build();
-		
+		 int result = new MemberService().addintroduce(mi);
+		 System.out.println(mi);
+		 System.out.println(result);
 		}
 		
 	}

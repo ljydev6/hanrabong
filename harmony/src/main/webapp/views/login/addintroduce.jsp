@@ -4,7 +4,7 @@
 <%@ include file="/views/common/header.jsp" %> 
 
 <%Member m = (Member)request.getSession().getAttribute("loginMember"); %>
-<%MemberInfo mi =(MemberInfo)request.getSession().getAttribute("loginMember"); %>
+
 
 <head>
 <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -41,9 +41,9 @@
 				<h3>추가정보 입력</h3>
 			</div>
 			<div>
-				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduce.do" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="memNo" value="<%=m.getMemNo()%>">
-					<input type="hidden" name="email" value="<%=mi.getEmail()%>">
+				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduceServlet.do" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="memNo" value="<%=m.getMemNo()%>">
+	
 					<p>
 						<label>프로필사진</label> 
 						
@@ -135,6 +135,10 @@
 							<option value="mixing">믹싱(DAW)</option>
 							<option value="others">기타(오카리나,하모니카 등)</option>
 						</select>
+					</p>
+					<p>
+						<label>경력</label>				
+						<input class="w3-input" type="text"  name="memcareer" >						
 					</p>
 					<p>
 						<label>한줄소개</label> 

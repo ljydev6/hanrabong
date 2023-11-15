@@ -10,9 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
 import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
+import com.harmony.model.dto.MemberMusic;
+import com.harmony.model.dto.MemberVideo;
 
 public class MemberDao {
 	private Properties sql = new Properties();
@@ -91,7 +92,65 @@ public class MemberDao {
 		}return result;
 	}
 	
-	
+	public int addintroduce(Connection conn,MemberInfo mi) {
+		PreparedStatement pstmt= null;
+		int result =0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("addintroduce"));
+			pstmt.setString(1, mi.getMemNo());
+			pstmt.setString(2,mi.getActivityArea());
+			pstmt.setString(3,mi.getIntroduce());
+			pstmt.setString(4, mi.getProfilPhoto());
+			pstmt.setString(5, mi.getSchool());
+			pstmt.setString(6, mi.getDepartment());
+			pstmt.setString(7, mi.getSchoolState());
+			pstmt.setString(8, mi.getName());
+			pstmt.setString(9, mi.getGender());
+			pstmt.setInt(10, mi.getAge());
+			pstmt.setString(11,mi.getEmail());
+			pstmt.setString(12,mi.getMemCareer());
+			pstmt.setString(13, mi.getMemNo());
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			
+			close(pstmt);
+			
+		}return result;
+				
+	}
+	public int insertMusic(Connection conn,MemberMusic mm) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertMusic"));
+			pstmt.setString(1,mm.getMemNo());
+			pstmt.setString(2, mm.getMusicType());
+			pstmt.setString(3,mm.getMusicLink());
+			pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	public int insertVideo(Connection conn,MemberVideo mv) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertVideo"));
+			pstmt.setString(1,mv.getMemNo());
+			pstmt.setString(2, mv.getVideoType());
+			pstmt.setString(3,mv.getVideoLink());
+			pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 	public static Member getMember(ResultSet rs) throws SQLException{
 		return Member.builder()
 						.memNo(rs.getString("MEM_NO"))
