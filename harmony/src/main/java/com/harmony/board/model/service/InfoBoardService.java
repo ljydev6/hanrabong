@@ -1,16 +1,16 @@
 package com.harmony.board.model.service;
 
 import static com.harmony.common.JDBCTemplate.close;
-import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.commit;
+import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.rollback;
-
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.board.info.model.dto.InfoBoard;
 import com.harmony.board.model.dao.InfoBoardDao;
+
 
 
 
@@ -56,6 +56,15 @@ public class InfoBoardService {
 		close(conn);
 		return result;
 	}
+	
+	public InfoBoard selectBoardByNo(int no) {
+	    Connection conn = getConnection();
+	    InfoBoard b = dao.selectBoardByNo(conn, no);
+	    close(conn);
+	    return b;
+	}
+
+
 }
 
 

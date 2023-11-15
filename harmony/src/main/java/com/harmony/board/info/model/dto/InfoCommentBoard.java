@@ -9,9 +9,11 @@ import lombok.Data;
 @Builder
 public class InfoCommentBoard {
 	private int infComNo;
-	private int infComTitNo;
-	private int infComWriter;
+	private int infBrdNo;
+	private String infComWriter;
 	private String infComContent;
 	private Timestamp infComDate;
+	private int infComNoRef;
+	private int infComLevel;
 
 }

@@ -74,6 +74,9 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 				%>
 				<div class="post">
 					<h4><%=post.getInfBrdTitle()%></h4>
+					<a href="<%=request.getContextPath()%>/board/boardView.do?no=<%=post.getInfBrdNo()%>">
+					<%=post.getInfBrdTitle() %> 
+				</a>
 					<p><%=post.getInfBrdContent()%></p>
 				</div>
 				<%

@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.harmony.board.info.model.dto.InfoBoard;
 
 
+
 public class InfoBoardDao {
 	private Properties sql = new Properties();
 	{
@@ -163,5 +164,41 @@ public class InfoBoardDao {
 		
 		//rs에 db에서 가져온 dto를 넣음
 	}
+	
+	public int updateBoardReadCount(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateBoardReadcount"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public InfoBoard selectBoardByNo(Connection conn, int no) {
+		//번호가 no인 게시글을 데이터베이스에서 찾아서 InfoBoard 객체를 생성하고 반환하는 코드를 작성
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		InfoBoard b=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoardByNo"));
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			if(rs.next()) b=getBoard(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return b;
+	  
+	}
+	
+	
 	
 }
