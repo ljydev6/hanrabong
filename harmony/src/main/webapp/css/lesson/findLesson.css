@@ -26,6 +26,10 @@ a{
 .slideToggle{
 	color: var(--orange-color);
 }
+.contentContainer{
+	display: flex;
+	justify-content: space-between;
+}
 .filterBtns>button{
 	background-color: white;
 	margin: 10px;
@@ -47,17 +51,28 @@ a{
 	cursor: pointer;
 }
 
-.classListBox{
+.lessonListBox{
 	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.classListBox>div:hover{
+.lessonListBox>div:hover{
 	scale: 1.02;
 	cursor: pointer;
 }
-.classList{
+.lessonList{
 	width: 200px;
-	height: 150px;
+	height: 200px;
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+.lessonList>:first-child{
+	height: 75%;
+}
+.lessonList>:last-child{
+	height: 75%;
+	padding: 20px;
 }
 
 .dropdown>button{

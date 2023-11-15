@@ -14,6 +14,7 @@ import java.util.Scanner;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.harmony.common.exception.HarmonyException;
 
 public class KakaoService {
 	private static KakaoService kservice = new KakaoService();
@@ -51,7 +52,18 @@ public class KakaoService {
 
 	        int responseCode = conn.getResponseCode();
 	        System.out.println("responseCode : " + responseCode);
-
+	        
+	        InputStream stream = conn.getErrorStream();
+		    if (stream != null) {
+		    	String response = "";
+			    try (Scanner scanner = new Scanner(stream)) {
+			        scanner.useDelimiter("\\Z");
+			        response = scanner.next();
+			    }
+			    System.out.println("response : "+response);
+			    throw new HarmonyException("이 메세지가 보이면 재연에게 알려주세요\r\n"+response);
+		    }
+	        
 	        // 요청을 통해 얻은 데이터를 InputStreamReader을 통해 읽어 오기
 	        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        String line = "";
@@ -99,8 +111,9 @@ public class KakaoService {
 			    try (Scanner scanner = new Scanner(stream)) {
 			        scanner.useDelimiter("\\Z");
 			        response = scanner.next();
-			    }			
-			    System.out.println("error response : " + response);
+			    }
+			    System.out.println("response : "+response);
+			    throw new HarmonyException("이 메세지가 보이면 재연에게 알려주세요\r\n"+response);
 		    }
 	        
 	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));

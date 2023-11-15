@@ -1,12 +1,19 @@
+<%@page import="com.harmony.lesson.dto.Lesson"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<%
+	List<Lesson> lessons = (List<Lesson>)request.getAttribute("lessons");
+%>
+<%@ include file="/views/common/header.jsp"%>
+    <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
 	<section class="container w-75">
-        <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column">
+            <div style="height: 50px;"></div>
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
-                <div>레슨 찾기</div>
+                <div>레슨 검색</div>
+            
                 <div class="filterBtns p-2">
                   <button>조회수</button>
                   <button>별점순</button>
@@ -71,42 +78,31 @@
                       <ul>
                         <li><input type="checkbox" name="time" id="morning" ><label for="morning">오전</label></a></li>
                         <li><input type="checkbox" name="time" id="evening" ><label for="evening">오후</label></a></li>
-                        <li><input type="checkbox" name="time" id="night" ><label for="night">야간(6시 이후)</label></a></li>
+                        <li><input type="checkbox" name="time" id="night" ><label for="night">야간</label></a></li>
                       </ul>
                       
                     </div>
                 </article>
                 
-                <article class="rightClassLists">
-                    <div class="classListBox d-flex flex-wrap justify-content-center gap-3">
-                      <div class="classList">
-                        <div></div>
-                        <div></div>
+                <article class="rightLessonLists w-100 p-5">
+                    <div class="lessonListBox justify-content-center gap-3">
+                   	<%for(Lesson l : lessons){
+                   	if(!lessons.isEmpty()) {%>
+                      <div class="lessonList" onclick="location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=<%=l.getBoardNo() %>'">
+                      <%if(l.getBoardImg()!=null) {%>
+                        <div><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="150px" height="150px"></div>
+                        <%} else { %>
+                        <div><img src="<%=request.getContextPath()%>/image/lesson/default.jpg" width="150px" height="150px"></div>
+                        <%} %>
+                        <div><%=l.getBoardTitle() %></div>
                       </div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
-                      
-                      <div class="classList">
-                          <div></div>
-                          <div></div>
-                      </div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
-                      
-                      <div class="classList">
-                          <div></div>
-                          <div></div>
-                      </div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
-                      <div class="classList"></div>
+                      		<%} %>
+                     	<%} %>
+                     
                     </div>
                 </article>
             </div>
         </div>
-        
     </section>
     <script>
       $(document).ready(function(){
@@ -119,8 +115,8 @@
         $(".slide").slideToggle(500);
       });
       
-      const menu=document.querySelector(".menu");
-      const subBar=document.querySelector(".menu>.sub");
+      /* const menu=document.querySelector(".menu");
+      const subBar=document.querySelector(".menu>.sub"); */
 
       let subToggle=true,i=0;
 
@@ -139,8 +135,6 @@
         }
         console.log(subBar.classList);
       }
-      menu.addEventListener("click",slide_menu);
+      /* menu.addEventListener("click",slide_menu); */
     </script>
-</body>
-</html>
 <%@ include file="/views/common/footer.jsp" %>
