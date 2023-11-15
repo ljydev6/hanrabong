@@ -11,6 +11,7 @@
 
 
 <input type="button" value="합주팀등록" onclick = "location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')" >
+<input type="button" value="팀멤버등록" onclick = "location.assign('<%=request.getContextPath()%>/ensemble/addTeamMem.do')" >
 
 <div class="form_container">
 

@@ -1,10 +1,12 @@
 package com.harmony.ensemble.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +18,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
+import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.service.EnsembleService;
 import com.oreilly.servlet.MultipartRequest;
@@ -56,6 +59,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 //			List<Map<String,String>> files = new ArrayList<>();
 			List<EnsembleTeamMusic> musicList = new ArrayList<>();
 			List<EnsembleTeamVideo> videoList = new ArrayList<>();
+			List<EnsembleTeamTime> timeList = new ArrayList<>();
 			
 			String msg ="";
 			
@@ -69,6 +73,22 @@ public class EnrollTeamEndServlet extends HttpServlet {
 					.ensGenreNo(mr.getParameter("genre"))
 					.ensTeamType(mr.getParameter("type"))
 					.build();
+			
+			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+	         Date date = new Date(System.currentTimeMillis());
+	         
+	         Timestamp startTime = Timestamp.valueOf(formatter.format(date) +" "+ mr.getParameter("startTime"));
+	         Timestamp endTime = Timestamp.valueOf(formatter.format(date) +" "+mr.getParameter("endTime"));
+			
+	         System.out.println(startTime);
+			
+	         timeList.add(
+		         EnsembleTeamTime.builder()
+						.ensTeamNo(ensTeamNo)
+						.ensDayOfWeek(mr.getParameter("dayOfWeek"))
+						.ensStarTime(startTime)
+						.ensEndTime(endTime)
+						.build());
 			
 			while(names.hasMoreElements()) {
 				String name = (String)names.nextElement();
@@ -101,7 +121,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			}
 			
 			
-			int result = es.insertTeam(ensTeam, musicList, videoList);
+			int result = es.insertTeam(ensTeam, musicList, videoList, timeList);
 			
 			if(result>0) System.out.println("성공!");
 			
