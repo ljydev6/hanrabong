@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.harmony.model.dto.MemberInfo" %>
 <%@ include file="/views/common/header.jsp" %> 
+
+<%Member m = (Member)request.getSession().getAttribute("loginMember"); %>
+<%MemberInfo mi =(MemberInfo)request.getSession().getAttribute("loginMember"); %>
+
 <head>
 <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +20,17 @@
     .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
     #centerAddr {display:block;margin-top:2px;font-weight: normal;}
     .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	
+	#profile{
+	border-radius:100px;
+	cursor:pointer;
+		}
+	#profiledata{
+	display:none;
+	}
+
 </style>
+
 <title>마이페이지</title>
 </head>
 <body>
@@ -26,37 +41,63 @@
 				<h3>추가정보 입력</h3>
 			</div>
 			<div>
-				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduce.do" method="post">
+				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduce.do" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="memNo" value="<%=m.getMemNo()%>">
+					<input type="hidden" name="email" value="<%=mi.getEmail()%>">
 					<p>
 						<label>프로필사진</label> 
-						<input class="w3-input" type="file" value="" >
+						
+						<img src="<%=request.getContextPath() %>/image/profile/profile.png"
+					width="150" height="150" id="profile" >
+					<input type="file" id="profiledata" name="profilephoto">
 					</p>
+				
+					<script>
+						$("#profile").click(e=>{
+							$("#profiledata").click();
+						})
+						$("#profiledata").change(e=>{
+							const reader=new FileReader();
+							reader.readAsDataURL(e.target.files[0]);
+							reader.onload=e=>{
+								const path=e.target.result;
+								$("#profile").attr("src",path);
+							}
+						})
+					</script>
 					<p>
 						<label>이름</label> 
-						<input class="w3-input" type="text" id="name" name="name" value=""> 
+						<input class="w3-input" type="text" id="name" name="name"> 
 					</p>
 					<p>
 						<label>나이</label> 
-						<input class="w3-input" type="number" id="age" name="age" value="" > 
+						<input class="w3-input" type="number" id="age" name="age"> 
 					</p>
 					<p>
 						<label>학교</label> 
-						<input class="w3-input" type="text"  value="" > 
+						<input class="w3-input" type="text"  name="school" > 
 					</p>
 					<p>
 						<label>학과</label> 
-						<input class="w3-input" type="text"  value="" > 
+						<input class="w3-input" type="text" name="department"> 
 					</p>	
+				
+						<select class="w3-select" name="schoolstate"> 
+							<option value="졸업">졸업</option>
+							<option value="재학">재학</option>
+							<option value="중퇴">중퇴</option>
+						</select>
+					
 					<p class="border-bottom pb-3">
 						<label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" >
-					&nbsp;	여 &nbsp; <input class="w3-radio" id="gender2" name="gender" type="radio" >
+						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="남">
+					&nbsp;	여 &nbsp; <input class="w3-radio" id="gender2" name="gender" type="radio" value="여">
 						
 					</p>
 				
 					<p>
 						<label>활동지역</label> 
-						<input class="w3-input" type="text" id="sample5_address" name="area" placeholder="주소">
+						<input class="w3-input" type="text" id="sample5_address" name="activityarea" placeholder="주소">
 					<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
 					<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
 							
@@ -64,30 +105,58 @@
 					</p>
 					<p>
 						<label>관심장르</label>
-						<select class="w3-select" name="Genre" >
-							<option>힙합</option>
-							<option>재즈</option>
-							<option>클래식</option>
-							<option>케이팝</option>
-							<option>기타</option>
+						<select class="w3-select" name="genre" >
+							<option value="jazz">재즈</option>
+							<option value="classic">클래식</option>
+							<option value="electronic">일렉트로닉</option>
+							<option value="hiphop">힙합</option>
+							<option value="indie">인디</option>
+							<option value="rock">락</option>
+							<option value="kpop">케이팝</option>
+							<option value="others">기타</option>
 						</select>
 					</p>
 					<p>
-						<label>악기</label>
-						<select class="w3-select" >
-							<option>기타</option>
-							<option>피아노</option>
-							<option>일렉기타</option>
-							<option>장구</option>
+						<label>관심분야</label>
+						<select class="w3-select" name="interest">
+							<option value="drum">드럼</option>
+							<option value="bass">베이스</option>
+							<option value="guitar">기타</option>
+							<option value="piano">피아노</option>
+							<option value="composing">작곡</option>
+							<option value="saxophone">색소폰</option>
+							<option value="trumpet">트럼펫</option>
+							<option value="flute">플룻</option>
+							<option value="violin">바이올린</option>
+							<option value="chello">첼로</option>
+							<option value="doublebass">더블베이스</option>
+							<option value="percussion">퍼커션</option>
+							<option value="vocal">보컬</option>
+							<option value="mixing">믹싱(DAW)</option>
+							<option value="others">기타(오카리나,하모니카 등)</option>
 						</select>
 					</p>
 					<p>
-						<label>연주영상</label> 
-						<input class="w3-input" type="file"  value="" > 
+						<label>한줄소개</label> 
+						<input class="w3-input" type="text"  name="introduce" > 
 					</p>
 					<p>
-						<label>음원</label> 
-						<input class="w3-input" type="file"  value="" > 
+						<label>연주영상 파일</label>  <button type="button" class="vidoeplus">추가</button>	
+						<input class="w3-input" type="file"  name="videofile" > 
+							
+					</p>
+					<p>
+						<label>연주영상 링크</label> 
+						<input class="w3-input" type="text"  name="videolink" > 
+					</p>
+					<p>
+						<label>음원 파일</label> <button type="button" class="musicplus">추가</button>	
+						<input class="w3-input" type="file"  name="musicfile">
+						
+					</p>
+					<p>
+						<label>음원 링크</label> 
+						<input class="w3-input" type="text"  name="musiclink" > 
 					</p>
 					<p class="w3-center">
 						<button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">확인</button>
@@ -96,7 +165,36 @@
 			</div>
 		</div>
 	</div>
-	
+	<script>
+		
+		$(".vidoeplus").click((()=>{
+			let count=0;
+			return e=>{
+			//js createElement()
+			//jquery $("<p>")
+				console.log(e.target);
+				const $input=$("<input>")
+				.attr({"type":"file","name":"videofile"+(++count)})
+				.addClass("w3-input");
+				$(e.target).next().after($input);
+			}
+		})());
+	</script>
+	<script>
+		
+		$(".musicplus").click((()=>{
+			let count=0;
+			return e=>{
+			//js createElement()
+			//jquery $("<p>")
+				console.log(e.target);
+				const $input=$("<input>")
+				.attr({"type":"file","name":"videofile"+(++count)})
+				.addClass("w3-input");
+				$(e.target).next().after($input);
+			}
+		})());
+	</script>
 	
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cc95c9b42927b4f8a48697f198c5594e&libraries=services"></script>

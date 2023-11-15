@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class MemberMusic {
 	private String memNo;
-	private String type;
-	private String link;
+	private String musicType;
+	private String musicLink;
 
 }
