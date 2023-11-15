@@ -1,16 +1,24 @@
+<%@page import="com.harmony.lesson.dto.Lesson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Lesson lesson = (Lesson)request.getAttribute("lesson");
+	Lesson time = (Lesson)request.getAttribute("time");
+%>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/enrollLesson.css">
-   	<section class="container w-50">
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/updateLesson.css">
+</head>
+<body>
+   <section class="container w-50">
 		<div class="container">
-            <form action="<%=request.getContextPath() %>/enroll/enrollEndLesson.do" method="post" enctype="multipart/form-data">
+          <form action="<%=request.getContextPath() %>/update/updateEndLesson.do" method="post" enctype="multipart/form-data">
+            <input type="hidden" value="<%=lesson.getBoardNo() %>" name="boardNo">
             <!-- 카데고리 상태, 등록버튼 -->
 			<div class="upperBar">
-                <div></div>
+				<div></div>
                 <div class="mb-3">
-                    <input type="submit" value="등록하기">
+                    <input type="submit" value="수정하기">
                 </div>
             </div>
 			<article class="lessonInfo gap-2">
@@ -23,9 +31,9 @@
                         <div class="lessonSubmit d-flex flex-column">
                             <div class="labelBox d-flex flex-column p-4 mb-4">
                                 <div class="enrollLessonInfo mb-3">
-                                    <h5>타이틀, 내용등록</h5>
-                                    <input type="text" name="title" placeholder="타이틀" required>
-                                    <input type="text" name="content" placeholder="설명" required>
+                                    <h5>타이틀, 내용 수정</h5>
+                                    <input type="text" name="title" placeholder="타이틀" value="<%=lesson.getBoardTitle()%>">
+                                    <input type="text" name="content" placeholder="내용" value="<%=lesson.getBoardContent()%>">
                                 </div>
                             </div>
                         </div>
@@ -38,8 +46,8 @@
                             <!-- 시간대, 가격 등등... -->
                             <div>레슨정보</div>
                             <div>강사정보</div>
-                            <!-- teacherNum일단 T_0002로 해놓음 -->
-                            <input type="hidden" value="T_0002" name="teacherNum">
+                            <!-- teacherNum -->
+                            <input type="hidden" value="<%=lesson.getTeacherNo() %>" name="teacherNum">
                         </div>
                         <div class="detailInfo d-flex mt-3">
                             <div class="detailsContainer">
@@ -50,7 +58,7 @@
                                     <div class="detailsContainer_content-inputpost">
                                         <input type="text" id="sample6_postcode" placeholder="우편번호"><br>
                                         <input type="button" class="btn btn-outline-warning" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                                        <input type="text" id="sample6_address" name="address" placeholder="주소" required><br>
+                                        <input type="text" id="sample6_address" name="address" placeholder="주소" value="<%=lesson.getBoardPlace()%>"><br>
                                         <input type="text" id="sample6_detailAddress" placeholder="상세주소"><br>
                                         <input type="text" id="sample6_extraAddress" placeholder="주소이름">
                                     </div>
@@ -62,10 +70,10 @@
                                 </div>
                                 <div class="detailsContainer_content">
                                     <div class="d-flex flex-column"> 
-                                        <div class="mb-3">레슨 악기</div>
+                                        <div class="mb-3">레슨 악기 </div>
                                         <div class="detailsContainer_content-selectInst">
                                             <div class="mb-3">
-                                                <input class="btn-check" type="radio" name="inst" value="INST_1" id="drum" required><label class="btn btn-outline-warning" for="drum">드럼</label>
+                                                <input class="btn-check" type="radio" name="inst" value="INST_1" id="drum" ><label class="btn btn-outline-warning" for="drum">드럼</label>
                                                 <input class="btn-check" type="radio" name="inst" value="INST_2" id="bass"><label class="btn btn-outline-warning" for="bass">베이스</label>
                                                 <input class="btn-check" type="radio" name="inst" value="INST_3" id="doublebass"><label class="btn btn-outline-warning" for="doublebass">더블베이스</label>
                                                 <input class="btn-check" type="radio" name="inst" value="INST_4" id="gittar"><label class="btn btn-outline-warning" for="gittar">기타</label>
@@ -99,7 +107,7 @@
                                     <div>
                                         <div>희망 시작 시간</div>
                                         <!-- <input class="form-select" type="time" name="startTime"> -->
-                                        	<select class="form-select" name="startTime" id="startTime">
+                                        <select class="form-select" name="startTime" id="startTime">
                                                 <option value="09:00:00.0">09:00</option>
                                                 <option value="10:00:00.0">10:00</option>
                                                 <option value="11:00:00.0">11:00</option>
@@ -162,8 +170,7 @@
                     </div>
                 </div>
             </article>
-            <h1>footer</h1>
-            </form>
+          </form>
 		</div>
 	</section>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>

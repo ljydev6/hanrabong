@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.lesson.dto.Lesson;
+import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.service.LessonService;
 
 /**
- * Servlet implementation class LessonInfo
+ * Servlet implementation class ApplyLesson
  */
-@WebServlet("/lesson/lessonInfo.do")
-public class LessonInfoServlet extends HttpServlet {
+@WebServlet("/apply/applyLesson.do")
+public class ApplyLesson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LessonInfoServlet() {
+    public ApplyLesson() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,17 +30,35 @@ public class LessonInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int no = Integer.parseInt(request.getParameter("no"));
-		// 레슨정보테이블에서 레슨정보가져오기
-		Lesson lesson = new LessonService().selectLessonByNo(no);
-		Lesson time = new LessonService().selectTimeByNo(no);
-		System.out.println(lesson);
-		System.out.println(time);
+		int boardNo = Integer.parseInt(request.getParameter("no"));
+		String memNo = request.getParameter("memNo");
+		String place = request.getParameter("place");
+		int count = Integer.parseInt(request.getParameter("count"));
 		
-		request.setAttribute("time", time);
-		request.setAttribute("lesson", lesson);
-		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
+		LessonApply applyMem = LessonApply
+				.builder()
+				.boardNo(boardNo)
+				.memNo(memNo)
+				.applyPlace(place)
+				.applyNumberOfTimes(count)
+				.build();
+		
+		int result = new LessonService().applyLesson(applyMem);
+		
+		String msg,loc;
+		if(result>0) {
+			msg = "레슨 상담 신청에 성공하셨습니다. :)";
+			loc = "/lesson/findLesson.do";
+		} else {
+			msg = "신청 실패 :(";
+			loc = "/lesson/findLesson.do";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/lesson/common/msg.jsp")
 			.forward(request, response);
+	
 	}
 
 	/**

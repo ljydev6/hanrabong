@@ -66,6 +66,13 @@ a{
 	width: 200px;
 	height: 200px;
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+	position: relative;
+}
+
+.lessonList>i{
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 .lessonList>:first-child{
 	height: 75%;

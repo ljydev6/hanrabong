@@ -12,16 +12,16 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.service.LessonService;
 
 /**
- * Servlet implementation class LessonInfo
+ * Servlet implementation class UpdateLesson
  */
-@WebServlet("/lesson/lessonInfo.do")
-public class LessonInfoServlet extends HttpServlet {
+@WebServlet("/lesson/updateLesson.do")
+public class UpdateLessonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LessonInfoServlet() {
+    public UpdateLessonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +34,14 @@ public class LessonInfoServlet extends HttpServlet {
 		// 레슨정보테이블에서 레슨정보가져오기
 		Lesson lesson = new LessonService().selectLessonByNo(no);
 		Lesson time = new LessonService().selectTimeByNo(no);
+		
 		System.out.println(lesson);
-		System.out.println(time);
 		
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
-		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
-			.forward(request, response);
+		request.getRequestDispatcher("/views/lesson/updateLesson.jsp")
+				.forward(request, response);
+	
 	}
 
 	/**

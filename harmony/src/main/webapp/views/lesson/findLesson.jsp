@@ -30,19 +30,21 @@
                     <div>
                       <div class="slideToggle"><i class="fa-solid fa-drum"></i> 악기별</div>
                       <ul>
-                        <li><input type="checkbox" name="instrument" id="vocal" ><label for="vocal">보컬</label></li>
-                        <li><input type="checkbox" name="instrument" id="keyboard"><label for="keyboard">건반</label></li>
                         <li><input type="checkbox" name="instrument" id="drum"><label for="drum">드럼</label></li>
-                        <li><input type="checkbox" name="instrument" id="gittar"><label for="gittar">기타</label></li>
                         <li><input type="checkbox" name="instrument" id="bass"><label for="bass">베이스</label></li>
-                        <li><input type="checkbox" name="instrument" id="violin"><label for="violin">바이올린</label></li>
-                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">퍼커션</label></li>
-                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">색소폰</label></li>
-                        <li><input type="checkbox" name="instrument" id="flute"><label for="flute">플룻</label></li>
-                        <li><input type="checkbox" name="instrument" id="electronica"><label for="electronica">전자음악</label></li>
                         <li><input type="checkbox" name="instrument" id="doublebass"><label for="doublebass">더블베이스</label></li>
-                        <li><input type="checkbox" name="instrument" id="cello"><label for="cello">첼로</label></li>
+                        <li><input type="checkbox" name="instrument" id="gittar"><label for="gittar">기타</label></li>
+                        <li><input type="checkbox" name="instrument" id="piano"><label for="piano">피아노</label></li>
+                        <li><input type="checkbox" name="instrument" id="composition" ><label for="composition">작곡</label></li>
+                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">색소폰</label></li>
                         <li><input type="checkbox" name="instrument" id="trumpet"><label for="trumpet">트럼펫</label></li>
+                        <li><input type="checkbox" name="instrument" id="flute"><label for="flute">플룻</label></li>
+                        <li><input type="checkbox" name="instrument" id="violin"><label for="violin">바이올린</label></li>
+                        <li><input type="checkbox" name="instrument" id="cello"><label for="cello">첼로</label></li>
+                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">퍼커션</label></li>
+                        <li><input type="checkbox" name="instrument" id="vocal" ><label for="vocal">보컬</label></li>
+                        <li><input type="checkbox" name="instrument" id="daw"><label for="daw">믹싱(DAW)</label></li>
+                        <li><input type="checkbox" name="instrument" id="etc"><label for="etc">ETC</label></li>
                       </ul>
                       
                     </div>
@@ -69,7 +71,7 @@
                         <li><input type="checkbox" name="price" id="less20" ><label for="less20">20만원이하</label></li>
                         <li><input type="checkbox" name="price" id="less30" ><label for="less30">30만원이하</label></li>
                         <li><input type="checkbox" name="price" id="less50" ><label for="less50">50만원이하</label></li>
-                        <li><input type="checkbox" name="price" id="less100" ><label for="less100">100만원이하</label></li>
+                        <li><input type="checkbox" name="price" id="discuss" ><label for="discuss">협의가능</label></li>
                       </ul>
                       
                     </div>
@@ -92,9 +94,10 @@
                       <%if(l.getBoardImg()!=null) {%>
                         <div><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="150px" height="150px"></div>
                         <%} else { %>
-                        <div><img src="<%=request.getContextPath()%>/image/lesson/default.jpg" width="150px" height="150px"></div>
+                        <div><img src="<%=request.getContextPath()%>/images/default.jpg" width="150px" height="150px"></div>
                         <%} %>
-                        <div><%=l.getBoardTitle() %></div>
+                        <div><%=l.getBoardTitle() %>&nbsp;</div>
+                        <i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
                       </div>
                       		<%} %>
                      	<%} %>

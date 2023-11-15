@@ -2,14 +2,29 @@
 *{
 	box-sizing: border-box;
 }
+a{
+	text-decoration: none;
+	color: coral;
+}
 .upperBar {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
-a{
-	text-decoration: none;
-	color: coral;
+.category{
+	display: flex;
+}
+.category>input{
+	padding: 0;
+	margin: 0;
+}
+.category>input:first-child{
+	text-align: left;
+	width: 70px;
+}
+.category>input:last-child{
+	text-align: left;
+	width: 100px;
 }
 div{
 	border-radius: 5px;

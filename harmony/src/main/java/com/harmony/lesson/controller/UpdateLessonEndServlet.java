@@ -22,14 +22,14 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 /**
  * Servlet implementation class EnrollLessonServlet
  */
-@WebServlet("/enroll/enrollEndLesson.do")
-public class EnrollLessonEndServlet extends HttpServlet {
+@WebServlet("/update/updateEndLesson.do")
+public class UpdateLessonEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EnrollLessonEndServlet() {
+    public UpdateLessonEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,6 +53,7 @@ public class EnrollLessonEndServlet extends HttpServlet {
 			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date(System.currentTimeMillis());
 			
+			int boardNo = Integer.parseInt(mr.getParameter("boardNo"));
 			String teacherNum = mr.getParameter("teacherNum");
 			String instNo = mr.getParameter("inst");
 			String title = mr.getParameter("title");
@@ -69,9 +70,9 @@ public class EnrollLessonEndServlet extends HttpServlet {
 			// MultipartRequest클래스가 제공하는 메소드를 이용해서 파일 이름 가져오기
 			String ori = mr.getOriginalFileName("upfile");
 			String rename = mr.getFilesystemName("upfile");
-			System.out.println(ori + " : " + rename);
 			
 			Lesson l = Lesson.builder()
+					.boardNo(boardNo)
 					.teacherNo(teacherNum)
 					.instNo(instNo)
 					.boardTitle(title)
@@ -83,15 +84,15 @@ public class EnrollLessonEndServlet extends HttpServlet {
 					.lessonEndTime(endTime)
 					.day(day)
 					.build();
-			System.out.println(l);
 			
-			int result = new LessonService().insertLesson(l);
+			int result = new LessonService().updateLesson(l);
+			
 			String msg,loc;
 			if(result>0) {
-				msg = "등록성공 :)";
+				msg = "수정성공 :)";
 				loc = "/lesson/findLesson.do";
 			} else {
-				msg = "등록실패 :(";
+				msg = "수정실패 :(";
 				loc = "/lesson/findLesson.do";
 			}
 			request.setAttribute("msg", msg);
@@ -100,6 +101,9 @@ public class EnrollLessonEndServlet extends HttpServlet {
 			request.getRequestDispatcher("/views/lesson/common/msg.jsp")
 				.forward(request, response);
 		}
+		
+		
+		
 		
 	}
 

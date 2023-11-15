@@ -8,20 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.service.LessonService;
 
+
 /**
- * Servlet implementation class LessonInfo
+ * Servlet implementation class DeleteLessonServlet
  */
-@WebServlet("/lesson/lessonInfo.do")
-public class LessonInfoServlet extends HttpServlet {
+@WebServlet("/lesson/deleteLesson.do")
+public class DeleteLessonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LessonInfoServlet() {
+    public DeleteLessonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +31,21 @@ public class LessonInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = Integer.parseInt(request.getParameter("no"));
-		// 레슨정보테이블에서 레슨정보가져오기
-		Lesson lesson = new LessonService().selectLessonByNo(no);
-		Lesson time = new LessonService().selectTimeByNo(no);
-		System.out.println(lesson);
-		System.out.println(time);
 		
-		request.setAttribute("time", time);
-		request.setAttribute("lesson", lesson);
-		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
+		int result = new LessonService().deleteLesson(no);
+		
+		String msg,loc;
+		if(result>0) {
+			msg = "삭제성공 :)";
+			loc = "/lesson/findLesson.do";
+		} else {
+			msg = "삭제실패 :(";
+			loc = "/lesson/findLesson.do";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/lesson/common/msg.jsp")
 			.forward(request, response);
 	}
 
