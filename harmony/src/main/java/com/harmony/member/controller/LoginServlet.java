@@ -1,4 +1,4 @@
-package com.harmony.member.ljykakao;
+package com.harmony.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
