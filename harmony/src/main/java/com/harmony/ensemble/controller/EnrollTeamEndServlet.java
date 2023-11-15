@@ -44,7 +44,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		EnsembleService es = new EnsembleService(); 
+		 
 		
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("노!");
@@ -63,6 +63,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			
 			String msg ="";
 			
+			EnsembleService es = new EnsembleService();
 			String ensTeamNo = es.selectSeq();
 			System.out.println(ensTeamNo);
 			

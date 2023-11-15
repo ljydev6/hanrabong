@@ -8,12 +8,15 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.ensemble.model.dao.EnsembleDao;
+import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.Member;
+import com.harmony.model.dto.MemberInfo;
 
 
 public class EnsembleService {
@@ -34,16 +37,33 @@ public class EnsembleService {
 		return result;
 	}
 	
+	public int insertEnsMember(EnsembleMember eMem, String loginMemNo) {
+		Connection conn=getConnection();
+
+		int result =  dao.compareMemNo(conn, loginMemNo);
+		
+		if(result==0) {
+			int result2 = dao.insertEnsLeader(conn, eMem);
+			return result2;
+		}else {
+			int result3 = dao.insertEnsMember(conn, eMem);
+			return result3;
+		}
+		
+	}
+	
+	public Member searchMemberById() {
+		Connection conn=getConnection();
+		Member m = dao.searchMemberById(conn);
+		return m;
+	}
+	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
 							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList) {
 		Connection conn=getConnection();
 		
-		
-		
 		int result = dao.insertTeam(conn, ensTeam);
-		
-		
 		
 		if(result>0) {
 			

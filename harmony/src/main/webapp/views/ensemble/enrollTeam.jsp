@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
   <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <%@ include file="/views/common/header.jsp" %>  
-<%@ page import= "java.util.List, com.harmony.ensemble.model.dto.Genre" %>
+<%@ page import= "java.util.List, 
+					com.harmony.ensemble.model.dto.Genre" %>
 <%
 	List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 %>
@@ -57,7 +58,9 @@
 		<input type="file" id="music" multiple accept="audio/*">
 	</div>
 	<div class="add_mem">
-		<input type="button" value="멤버추가">
+		<p>멤버추가</p>
+		<input type="button" value="기존회원" onclick="addTeamMem();">
+		<input type="button" value="비회원" onclick="addNonMem();">
 	</div>
 		<div class="submit_container">
 			<input type="button" value="등록" id="submit" >
@@ -67,8 +70,6 @@
 </div>
 
 
-<input type="text" id="test">
-<input type="button" id="testbtn" value="test"> 
 
 <input type="hidden" id="dayOfWeek" name="dayOfWeek">
 <input type="hidden" id="startTime" name="startTime">
@@ -79,20 +80,16 @@
 
 <script>
 
+const addTeamMem =()=>{
+	open("<%=request.getContextPath()%>/ensemble/addTeamMem.do")
+	
+}
 
 const addSchedule =()=>{
 	open("<%=request.getContextPath()%>/ensemble/addSchedule.do"
 			,"_blank","width=500, height=400");
 	
 }
-$('#testbtn').click(e=>{
-	console.log($('#dayOfWeek').val());
-	console.log($('#startTime').val());
-	console.log($('#endTime').val());
-	
-
-});
-
 
 
 $(document).ready(function(){

@@ -204,6 +204,7 @@
 </aside>
 
 <section>
+	<input type="button" value="합주팀등록" onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
 	<article>
       <div class="board">
       
