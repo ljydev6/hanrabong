@@ -77,4 +77,10 @@
           </div>
           </div>
 		</main>
+		<script>
+			const viewno = '<%=notice.getNoticeNo()%>';
+        	const editPath = '<%=request.getContextPath()%>/admin/notice/write.do';
+        	const deletePath = '<%=request.getContextPath()%>/admin/notice/delete.do';
+        </script>
+        <script src="<%=request.getContextPath()%>/views/admin/assets/js/boardView.js"></script>
 <%@ include file="/views/admin/views/common/footer.jsp" %>

@@ -45,7 +45,7 @@
               </h1>
               <form action="" method="post">
               <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">아이디</span>
+                <span class="text-gray-700 dark:text-gray-400">아이디 : admin</span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="아이디를 입력해주세요"
@@ -53,7 +53,7 @@
                 />
               </label>
               <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Password</span>
+                <span class="text-gray-700 dark:text-gray-400">Password : admin1234</span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="비밀번호를 입력해주세요"

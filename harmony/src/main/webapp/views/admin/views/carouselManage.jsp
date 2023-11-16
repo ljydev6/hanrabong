@@ -15,7 +15,7 @@
 	           	<% if(carousels !=null && carousels.size()>0){ %>
 	           	<%for(Carousel c : carousels){ %>
 	          	<div class="card col" id="card_<%=c.getCrslNo()%>">
-	          		<form method="post" enctype="multipart/form-data" class="align-items-center" onsubmit="doajax(event,'edit');">
+	          		<form method="post" enctype="multipart/form-data" class="align-items-center needs-validation" novalidate onchange="frmchange(event);" onsubmit="validate(event,'edit');">
 	          			<div class="card-header input-group input-group-sm">
           					<span class="input-group-text">관리번호</span>
           					<input class="form-control form-control-plaintext" type="number" name="crslNo" value="<%=c.getCrslNo()%>" style="width:50px" readOnly>

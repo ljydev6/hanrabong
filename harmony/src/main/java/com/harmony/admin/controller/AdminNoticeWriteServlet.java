@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.admin.model.dto.Notice;
 import com.harmony.admin.service.AdminService;
+import com.harmony.common.exception.HarmonyException;
 
 /**
  * Servlet implementation class AdminNoticeWriteServlet
@@ -31,17 +32,17 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = -1;
 		try {
-			Integer.parseInt(request.getParameter("no"));
+			no = Integer.parseInt(request.getParameter("no"));
 		}catch(NumberFormatException e) {
 			no = -1;
 		}
-		
+		System.out.println(no);
 		if(no>0) {
-			Notice notice = AdminService.getService().selectNoticeByNo(no);
+			Notice notice = AdminService.getService().selectNoticeByNo(no,false);
 			if(notice!=null) {
 				request.setAttribute("notice", notice);
 			}else {
-				throw new RuntimeException();
+				throw new HarmonyException("유효하지 않은 공지글 번호입니다.");
 			}
 		}
 		request.getRequestDispatcher("/views/admin/views/noticewrite.jsp").forward(request, response);
@@ -52,7 +53,7 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 	 */
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		response.sendRedirect(getServletInfo());
 	}
 
 }

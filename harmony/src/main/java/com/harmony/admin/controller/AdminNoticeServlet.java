@@ -34,7 +34,7 @@ public class AdminNoticeServlet extends HttpServlet {
 		if(no<0) {
 			throw new HarmonyException("해당 공지사항을 찾을 수 없습니다.");
 		}
-		Notice notice = AdminService.getService().selectNoticeByNo(no);
+		Notice notice = AdminService.getService().selectNoticeByNo(no,true);
 		
 		request.setAttribute("notice", notice);
 		
