@@ -13,4 +13,5 @@ public class NoticeList {
 	private String title;
 	private Date writeDate;
 	private int viewCount;
+	private boolean hasFile;
 }

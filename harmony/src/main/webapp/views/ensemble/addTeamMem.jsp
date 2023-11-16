@@ -2,17 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ page import= "java.util.List,
 				com.harmony.ensemble.model.dto.Inst,
-				com.harmony.ensemble.model.dto.Member,
+				com.harmony.model.dto.Member,
 				com.harmony.model.dto.MemberInfo" %>
 <%@ include file="/views/common/header.jsp" %>  
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
+  <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <meta charset="UTF-8">
 <%
-	List<Inst> inst = (List<Inst>)request.getAttribute("inst");
-	Member member = (Member)request.getAttribute("member");
+List<Inst> inst = (List<Inst>)request.getAttribute("inst");
+Member member = (Member)request.getAttribute("member");
+String memberChk = (String)request.getAttribute("memberChk");
 
 %>
 <title>Insert title here</title>
@@ -28,41 +29,57 @@
 탈퇴일 : DATE -> 팀원제외/탈퇴 페이지
 비회원성별 -> 합주모집글에서
 비회원나이 -> 합주모집글에서 -->
-<form action="<%=request.getContextPath()%>/ensemble/addTeamMemEnd.do?position=L">
+
 <div class="add_mem_container">
 	
 	
-	<div>
-		<p>회원 아이디 검색</p>
-		<input type="search" name="searchId" id="searchId">
-		<input type="button" value="검색" onclick="searchId();">
-	</div>
+
 	<div>
 		<label for="inst">파트</label>
 		<select name="inst" id="inst">
 			<%if(!inst.isEmpty()) {
 				for(Inst i : inst){ %>
-					<option value="<%=i.getInstCode() %>"><%=i.getInstName() %></option>
+					<option value="<%=i.getInstName() %>">
+						<%=i.getInstName() %>
+					</option>
 			
-			<%	} 
+				<%}
 			}%>
 		</select>
 	</div>
 	<div>
-		<p>가입일</p>
-		<input type="date" id="enrollDate" name="enrollDate">
+		<p>구분</p>
+		<label><input type="radio" name="position" class="position" value="리더">리더</label>		
+		<label><input type="radio" name="position" class="position" value="멤버">멤버</label> 
 	</div>
 	
 	<div class="submit-container">
-		<input type="submit">
+		<input type="button" id="addMember" value="등록">
 	</div>
 	
-</form>
+
 <script>
-	const searchId =()=>{
-		if($(searchId).val()==<%=%>)
+
+$('#addMember').click((e)=>{
+	
+	if($('#inst option:selected').val() != null &&
+		$('.position:checked').val() !=null){ 
+			$("#inst",opener.document).val($('#inst option:selected').val());
+			$(".position",opener.document).val($('.position:checked').val());
+			
+			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
+			$("#add_result",opener.document).append($('.position:checked').val()+ "), ");
+			
+			close();
+	}else{
+		
+		alert("정보를 입력해주세요.");
 	}
-</script>
+
+	
+	});
+	
+	</script>
 
 </div>
 

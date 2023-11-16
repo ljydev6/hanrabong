@@ -52,7 +52,7 @@ public class LessonInfoServlet extends HttpServlet {
 		
 		if(!readResult) {
 			Cookie c = new Cookie("readLesson",readLesson + "|"+no+"|");
-			c.setMaxAge(60*60*12);
+			c.setMaxAge(60*60*1);
 			response.addCookie(c);
 		}
 		
@@ -63,12 +63,14 @@ public class LessonInfoServlet extends HttpServlet {
 		Lesson time = new LessonService().selectTimeByNo(no);
 		//레슨 게시글 번호로 리뷰가져오기
 		List<LessonApply> reviews = new LessonService().selectReviewByNo(no);
-				
+		// 리뷰개수 가져오기
+		int reviewsCount = new LessonService().selectReviewCountByNo(no);
 		System.out.println(reviews);
 		
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("review", reviews);
+		request.setAttribute("reviewsCount", reviewsCount);
 		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
 			.forward(request, response);
 	}

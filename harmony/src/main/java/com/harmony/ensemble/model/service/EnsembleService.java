@@ -15,7 +15,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
-import com.harmony.ensemble.model.dto.Member;
+import com.harmony.ensemble.model.dto.MemberEns;
 import com.harmony.model.dto.MemberInfo;
 
 
@@ -37,27 +37,35 @@ public class EnsembleService {
 		return result;
 	}
 	
-	public int insertEnsMember(EnsembleMember eMem, String loginMemNo) {
+	
+	public String selectMemberByEmail(String userEmail) {
 		Connection conn=getConnection();
-
-		int result =  dao.compareMemNo(conn, loginMemNo);
-		
-		if(result==0) {
-			int result2 = dao.insertEnsLeader(conn, eMem);
-			return result2;
-		}else {
-			int result3 = dao.insertEnsMember(conn, eMem);
-			return result3;
-		}
-		
+		String memNo = dao.selectMemberByEmail(conn, userEmail);
+		close(conn);
+		return memNo;
 	}
 	
-	public Member searchMemberById() {
-		Connection conn=getConnection();
-		Member m = dao.searchMemberById(conn);
-		return m;
+	public int insertTeamLeader(String memNo, String instCode) {
+		Connection conn = getConnection();
+		int result = dao.insertTeamLeader(conn, memNo, instCode);
+		close(conn);
+		return result;
 	}
 	
+	public int insertTeamMember(String memNo, String instCode) {
+		Connection conn = getConnection();
+		int result = dao.insertTeamMember(conn, memNo, instCode);
+		close(conn);
+		return result;
+	}
+	
+//	
+//	public MemberEns searchMemberById() {
+//		Connection conn=getConnection();
+//		MemberEns m = dao.searchMemberById(conn);
+//		return m;
+//	}
+//	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
 							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList) {

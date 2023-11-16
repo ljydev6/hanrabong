@@ -28,61 +28,58 @@
             <div class="contentContainer d-flex justify-content-between">
                 <article class="leftCategory w-50 align-items-center">
                     <div>
-                      <div class="slideToggle"><i class="fa-solid fa-drum"></i> 악기별</div>
+                      <div class="slideToggle" id="instrument"><i class="fa-solid fa-drum"></i> 악기별</div>
                       <ul>
-                        <li><input type="checkbox" name="instrument" id="drum"><label for="drum">드럼</label></li>
-                        <li><input type="checkbox" name="instrument" id="bass"><label for="bass">베이스</label></li>
-                        <li><input type="checkbox" name="instrument" id="doublebass"><label for="doublebass">더블베이스</label></li>
-                        <li><input type="checkbox" name="instrument" id="gittar"><label for="gittar">기타</label></li>
-                        <li><input type="checkbox" name="instrument" id="piano"><label for="piano">피아노</label></li>
-                        <li><input type="checkbox" name="instrument" id="composition" ><label for="composition">작곡</label></li>
-                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">색소폰</label></li>
-                        <li><input type="checkbox" name="instrument" id="trumpet"><label for="trumpet">트럼펫</label></li>
-                        <li><input type="checkbox" name="instrument" id="flute"><label for="flute">플룻</label></li>
-                        <li><input type="checkbox" name="instrument" id="violin"><label for="violin">바이올린</label></li>
-                        <li><input type="checkbox" name="instrument" id="cello"><label for="cello">첼로</label></li>
-                        <li><input type="checkbox" name="instrument" id="percussion"><label for="percussion">퍼커션</label></li>
-                        <li><input type="checkbox" name="instrument" id="vocal" ><label for="vocal">보컬</label></li>
-                        <li><input type="checkbox" name="instrument" id="daw"><label for="daw">믹싱(DAW)</label></li>
-                        <li><input type="checkbox" name="instrument" id="etc"><label for="etc">ETC</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_1" id="drum"><label for="drum">드럼</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_2" id="bass"><label for="bass">베이스</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_3" id="doublebass"><label for="doublebass">더블베이스</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_4" id="gittar"><label for="gittar">기타</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_5" id="piano"><label for="piano">피아노</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_6" id="composition" ><label for="composition">작곡</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_7" id="percussion"><label for="percussion">색소폰</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_8" id="trumpet"><label for="trumpet">트럼펫</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_9" id="flute"><label for="flute">플룻</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_10" id="violin"><label for="violin">바이올린</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_11" id="cello"><label for="cello">첼로</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_12" id="percussion"><label for="percussion">퍼커션</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_13" id="vocal" ><label for="vocal">보컬</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_14" id="daw"><label for="daw">믹싱(DAW)</label></li>
+                        <li><input type="checkbox" name="instrument" value="INST_15" id="etc"><label for="etc">ETC</label></li>
                       </ul>
                       
                     </div>
-                    <div class="slide"></div>
                     <div>
                       <div class="slideToggle"><i class="fa-solid fa-location-dot"></i> 장소별</div>
                       <ul>
-                        <li><input type="checkbox" name="place" id="seoul" ><label for="seoul">서울</label></li>
-                        <li><input type="checkbox" name="place" id="incheon" ><label for="incheon">인천</label></li>
-                        <li><input type="checkbox" name="place" id="gyeonggi" ><label for="gyeonggi">경기</label></li>
-                        <li><input type="checkbox" name="place" id="gangwon" ><label for="gangwon">강원</label></li>
-                        <li><input type="checkbox" name="place" id="choungcheong" ><label for="choungcheong">충청</label></li>
-                        <li><input type="checkbox" name="place" id="jeolla" ><label for="jeolla">전라</label></li>
-                        <li><input type="checkbox" name="place" id="gyeongsang" ><label for="gyeongsang">경상</label></li>
-                        <li><input type="checkbox" name="place" id="jeju" ><label for="jeju">제주</label></li>
+                        <li><input type="checkbox" name="place" value="서울" id="seoul" ><label for="seoul">서울</label></li>
+                        <li><input type="checkbox" name="place" value="인천" id="incheon" ><label for="incheon">인천</label></li>
+                        <li><input type="checkbox" name="place" value="경기" id="gyeonggi" ><label for="gyeonggi">경기</label></li>
+                        <li><input type="checkbox" name="place" value="강원" id="gangwon" ><label for="gangwon">강원</label></li>
+                        <li><input type="checkbox" name="place" value="충청" id="choungcheong" ><label for="choungcheong">충청</label></li>
+                        <li><input type="checkbox" name="place" value="전라" id="jeolla" ><label for="jeolla">전라</label></li>
+                        <li><input type="checkbox" name="place" value="경상" id="gyeongsang" ><label for="gyeongsang">경상</label></li>
+                        <li><input type="checkbox" name="place" value="제주" id="jeju" ><label for="jeju">제주</label></li>
                       </ul>
                       
                     </div>
                     <div class="slide2"></div>
                     <div>
                         <div class="slideToggle"><i class="fa-solid fa-barcode"></i> 가격별</div>
-                      <ul>
-                        <li><input type="checkbox" name="price" id="less10" ><label for="less10">10만원이하</label></li>
-                        <li><input type="checkbox" name="price" id="less20" ><label for="less20">20만원이하</label></li>
-                        <li><input type="checkbox" name="price" id="less30" ><label for="less30">30만원이하</label></li>
-                        <li><input type="checkbox" name="price" id="less50" ><label for="less50">50만원이하</label></li>
-                        <li><input type="checkbox" name="price" id="discuss" ><label for="discuss">협의가능</label></li>
-                      </ul>
-                      
+	                      <ul>
+	                        <li><input type="checkbox" name="price" value="10" id="less10" ><label for="less10">10만원이하</label></li>
+	                        <li><input type="checkbox" name="price" value="20" id="less20" ><label for="less20">20만원이하</label></li>
+	                        <li><input type="checkbox" name="price" value="30" id="less30" ><label for="less30">30만원이하</label></li>
+	                        <li><input type="checkbox" name="price" value="50" id="less50" ><label for="less50">50만원이하</label></li>
+	                        <li><input type="checkbox" name="price" value="협의가능" id="discuss" ><label for="discuss">협의가능</label></li>
+	                      </ul>
                     </div>
                     <div>
                         <div class="slideToggle"><i class="fa-regular fa-clock"></i> 시간대별</div>
-                      <ul>
-                        <li><input type="checkbox" name="time" id="morning" ><label for="morning">오전</label></a></li>
-                        <li><input type="checkbox" name="time" id="evening" ><label for="evening">오후</label></a></li>
-                        <li><input type="checkbox" name="time" id="night" ><label for="night">야간</label></a></li>
-                      </ul>
-                      
+	                      <ul>
+	                        <li><input type="checkbox" name="time" value="오전" id="morning" ><label for="morning">오전</label></a></li>
+	                        <li><input type="checkbox" name="time" value="오후" id="evening" ><label for="evening">오후</label></a></li>
+	                        <li><input type="checkbox" name="time" value="야간" id="night" ><label for="night">야간</label></a></li>
+	                      </ul>
                     </div>
                 </article>
                 
@@ -92,7 +89,7 @@
                    	if(!lessons.isEmpty()) {%>
                       <div class="lessonList" onclick="location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=<%=l.getBoardNo() %>'">
                       <%if(l.getBoardImg()!=null) {%>
-                        <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="200px" height="200px"></div>
+                        <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/upload/lesson/<%=l.getBoardImg()%>" width="100%" height="200px"></div>
                         <%} else { %>
                         <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/images/default.jpg" width="200px" height="200px"></div>
                         <%} %>
@@ -103,43 +100,31 @@
                       </div>
                       		<%} %>
                      	<%} %>
-                     
                     </div>
+                    <br><br>
+                    <div><%=request.getAttribute("pageBar") %></div>
                 </article>
             </div>
         </div>
     </section>
+    <script>
+	 // 필터링하기
+	    let searchFilter = $("input[type=checkbox]");
+	
+	    searchFilter.click(function(){
+	          let targetValue = [];//체크할때 비우고 새로체크된것만 넣는다!
+	          searchFilter.filter(':checked').each(function(){
+	        	  targetValue.push("." + $(this).val());
+	          });//each
+	          let targetClass = targetValue.join(",");
+	         console.log(targetValue)
+	    });
+	</script>
     <script>
       $(document).ready(function(){
            $(".slideToggle").click(function(e){
               $(e.target).next().slideToggle();      
            });
         });
-
-      $(".slideBtn").click(function(){
-        $(".slide").slideToggle(500);
-      });
-      
-      /* const menu=document.querySelector(".menu");
-      const subBar=document.querySelector(".menu>.sub"); */
-
-      let subToggle=true,i=0;
-
-      function slide_menu(){
-        if(subToggle){
-          subBar.style.display="block";
-          subBar.classList.remove("up");
-          subBar.classList.add("down");
-                
-          subToggle=!subToggle;
-        }else{
-          subBar.classList.remove("down");
-          subBar.classList.add("up");
-
-          subToggle=!subToggle;
-        }
-        console.log(subBar.classList);
-      }
-      /* menu.addEventListener("click",slide_menu); */
     </script>
 <%@ include file="/views/common/footer.jsp" %>
