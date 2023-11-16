@@ -9,6 +9,7 @@
 	Lesson lesson = (Lesson)request.getAttribute("lesson");
 	Lesson time = (Lesson)request.getAttribute("time");
 	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
+	int reviewsCount = (int)request.getAttribute("reviewsCount");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -62,13 +63,14 @@
                 <div class="mb-3">
                 <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do">레슨 등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
-                    <button onclick="location.href='<%=request.getContextPath()%>/lesson/deleteLesson.do?no=<%=lesson.getBoardNo()%>'">삭제하기</button>
+                    <button id="deleteLesson">삭제하기</button>
                 </div>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
+                        <%-- <div class="saveLesson" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?no=<%=lesson.getBoardNo()%>')"> --%>
                         <div class="saveLesson">
                             <i class="fa-solid fa-heart fa-xs"></i>
                     	</div>
@@ -145,7 +147,7 @@
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="wed" value="수"> <label class="btn btn-outline-warning" for="wed">수</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="thur" value="목"> <label class="btn btn-outline-warning" for="thur">목</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="fri" value="금"> <label class="btn btn-outline-warning" for="fri">금</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="토"> <label class="btn btn-outline-warning" for="sat">토</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="토" checked> <label class="btn btn-outline-warning" for="sat">토</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="sun" value="일"> <label class="btn btn-outline-warning" for="sun">일</label>
                                 </label>
                                 <label>
@@ -180,12 +182,13 @@
 
                 <div class="detailInfoSection">
                     	<div>
-	                        <div class="reviewInfo"> 리뷰 ??건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
+	                        <div class="reviewInfo"> 리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
 	                        <div class="detailInfoBar d-flex justify-content-center gap-3">
-	                            <a href="#areaInfo">지역정보</a>
-	                            <a href="#lessonInfo">레슨정보</a>
-	                            <a href="#teacherInfo">강사정보</a>
-	                            <a href="#reviewInfo">리뷰</a>
+	                            <button id="areaBtn">지역정보</button>
+	                            <button id="lessonBtn">레슨정보</button>
+	                            <button id="teacherBtn">강사정보</button>
+	                            <button id="reviewBtn">리뷰</button>
+	                            <div class="upup"><i class="fa-regular fa-circle-up fa-lg"></i></div>
 	                        </div>
 	                      	<div class="detailsContainer mt-3" id="areaInfo">
                               <div class="detailsContainer_title">
@@ -195,8 +198,8 @@
                                   <div id="map" style="width:100%;height:400px;"></div>
                               </div>
                           	</div>
-               				<div class="detailsContainer" id="lessonInfo">
-                              <div class="detailsContainer_title" >
+               				<div class="detailsContainer">
+                              <div class="detailsContainer_title" id="lessonInfo">
                                   <div>레슨정보</div>
                               </div>
                               <div class="detailsContainer_content">
@@ -244,8 +247,8 @@
                               </div>
                           </div>
                             <!-- 강사정보 -->
-                          <div class="detailsContainer" id="teacherInfo">
-                              <div class="detailsContainer_title" >
+                          <div class="detailsContainer">
+                              <div class="detailsContainer_title" id="teacherInfo">
                                   <div>강사정보</div>
                               </div>
                               <div class="detailsContainer_content">
@@ -285,10 +288,56 @@
             </article>
 		</div>
 	</section>
+	<script>
+		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
+		console.log(rect); */
+		//스크롤
+		/* <button id="areaBtn">지역정보</button>
+	    <button id="lessonBtn">레슨정보</button>
+	    <button id="teacherBtn">강사정보</button>
+	    <button id="reviewBtn">리뷰</button> */
+	    
+		/* const areaBtn = document.getElementById('areaBtn');
+	    const lessonBtn = document.getElementById('lessonBtn');
+	    const teacherBtn = document.getElementById('teacherBtn');
+	    const reviewBtn = document.getElementById('reviewBtn');
+	    
+	    const areaInfo = document.getElementById('areaInfo');
+	    const lessonInfo = document.getElementById('lessonInfo');
+	    const teacherInfo = document.getElementById('teacherInfo');
+	    const reviewInfo = document.getElementById('reviewInfo'); */
 	
+	    /* areaBtn.addEventListener('click', () => {
+	    	 window.scrollTo({top: document.querySelector('#areaInfo').getBoundingClientRect().top, behavior: "smooth" }); 
+	    	window.scrollTo(0, document.querySelector('#areaInfo').getBoundingClientRect().bottom);
+	    }); */
+	    
+	    areaBtn.addEventListener('click', () => {
+	        window.scrollBy({top: areaInfo.getBoundingClientRect().top, behavior: 'smooth'});
+	    });
+	    lessonBtn.addEventListener('click', () => {
+	        window.scrollBy({top: lessonInfo.getBoundingClientRect().top, behavior: 'smooth'});
+	    });
+	    
+	    teacherBtn.addEventListener('click', () => {
+	        window.scrollBy({top: teacherInfo.getBoundingClientRect().top, behavior: 'smooth'});
+	    });
+	    reviewBtn.addEventListener('click', () => {
+	        window.scrollBy({top: reviewInfo.getBoundingClientRect().top, behavior: 'smooth'});
+	    });
+	    
+	    $(".upup").click(()=>{
+	    	$(window).scrollTop(0);
+	    });
+	    
+	</script>
 	<script>
 		$(".saveLesson").click(()=>{
-			confirm('찜하시겠습니까?')
+			if (confirm('찜하시겠습니까?')==true) {
+				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?no=<%=lesson.getBoardNo()%>')
+			} else {
+				return false;
+			}
 		});
 	
 		$("#startTime").change(()=>{
@@ -306,13 +355,14 @@
 	        }
 	    });
 	    
-	    /* function removeCheck() {
-		 if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-		     document.removefrm.submit();
-		 }else{   //취소
-		     return false;
-		 }
-		} */
+		$("#deleteLesson").click(()=>{
+	    	if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+				 location.href='<%=request.getContextPath()%>/lesson/deleteLesson.do?no=<%=lesson.getBoardNo()%>'
+			 }else{   //취소
+			     return false;
+			 }
+	    })
+			 
 	</script>
 	
 	<script>
@@ -352,7 +402,5 @@
 	        map.setDraggable(false);
 	    } 
 	});
-	
-	
 	</script>
 <%@ include file="/views/common/footer.jsp" %>

@@ -1,6 +1,6 @@
 package com.harmony.lesson.dao;
 
-import static com.harmony.common.JDBCTemplate.*;
+import static com.harmony.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.dto.SaveLesson;
 
 public class LessonDao {
 	private Properties sql=new Properties();
@@ -248,7 +249,7 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
-		
+		//리뷰가져오기
 		public List<LessonApply> selectReviewByNo(Connection conn, int no) {
 			PreparedStatement pstmt =null;
 			ResultSet rs = null;
@@ -266,6 +267,74 @@ public class LessonDao {
 				close(rs);
 				close(pstmt);
 			} return l;
+		}
+		// 리뷰숫자가져오기
+		public int selectReviewCountByNo(Connection conn, int no) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectReviewCountByNo"));
+				pstmt.setInt(1, no);
+				rs=pstmt.executeQuery();
+				if(rs.next()) result=rs.getInt(1);
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		public SaveLesson saveLessonConfirm(Connection conn, int boardNo, String userNo) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			SaveLesson result = null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("saveLessonConfirm"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, userNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result=SaveLesson.builder()
+							.BoardNo(boardNo)
+							.memNo(userNo)
+							.build();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			} return result;
+		}
+		
+		public int saveLesson(Connection conn, int boardNo, String userNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("saveLesson"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, userNo);
+				result=pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			} return result;
+		}
+		public int deleteSavedLesson(Connection conn, int boardNo, String userNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteSavedLesson"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, userNo);
+				result=pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			} return result;
 		}
 		
 		

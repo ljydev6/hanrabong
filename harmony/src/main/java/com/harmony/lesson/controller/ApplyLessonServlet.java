@@ -18,13 +18,13 @@ import com.harmony.lesson.service.LessonService;
  * Servlet implementation class ApplyLesson
  */
 @WebServlet("/apply/applyLesson.do")
-public class ApplyLesson extends HttpServlet {
+public class ApplyLessonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplyLesson() {
+    public ApplyLessonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -144,7 +144,7 @@
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="wed" value="수"> <label class="btn btn-outline-warning" for="wed">수</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="thur" value="목"> <label class="btn btn-outline-warning" for="thur">목</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="fri" value="금"> <label class="btn btn-outline-warning" for="fri">금</label>
-                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="토"> <label class="btn btn-outline-warning" for="sat">토</label>
+                                        <input class="btn-check" type="checkbox" name='hopeDay' id="sat" value="토" checked> <label class="btn btn-outline-warning" for="sat">토</label>
                                         <input class="btn-check" type="checkbox" name='hopeDay' id="sun" value="일"> <label class="btn btn-outline-warning" for="sun">일</label>
                                     </div> 
                                 </div>
@@ -162,7 +162,6 @@
                     </div>
                 </div>
             </article>
-            <h1>footer</h1>
             </form>
 		</div>
 	</section>

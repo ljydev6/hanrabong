@@ -11,6 +11,7 @@ import java.util.List;
 import com.harmony.lesson.dao.LessonDao;
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.dto.SaveLesson;
 
 
 public class LessonService {
@@ -57,7 +58,13 @@ public class LessonService {
 		close(conn);
 		return l;
 	}
-	
+	// 리뷰개수
+	public int selectReviewCountByNo(int no) {
+		Connection conn=getConnection();
+		int result=dao.selectReviewCountByNo(conn, no);
+		close(conn);
+		return result;
+	}
 	
 	public Lesson selectTimeByNo(int no) {
 		Connection conn=getConnection();
@@ -111,6 +118,33 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
+	// 찜이되었는지 확인
+	public SaveLesson saveLessonConfirm(int boardNo, String userNo){
+		Connection conn=getConnection();
+		SaveLesson result = dao.saveLessonConfirm(conn,boardNo,userNo);
+		close(conn);
+		return result;
+	}
+	// 찜하기
+	public int saveLesson(int boardNo, String userNo){
+		Connection conn=getConnection();
+		int result = dao.saveLesson(conn,boardNo,userNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	// 찜삭제
+	public int deleteSavedLesson(int boardNo, String userNo){
+		Connection conn=getConnection();
+		int result = dao.deleteSavedLesson(conn,boardNo,userNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
 	//댓글기능
 //	public int insertBoardComment(BoardComment bc) {
 //		Connection conn = getConnection();
