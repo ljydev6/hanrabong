@@ -9,7 +9,7 @@ import lombok.Data;
 public class Lesson {
 	private int boardNo;
 	private String teacherNo;
-	private String[] instNo;
+	private String instNo;
 	private String boardTitle;
 	private String boardContent;
 	private Timestamp boardDate;

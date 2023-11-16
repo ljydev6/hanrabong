@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,16 +12,16 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.service.LessonService;
 
 /**
- * Servlet implementation class LessonInfo
+ * Servlet implementation class UpdateLesson
  */
-@WebServlet("/lesson/lessonInfo.do")
-public class LessonInfoServlet extends HttpServlet {
+@WebServlet("/lesson/updateLesson.do")
+public class UpdateLessonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LessonInfoServlet() {
+    public UpdateLessonServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,38 +31,17 @@ public class LessonInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = Integer.parseInt(request.getParameter("no"));
-		
-		Cookie[] cookies = request.getCookies();
-		String readLesson ="";
-		boolean readResult = false;
-		for(Cookie c : cookies) {
-			String name = c.getName();
-			if(name.equals("readLesson")) {
-				readLesson = c.getValue();
-				if(readLesson.contains("|"+no+"|")) {
-					readResult = true;
-				}
-				break;
-			}
-		}
-		
-		if(!readResult) {
-			Cookie c = new Cookie("readLesson",readLesson + "|"+no+"|");
-			c.setMaxAge(60*60*12);
-			response.addCookie(c);
-		}
-		
-		
-		
-		Lesson lesson = new LessonService().selectLessonByNo(no,readResult);
+		// 레슨정보테이블에서 레슨정보가져오기
+		Lesson lesson = new LessonService().selectLessonByNo(no);
 		Lesson time = new LessonService().selectTimeByNo(no);
+		
 		System.out.println(lesson);
-		System.out.println(time);
 		
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
-		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
-			.forward(request, response);
+		request.getRequestDispatcher("/views/lesson/updateLesson.jsp")
+				.forward(request, response);
+	
 	}
 
 	/**

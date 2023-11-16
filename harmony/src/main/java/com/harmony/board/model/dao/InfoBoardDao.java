@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.harmony.board.info.model.dto.InfoBoard;
 
 
+
 public class InfoBoardDao {
 	private Properties sql = new Properties();
 	{
@@ -73,15 +74,20 @@ public class InfoBoardDao {
 	}
 	//이코드는 게시글 갯수를 카운트하는 코드
 	
-	public List<InfoBoard> selectBoardByCategory(Connection conn, String category, int cPage, int numPerpage) {
+	public List<InfoBoard> selectBoardByCategoryTagRegion(Connection conn, String category, String tag, String region, int cPage, int numPerpage) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<InfoBoard> result = new ArrayList<>();
 		try {
-			pstmt = conn.prepareCall(sql.getProperty("selectBoardByCategory"));
+			pstmt = conn.prepareCall(sql.getProperty("selectBoardByCategoryTagRegion"));
 			pstmt.setString(1, category);
-			pstmt.setInt(2, (cPage - 1) * numPerpage + 1);
-			pstmt.setInt(3, cPage * numPerpage);
+			pstmt.setString(2, category);
+			pstmt.setString(3, tag);
+			pstmt.setString(4, tag);
+			pstmt.setString(5, region);
+			pstmt.setString(6, region);
+			pstmt.setInt(7, (cPage - 1) * numPerpage + 1);
+			pstmt.setInt(8, cPage * numPerpage);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				result.add(getBoard(rs));
@@ -94,48 +100,33 @@ public class InfoBoardDao {
 		}
 		return result;
 	}
-	// pstmt로 sql 명령어로 카테고리를 조건문으로 걸어 특정 카테고리만 result에 담음 
 
-	
-	public int selectBoardCountByCategory(Connection conn, String keyword) {
-	    PreparedStatement pstmt = null;
-	    ResultSet rset = null;
-	    int result = 0;
-
-	    
-	    try {
-	    	pstmt = conn.prepareCall(sql.getProperty("selectBoardCountByCategory"));
-	        pstmt.setString(1, keyword);
-	        rset = pstmt.executeQuery();
-	        if(rset.next()) {
-	            result = rset.getInt(1);
-	        }
-	    } catch(Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        close(rset);
-	        close(pstmt);
-	    }
-
-	    return result;
+	public int selectBoardCountByCategoryTagRegion(Connection conn, String category, String tag, String region) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareCall(sql.getProperty("selectBoardCountByCategoryTagRegion"));
+			pstmt.setString(1, category);
+			pstmt.setString(2, category);
+			pstmt.setString(3, tag);
+			pstmt.setString(4, tag);
+			pstmt.setString(5, region);
+			pstmt.setString(6, region);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
 	}
 
-	
-	private InfoBoard getBoard(ResultSet rs) throws SQLException {
-		return InfoBoard.builder()
-				.infBrdNo(rs.getInt("inf_brd_no"))
-				.infBrdWriter(rs.getString("inf_brd_writer"))
-				.infBrdTitle(rs.getString("inf_brd_title"))
-				.infBrdContent(rs.getString("inf_brd_content"))
-				.infBrdTitleImg(rs.getString("inf_brd_title_img"))
-				.infBrdRegion(rs.getString("inf_brd_region"))
-				.infBrdCatNo(rs.getString("inf_brd_cat_no"))
-				.infBrdTagNo(rs.getString("inf_brd_tag_no"))
-				.infBrdRegDate(rs.getDate("inf_brd_reg_date"))
-				.build();
-		
-		//rs에 db에서 가져온 dto를 넣음
-	}
+
 	
 	public int insertBoard(Connection conn, InfoBoard b) {
 		PreparedStatement pstmt=null;
@@ -157,4 +148,57 @@ public class InfoBoardDao {
 			close(pstmt);
 		}return result;
 	}
+	
+	private InfoBoard getBoard(ResultSet rs) throws SQLException {
+		return InfoBoard.builder()
+				.infBrdNo(rs.getInt("inf_brd_no"))
+				.infBrdWriter(rs.getString("inf_brd_writer"))
+				.infBrdTitle(rs.getString("inf_brd_title"))
+				.infBrdContent(rs.getString("inf_brd_content"))
+				.infBrdTitleImg(rs.getString("inf_brd_title_img"))
+				.infBrdRegion(rs.getString("inf_brd_region"))
+				.infBrdCatNo(rs.getString("inf_brd_cat_no"))
+				.infBrdTagNo(rs.getString("inf_brd_tag_no"))
+				.infBrdRegDate(rs.getDate("inf_brd_reg_date"))
+				.build();
+		
+		//rs에 db에서 가져온 dto를 넣음
+	}
+	
+	public int updateBoardReadCount(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateBoardReadcount"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public InfoBoard selectBoardByNo(Connection conn, int no) {
+		//번호가 no인 게시글을 데이터베이스에서 찾아서 InfoBoard 객체를 생성하고 반환하는 코드를 작성
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		InfoBoard b=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoardByNo"));
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			if(rs.next()) b=getBoard(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return b;
+	  
+	}
+	
+	
+	
 }

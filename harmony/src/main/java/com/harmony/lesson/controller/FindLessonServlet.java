@@ -32,7 +32,6 @@ public class FindLessonServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Lesson> lessons = new LessonService().printLessonAll(1, 10);
-		System.out.println(lessons);
 		request.setAttribute("lessons", lessons);
 		
 		request.getRequestDispatcher("/views/lesson/findLesson.jsp")

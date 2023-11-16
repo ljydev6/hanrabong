@@ -64,17 +64,25 @@ a{
 }
 .lessonList{
 	width: 200px;
-	height: 200px;
+	height: 250px;
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+	position: relative;
 }
-.lessonList>:first-child{
-	height: 75%;
+.lessonListTitle{
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 100%;
 }
-.lessonList>:last-child{
-	height: 75%;
-	padding: 20px;
+.lessonView{
+	position: absolute;
+	right: 20px;
+	top: 20px;
 }
-
+.saveLesson{
+	position: absolute;
+	left: 20px;
+	top: 20px;
+}
 .dropdown>button{
 	background-color: white;
 	margin: 0px;
@@ -184,4 +192,27 @@ li input[type="checkbox"]:checked::before {
 	height: 45px;	
 	border-radius: 5px;
 	padding: 10px
+}
+
+@keyframes heartBeat {
+    0%{
+        color: white;
+        transform: none;
+    }
+    50%{
+        color: rgb(216, 82, 212);
+        transform: scale(1.5);
+    }
+    100%{
+        color: white;
+        transform: none;
+    }
+}
+
+.saveLesson:hover i {
+    will-change: transform;
+    /* 애니메이션을 안정적으로 보이도록 브라우저를 도와준다. */
+    /* 브라우저에게 어떤 것이 변할 것인지 예고해주는것 */
+    /* 그래픽 카드를 이용해서 애니메이션을 가속화 한다. */
+    animation: heartBeat 1s linear infinite;
 }
