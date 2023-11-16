@@ -17,7 +17,7 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
                 <a href="<%=request.getContextPath()%>/communitymain.do">정보 게시판</a>
             </h3>
             <h3 class="free">
-                <a href="<%=request.getContextPath()%>/test2.do">자유 게시판</a>
+                <a href="<%=request.getContextPath()%>/communitysub.do">자유 게시판</a>
             </h3>
         </div>
     </div>
