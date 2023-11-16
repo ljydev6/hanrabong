@@ -48,7 +48,7 @@ public class FreeBoardListServlet extends HttpServlet {
 
         request.setAttribute("boards", boards);
         request.setAttribute("pageBar", pageBar);
-        request.getRequestDispatcher("/views/board/communityfree.jsp")
+        request.getRequestDispatcher("/views/board/freeBoardList.jsp")
         .forward(request, response);
     }
 

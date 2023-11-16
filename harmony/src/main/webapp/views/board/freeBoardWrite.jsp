@@ -36,9 +36,6 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
                 <input type="text" id="post-title" name="title">
               </div>
              
-              
-             
-              
           
               <div class="form-field">
                 <label for="post-content">내용</label>

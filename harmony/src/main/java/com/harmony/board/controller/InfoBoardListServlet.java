@@ -80,7 +80,7 @@ public class InfoBoardListServlet extends HttpServlet {
 		
 		request.setAttribute("boards", boards);
 		request.setAttribute("pageBar",pageBar);
-		request.getRequestDispatcher("/views/board/communityinfo.jsp")
+		request.getRequestDispatcher("/views/board/infoBoardList.jsp")
 		.forward(request, response);
 		
 	}

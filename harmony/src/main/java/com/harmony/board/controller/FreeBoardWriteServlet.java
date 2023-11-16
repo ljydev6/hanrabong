@@ -27,7 +27,7 @@ public class FreeBoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/board/freeboardWrite.jsp")
+		request.getRequestDispatcher("/views/board/freeBoardWrite.jsp")
 		.forward(request, response);
 	}
 

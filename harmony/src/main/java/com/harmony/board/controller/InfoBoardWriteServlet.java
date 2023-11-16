@@ -26,7 +26,7 @@ public class InfoBoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/board/boardWrite.jsp")
+		request.getRequestDispatcher("/views/board/infoBoardWrite.jsp")
 		.forward(request, response);
 	}
 
