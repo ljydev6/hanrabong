@@ -13,7 +13,7 @@ public class InfoCommentBoard {
 	private String infComWriter;
 	private String infComContent;
 	private Timestamp infComDate;
-	private int infComNoRef;
+	private Integer infComNoRef;
 	private int infComLevel;
 
 }

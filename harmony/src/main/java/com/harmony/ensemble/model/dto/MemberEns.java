@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class Member {
+public class MemberEns {
 
 	private String memNo;
 	private String memInfoEmail;

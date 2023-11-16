@@ -19,7 +19,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 /**
  * Servlet Filter implementation class MultipartContentFilter
  */
-@WebFilter(servletNames = {"ajaxCarouselManage"})
+@WebFilter(servletNames = {"ajaxCarouselManage","adminNoticeWrite"})
 public class MultipartContentFilter extends HttpFilter implements Filter {
        
     /**
@@ -45,7 +45,8 @@ public class MultipartContentFilter extends HttpFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// place your code here
-		if(!ServletFileUpload.isMultipartContent((HttpServletRequest)request)) {
+		HttpServletRequest req = (HttpServletRequest)request;
+		if(req.getMethod().equals("POST")&&!ServletFileUpload.isMultipartContent(req)) {
 			HttpServletResponse rsp = (HttpServletResponse)response;
 			PrintWriter out = rsp.getWriter();
 			out.write("is not Multipart Request");

@@ -1,7 +1,9 @@
 package com.harmony.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,11 +49,15 @@ public class AdminNoticeListServlet extends HttpServlet {
 		}
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");
+		List<Map<String,String>> filters = new ArrayList<>();
+		if(type!=null && keyword!=null) {
+			filters.add(Map.of(type, keyword));
+		}
 		int totalData = AdminService.getService().getNoticeTotalData(type,keyword);
 		List<NoticeList> noticeList = AdminService.getService().selectNoticeList(type,keyword);
 		
 		request.setAttribute("noticeList", noticeList);
-		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, totalData, pageBarSize, request.getRequestURI()));
+		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, totalData, pageBarSize, request.getRequestURI(),filters));
 		request.getRequestDispatcher("/views/admin/views/noticelist.jsp").forward(request, response);
 	}
 

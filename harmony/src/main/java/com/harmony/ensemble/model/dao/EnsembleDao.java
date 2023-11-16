@@ -19,7 +19,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
-import com.harmony.ensemble.model.dto.Member;
+import com.harmony.ensemble.model.dto.MemberEns;
 import com.harmony.ensemble.model.service.EnsembleService;
 
 
@@ -36,16 +36,86 @@ private Properties sql=new Properties();
 		}
 	}
 	
-	public Member searchMemberById(Connection conn) {
+	
+	public String selectMemberByEmail(Connection conn, String userEmail) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Member m = null;
+		String memNo = "";
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectMemberByEmail"));
+			pstmt.setString(1, userEmail);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) memNo = rs.getString("MEM_NO");
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return memNo;
+	}
+
+	
+	public int insertTeamLeader(Connection conn, String memNo, String instCode) {
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		int result = 0;
+		EnsembleService es = new EnsembleService();
+		String ensTeamNo = es.selectSeq();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertTeamLeader"));
+			pstmt.setString(1,ensTeamNo);
+			pstmt.setString(2, instCode);
+			pstmt.setString(3, memNo);
+			result=pstmt.executeUpdate();
+//			if(rs.next()) result=rs.getInt(1);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+//			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertTeamMember(Connection conn, String memNo, String instCode) {
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		int result = 0;
+		EnsembleService es = new EnsembleService();
+		String ensTeamNo = es.selectSeq();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertTeamMember"));
+			pstmt.setString(1,ensTeamNo);
+			pstmt.setString(2, instCode);
+			pstmt.setString(3, memNo);
+			result=pstmt.executeUpdate();
+//			if(rs.next()) result=rs.getInt(1);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+//			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	public MemberEns searchMemberById(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberEns m = null;
+		
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("searchMemberById"));
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-			m=(Member.builder()
+			m=(MemberEns.builder()
 							.memNo(rs.getString("MEM_NO"))
 							.memInfoEmail(rs.getString("MEM_INFO_EMAIL"))
 							.build());
@@ -109,6 +179,7 @@ private Properties sql=new Properties();
 			pstmt.setString(2, eMem.getEnsInstCode());
 			pstmt.setString(3, eMem.getEnsMemNo());
 			result=pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
