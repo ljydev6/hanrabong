@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.board.info.model.dto.InfoBoard;
+import com.harmony.board.info.model.dto.InfoCommentBoard;
 import com.harmony.board.model.dao.InfoBoardDao;
 
 
@@ -63,6 +64,22 @@ public class InfoBoardService {
 	    close(conn);
 	    return b;
 	}
+	
+	public int insertBoardComment(InfoCommentBoard bc) {
+		Connection conn=getConnection();
+		int result=dao.insertBoardComment(conn,bc);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<InfoCommentBoard> selectBoardComments(int boardNo) {
+        Connection conn = getConnection();
+        List<InfoCommentBoard> comments = dao.selectBoardComments(conn, boardNo);
+        close(conn);
+        return comments;
+    }
 
 
 }
