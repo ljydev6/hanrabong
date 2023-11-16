@@ -249,6 +249,24 @@ public class LessonDao {
 			}return result;
 		}
 		
+		public List<LessonApply> selectReviewByNo(Connection conn, int no) {
+			PreparedStatement pstmt =null;
+			ResultSet rs = null;
+			List<LessonApply> l = new ArrayList<>();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectReviewByNo"));
+				pstmt.setInt(1, no);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					l.add(getLessonApplyReview(rs));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			} return l;
+		}
 		
 		
 		
@@ -327,16 +345,25 @@ public class LessonDao {
 					.build();
 		}
 		
-//		private LessonApply getLessonApply(ResultSet rs) throws SQLException {
-//			return LessonApply.builder()
-//					.applyNo(rs.getInt("apply_no"))
-//					.boardNo(rs.getInt("board_no"))
-//					.memNo(rs.getString("mem_no"))
-//					.applyPlace(rs.getString("apply_place"))
-//					.applyNumberOfTimes(rs.getInt("apply_number_of_times"))
-//					.applyDate(rs.getDate("apply_date"))
-//					.applyAccept(rs.getString("apply_accept").charAt(0))
-//					.build();
-//		}
+		private LessonApply getLessonApply(ResultSet rs) throws SQLException {
+			return LessonApply.builder()
+					.applyNo(rs.getInt("apply_no"))
+					.boardNo(rs.getInt("board_no"))
+					.memNo(rs.getString("mem_no"))
+					.applyPlace(rs.getString("apply_place"))
+					.applyNumberOfTimes(rs.getInt("apply_number_of_times"))
+					.applyDate(rs.getDate("apply_date"))
+					.applyAccept(rs.getString("apply_accept").charAt(0))
+					.build();
+		}
+		private LessonApply getLessonApplyReview(ResultSet rs) throws SQLException {
+			return LessonApply.builder()
+					.boardNo(rs.getInt("board_no"))
+					.memNo(rs.getString("mem_no"))
+					.reviewPoint(rs.getInt("lesson_review_point"))
+					.review(rs.getString("lesson_review"))
+					.reviewEnrollDate(rs.getDate("review_enroll_date"))
+					.build();
+		}
 	
 }

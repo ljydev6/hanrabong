@@ -1,6 +1,7 @@
 package com.harmony.lesson.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.lesson.dto.Lesson;
+import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.service.LessonService;
 
 /**
@@ -31,6 +33,7 @@ public class LessonInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//레슨 게시글번호
 		int no = Integer.parseInt(request.getParameter("no"));
 		
 		Cookie[] cookies = request.getCookies();
@@ -54,14 +57,18 @@ public class LessonInfoServlet extends HttpServlet {
 		}
 		
 		
-		
+		//레슨 게시글번호로 레슨정보가져오기
 		Lesson lesson = new LessonService().selectLessonByNo(no,readResult);
+		//레슨 게시글번호로 레슨시간,요일정보
 		Lesson time = new LessonService().selectTimeByNo(no);
-		System.out.println(lesson);
-		System.out.println(time);
+		//레슨 게시글 번호로 리뷰가져오기
+		List<LessonApply> reviews = new LessonService().selectReviewByNo(no);
+				
+		System.out.println(reviews);
 		
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
+		request.setAttribute("review", reviews);
 		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
 			.forward(request, response);
 	}
