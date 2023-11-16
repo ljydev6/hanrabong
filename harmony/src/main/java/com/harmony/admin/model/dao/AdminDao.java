@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminDao {
 	private static AdminDao dao = new AdminDao();
@@ -107,5 +108,216 @@ public class AdminDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int deleteCarousel(Connection conn, String crslNo) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteCarousel"));
+			pstmt.setString(1, crslNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int getCrslSeqNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getCrslSeqNo"));
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int insertCarousel(Connection conn, Carousel c) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		String query = sql.getProperty("insertCarousel");
+		StringBuilder cols = new StringBuilder();
+		StringBuilder vals = new StringBuilder();
+		
+		cols.append("CRSL_NO,");
+		vals.append("? ,");
+		if(c.getCrslName()!=null) {
+			cols.append("CRSL_NAME,");
+			vals.append("? ,");
+		}
+		if(c.getCrslImgLink()!=null) {
+			cols.append("CRSL_IMG_LINK,");
+			vals.append("? ,");
+		}
+		if(c.getCrslPageLink()!=null) {
+			cols.append("CRSL_PAGE_LINK,");
+			vals.append("? ,");
+		}
+		if(c.getCrslWriteDate()!=null) {
+			cols.append("CRSL_WRITE_DATE,");
+			vals.append("? ,");
+		}
+		if(c.getCrslEndDate()!=null) {
+			cols.append("CRSL_END_DATE,");
+			vals.append("? ,");
+		}
+		if(c.getCrslIntervalMs()>=0) {
+			cols.append("CRSL_INTERVAL_MS,");
+			vals.append("? ,");
+		}
+		if(c.getCrslViewRank()>=0) {
+			cols.append("CRSL_VIEW_RANK,");
+			vals.append("? ,");
+		}
+		query = query.replace("#cols", cols.substring(0, cols.length()-1).toString());
+		query = query.replace("#vals", vals.substring(0, vals.length()-1).toString());
+		System.out.println(query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			pstmt.setInt(count++, c.getCrslNo());
+			if(c.getCrslName()!=null) {
+				pstmt.setString(count++, c.getCrslName());
+			}
+			if(c.getCrslImgLink()!=null) {
+				pstmt.setString(count++, c.getCrslImgLink());
+			}
+			if(c.getCrslPageLink()!=null) {
+				pstmt.setString(count++, c.getCrslPageLink());
+			}
+			if(c.getCrslWriteDate()!=null) {
+				pstmt.setDate(count++, c.getCrslWriteDate());
+			}
+			if(c.getCrslEndDate()!=null) {
+				pstmt.setDate(count++, c.getCrslEndDate());
+			}
+			if(c.getCrslIntervalMs()>=0) {
+				pstmt.setInt(count++, c.getCrslIntervalMs());
+			}
+			if(c.getCrslViewRank()>=0) {
+				pstmt.setInt(count++, c.getCrslViewRank());
+			}
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Carousel getCrslByCrslNo(Connection conn, int seqCrslNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Carousel result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectCarouselByCrslNo"));
+			pstmt.setInt(1, seqCrslNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getCarousel(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateCarousel(Connection conn, Carousel c) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		String query = sql.getProperty("updateCarousel");
+		StringBuilder cols = new StringBuilder();
+		
+		if(c.getCrslName()!=null) {
+			cols.append("CRSL_NAME = ?,");
+		}
+		if(c.getCrslImgLink()!=null) {
+			cols.append("CRSL_IMG_LINK = ?,");
+		}
+		if(c.getCrslPageLink()!=null) {
+			cols.append("CRSL_PAGE_LINK = ?,");
+		}
+		if(c.getCrslWriteDate()!=null) {
+			cols.append("CRSL_WRITE_DATE = ?,");
+		}
+		if(c.getCrslEndDate()!=null) {
+			cols.append("CRSL_END_DATE = ?,");
+		}
+		if(c.getCrslIntervalMs()>=0) {
+			cols.append("CRSL_INTERVAL_MS = ?,");
+		}
+		if(c.getCrslViewRank()>=0) {
+			cols.append("CRSL_VIEW_RANK = ?,");
+		}
+		
+		query = query.replace("#cols", cols.substring(0, cols.length()-1).toString());
+		System.out.println(query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			if(c.getCrslName()!=null) {
+				pstmt.setString(count++, c.getCrslName());
+			}
+			if(c.getCrslImgLink()!=null) {
+				pstmt.setString(count++, c.getCrslImgLink());
+			}
+			if(c.getCrslPageLink()!=null) {
+				pstmt.setString(count++, c.getCrslPageLink());
+			}
+			if(c.getCrslWriteDate()!=null) {
+				pstmt.setDate(count++, c.getCrslWriteDate());
+			}
+			if(c.getCrslEndDate()!=null) {
+				pstmt.setDate(count++, c.getCrslEndDate());
+			}
+			if(c.getCrslIntervalMs()>=0) {
+				pstmt.setInt(count++, c.getCrslIntervalMs());
+			}
+			if(c.getCrslViewRank()>=0) {
+				pstmt.setInt(count++, c.getCrslViewRank());
+			}
+			pstmt.setInt(count++, c.getCrslNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<NoticeList> selectNoticeList(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<NoticeList> result = new ArrayList<>();
+		String query = sql.getProperty("selectNoticeList");
+		try{
+			pstmt = conn.prepareStatement(null);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getNoticeTotalData(Connection conn, String type, String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

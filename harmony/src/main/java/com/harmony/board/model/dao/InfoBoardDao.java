@@ -2,18 +2,19 @@ package com.harmony.board.model.dao;
 
 import static com.harmony.common.JDBCTemplate.close;
 
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import com.harmony.board.info.model.dto.InfoBoard;
+import com.harmony.board.info.model.dto.InfoCommentBoard;
 
 
 
@@ -149,21 +150,7 @@ public class InfoBoardDao {
 		}return result;
 	}
 	
-	private InfoBoard getBoard(ResultSet rs) throws SQLException {
-		return InfoBoard.builder()
-				.infBrdNo(rs.getInt("inf_brd_no"))
-				.infBrdWriter(rs.getString("inf_brd_writer"))
-				.infBrdTitle(rs.getString("inf_brd_title"))
-				.infBrdContent(rs.getString("inf_brd_content"))
-				.infBrdTitleImg(rs.getString("inf_brd_title_img"))
-				.infBrdRegion(rs.getString("inf_brd_region"))
-				.infBrdCatNo(rs.getString("inf_brd_cat_no"))
-				.infBrdTagNo(rs.getString("inf_brd_tag_no"))
-				.infBrdRegDate(rs.getDate("inf_brd_reg_date"))
-				.build();
-		
-		//rs에 db에서 가져온 dto를 넣음
-	}
+
 	
 	public int updateBoardReadCount(Connection conn, int no) {
 		PreparedStatement pstmt=null;
@@ -199,6 +186,86 @@ public class InfoBoardDao {
 	  
 	}
 	
+	public int insertBoardComment(Connection conn, InfoCommentBoard bc) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("insertBoardComment"));
+	        pstmt.setInt(1, bc.getInfBrdNo());
+	        pstmt.setString(2, bc.getInfComWriter());
+	        pstmt.setString(3, bc.getInfComContent());
+	        if (bc.getInfComNoRef() != null) {
+	            pstmt.setInt(4, bc.getInfComNoRef());
+	        } else {
+	            pstmt.setNull(4, java.sql.Types.INTEGER);
+	        }
+	        pstmt.setInt(5, bc.getInfComLevel());
+	        
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt);
+	    }
+	    return result;
+	}
+	
+	public List<InfoCommentBoard> selectBoardComments(Connection conn, int boardNo) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<InfoCommentBoard> comments = new ArrayList<>();
+
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("selectBoardComment"));
+	        pstmt.setInt(1, boardNo);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            InfoCommentBoard comment = getComment(rs);
+	            comments.add(comment);
+	        }
+	    } catch(SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    
+	    return comments;
+	}
+
+
+	
+	
+	private InfoBoard getBoard(ResultSet rs) throws SQLException {
+		return InfoBoard.builder()
+				.infBrdNo(rs.getInt("inf_brd_no"))
+				.infBrdWriter(rs.getString("inf_brd_writer"))
+				.infBrdTitle(rs.getString("inf_brd_title"))
+				.infBrdContent(rs.getString("inf_brd_content"))
+				.infBrdTitleImg(rs.getString("inf_brd_title_img"))
+				.infBrdRegion(rs.getString("inf_brd_region"))
+				.infBrdCatNo(rs.getString("inf_brd_cat_no"))
+				.infBrdTagNo(rs.getString("inf_brd_tag_no"))
+				.infBrdRegDate(rs.getDate("inf_brd_reg_date"))
+				.build();
+		
+		//rs에 db에서 가져온 dto를 넣음
+	}
+	
+	private InfoCommentBoard getComment(ResultSet rs) throws SQLException {
+	    Integer infComNoRef = rs.getObject("INF_COM_NO_REF", Integer.class);
+	    return InfoCommentBoard.builder()
+	            .infComNo(rs.getInt("INF_COM_NO"))
+	            .infBrdNo(rs.getInt("INF_BRD_NO"))
+	            .infComWriter(rs.getString("INF_COM_WRITER"))
+	            .infComContent(rs.getString("INF_COM_CONTENT"))
+	            .infComDate(rs.getTimestamp("INF_COM_DATE"))
+	            .infComNoRef(infComNoRef)
+	            .infComLevel(rs.getInt("INF_COM_LEVEL"))
+	            .build();
+	}
+
 	
 	
 }
