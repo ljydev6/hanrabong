@@ -21,5 +21,5 @@ public class MemberInfo {
 	private String email;
 	private List<MemberVideo> memberVideo;
 	private List<MemberMusic> memberMusic;
-	private List<MemberCareer> memberCareer;
+	private String memCareer;
 }

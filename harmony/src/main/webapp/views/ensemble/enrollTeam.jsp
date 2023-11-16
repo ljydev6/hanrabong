@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
   <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <%@ include file="/views/common/header.jsp" %>  
-<%@ page import= "java.util.List, com.harmony.ensemble.model.dto.Genre" %>
+<%@ page import= "java.util.List, 
+					com.harmony.ensemble.model.dto.Genre" %>
 <%
 	List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 %>
@@ -39,6 +40,11 @@
 			<span class="single_chk_span">전문</span>
 		</label>
 	</div>
+	<input type="button" value="합주일정추가" name="schedule" id="schedule" 
+			onclick="addSchedule();">
+	<span id="sch_result">
+		
+	</span>
 	<div>
 		<p>한 줄 소개</p>
 		<textarea cols="30" rows="3" id="detail"></textarea>
@@ -52,7 +58,9 @@
 		<input type="file" id="music" multiple accept="audio/*">
 	</div>
 	<div class="add_mem">
-		<input type="button" value="멤버추가">
+		<p>멤버추가</p>
+		<input type="button" value="기존회원" onclick="addTeamMem();">
+		<input type="button" value="비회원" onclick="addNonMem();">
 	</div>
 		<div class="submit_container">
 			<input type="button" value="등록" id="submit" >
@@ -63,21 +71,26 @@
 
 
 
+<input type="hidden" id="dayOfWeek" name="dayOfWeek">
+<input type="hidden" id="startTime" name="startTime">
+<input type="hidden" id="endTime" name="endTime">
+
 
 </section>
 
-<!-- 팀 등록 페이지 -->
-
-<!-- 팀 번호 seq -->
-<!-- 팀명 -->
-<!-- 장르번호 : select op으로 선택하도록.  서블릿 : db에서 카테고리를 가져옴 setAttr로 꽂아주기 -->
-<!-- 구분 : 취미/전문 선택 -->
-<!-- 한 줄 소개 -->
-<!-- 비디오 -->
-<!-- 음원 -->
-<!-- 팀원리스트 -->
-<!-- 합주 일시 -->
 <script>
+
+const addTeamMem =()=>{
+	open("<%=request.getContextPath()%>/ensemble/addTeamMem.do")
+	
+}
+
+const addSchedule =()=>{
+	open("<%=request.getContextPath()%>/ensemble/addSchedule.do"
+			,"_blank","width=500, height=400");
+	
+}
+
 
 $(document).ready(function(){
 	$('.single_chk_span').click(function(){
@@ -93,17 +106,26 @@ $(document).ready(function(){
 	
 	$("#submit").click(e=>{
 
+		
 		const form = new FormData();
 		
 		const teamName = $("#teamName").val();
 		const genre = $("#genre").val();
 		const type = $(".single_chk:checked").val(); 
 		const detail = $("#detail").val();
+		const dayOfWeek = $("#dayOfWeek").val();
+		const startTime = $("#startTime").val();
+		const endTime = $("#endTime").val();
+		
+		
 		
 		form.append("teamName", teamName);
 		form.append("genre", genre);
 		form.append("type", type);
 		form.append("detail", detail);
+		form.append("dayOfWeek",dayOfWeek);
+		form.append("startTime", startTime);
+		form.append("endTime",endTime);
 		
 		const videoInput=$("#video");
 		$.each(videoInput[0].files, (i,v)=>{

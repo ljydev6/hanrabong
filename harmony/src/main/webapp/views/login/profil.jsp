@@ -24,7 +24,7 @@
 </style>
 <section class="container2">
 <div class="profil">
-	<img src="<%=request.getContextPath() %>/image/profile/pofile.png" height="150px"><br>
+	<img src="<%=request.getContextPath() %>/image/profile/profile.png" height="150px"><br>
 	<a>한줄소개</a>
 	<table class="pofileTable">
 		<tr>

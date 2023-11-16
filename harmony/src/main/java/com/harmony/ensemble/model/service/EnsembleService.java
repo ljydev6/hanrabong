@@ -8,10 +8,15 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.ensemble.model.dao.EnsembleDao;
+import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
+import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
+import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.Member;
+import com.harmony.model.dto.MemberInfo;
 
 
 public class EnsembleService {
@@ -25,20 +30,58 @@ public class EnsembleService {
 		return result;
 	}
 	
-	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, List<EnsembleTeamVideo> videoList) {
+	public List<Inst> searchAllInst(){
 		Connection conn=getConnection();
+		List<Inst> result=dao.searchAllInst(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int insertEnsMember(EnsembleMember eMem, String loginMemNo) {
+		Connection conn=getConnection();
+
+		int result =  dao.compareMemNo(conn, loginMemNo);
 		
+		if(result==0) {
+			int result2 = dao.insertEnsLeader(conn, eMem);
+			return result2;
+		}else {
+			int result3 = dao.insertEnsMember(conn, eMem);
+			return result3;
+		}
 		
+	}
+	
+	public Member searchMemberById() {
+		Connection conn=getConnection();
+		Member m = dao.searchMemberById(conn);
+		return m;
+	}
+	
+	
+	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
+							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList) {
+		Connection conn=getConnection();
 		
 		int result = dao.insertTeam(conn, ensTeam);
 		
-		
-		
 		if(result>0) {
+			
+			if(!timeList.isEmpty()) {
+				for(EnsembleTeamTime time : timeList) {
+					int result2 = dao.insertTime(conn, time);
+					if(result2==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("노노");
+					}
+				}
+			}
+			
+			
 			if(!musicList.isEmpty()) {
 				for(EnsembleTeamMusic music : musicList) {
-					int result2 = dao.insertMusic(conn, music);
-					if(result2==0) {
+					int result3 = dao.insertMusic(conn, music);
+					if(result3==0) {
 						rollback(conn);
 						throw new IllegalArgumentException("노노노");
 					}
@@ -46,8 +89,8 @@ public class EnsembleService {
 			}
 			if(!videoList.isEmpty()) {
 				for(EnsembleTeamVideo video : videoList) {		
-					int result3 = dao.insertVideo(conn, video);
-					if(result3==0) {
+					int result4 = dao.insertVideo(conn, video);
+					if(result4==0) {
 						rollback(conn);
 						throw new IllegalArgumentException("노노노");
 					}

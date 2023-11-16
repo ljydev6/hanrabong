@@ -1,4 +1,4 @@
-package com.harmony.member.ljykakao;
+package com.harmony.ensemble.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class BoardList
  */
-@WebServlet("/loginServlet.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/ensemble/boardList.do")
+public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public BoardListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/login/kakaoLogin.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/ensemble/boardList.jsp")
+		.forward(request, response);
 	}
 
 	/**
