@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AdminMainServlet
  */
-@WebServlet(name = "adminMain", urlPatterns = "/admin/main.do")
+@WebServlet(name = "adminMain", urlPatterns = {"/admin/main.do","/admin","/admin/"})
 public class AdminMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

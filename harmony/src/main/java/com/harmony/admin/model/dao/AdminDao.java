@@ -15,6 +15,7 @@ import java.util.Properties;
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
 import com.harmony.admin.model.dto.Notice;
+import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminDao {
@@ -372,11 +373,17 @@ public class AdminDao {
 		ResultSet rs = null;
 		Notice result = null;
 		try {
-			pstmt = conn.prepareStatement(sql.getProperty("getNoticeByNo"));
+			pstmt = conn.prepareStatement(sql.getProperty("selectNoticeByNo"));
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = getNotice(rs);
+				do {
+					NoticeAttachFile file = getNoticeFile(rs);
+					if(file !=null) {
+						result.getAttachFileList().add(file);
+					}
+				}while(rs.next());
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -387,18 +394,41 @@ public class AdminDao {
 		return result;
 	}
 
+	private NoticeAttachFile getNoticeFile(ResultSet rs) throws SQLException{
+		NoticeAttachFile result = null;
+		if(rs.getInt("FILE_NO")>0) {
+			result = NoticeAttachFile.builder().noticeFileNo(rs.getInt("FILE_NO"))
+												.noticeNo(rs.getInt("NO"))
+												.oriName(rs.getString("ORINAME"))
+												.reName(rs.getString("RENAME"))
+												.build();
+		}
+		return result;
+	}
+
 	private Notice getNotice(ResultSet rs) throws SQLException{
-		return Notice.builder().noticeNo(rs.getInt("BRD_NOTICE_NO"))
-							   .title(null)
-							   .noticeWriter(rs.getString("BRD_NOTICE_CONTENT"))
-							   .content(rs.getString("BRD_NOTICE_CONTENT"))
-							   .writeDate(rs.getDate("BRD_NOTICE_WRITE_DATE"))
-							   .viewCount(rs.getInt("BRD_NOTICE_VIEW_COUNT"))
+		return Notice.builder().noticeNo(rs.getInt("NO"))
+							   .title(rs.getString("TITLE"))
+							   .noticeWriter(rs.getString("WRITER"))
+							   .content(rs.getString("CONTENT"))
+							   .writeDate(rs.getDate("WRITE_DATE"))
+							   .viewCount(rs.getInt("VIEW_COUNT"))
 							   .build();
 	}
 
-	public Notice getNoticeFileByNo(Connection conn, int no, Notice result) {
-		// TODO Auto-generated method stub
-		return null;
+	public int addNoticeViewCount(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("addNoticeViewCount"));
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
+
 }

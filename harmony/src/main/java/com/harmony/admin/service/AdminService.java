@@ -96,11 +96,18 @@ public class AdminService {
 	public Notice selectNoticeByNo(int no) {
 		Connection conn = getConnection();
 		Notice result = AdminDao.getDao().getNoticeByNo(conn,no);
-		result = AdminDao.getDao().getNoticeFileByNo(conn,no,result);
+		if(result!=null) {
+			int vcresult = AdminDao.getDao().addNoticeViewCount(conn,no);
+			if(vcresult>0) {
+				commit(conn);
+				result.setViewCount(result.getViewCount()+1);
+			}else {
+				rollback(conn);
+			}
+		}
 		close(conn);
 		return result;
 	}
-	
 	
 	
 }
