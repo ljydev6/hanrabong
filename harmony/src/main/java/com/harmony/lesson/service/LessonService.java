@@ -16,6 +16,7 @@ import com.harmony.lesson.dto.LessonApply;
 public class LessonService {
 	private LessonDao dao=new LessonDao();
 	
+	//모든 레슨정보 출력
 	public List<Lesson> printLessonAll(int cPage,int numPerpage){
 		Connection conn=getConnection();
 		List<Lesson> result=dao.printLessonAll(conn, cPage, numPerpage);
@@ -34,7 +35,7 @@ public class LessonService {
 		close(conn);
 		return l;
 	}
-	// 숫자로 레슨정보가져오기 && 조회수출력
+	// 레슨 번호로 레슨정보가져오기 && 조회수출력
 	public Lesson selectLessonByNo(int no, boolean readResult) {
 		Connection conn=getConnection();
 		Lesson l = dao.selectLessonByNo(conn, no);
@@ -49,7 +50,15 @@ public class LessonService {
 		close(conn);
 		return l;
 	}
-	//
+	// 레슨 신청 정보 번호로 리뷰가져오기
+	public List<LessonApply> selectReviewByNo(int no) {
+		Connection conn = getConnection();
+		List<LessonApply> l = dao.selectReviewByNo(conn,no);
+		close(conn);
+		return l;
+	}
+	
+	
 	public Lesson selectTimeByNo(int no) {
 		Connection conn=getConnection();
 		Lesson result=dao.selectTimeByNo(conn, no);
