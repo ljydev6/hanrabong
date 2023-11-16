@@ -59,21 +59,24 @@
 	</div>
 	<div class="add_mem">
 		<p>멤버추가</p>
-		<input type="button" value="기존회원" onclick="addTeamMem();">
-		<input type="button" value="비회원" onclick="addNonMem();">
+		<input type="button" value="회원추가" onclick="addTeamMem();">
 	</div>
-		<div class="submit_container">
-			<input type="button" value="등록" id="submit" >
-		</div>
-		
+	<div>
+		<span id="add_result">
+			
+		</span>	
+	</div>	
+	<div class="submit_container">
+		<input type="button" value="등록" id="submit" >
+	</div>
+
 	
 </div>
 
 
 
-<input type="hidden" id="dayOfWeek" name="dayOfWeek">
-<input type="hidden" id="startTime" name="startTime">
-<input type="hidden" id="endTime" name="endTime">
+<input type="hidden" id="inst" name="dayOfWeek">
+<input type="hidden" id="position" name="startTime">
 
 
 </section>
@@ -81,12 +84,7 @@
 <script>
 
 const addTeamMem =()=>{
-	open("<%=request.getContextPath()%>/ensemble/addTeamMem.do")
-	
-}
-
-const addSchedule =()=>{
-	open("<%=request.getContextPath()%>/ensemble/addSchedule.do"
+	open("<%=request.getContextPath()%>/ensemble/addTeamMem.do"
 			,"_blank","width=500, height=400");
 	
 }
