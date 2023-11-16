@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <meta charset="UTF-8">
 <%
 List<Inst> inst = (List<Inst>)request.getAttribute("inst");
@@ -28,63 +29,55 @@ String memberChk = (String)request.getAttribute("memberChk");
 탈퇴일 : DATE -> 팀원제외/탈퇴 페이지
 비회원성별 -> 합주모집글에서
 비회원나이 -> 합주모집글에서 -->
-<form action="<%=request.getContextPath()%>/ensemble/addTeamMemEnd.do">
+
 <div class="add_mem_container">
 	
 	
-	<div>
-		<p>이메일로 회원 찾기</p>
-		<input type="search" name="searchKeyword" id="searchKeyword">
-		<input id="searchEmailBtn" type="button" value="검색" onclick="searchEmail();" >
-	</div>
-	<div>
-		<span id="searchMem"></span>
-	</div>
+
 	<div>
 		<label for="inst">파트</label>
 		<select name="inst" id="inst">
 			<%if(!inst.isEmpty()) {
 				for(Inst i : inst){ %>
-					<option value="<%=i.getInstCode() %>"><%=i.getInstName() %></option>
+					<option value="<%=i.getInstName() %>">
+						<%=i.getInstName() %>
+					</option>
 			
-			<%	} 
+				<%}
 			}%>
 		</select>
 	</div>
 	<div>
 		<p>구분</p>
-		<label><input type="radio" name="position" value="leader">리더</label>		
-		<label><input type="radio" name="position" value="member">멤버</label> 
-	</div>
-	
-	<div>
-		<span id="add_mem_result">
-			
-		</span>
+		<label><input type="radio" name="position" class="position" value="리더">리더</label>		
+		<label><input type="radio" name="position" class="position" value="멤버">멤버</label> 
 	</div>
 	
 	<div class="submit-container">
-		<input type="submit">
+		<input type="button" id="addMember" value="등록">
 	</div>
 	
-</form>
+
 <script>
 
-	if($('#searchKeyword').equals(<%%>))
+$('#addMember').click((e)=>{
+	
+	if($('#inst option:selected').val() != null &&
+		$('.position:checked').val() !=null){ 
+			$("#inst",opener.document).val($('#inst option:selected').val());
+			$(".position",opener.document).val($('.position:checked').val());
+			
+			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
+			$("#add_result",opener.document).append($('.position:checked').val()+ "), ");
+			
+			close();
+	}else{
+		
+		alert("정보를 입력해주세요.");
+	}
 
-	/* if(memberChk!=null){
-		$('#searchMem').text($('#searchKeyword'));
-	} */
 	
-	
-	
-	const searchEmail=()=>{
-		const searchMem = $("#searchKeyword").val().trim();
-		open("<%=request.getContextPath()%>/ensemble/searchEmail.do?searchMem="+searchMem,
-						"_blank","width=500, height=400");
-	};
-	//searchEmailBtn.addEventListener("click", searchEmail);
-
+	});
 	
 	</script>
 
