@@ -10,7 +10,7 @@
 	              공지사항게시판
 	          </h2>
           </div>
-          <div class="w-full bg-white whitespace-no-wrap rounded-lg px-2 py-1">
+          <div class="w-full bg-white whitespace-no-wrap rounded-lg px-2 py-1" style="min-height: 300px">
           <table class="table table-white table-hover">
           	<thead>
           		<tr class="text-xs font-semibold text-center">
@@ -45,7 +45,7 @@
           				<%=pageBar %>
           			</td>
           			<td>
-          				<button type="button"  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" name="editBtn" aria-label="Edit">
+          				<button type="button"  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" name="writeBtn" aria-label="write">
                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                            </svg>
