@@ -101,8 +101,10 @@ public class AddIntroduceServlet extends HttpServlet {
 							.memberMusic(memberMusic)
 							.build();
 		 int result = new MemberService().addintroduce(mi);
-		 System.out.println(mi);
-		 System.out.println(result);
+		 if(result>0) {
+			 
+			response.sendRedirect(request.getContextPath()+"/main.do");
+		 }
 		}
 		
 	}
