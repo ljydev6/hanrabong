@@ -7,11 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.harmony.ensemble.model.dto.EnsembleMember;
-import com.harmony.ensemble.model.dto.Member;
 import com.harmony.ensemble.model.service.EnsembleService;
+import com.harmony.model.dto.Member;
 
 /**
  * Servlet implementation class AddTeamMemberEndServlet
@@ -32,38 +31,41 @@ public class AddTeamMemberEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		
-//		->db
-		
-//		아이디 검색 - 회원인지 확인
-//		고유번호 : 합주팀원으로서의 고유번호,,seq ->db
-//		팀번호 : 합주팀에서 input type="hidden"으로 팀번호 꽂아주기 
-//		악기번호 : 프론트에서 받아오기
-//		회원번호 : dto seq
-//		가입일 : 프론트에서
-//		탈퇴일 : null
-//		비회원성별 : null. 합주모집글에서 회원이 아닐 경우 받음.
-//		비회원 나이 : null. 합주모집글에서 회원이 아닐 경우 받음.
-//		포지션 : CHECK('LEADER','MEMBER')
 		
 		EnsembleService es = new EnsembleService();
-		String ensTeamNo = es.selectSeq();
-		
-		Member m = es.searchMemberById();
-		
-		com.harmony.model.dto.Member loginMember = (com.harmony.model.dto.Member)request.getSession().getAttribute("loginMember");
+		String userEmail = request.getParameter("searchKeyword");
+		System.out.println(userEmail);
+		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+//		String loginEmail = loginMember.getMemInfoEmail();
+//		request.setAttribute("loginEmail", loginEmail);
 		String loginMemNo = loginMember.getMemNo();
+		String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
+		String instCode = request.getParameter("inst");	
+		int result = 0;
 	
+		String position = request.getParameter("position");
+		System.out.println(position);
 		
-		EnsembleMember eMem = EnsembleMember.builder()
-//								.ensTeamMemberNo()
-								.ensTeamNo(ensTeamNo)
-								.ensInstCode(request.getParameter("inst"))
-								.ensMemNo(m.getMemNo())
-								.build();
-		
-		int result = es.insertEnsMember(eMem, loginMemNo);
-		
+		//이메일으로 검색되는 회원이 있을 때
+		if(memNo!=null) {
+					
+			//포지션이 리더일 때
+			if(position.equals("leader")) {
+			 	result = es.insertTeamLeader(memNo, instCode);
+			 	request.setAttribute("memberChk", "leader");
+			}else {
+			
+			//포지션이 멤버일 때
+				result = es.insertTeamMember(memNo, instCode);
+				request.setAttribute("memberChk", "member");
+			}
+			
+			request.setAttribute("msg","멤버 등록 완료");
+			request.setAttribute("result", "1");
+		}else {
+			request.setAttribute("result","0");
+			request.setAttribute("msg","존재하지 않는 회원입니다.");
+		}
 	}
 
 	/**
