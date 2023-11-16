@@ -1,16 +1,16 @@
 package com.harmony.board.model.service;
 
 import static com.harmony.common.JDBCTemplate.close;
-import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.commit;
+import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.rollback;
-
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.board.info.model.dto.InfoBoard;
 import com.harmony.board.model.dao.InfoBoardDao;
+
 
 
 
@@ -34,18 +34,18 @@ public class InfoBoardService {
 		return result;
 	}
 	
-	public List<InfoBoard> selectBoardByCategory(String category, int cPage, int numPerpage){
+	public List<InfoBoard> selectBoardByCategoryTagRegion(String category, String tag, String region, int cPage, int numPerpage) {
 		Connection conn = getConnection();
-		List<InfoBoard> result = dao.selectBoardByCategory(conn, category, cPage, numPerpage);
+		List<InfoBoard> result = dao.selectBoardByCategoryTagRegion(conn, category, tag, region, cPage, numPerpage);
 		close(conn);
 		return result;
 	}
 	
-	public int selectBoardCountByCategory(String keyword) {
-	    Connection conn = getConnection();
-	    int result = new InfoBoardDao().selectBoardCountByCategory(conn, keyword);
-	    close(conn);
-	    return result;
+	public int selectBoardCountByCategoryTagRegion(String category, String tag, String region) {
+		Connection conn = getConnection();
+		int result = dao.selectBoardCountByCategoryTagRegion(conn, category, tag, region);
+		close(conn);
+		return result;
 	}
 	
 	public int insertBoard(InfoBoard b) {
@@ -56,6 +56,15 @@ public class InfoBoardService {
 		close(conn);
 		return result;
 	}
+	
+	public InfoBoard selectBoardByNo(int no) {
+	    Connection conn = getConnection();
+	    InfoBoard b = dao.selectBoardByNo(conn, no);
+	    close(conn);
+	    return b;
+	}
+
+
 }
 
 

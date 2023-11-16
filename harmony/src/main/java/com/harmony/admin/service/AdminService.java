@@ -8,6 +8,7 @@ import java.util.List;
 import com.harmony.admin.model.dao.AdminDao;
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminService {
 	private static AdminService service = new AdminService();
@@ -37,4 +38,60 @@ public class AdminService {
 		close(conn);
 		return result;
 	}
+
+	public int deleteCarousel(String crslNo) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().deleteCarousel(conn,crslNo);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+
+	public Carousel insertCarousel(Carousel c) {
+		Connection conn = getConnection();
+		int seqCrslNo = AdminDao.getDao().getCrslSeqNo(conn);
+		c.setCrslNo(seqCrslNo);
+		int result = AdminDao.getDao().insertCarousel(conn,c);
+		Carousel cResult = null;
+		if(result>0) {
+			commit(conn);
+			cResult = AdminDao.getDao().getCrslByCrslNo(conn,seqCrslNo);
+		}else {
+			rollback(conn);
+		}
+		return cResult;
+	}
+
+	public Carousel updateCarousel(Carousel c) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().updateCarousel(conn,c);
+		Carousel cResult = null;
+		if(result>0) {
+			commit(conn);
+			cResult = AdminDao.getDao().getCrslByCrslNo(conn,c.getCrslNo());
+		}else {
+			rollback(conn);
+		}
+		return cResult;
+	}
+
+	public List<NoticeList> selectNoticeList(String type, String keyword) {
+		Connection conn = getConnection();
+		List<NoticeList> result = AdminDao.getDao().selectNoticeList(conn, type, keyword);
+		close(conn);
+		return result;
+	}
+
+	public int getNoticeTotalData(String type, String keyword) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().getNoticeTotalData(conn,type,keyword);
+		close(conn);
+		return result;
+	}
+	
+	
+	
 }

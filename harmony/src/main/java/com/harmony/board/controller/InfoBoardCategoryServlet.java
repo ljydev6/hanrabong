@@ -31,30 +31,41 @@ public class InfoBoardCategoryServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String type = request.getParameter("type");
-	     String keyword = request.getParameter("keyword");
-	     int cPage, numPerpage=5;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String category = request.getParameter("category");
+        String tag = request.getParameter("tag");
+        String region = request.getParameter("region");
 
-	     try {
-	         cPage = Integer.parseInt(request.getParameter("cPage"));
-	     } catch (NumberFormatException e) {
-	         cPage = 1;
-	     }
+        
+        if (category == null) category = "";
+        if (tag == null) tag = "";
+        if (region == null) region = "";
+        
+        if ("all".equals(category)) category = "";
+        if ("all".equals(tag)) tag = "";
+        if ("all".equals(region)) region = "";
+        
 
-	     List<InfoBoard> boards = new InfoBoardService().selectBoardByCategory(keyword, cPage, numPerpage);
+        int cPage, numPerpage=5;
 
-	     int totalData = new InfoBoardService().selectBoardCountByCategory(keyword);
-	     int pageBarSize = 5;
+        try {
+            cPage = Integer.parseInt(request.getParameter("cPage"));
+        } catch (NumberFormatException e) {
+            cPage = 1;
+        }
 
-	     String pageBar = PageBarBuilder.pageBarBuilderWithCategory(cPage, numPerpage, totalData, pageBarSize, request.getRequestURI(), type, keyword);
+        List<InfoBoard> boards = new InfoBoardService().selectBoardByCategoryTagRegion(category, tag, region, cPage, numPerpage);
 
-	     request.setAttribute("pageBar", pageBar);
+        int totalData = new InfoBoardService().selectBoardCountByCategoryTagRegion(category, tag, region);
+        int pageBarSize = 5;
 
-	     request.setAttribute("boards", boards);
+        String pageBar = PageBarBuilder.pageBarBuilderWithCategoryTagRegion(cPage, numPerpage, totalData, pageBarSize, request.getRequestURI(), category, tag, region);
 
-	     request.getRequestDispatcher("/views/board/communityinfo.jsp").forward(request, response);
-	}
+        request.setAttribute("pageBar", pageBar);
+        request.setAttribute("boards", boards);
+
+        request.getRequestDispatcher("/views/board/communityinfo.jsp").forward(request, response);
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
