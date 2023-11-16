@@ -59,6 +59,12 @@ button{
 .detailImg{
 	width: 100%;
 	height: 100%;
+	position: relative;
+}
+.saveLesson{
+	position: absolute;
+	left: 20px;
+	top: 20px;
 }
 .detailImg>img{
 	padding: 5px;
@@ -155,4 +161,47 @@ input[type=submit]{
 .detailsContainer_content-inputpost{
 	display: flex;
 	flex-direction: column;
+}
+.rewiewContainer{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 3px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+.avataMemberStarDate{
+	display: flex;
+	align-items: center;
+}
+.memberStarDate{
+	font-size: 0.8rem;
+	margin-left: 10px;
+}
+.starDate>i{
+	color: coral;
+}
+
+@keyframes heartBeat {
+    0%{
+        color: white;
+        transform: none;
+    }
+    50%{
+        color: rgb(216, 82, 212);
+        transform: scale(1.5);
+    }
+    100%{
+        color: white;
+        transform: none;
+    }
+}
+
+.saveLesson:hover i {
+    will-change: transform;
+    /* 애니메이션을 안정적으로 보이도록 브라우저를 도와준다. */
+    /* 브라우저에게 어떤 것이 변할 것인지 예고해주는것 */
+    /* 그래픽 카드를 이용해서 애니메이션을 가속화 한다. */
+    animation: heartBeat 1s linear infinite;
 }

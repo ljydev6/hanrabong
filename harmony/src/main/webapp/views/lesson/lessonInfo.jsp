@@ -1,3 +1,4 @@
+<%@page import="com.harmony.lesson.dto.LessonApply"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="com.harmony.lesson.dto.Lesson"%>
@@ -7,6 +8,7 @@
 <%
 	Lesson lesson = (Lesson)request.getAttribute("lesson");
 	Lesson time = (Lesson)request.getAttribute("time");
+	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -67,6 +69,9 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
+                        <div class="saveLesson">
+                            <i class="fa-solid fa-heart fa-xs"></i>
+                    	</div>
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
                         <%} else { %>
@@ -248,22 +253,44 @@
                               </div>
                           </div>
                           <!-- 리뷰 -->
-                          <div class="detailsContainer" id="reviewInfo">
-                              <div class="detailsContainer_title">
-                                  <div>리뷰</div>
+                          <div class="rewiewContainer" id="reviewInfo">
+                              <div class="mb-3">리뷰</div>
+                              <%for(LessonApply l : reviews){ %>
+                              <div class="avataMemberStarDate">
+                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></i></div>
+                              	<div class="memberStarDate">
+                              		<div>
+                               			<%=l.getMemNo() %>
+                               		</div>
+                               		<div class="starDate">
+                               			<%for(int i=0;i<l.getReviewPoint();i++){ %>
+                               				<i class="fa-solid fa-star"></i>
+                               			<%} %>
+                                		<%=l.getReviewPoint() %> |
+                                		<%=l.getReviewEnrollDate() %>
+                               		</div>
+                              	</div>
                               </div>
-                              <div class="detailsContainer_content">
-                                  <div></div>
+                              
+                              <div class="reviewContent">
+                               	<div class="review">
+                               		<%=l.getReview() %>
+                               	</div>
+                               	<hr>
                               </div>
+                              <%} %>
                           </div>
                     </div>
                 </div>
             </article>
-            <h1>footer</h1>
 		</div>
 	</section>
 	
 	<script>
+		$(".saveLesson").click(()=>{
+			confirm('찜하시겠습니까?')
+		});
+	
 		$("#startTime").change(()=>{
 	        let startTime = ($("#startTime").val()).substr(0,2);
 	        let endTime = ($("#endTime").val()).substr(0,2);
@@ -277,15 +304,15 @@
 	        for(let i=0; i<=startTime-9;i++){
 	            $("#endTime option:eq("+i+")").attr("disabled", true);
 	        }
-	    })
+	    });
 	    
-	    function removeCheck() {
+	    /* function removeCheck() {
 		 if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 		     document.removefrm.submit();
 		 }else{   //취소
 		     return false;
 		 }
-		}
+		} */
 	</script>
 	
 	<script>
@@ -322,6 +349,7 @@
 	
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
+	        map.setDraggable(false);
 	    } 
 	});
 	

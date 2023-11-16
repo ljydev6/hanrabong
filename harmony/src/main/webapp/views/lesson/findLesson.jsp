@@ -100,9 +100,6 @@
                         <div class="lessonView">
                         	<i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
                         </div>
-                        <div class="saveLesson">
-                            <i class="fa-solid fa-heart fa-xs"></i>
-                    	</div>
                       </div>
                       		<%} %>
                      	<%} %>
