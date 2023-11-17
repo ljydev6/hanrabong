@@ -65,6 +65,8 @@ public class EnrollLessonEndServlet extends HttpServlet {
 			Timestamp startTime = Timestamp.valueOf(formatter.format(date) +" "+ mr.getParameter("startTime"));
 			Timestamp endTime = Timestamp.valueOf(formatter.format(date) +" "+mr.getParameter("endTime"));
 			String[] day = mr.getParameterValues("hopeDay");
+			
+			String memNo = request.getParameter("memNo");
 					
 			// MultipartRequest클래스가 제공하는 메소드를 이용해서 파일 이름 가져오기
 			String ori = mr.getOriginalFileName("upfile");

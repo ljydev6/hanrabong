@@ -71,7 +71,7 @@ public class KakaoLoginServlet extends HttpServlet {
 	    }
 		// member객체를 loginMember라는 이름으로 세션에 저장
 	         request.getSession().setAttribute("loginMember", member);
-	       
+	         
 	        // 지정된 경로로 리다이렉트 하기
 	         response.sendRedirect(path);
 	}

@@ -38,7 +38,7 @@
             <!-- 카데고리, 수정, 삭제버튼 -->
 			<div class="upperBar">
 				<div class="category">
-					<input class="btn" value="악기 >" readonly>
+					<input class="btn" value="악기 >" onclick="location.href='<%=request.getContextPath()%>/lesson/findLesson.do'" readonly>
 	                <input class="btn" readonly type="text" 
                                       <% switch (inst) {
                                       	case "INST_1" :%>value="드럼";break;
@@ -58,13 +58,16 @@
                                       <% case "INST_15" :%>value="ETC";break;
                                       <%} %>
                                       >
-                 </div>                     
-                
+                 </div>
+                 <!--  -->
+                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %>
                 <div class="mb-3">
-                <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do">레슨 등록</a>
+                <!-- 레슨게시글번호로 강사번호를 찾아야함 -->
+                <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
+                <%} %>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
@@ -83,7 +86,7 @@
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
-                        	<form action="<%=request.getContextPath() %>/apply/applyLesson.do?no=<%=lesson.getBoardNo()%>" method="post">
+                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do?no=<%=lesson.getBoardNo()%>" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
                         	<!-- 강사번호 바꿔야함 -->
                         	<input type="hidden" value="MEM_11" name="memNo">
                             <div class="labelBox d-flex flex-column p-4 mb-4">
@@ -173,7 +176,11 @@
                                 
                             </div>
                             <div>
+                            <%if(loginMember!=null) {%>
                                 <input type="submit" value="상담신청">
+                            <%} else {%>
+                            	<input type="button" value="상담신청" readonly="readonly" onclick="alert('로그인이 필요한 서비스입니다.');">
+                            <%} %>
                             </div>
                             </form>
                         </div>
@@ -279,6 +286,19 @@
                                	<div class="review">
                                		<%=l.getReview() %>
                                	</div>
+                               	<div id="comment-container">
+									<div class="comment-editor">
+										<form action="<%=request.getContextPath() %>/lesson/insertComment.do" method="post">
+											<input type="hidden" name="boardRef" value="">
+											<input type="hidden" name="level" value="1">
+											<input type="hidden" name="writer" value="">
+											<input type="hidden" name="boardCommentRef" value="0">
+											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
+											<br>
+											<button class="btn btn-outline-warning" type="submit" id="btn-insert">등록</button>
+										</form>
+									</div>
+								</div>
                                	<hr>
                               </div>
                               <%} %>
@@ -356,12 +376,21 @@
 	    });
 	    
 		$("#deleteLesson").click(()=>{
-	    	if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+	    	if (confirm("정말 삭제하시겠습니까?") == true){ //확인
 				 location.href='<%=request.getContextPath()%>/lesson/deleteLesson.do?no=<%=lesson.getBoardNo()%>'
 			 }else{   //취소
 			     return false;
 			 }
 	    })
+	    
+	    /* function consult() {
+		    if (confirm("신청하시겠습니까?") == true) {
+		        let form = document.getElementById("lessonConsultSubmit");
+		        form.submit();
+			    } else {
+			    	return false;
+			    }
+		} */
 			 
 	</script>
 	
