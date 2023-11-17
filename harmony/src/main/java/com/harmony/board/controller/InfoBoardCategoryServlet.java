@@ -64,7 +64,7 @@ public class InfoBoardCategoryServlet extends HttpServlet {
         request.setAttribute("pageBar", pageBar);
         request.setAttribute("boards", boards);
 
-        request.getRequestDispatcher("/views/board/communityinfo.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/board/infoBoardList.jsp").forward(request, response);
     }
 
 	/**

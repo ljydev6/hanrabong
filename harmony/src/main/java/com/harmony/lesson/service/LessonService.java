@@ -30,12 +30,21 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
+	// 게시글번호로 레슨찾기
 	public Lesson selectLessonByNo(int no) {
 		Connection conn=getConnection();
 		Lesson l = dao.selectLessonByNo(conn, no);
 		close(conn);
 		return l;
 	}
+	// 게시글번호로 레슨찾기 join 레슨게시글 강사
+	public Lesson selectLessonByNoJoin(int boardNo) {
+		Connection conn=getConnection();
+		Lesson l = dao.selectLessonByNoJoin(conn, boardNo);
+		close(conn);
+		return l;
+	}
+	
 	// 레슨 번호로 레슨정보가져오기 && 조회수출력
 	public Lesson selectLessonByNo(int no, boolean readResult) {
 		Connection conn=getConnection();
@@ -83,7 +92,6 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
-	
 	public int insertLesson(Lesson l) {
 		Connection conn=getConnection();
 		int result=dao.insertLesson(conn, l);

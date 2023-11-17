@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.harmony.lesson.dto.Lesson;
+import com.harmony.lesson.service.LessonService;
+
 /**
  * Servlet implementation class EnrollLessonServlet
  */
@@ -26,6 +29,12 @@ public class EnrollLessonServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 조인한 회원번호 + 레슨 게시글 가져오기
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		Lesson l = new LessonService().selectLessonByNoJoin(boardNo);
+		System.out.println(l.getTeacherNo());
+		
+		request.setAttribute("lesson", l);
 		request.getRequestDispatcher("/views/lesson/enrollLesson.jsp")
 				.forward(request, response);
 	

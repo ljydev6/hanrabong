@@ -1,8 +1,10 @@
+<%@page import="javax.sound.midi.MidiChannel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.harmony.model.dto.MemberInfo" %>
-<%@ include file="/views/common/header.jsp" %> 
 
+<%@ include file="/views/common/header.jsp" %> 
+<%MemberInfo mi = (MemberInfo)request.getSession().getAttribute("MemberInfo"); %>
 <%Member m = (Member)request.getSession().getAttribute("loginMember"); %>
 
 
@@ -42,7 +44,7 @@
 			</div>
 			<div>
 				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduceServlet.do" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="memNo" value="<%=m.getMemNo()%>">
+					<input type="hidden" name="memNo" value="<%=mi.getMemNo()%>">
 	
 					<p>
 						<label>프로필사진</label> 
@@ -161,6 +163,10 @@
 					<p>
 						<label>음원 링크</label> 
 						<input class="w3-input" type="text"  name="musiclink" > 
+					</p>
+					<p>
+						<label>이메일</label> 
+						<input class="w3-input" type="text"  name="email" value="<%=mi.getEmail()%>"> 
 					</p>
 					<p class="w3-center">
 						<button type="submit" id="joinBtn" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">확인</button>

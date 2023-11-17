@@ -1,4 +1,4 @@
-package com.harmony.board.controller;
+package com.harmony.lesson.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class InfoBoardWriteServlet
+ * Servlet implementation class InsertComment
  */
-@WebServlet("/board/boardWrite.do")
-public class InfoBoardWriteServlet extends HttpServlet {
+@WebServlet("/lesson/insertComment.do")
+public class InsertComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InfoBoardWriteServlet() {
+    public InsertComment() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +26,8 @@ public class InfoBoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/board/infoBoardWrite.jsp")
-		.forward(request, response);
+			
+	
 	}
 
 	/**

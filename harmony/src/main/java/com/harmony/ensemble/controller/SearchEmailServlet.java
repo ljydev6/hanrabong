@@ -1,6 +1,7 @@
 package com.harmony.ensemble.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.ensemble.model.dto.MemberEns;
+import com.harmony.ensemble.model.dto.Inst;
 import com.harmony.ensemble.model.service.EnsembleService;
 /**
  * Servlet implementation class SearchEmail
@@ -38,10 +39,31 @@ public class SearchEmailServlet extends HttpServlet {
 		//이메일 검색 
 		//사용자가 전달한 이메일이 DB(TBL_MEMBER_INFO)에 있는지 확인
 		
+		List<Inst> inst = new EnsembleService().searchAllInst();
+		
+		request.setAttribute("inst", inst);
+	
+		
 		EnsembleService es = new EnsembleService();
 //		
-		String userEmail = request.getParameter("searchKeyword");
+		String userEmail = request.getParameter("keyword");
 		String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
+		
+		System.out.println(userEmail);
+		System.out.println(memNo);
+		
+		if(!memNo.equals("")) {
+			//검색한 이메일이 회원 테이블에 있으면
+			request.setAttribute("memNo", memNo);
+		}else{
+			//검색한 이메일이 회원 테이블에 없음
+			request.setAttribute("msg","존재하지 않는 회원입니다.");
+			request.setAttribute("result", "fail");
+			
+	
+		}
+//		
+		request.getRequestDispatcher("/views/ensemble/addTeamMem.jsp").forward(request, response);
 ////		String instCode = request.getParameter("inst");
 //		
 //		MemberEns loginMember = (MemberEns)request.getSession().getAttribute("loginMember");
@@ -53,17 +75,8 @@ public class SearchEmailServlet extends HttpServlet {
 //			
 //		
 //			String loginEmail = loginMember.getMemInfoEmail();
-			
-			if(memNo!=null) {
-				//검색한 이메일이 회원 테이블에 있으면
-				request.getRequestDispatcher("/views/ensemble/searchEmail.jsp").forward(request, response);
-			
-			}else{
-				//검색한 이메일이 회원 테이블에 없음
-				request.setAttribute("msg","존재하지 않는 회원입니다.");
-				
-					
-			}
+			//----------------------
+		
 				
 		
 		

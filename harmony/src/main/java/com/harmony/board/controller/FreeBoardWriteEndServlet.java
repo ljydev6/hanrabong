@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.harmony.board.exception.BadAccessException;
-import com.harmony.board.info.model.dto.InfoBoard;
-import com.harmony.board.model.service.InfoBoardService;
+import com.harmony.board.free.model.dto.FreeBoard;
+import com.harmony.board.model.service.FreeBoardService;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
- * Servlet implementation class InfoBoardWriteEndServlet
+ * Servlet implementation class FreeBoardWriteEndServlet
  */
-@WebServlet("/board/boardWriteEnd.do")
-public class InfoBoardWriteEndServlet extends HttpServlet {
+@WebServlet("/board/freeboardWriteEnd.do")
+public class FreeBoardWriteEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InfoBoardWriteEndServlet() {
+    public FreeBoardWriteEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,25 +47,23 @@ public class InfoBoardWriteEndServlet extends HttpServlet {
 					request, path,1024*1024*100,"UTF-8",
 					new DefaultFileRenamePolicy());
 			
-			InfoBoard b=InfoBoard.builder()
-			    .infBrdWriter(mr.getParameter("infBrdWriter"))  
-			    .infBrdTitle(mr.getParameter("title"))  
-			    .infBrdContent(mr.getParameter("content"))  
-			    .infBrdTitleImg(mr.getFilesystemName("upfile"))  
-			    .infBrdRegion(mr.getParameter("region"))  
-			    .infBrdCatNo(mr.getParameter("category"))  
-			    .infBrdTagNo(mr.getParameter("tag"))  
-			    .build();
-			
-			int result=new InfoBoardService().insertBoard(b);
+			FreeBoard b = FreeBoard.builder()
+				    .freBrdWriter(mr.getParameter("freBrdWriter"))  
+				    .freBrdTitle(mr.getParameter("title"))  
+				    .freBrdContent(mr.getParameter("content"))  
+				    .freBrdTitleImg(mr.getFilesystemName("upfile"))  
+				    .build();
+
+				int result = new FreeBoardService().insertFreeBoard(b);
+
 			String msg,loc;
 			if(result>0) {
 			    msg="게시글 등록성공";
-			    loc="/infoBoardList.do";
+			    loc="/freeBoardList.do";
 			}else {
 			    msg="게시글 등록실패";
-			    loc="/board/boardWrite.do";
-			    File delFile=new File(path+b.getInfBrdTitleImg()); 
+			    loc="/board/freeboardWrite.do";
+			    File delFile=new File(path+b.getFreBrdTitleImg()); 
 			    if(delFile.exists()) delFile.delete();
 			}
 			request.setAttribute("msg", msg);
@@ -75,12 +73,7 @@ public class InfoBoardWriteEndServlet extends HttpServlet {
 			.forward(request, response);
 			
 		}
-	
-	
-	
-	
 	}
-		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

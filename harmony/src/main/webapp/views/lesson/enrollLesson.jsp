@@ -1,6 +1,10 @@
+<%@page import="com.harmony.lesson.dto.Lesson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
+<%
+	Lesson lesson = (Lesson)request.getAttribute("lesson");
+%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/enrollLesson.css">
    	<section class="container w-50">
@@ -17,7 +21,7 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50 d-flex flex-column">
                         <h5>이미지업로드</h5>
-                        <input type="file" name="upfile" class="imgUpload" accept="image/*">
+                        <input type="file" name="upfile" class="imgUpload form-control" accept="image/*">
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
@@ -38,8 +42,8 @@
                             <!-- 시간대, 가격 등등... -->
                             <div>레슨정보</div>
                             <div>강사정보</div>
-                            <!-- teacherNum일단 T_0002로 해놓음 -->
-                            <input type="hidden" value="T_0002" name="teacherNum">
+                            <!-- teacherNum 회원정보(memNo)를 사용해 Join으로 강사번호 가져오기-->
+                            <input type="hidden" value="<%=lesson.getTeacherNo() %>" name="teacherNum">
                         </div>
                         <div class="detailInfo d-flex mt-3">
                             <div class="detailsContainer">

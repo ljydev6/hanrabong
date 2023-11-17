@@ -80,6 +80,23 @@ public class LessonDao {
 				close(pstmt);
 			}return l;
 		}
+		// 게시글번호로 레슨찾기 join사용
+				public Lesson selectLessonByNoJoin(Connection conn, int boardNo) {
+					PreparedStatement pstmt=null;
+					ResultSet rs=null;
+					Lesson l=null;
+					try {
+						pstmt=conn.prepareStatement(sql.getProperty("selectLessonByNoJoin"));
+						pstmt.setInt(1, boardNo);
+						rs=pstmt.executeQuery();
+						if(rs.next()) l=getLesson(rs);
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}finally {
+						close(rs);
+						close(pstmt);
+					}return l;
+				}
 		// 번호로 레슨 요일정보찾기
 		public Lesson selectTimeByNo(Connection conn, int no) {
 			PreparedStatement pstmt=null;

@@ -46,7 +46,6 @@
                         <li><input type="checkbox" name="instrument" value="INST_14" id="daw"><label for="daw">믹싱(DAW)</label></li>
                         <li><input type="checkbox" name="instrument" value="INST_15" id="etc"><label for="etc">ETC</label></li>
                       </ul>
-                      
                     </div>
                     <div>
                       <div class="slideToggle"><i class="fa-solid fa-location-dot"></i> 장소별</div>
@@ -60,9 +59,7 @@
                         <li><input type="checkbox" name="place" value="경상" id="gyeongsang" ><label for="gyeongsang">경상</label></li>
                         <li><input type="checkbox" name="place" value="제주" id="jeju" ><label for="jeju">제주</label></li>
                       </ul>
-                      
                     </div>
-                    <div class="slide2"></div>
                     <div>
                         <div class="slideToggle"><i class="fa-solid fa-barcode"></i> 가격별</div>
 	                      <ul>
@@ -118,6 +115,7 @@
 	          });//each
 	          let targetClass = targetValue.join(",");
 	         console.log(targetValue)
+	         console.log(targetClass)
 	    });
 	</script>
     <script>

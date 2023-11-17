@@ -1,5 +1,6 @@
 package com.harmony.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -44,7 +45,7 @@ public class AddIntroduceServlet extends HttpServlet {
 		if(!ServletFileUpload.isMultipartContent(request)){
 			throw new BadAccessException("잘못된접근입니다. 관리자에게 문의하세요");
 		}else {
-			String path= getServletContext().getRealPath("/upload//");
+			String path= getServletContext().getRealPath("/upload/");
 			int maxSize=1024*1024*300;//300mb
 			String encoding ="UTF-8";
 			DefaultFileRenamePolicy dfr = new DefaultFileRenamePolicy();
@@ -71,17 +72,22 @@ public class AddIntroduceServlet extends HttpServlet {
 			
 		Enumeration<String> filenames= mr.getFileNames();
 		while(filenames.hasMoreElements()) {
+			
 			String filename=filenames.nextElement();
 			String rename=mr.getFilesystemName(filename);
 			String oriname=mr.getOriginalFileName(filename);
 			String filetype=filename.substring(0,5);
-		
+			File file = mr.getFile(filename);
 			if(filetype.equals("video")){
-			memberVideo.add(MemberVideo.builder().videoType("FILE").videoLink(rename).build());
+			memberVideo.add(MemberVideo.builder().memNo(memNo).videoType("FILE").videoLink(rename).build());
+			memberVideo.add(MemberVideo.builder().memNo(memNo).videoType("LINK").videoLink(videolink).build());
+			
 			}else if(filetype.equals("music")) {
-			memberMusic.add(MemberMusic.builder().musicType("FILE").musicLink(rename).build());	
+			memberMusic.add(MemberMusic.builder().memNo(memNo).musicType("FILE").musicLink(rename).build());
+			memberMusic.add(MemberMusic.builder().memNo(memNo).musicType("LINK").musicLink(musiclink).build());
 			}else if(filetype.equals("profi")) {
-			MemberInfo.builder().profilPhoto(rename).build();	
+				profilephoto=rename;
+				
 			}
 		}			
 		MemberInfo mi= MemberInfo.builder()

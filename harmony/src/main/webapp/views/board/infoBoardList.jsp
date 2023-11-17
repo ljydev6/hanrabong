@@ -14,8 +14,8 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 	<div class="content">
 		<div class="infoboard">
 			<div class="info-container">
-				<h3 class="info"><a href ="<%=request.getContextPath()%>/communitymain.do">정보 게시판</a></h3>
-				<h3 class="free"><a href="<%=request.getContextPath()%>/test2.do">자유 게시판</a></h3>
+				<h3 class="info"><a href ="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a></h3>
+				<h3 class="free"><a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a></h3>
 			</div>
 		</div>
 		<div class="main-sort-container">
@@ -93,11 +93,8 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 
 		</div>
 		<div class="write-button-container">
-		<!-- 	<button type="button" class="write-button">
-				<a href="정보글쓰기.html">글쓰기</a>
-			</button> -->
 			<button onclick="location.assign('<%=request.getContextPath() %>/board/boardWrite.do')">
-				글쓰기
+				정보게시판글쓰기
 			</button>
 			
 		</div>

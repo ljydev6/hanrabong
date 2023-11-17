@@ -31,6 +31,7 @@ public class InfoBoardCommentInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
     	int infBrdNo = Integer.parseInt(request.getParameter("boardRef"));
         String infComWriter = request.getParameter("infComWriter");
         String infComContent = request.getParameter("content");
@@ -53,7 +54,7 @@ public class InfoBoardCommentInsertServlet extends HttpServlet {
         if (result > 0) {
             response.sendRedirect(request.getContextPath() + "/board/boardView.do?no=" + infBrdNo);
         } else {
-            request.getRequestDispatcher("/views/common/error.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/common/harmonyExceptionPage.jsp").forward(request, response);
         }
     }
 
