@@ -93,14 +93,16 @@ public class AdminService {
 		return result;
 	}
 
-	public Notice selectNoticeByNo(int no) {
+	public Notice selectNoticeByNo(int no,boolean viewCount) {
 		Connection conn = getConnection();
 		Notice result = AdminDao.getDao().getNoticeByNo(conn,no);
 		if(result!=null) {
 			int vcresult = AdminDao.getDao().addNoticeViewCount(conn,no);
 			if(vcresult>0) {
 				commit(conn);
-				result.setViewCount(result.getViewCount()+1);
+				if(viewCount) {
+					result.setViewCount(result.getViewCount()+1);
+				}
 			}else {
 				rollback(conn);
 			}

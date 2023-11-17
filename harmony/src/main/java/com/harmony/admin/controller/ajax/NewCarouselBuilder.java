@@ -5,7 +5,7 @@ import com.harmony.admin.model.dto.Carousel;
 public class NewCarouselBuilder {
 	public static String carouselBuilder(Carousel c,String contextPath) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<form method=\"post\" enctype=\"multipart/form-data\" class=\"align-items-center\" onsubmit=\"doajax(event,'edit');\">");
+		sb.append("<form method=\"post\" enctype=\"multipart/form-data\" class=\"align-items-center needs-validation\" novalidate onchange=\"frmchange(event);\" onsubmit=\"validate(event,'edit');\">");
 		sb.append("<div class=\"card-header input-group input-group-sm\">");
 		sb.append("<span class=\"input-group-text\">관리번호</span>");
 		sb.append("<input class=\"form-control form-control-plaintext\" type=\"number\" name=\"crslNo\" value=\""+c.getCrslNo()+"\" style=\"width:50px\" readOnly>");

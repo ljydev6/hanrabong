@@ -129,7 +129,8 @@ public class MemberDao {
 			pstmt.setString(1,mm.getMemNo());
 			pstmt.setString(2, mm.getMusicType());
 			pstmt.setString(3,mm.getMusicLink());
-			pstmt.executeUpdate();
+			result=pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -144,7 +145,7 @@ public class MemberDao {
 			pstmt.setString(1,mv.getMemNo());
 			pstmt.setString(2, mv.getVideoType());
 			pstmt.setString(3,mv.getVideoLink());
-			pstmt.executeUpdate();
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

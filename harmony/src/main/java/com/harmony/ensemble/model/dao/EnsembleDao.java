@@ -58,51 +58,6 @@ private Properties sql=new Properties();
 	}
 
 	
-	public int insertTeamLeader(Connection conn, String memNo, String instCode) {
-		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-		int result = 0;
-		EnsembleService es = new EnsembleService();
-		String ensTeamNo = es.selectSeq();
-		try {
-			pstmt = conn.prepareStatement(sql.getProperty("insertTeamLeader"));
-			pstmt.setString(1,ensTeamNo);
-			pstmt.setString(2, instCode);
-			pstmt.setString(3, memNo);
-			result=pstmt.executeUpdate();
-//			if(rs.next()) result=rs.getInt(1);
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-//			close(rs);
-			close(pstmt);
-		}
-		return result;
-	}
-	
-	public int insertTeamMember(Connection conn, String memNo, String instCode) {
-		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-		int result = 0;
-		EnsembleService es = new EnsembleService();
-		String ensTeamNo = es.selectSeq();
-		try {
-			pstmt = conn.prepareStatement(sql.getProperty("insertTeamMember"));
-			pstmt.setString(1,ensTeamNo);
-			pstmt.setString(2, instCode);
-			pstmt.setString(3, memNo);
-			result=pstmt.executeUpdate();
-//			if(rs.next()) result=rs.getInt(1);
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-//			close(rs);
-			close(pstmt);
-		}
-		return result;
-	}
 	
 	
 	public MemberEns searchMemberById(Connection conn) {
@@ -132,17 +87,18 @@ private Properties sql=new Properties();
 	public int insertEnsMember(Connection conn, EnsembleMember eMem) {
 		PreparedStatement pstmt=null;
 		int result=0;
-		EnsembleService es = new EnsembleService();
-		String ensTeamNo = es.selectSeq();
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
-			pstmt.executeQuery();
-			pstmt.setString(1, ensTeamNo);
+			pstmt.setString(1, eMem.getEnsTeamNo());
 			pstmt.setString(2, eMem.getEnsInstCode());
 			pstmt.setString(3, eMem.getEnsMemNo());
+			pstmt.setString(4, eMem.getEnsMemPosition());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}finally {
+			
+			close(pstmt);
 		}
 		
 		
@@ -167,27 +123,7 @@ private Properties sql=new Properties();
 		return result;
 	}
 	
-	public int insertEnsLeader(Connection conn, EnsembleMember eMem) {
-		PreparedStatement pstmt=null;
-		int result=0;
-		EnsembleService es = new EnsembleService();
-		String ensTeamNo = es.selectSeq();
-		try {
-			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
-			pstmt.executeQuery();
-			pstmt.setString(1, ensTeamNo);
-			pstmt.setString(2, eMem.getEnsInstCode());
-			pstmt.setString(3, eMem.getEnsMemNo());
-			result=pstmt.executeUpdate();
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-		return result;
-	}
-	
+
 	
 	public List<Inst> searchAllInst(Connection conn){
 		PreparedStatement pstmt=null;

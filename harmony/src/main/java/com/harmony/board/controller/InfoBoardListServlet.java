@@ -16,7 +16,7 @@ import com.harmony.common.PageBarBuilder;
 /**
  * Servlet implementation class InfoBoardListServlet
  */
-@WebServlet("/communitymain.do")
+@WebServlet("/infoBoardList.do")
 public class InfoBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -80,7 +80,7 @@ public class InfoBoardListServlet extends HttpServlet {
 		
 		request.setAttribute("boards", boards);
 		request.setAttribute("pageBar",pageBar);
-		request.getRequestDispatcher("/views/board/communityinfo.jsp")
+		request.getRequestDispatcher("/views/board/infoBoardList.jsp")
 		.forward(request, response);
 		
 	}

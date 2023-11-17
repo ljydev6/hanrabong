@@ -1,13 +1,15 @@
 /**
  * 
  */
-
+(() => {
+  'use strict'
+})();
 const addNewBlankCarousel = ()=>{
 	const today = new Date();
 	let year = today.getFullYear();
 	let month = ('0'+(today.getMonth()+1)).slice(-2);
 	let day = ('0'+today.getDate()).slice(-2);
-	const $div = $('<div>').addClass('card newcard').html('<form method="post" enctype="multipart/form-data" class="align-items-center" onsubmit="doajax(event,\'insert\');">'+
+	const $div = $('<div>').addClass('card newcard').html('<form method="post" enctype="multipart/form-data" class="align-items-center needs-validation" novalidate onchange="frmchange(event);" onsubmit="validate(event,\'insert\');">'+
 	          			'<div class="card-header input-group input-group-sm">'+
           					'<span class="input-group-text">관리번호</span>'+
           					'<input class="form-control form-control-plaintext" type="number" name="crslNo" value="" style="width:50px" disabled>'+
@@ -25,9 +27,9 @@ const addNewBlankCarousel = ()=>{
 		          			'<li class="list-group-item">'+
 		          				'<div class="input-group input-group-sm">'+
 			          				'<span class="input-group-text">게시일</span>'+
-			          				'<input class="form-control" type="date" name="startDate" placeholder="게시시작일" value="'+(year+'-'+month+'-'+day)+'">'+
+			          				'<input class="form-control" type="date" name="startDate" placeholder="게시시작일" value="'+(year+'-'+month+'-'+day)+'" required>'+
 			          				'<span class="input-group-text">~</span>'+
-			          				'<input class="form-control" type="date" name="endDate" placeholder="게시종료일" value="">'+
+			          				'<input class="form-control" type="date" name="endDate" placeholder="게시종료일" value="" required>'+
 			          			'</div>'+
 		          			'</li>'+
 		          			'<li class="list-group-item">'+
@@ -85,6 +87,26 @@ const changeThumbnail = (e)=>{
 		$img.attr('src',e.target.result);
 	};
 };
+const frmchange = (e)=>{
+	let startdate = new Date($(e.currentTarget).find('input[name="startDate"]').val());
+	let enddate = new Date($(e.currentTarget).find('input[name="endDate"]').val());
+	if(enddate-startdate>0){
+		$(e.currentTarget).find('input[name="endDate"]')[0].setCustomValidity("");
+	}else{
+		$(e.currentTarget).find('input[name="endDate"]')[0].setCustomValidity("종료는 시작보다 우선할 수 없습니다.");
+	}
+}
+const validate = (e,type)=>{
+	e.target.classList.add('was-validated');
+	let startdate = new Date($(e.target).find('input[name="startDate"]').val());
+	let enddate = new Date($(e.target).find('input[name="endDate"]').val());
+	if(enddate-startdate<0 || !e.target.checkValidity()){
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	}
+	doajax(e,type);
+}
 
 const doajax = (e,type)=>{
 	e.preventDefault();
