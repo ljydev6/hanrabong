@@ -7,6 +7,9 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 %>
 <%@ include file="/views/common/header.jsp"%>
 
+
+
+
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoboardView.css"
 	type="text/css">

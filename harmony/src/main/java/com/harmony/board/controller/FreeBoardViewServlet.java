@@ -9,22 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.board.info.model.dto.InfoBoard;
-import com.harmony.board.info.model.dto.InfoCommentBoard;
-import com.harmony.board.model.service.InfoBoardService;
-
+import com.harmony.board.free.model.dto.FreeBoard;
+import com.harmony.board.free.model.dto.FreeCommentBoard;
+import com.harmony.board.model.service.FreeBoardService;
 
 /**
- * Servlet implementation class InfoBoardViewServlet
+ * Servlet implementation class FreeBoardViewServlet
  */
-@WebServlet("/board/boardView.do")
-public class InfoBoardViewServlet extends HttpServlet {
+@WebServlet("/board/freeboardView.do")
+public class FreeBoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InfoBoardViewServlet() {
+    public FreeBoardViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,25 +32,22 @@ public class InfoBoardViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		InfoBoard b=new InfoBoardService().selectInfBrdTitle();
-//		request.setAttribute("InfoBoard",b);
-		//서비스에 리스트 적어주고 보드뷰 맨위에 리스트 적어줘야함)
 		String noParam = request.getParameter("no");
         int no = noParam != null ? Integer.parseInt(noParam) : 0;
 
-        InfoBoardService infoBoardService = new InfoBoardService();
-        InfoBoard b = infoBoardService.selectBoardByNo(no);
-        List<InfoCommentBoard> comments = infoBoardService.selectBoardComments(no);
+        FreeBoardService freeBoardService = new FreeBoardService();
+        FreeBoard b = freeBoardService.selectBoardByNo(no);
+        List<FreeCommentBoard> comments = freeBoardService.selectFreeBoardComments(no);
 
-        request.setAttribute("InfoBoard", b);
+        request.setAttribute("FreeBoard", b);
         request.setAttribute("comments", comments);
-        //setAttribute로 jsp의 getAttribute에 보냄(InfoBoard)
+        //setAttribute로 jsp의 getAttribute에 보냄(freeboard)
 	    //setAttribute 로 키값과 벨류값을 가져오고
 	    //jsp에서 getAttribute를 이용해 키값을 가져와 화면에 나타냄
-		
-		request.getRequestDispatcher("/views/board/infoBoardView.jsp")
-		.forward(request, response);
-	}
+
+        request.getRequestDispatcher("/views/board/freeBoardView.jsp")
+        .forward(request, response);
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

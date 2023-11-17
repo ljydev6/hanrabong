@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.harmony.board.free.model.dto.FreeBoard;
+import com.harmony.board.free.model.dto.FreeCommentBoard;
 
 public class FreeBoardDao {
 	
@@ -44,6 +45,7 @@ public class FreeBoardDao {
 	        close(pstmt);
 	    }
 	    return result;
+	    //페이지네이션을 위한 게시판 목록 조회
 	}
 	
 	public int selectFreeBoardCount(Connection conn) {
@@ -63,7 +65,9 @@ public class FreeBoardDao {
 	        close(pstmt);
 	    }
 	    return result;
+	    //자유게시판의 전체 게시글 수를 조회
 	}
+
 
 	public FreeBoard selectFreeBoardByNo(Connection conn, int no) {
         PreparedStatement pstmt = null;
@@ -83,6 +87,7 @@ public class FreeBoardDao {
             close(pstmt);
         }
         return freeBoard;
+        //특정 번호(no)의 게시글을 조회
     }
 	
 	
@@ -103,8 +108,60 @@ public class FreeBoardDao {
 		}finally {
 			close(pstmt);
 		}return result;
+		//새로운 게시글을 데이터베이스에 삽입하는 메소드
 	}
 
+	public int insertFreeBoardComment(Connection conn, FreeCommentBoard fc) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("insertFreeBoardComment"));
+	        pstmt.setInt(1, fc.getFreBrdNo());
+	        pstmt.setString(2, fc.getFreComWriter());
+	        pstmt.setString(3, fc.getFreComContent());
+	        if (fc.getFreComRefNo() != null) {
+	            pstmt.setInt(4, fc.getFreComRefNo());
+	        } else {
+	            pstmt.setNull(4, java.sql.Types.INTEGER);
+	        }
+	        pstmt.setInt(5, fc.getFreComLevel());
+	        
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt);
+	    }
+	    return result;
+	}
+	
+	
+	public List<FreeCommentBoard> selectFreeBoardComments(Connection conn, int boardNo) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<FreeCommentBoard> comments = new ArrayList<>();
+
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("selectFreeBoardComment")); 
+	        pstmt.setInt(1, boardNo);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            FreeCommentBoard comment = getFreeComment(rs);
+	            comments.add(comment);
+	        }
+	    } catch(SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    
+	    return comments;
+	}
+	
+	
+	
 	private FreeBoard getFreeBoard(ResultSet rs) throws SQLException {
 	    return FreeBoard.builder()
 	            .freBrdNo(rs.getInt("fre_brd_no"))
@@ -116,4 +173,20 @@ public class FreeBoardDao {
 	            .freBrdViews(rs.getInt("fre_brd_views"))
 	            .build();
 	}
+	//esultSet으로부터 데이터를 읽어와 FreeBoard 객체를 생성하는 메소드
+	
+	private FreeCommentBoard getFreeComment(ResultSet rs) throws SQLException {
+	    Integer freComRefNo = rs.getObject("FRE_COM_REF_NO", Integer.class); 
+	    return FreeCommentBoard.builder()
+	            .freComNo(rs.getInt("FRE_COM_NO"))
+	            .freBrdNo(rs.getInt("FRE_BRD_NO"))
+	            .freComWriter(rs.getString("FRE_COM_WRITER"))
+	            .freComContent(rs.getString("FRE_COM_CONTENT"))
+	            .freComDate(rs.getTimestamp("FRE_COM_DATE"))
+	            .freComRefNo(freComRefNo)
+	            .freComLevel(rs.getInt("FRE_COM_LEVEL"))
+	            .build();
+	
+  }
 }
+

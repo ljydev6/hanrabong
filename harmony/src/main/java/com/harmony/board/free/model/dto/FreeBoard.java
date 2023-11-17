@@ -1,7 +1,6 @@
 package com.harmony.board.free.model.dto;
 
 import java.sql.Date;
-
 import lombok.Builder;
 import lombok.Data;
 
