@@ -129,7 +129,8 @@ public class MemberDao {
 			pstmt.setString(1,mm.getMemNo());
 			pstmt.setString(2, mm.getMusicType());
 			pstmt.setString(3,mm.getMusicLink());
-			pstmt.executeUpdate();
+			result=pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -144,13 +145,30 @@ public class MemberDao {
 			pstmt.setString(1,mv.getMemNo());
 			pstmt.setString(2, mv.getVideoType());
 			pstmt.setString(3,mv.getVideoLink());
-			pstmt.executeUpdate();
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}return result;
 	}
+	public MemberInfo selectMemberInfo(Connection conn,String memNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		MemberInfo mi=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectMemberInfo"));
+			pstmt.setString(1,memNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) mi=getMemberInfo(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return mi;
+	}
+	
 	public static Member getMember(ResultSet rs) throws SQLException{
 		return Member.builder()
 						.memNo(rs.getString("MEM_NO"))
@@ -158,7 +176,22 @@ public class MemberDao {
 						.memKakaoNum(rs.getString("mem_kakao_num"))
 						.build();
 	
-	
-	
+	}
+	public static MemberInfo getMemberInfo(ResultSet rs) throws SQLException{
+		return MemberInfo.builder()
+			    .memNo(rs.getString("MEM_NO"))
+				.activityArea(rs.getString("MEM_INFO_ACTIVITY_AREA"))
+				.introduce(rs.getString("MEM_INFO_INTRODUCE"))
+				.profilPhoto(rs.getString("MEM_INFO_PROFIL_PHOTO"))
+				.school(rs.getString("MEM_INFO_SCHOOL"))
+				.department(rs.getString("MEM_INFO_DEPARTMENT"))
+				.schoolState(rs.getString("MEM_INFO_SCHOOL_STATE"))
+				.name(rs.getString("MEM_INFO_NAME"))
+				.gender(rs.getString("MEM_INFO_GENDER"))
+				.age(rs.getInt("MEM_INFO_AGE"))
+				.email(rs.getString("MEM_INFO_EMAIL"))
+				.memCareer(rs.getString("MEM_INFO_CAREER"))
+
+				.build();
 	}
 }

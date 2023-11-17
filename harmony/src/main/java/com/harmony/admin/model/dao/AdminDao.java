@@ -14,6 +14,8 @@ import java.util.Properties;
 
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.Notice;
+import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminDao {
@@ -305,8 +307,84 @@ public class AdminDao {
 		ResultSet rs = null;
 		List<NoticeList> result = new ArrayList<>();
 		String query = sql.getProperty("selectNoticeList");
+		if(type!=null&&keyword!=null) {
+			query = query.replace("#where","WHERE "+type+"=?");
+		}else {
+			query = query.replace("#where", "");
+		}
 		try{
-			pstmt = conn.prepareStatement(null);
+			pstmt = conn.prepareStatement(query);
+			if(type!=null&&keyword!=null) {
+				pstmt.setString(1, keyword);
+			}
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getNoticeList(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int getNoticeTotalData(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		String query = sql.getProperty("getNoticeTotalData");
+		if(type!=null&&keyword!=null) {
+			query = query.replace("#where", "WHERE "+type+"= ?");
+		}else {
+			query = query.replace("#where", "");
+		}
+		try {
+			pstmt = conn.prepareStatement(query);
+			if(type!=null&&keyword!=null) {
+				pstmt.setString(1, keyword);
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public NoticeList getNoticeList(ResultSet rs) throws SQLException{
+		return NoticeList.builder().noticeNo(rs.getInt("NOTICE_NO"))
+								   .writer(rs.getString("WRITER"))
+								   .title(rs.getString("TITLE"))
+								   .writeDate(rs.getDate("WRITE_DATE"))
+								   .viewCount(rs.getInt("VIEW_COUNT"))
+								   .hasFile(rs.getInt("DATACOUNT")>0)
+								   .build();
+	}
+
+	public Notice getNoticeByNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Notice result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectNoticeByNo"));
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getNotice(rs);
+				do {
+					NoticeAttachFile file = getNoticeFile(rs);
+					if(file !=null) {
+						result.getAttachFileList().add(file);
+					}
+				}while(rs.next());
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -316,8 +394,41 @@ public class AdminDao {
 		return result;
 	}
 
-	public int getNoticeTotalData(Connection conn, String type, String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+	private NoticeAttachFile getNoticeFile(ResultSet rs) throws SQLException{
+		NoticeAttachFile result = null;
+		if(rs.getInt("FILE_NO")>0) {
+			result = NoticeAttachFile.builder().noticeFileNo(rs.getInt("FILE_NO"))
+												.noticeNo(rs.getInt("NO"))
+												.oriName(rs.getString("ORINAME"))
+												.reName(rs.getString("RENAME"))
+												.build();
+		}
+		return result;
 	}
+
+	private Notice getNotice(ResultSet rs) throws SQLException{
+		return Notice.builder().noticeNo(rs.getInt("NO"))
+							   .title(rs.getString("TITLE"))
+							   .noticeWriter(rs.getString("WRITER"))
+							   .content(rs.getString("CONTENT"))
+							   .writeDate(rs.getDate("WRITE_DATE"))
+							   .viewCount(rs.getInt("VIEW_COUNT"))
+							   .build();
+	}
+
+	public int addNoticeViewCount(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("addNoticeViewCount"));
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

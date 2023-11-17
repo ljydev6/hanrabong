@@ -11,11 +11,11 @@ public class PageBarBuilder {
 		int pageEnd = pageNo + pageBarSize -1;
 		StringBuilder pageBar = new StringBuilder();
 		
-		pageBar.append("<ul class='pagination justify-content-center'>");
+		pageBar.append("<ul class='pagination pagination-sm justify-content-center'>");
 		if(pageNo==1) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&laquo;</a></li>");
 		}else {
-			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo-1)+"'>이전</a></li>");
+			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo-1)+"'>&laquo;</a></li>");
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
@@ -26,9 +26,9 @@ public class PageBarBuilder {
 			pageNo++;
 		}
 		if(pageNo>=totalPage) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&raquo;</a></li>");
 		}else {
-			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo)+"'>다음</a></li>");
+			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo)+"'>&raquo;</a></li>");
 		}
 		pageBar.append("</ul>");
 		
@@ -41,11 +41,11 @@ public class PageBarBuilder {
 		int pageEnd = pageNo + pageBarSize -1;
 		StringBuilder pageBar = new StringBuilder();
 
-		pageBar.append("<ul class='pagination justify-content-center'>");
+		pageBar.append("<ul class='pagination pagination-sm justify-content-center'>");
 		if(pageNo==1) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&laquo;</a></li>");
 		}else {
-			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo-1)+"&category="+category+"&tag="+tag+"&region="+region+"'>이전</a></li>");
+			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo-1)+"&category="+category+"&tag="+tag+"&region="+region+"'>&laquo;</a></li>");
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
@@ -56,9 +56,9 @@ public class PageBarBuilder {
 			pageNo++;
 		}
 		if(pageNo>=totalPage) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&raquo;</a></li>");
 		}else {
-			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo)+"&category="+category+"&tag="+tag+"&region="+region+"'>다음</a></li>");
+			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo)+"&category="+category+"&tag="+tag+"&region="+region+"'>&raquo;</a></li>");
 		}
 		pageBar.append("</ul>");
 		
@@ -71,20 +71,24 @@ public class PageBarBuilder {
 		int pageEnd = pageNo + pageBarSize -1;
 		StringBuilder pageBar = new StringBuilder();
 		StringBuilder filterList = new StringBuilder();
-		
-		for(Map<String,String> filter:filters) {
-			for(Map.Entry<String,String> f : filter.entrySet()) {
-				filterList.append("&"+f.getKey()+"="+f.getValue());
+		if(filters!=null && filters.size()>0) {
+			for(Map<String,String> filter:filters) {
+				if(!filter.isEmpty()) {
+					for(Map.Entry<String,String> f : filter.entrySet()) {
+						if(f.getKey()!=null && f.getValue()!=null) {
+							filterList.append("&"+f.getKey()+"="+f.getValue());
+						}
+					}
+				}
 			}
 		}
-		
-		pageBar.append("<ul class='pagination justify-content-center'>");
+		pageBar.append("<ul class='pagination pagination-sm justify-content-center'>");
 		if(pageNo==1) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&laquo;</a></li>");
 		}else {
 			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo-1));
 			pageBar.append(filterList.toString());
-			pageBar.append("'>이전</a></li>");
+			pageBar.append("'>&laquo;</a></li>");
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
@@ -97,11 +101,11 @@ public class PageBarBuilder {
 			pageNo++;
 		}
 		if(pageNo>=totalPage) {
-			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>");
+			pageBar.append("<li class='page-item disabled'><a class='page-link' href='#'>&raquo;</a></li>");
 		}else {
 			pageBar.append("<li class='page-item'><a class='page-link' href='"+requestURI+"?cPage="+(pageNo));
 			pageBar.append(filterList.toString());
-			pageBar.append("'>다음</a></li>");
+			pageBar.append("'>&raquo;</a></li>");
 		}
 		pageBar.append("</ul>");
 		

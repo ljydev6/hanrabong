@@ -76,4 +76,14 @@ public class MemberService {
 		
 		return resultAdd;
 	}
+	public MemberInfo selectMemberInfo(String memNo) {//memNo와 같은 아이의 memberInfo 가져오기
+		MemberInfo result=null;
+		Connection conn=getConnection();
+		
+		result=dao.selectMemberInfo(conn,memNo);
+		close(conn);
+		return result;
+		
+	}
+
 }

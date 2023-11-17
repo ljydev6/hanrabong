@@ -8,6 +8,7 @@ import java.util.List;
 import com.harmony.admin.model.dao.AdminDao;
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
+import com.harmony.admin.model.dto.Notice;
 import com.harmony.admin.model.dto.NoticeList;
 
 public class AdminService {
@@ -91,7 +92,24 @@ public class AdminService {
 		close(conn);
 		return result;
 	}
-	
+
+	public Notice selectNoticeByNo(int no,boolean viewCount) {
+		Connection conn = getConnection();
+		Notice result = AdminDao.getDao().getNoticeByNo(conn,no);
+		if(result!=null) {
+			int vcresult = AdminDao.getDao().addNoticeViewCount(conn,no);
+			if(vcresult>0) {
+				commit(conn);
+				if(viewCount) {
+					result.setViewCount(result.getViewCount()+1);
+				}
+			}else {
+				rollback(conn);
+			}
+		}
+		close(conn);
+		return result;
+	}
 	
 	
 }
