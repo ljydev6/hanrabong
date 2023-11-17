@@ -133,3 +133,10 @@ th {
 .btn-reply:hover, .btn-delete:hover {
     background-color: #e55347;
 }
+
+/*댓글/대댓글 부분*/
+
+.level2 {
+    margin-left: 2em; 
+}
+

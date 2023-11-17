@@ -79,4 +79,24 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
     </div>
 </div>
 
+<script>
+    	
+    	$(".btn-reply").click(e=>{
+    		
+    		const $tr=$("<tr>");
+    		const $td=$("<td>").attr("colspan","2");
+    		const $form=$(".comment-editor>form").clone();
+    		console.log($form);
+    		$form.find("input[name=level]").val("2"); //대댓글번호 찾는
+    		$form.find("textarea").attr("rows","1");  //답글 쓰는곳 크기 줄이기
+    		$form.find("button").removeAttr("id").addClass("btn-insert2"); //아이디 지우기
+    		$form.find("input[name=infComNoRef]").val($(e.target).val()); //대글의 번호를 대댓글에 넣는..?
+    		$td.append($form);
+    		$tr.append($td);
+    		
+    		$(e.target).parents("tr")
+    			.after($tr);	
+    	});
+    </script>
+
 <%@ include file="/views/common/footer.jsp"%>
