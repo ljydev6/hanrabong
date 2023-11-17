@@ -61,17 +61,9 @@
 	
 	<input type="text" name="searchKeyword" size="25" id="searchKeyword"
        				placeholder="검색할 이메일" >
-	<input type="button" value="회원추가" onclick="addTeamMem();"> 
+	<input type="button" value="멤버추가" onclick="addTeamMem();"> 
 	</div>
-<%-- 		<div id="search-userEmail">
-			<p>멤버추가</p>
-        		<form action="<%=request.getContextPath()%>/ensemble/searchEmail.do">
-        			<input type="hidden" name="searchType" value="userId" >
-       				<input type="text" name="searchKeyword" size="25" 
-       				placeholder="검색할 이메일" >
-       				<button type="submit" class="search_email">회원 검색</button>
-        		</form>
-        	</div> --%>
+
 	<div>
 		<span id="add_result">
 			
@@ -85,14 +77,23 @@
 </div>
 
 
-<input type="hidden" id="searchMem_bo" name="searchMem_bo">
-<input type="hidden" id="inst" name="dayOfWeek">
-<input type="hidden" id="position" name="startTime">
+<input type="hidden" id="dayOfWeek" name="dayOfWeek">
+<input type="hidden" id="startTime" name="startTime">
+<input type="hidden" id="endTime" name="startTime">
+
+<input type="hidden" class="position" name="position">
+<input type="hidden" id="inst">
 
 
 </section>
 
+
 <script>
+
+const addSchedule =()=>{
+	open("<%=request.getContextPath()%>/ensemble/addSchedule.do", "_blank", "width=500, height=400");
+	
+}
 
 const addTeamMem =()=>{
 	open("<%=request.getContextPath()%>/ensemble/searchEmail.do?keyword="+$('#searchKeyword').val()

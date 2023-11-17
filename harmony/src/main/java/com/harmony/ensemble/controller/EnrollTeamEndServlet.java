@@ -61,19 +61,18 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			List<EnsembleTeamMusic> musicList = new ArrayList<>();
 			List<EnsembleTeamVideo> videoList = new ArrayList<>();
 			List<EnsembleTeamTime> timeList = new ArrayList<>();
+			List<EnsembleMember> ensMemList = new ArrayList<>();
 			
 			String msg ="";
 			
 			EnsembleService es = new EnsembleService();
 			String ensTeamNo = es.selectSeq();
 			System.out.println(ensTeamNo);
+	
+			String userEmail = request.getParameter("keyword");
+			String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
 			
-			EnsembleMember ensMem = EnsembleMember.builder()
-									.ensTeamNo(ensTeamNo)
-									.ensInstCode(mr.getParameter("inst"))
-									.ensMemPosition(mr.getParameter("position"))
-									.build();
-			
+
 			
 			EnsembleTeam ensTeam = EnsembleTeam.builder()
 					.ensTeamNo(ensTeamNo)
@@ -128,31 +127,21 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			
 				
 			}
+		
+			
+			ensMemList.add(EnsembleMember.builder()
+									.ensTeamNo(ensTeamNo) //팀번호
+									.ensInstCode(mr.getParameter("inst"))
+									.ensMemPosition(mr.getParameter("position"))
+									.ensMemNo(memNo) //회원번호
+									.build());
 			
 			
-			int result = es.insertTeam(ensTeam, musicList, videoList, timeList, ensMem);
+			int result = es.insertTeam(ensTeam, musicList, videoList, timeList, ensMemList);
 			
 			if(result>0) System.out.println("성공!");
 			
 			
-//			files.forEach(e->{System.out.println(e);});
-			
-			//String userId = mr.getParameter("userId");
-			//System.out.println(userId);
-			
-			
-			
-//			
-//			System.out.println(mr.getParameter("teamName"));
-//			
-//			String teamName = mr.getParameter("teamName");
-//			String genre = mr.getParameter("genre");
-//			String type = mr.getParameter("type");
-//			String detail = mr.getParameter("detail");
-//		
-//			System.out.println(teamName+genre+type+detail);
-//			
-//			
 			
 		}
 	}

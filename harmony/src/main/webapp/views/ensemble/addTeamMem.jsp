@@ -48,8 +48,8 @@ String memberChk = (String)request.getAttribute("memberChk"); */
 	</div>
 	<div>
 		<p>구분</p>
-		<label><input type="radio" name="position" class="position" value="리더">리더</label>		
-		<label><input type="radio" name="position" class="position" value="멤버">멤버</label> 
+		<label><input type="radio" name="position" class="position" value="LEADER">리더</label>		
+		<label><input type="radio" name="position" class="position" value="MEMBER">멤버</label> 
 	</div>
 	
 	<div class="submit-container">
@@ -59,32 +59,25 @@ String memberChk = (String)request.getAttribute("memberChk"); */
 
 <script>
 
-$('#search_on').click((e)=>{
-	
-	const searchEmail = $('#searchMem_bo').val();
-	
-});
 
 $(document).ready(()=>{
 	if('<%=request.getAttribute("result")%>'=='fail'){
- alert('<%=request.getAttribute("msg")%>'); 
-	
-	
+	 	alert('<%=request.getAttribute("msg")%>'); 
+	 	close();
 	}
-
 });
 
 $('#addMember').click((e)=>{
 	
 	if($('#inst option:selected').val() != null &&
 		$('.position:checked').val() !=null){ 
-			$("#searchMem_bo",opener.document).val($("#searchMem_bo").val());
+			
 			$("#inst",opener.document).val($('#inst option:selected').val());
 			$(".position",opener.document).val($('.position:checked').val());
 			
-			$("#add_result",opener.document).append($('#searchMem_bo').val());
+			$("#add_result",opener.document).append($('#searchKeyword',opener.document).val()+ " ");
 			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
-			$("#add_result",opener.document).append($('.position:checked').val()+ "), ");
+			$("#add_result",opener.document).append($('.position:checked').val()+ "), <br>");
 			
 			close();
 	}else{

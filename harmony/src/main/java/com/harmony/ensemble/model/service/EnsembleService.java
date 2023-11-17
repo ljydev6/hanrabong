@@ -45,31 +45,12 @@ public class EnsembleService {
 		return memNo;
 	}
 	
-	public int insertTeamLeader(String memNo, String instCode) {
-		Connection conn = getConnection();
-		int result = dao.insertTeamLeader(conn, memNo, instCode);
-		close(conn);
-		return result;
-	}
+
 	
-	public int insertTeamMember(String memNo, String instCode) {
-		Connection conn = getConnection();
-		int result = dao.insertTeamMember(conn, memNo, instCode);
-		close(conn);
-		return result;
-	}
-	
-//	
-//	public MemberEns searchMemberById() {
-//		Connection conn=getConnection();
-//		MemberEns m = dao.searchMemberById(conn);
-//		return m;
-//	}
-//	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
 							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList,
-							EnsembleMember ensMem) {
+							List<EnsembleMember> ensMemList) {
 		Connection conn=getConnection();
 		
 		int result = dao.insertTeam(conn, ensTeam);
@@ -81,7 +62,7 @@ public class EnsembleService {
 					int result2 = dao.insertTime(conn, time);
 					if(result2==0) {
 						rollback(conn);
-						throw new IllegalArgumentException("노노");
+						throw new IllegalArgumentException("합주 일정 에러");
 					}
 				}
 			}
@@ -92,7 +73,7 @@ public class EnsembleService {
 					int result3 = dao.insertMusic(conn, music);
 					if(result3==0) {
 						rollback(conn);
-						throw new IllegalArgumentException("노노노");
+						throw new IllegalArgumentException("음원 업로드 에러");
 					}
 				}		
 			}
@@ -101,14 +82,24 @@ public class EnsembleService {
 					int result4 = dao.insertVideo(conn, video);
 					if(result4==0) {
 						rollback(conn);
-						throw new IllegalArgumentException("노노노");
+						throw new IllegalArgumentException("비디오 업로드 에러");
 					}
 				}
 			}		
 			
+			if(!ensMemList.isEmpty()) {
+				for(EnsembleMember ensMem : ensMemList) {		
+					int result5 = dao.insertEnsMember(conn, ensMem);
+					if(result5==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("팀원 등록 에러");
+					}
+				}
+			}	
+			
 		}else {
 			rollback(conn);
-			throw new IllegalArgumentException("노노노");
+			throw new IllegalArgumentException("팀테이블 등록 에러");
 		}
 		close(conn);
 		return result;
