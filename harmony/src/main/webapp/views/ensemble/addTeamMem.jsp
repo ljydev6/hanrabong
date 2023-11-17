@@ -12,8 +12,8 @@
 <meta charset="UTF-8">
 <%
 List<Inst> inst = (List<Inst>)request.getAttribute("inst");
-Member member = (Member)request.getAttribute("member");
-String memberChk = (String)request.getAttribute("memberChk");
+/* Member member = (Member)request.getAttribute("member");
+String memberChk = (String)request.getAttribute("memberChk"); */
 
 %>
 <title>Insert title here</title>
@@ -31,7 +31,6 @@ String memberChk = (String)request.getAttribute("memberChk");
 비회원나이 -> 합주모집글에서 -->
 
 <div class="add_mem_container">
-	
 	
 
 	<div>
@@ -60,13 +59,30 @@ String memberChk = (String)request.getAttribute("memberChk");
 
 <script>
 
+$('#search_on').click((e)=>{
+	
+	const searchEmail = $('#searchMem_bo').val();
+	
+});
+
+$(document).ready(()=>{
+	if('<%=request.getAttribute("result")%>'=='fail'){
+ alert('<%=request.getAttribute("msg")%>'); 
+	
+	
+	}
+
+});
+
 $('#addMember').click((e)=>{
 	
 	if($('#inst option:selected').val() != null &&
 		$('.position:checked').val() !=null){ 
+			$("#searchMem_bo",opener.document).val($("#searchMem_bo").val());
 			$("#inst",opener.document).val($('#inst option:selected').val());
 			$(".position",opener.document).val($('.position:checked').val());
 			
+			$("#add_result",opener.document).append($('#searchMem_bo').val());
 			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
 			$("#add_result",opener.document).append($('.position:checked').val()+ "), ");
 			

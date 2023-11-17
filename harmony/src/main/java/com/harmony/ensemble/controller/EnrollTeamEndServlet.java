@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamTime;
@@ -66,6 +67,13 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			EnsembleService es = new EnsembleService();
 			String ensTeamNo = es.selectSeq();
 			System.out.println(ensTeamNo);
+			
+			EnsembleMember ensMem = EnsembleMember.builder()
+									.ensTeamNo(ensTeamNo)
+									.ensInstCode(mr.getParameter("inst"))
+									.ensMemPosition(mr.getParameter("position"))
+									.build();
+			
 			
 			EnsembleTeam ensTeam = EnsembleTeam.builder()
 					.ensTeamNo(ensTeamNo)
@@ -122,7 +130,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			}
 			
 			
-			int result = es.insertTeam(ensTeam, musicList, videoList, timeList);
+			int result = es.insertTeam(ensTeam, musicList, videoList, timeList, ensMem);
 			
 			if(result>0) System.out.println("성공!");
 			

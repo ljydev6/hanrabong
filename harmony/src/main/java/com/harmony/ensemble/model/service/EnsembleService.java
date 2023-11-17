@@ -68,7 +68,8 @@ public class EnsembleService {
 //	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
-							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList) {
+							List<EnsembleTeamVideo> videoList, List<EnsembleTeamTime> timeList,
+							EnsembleMember ensMem) {
 		Connection conn=getConnection();
 		
 		int result = dao.insertTeam(conn, ensTeam);

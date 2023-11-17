@@ -58,9 +58,20 @@
 		<input type="file" id="music" multiple accept="audio/*">
 	</div>
 	<div class="add_mem">
-		<p>멤버추가</p>
-		<input type="button" value="회원추가" onclick="addTeamMem();">
+	
+	<input type="text" name="searchKeyword" size="25" id="searchKeyword"
+       				placeholder="검색할 이메일" >
+	<input type="button" value="회원추가" onclick="addTeamMem();"> 
 	</div>
+<%-- 		<div id="search-userEmail">
+			<p>멤버추가</p>
+        		<form action="<%=request.getContextPath()%>/ensemble/searchEmail.do">
+        			<input type="hidden" name="searchType" value="userId" >
+       				<input type="text" name="searchKeyword" size="25" 
+       				placeholder="검색할 이메일" >
+       				<button type="submit" class="search_email">회원 검색</button>
+        		</form>
+        	</div> --%>
 	<div>
 		<span id="add_result">
 			
@@ -74,7 +85,7 @@
 </div>
 
 
-
+<input type="hidden" id="searchMem_bo" name="searchMem_bo">
 <input type="hidden" id="inst" name="dayOfWeek">
 <input type="hidden" id="position" name="startTime">
 
@@ -84,7 +95,7 @@
 <script>
 
 const addTeamMem =()=>{
-	open("<%=request.getContextPath()%>/ensemble/addTeamMem.do"
+	open("<%=request.getContextPath()%>/ensemble/searchEmail.do?keyword="+$('#searchKeyword').val()
 			,"_blank","width=500, height=400");
 	
 }
@@ -114,7 +125,8 @@ $(document).ready(function(){
 		const dayOfWeek = $("#dayOfWeek").val();
 		const startTime = $("#startTime").val();
 		const endTime = $("#endTime").val();
-		
+		const inst = $("#inst").val();
+		const position = $("#position").val();
 		
 		
 		form.append("teamName", teamName);
@@ -124,6 +136,8 @@ $(document).ready(function(){
 		form.append("dayOfWeek",dayOfWeek);
 		form.append("startTime", startTime);
 		form.append("endTime",endTime);
+		form.append("inst",inst);
+		form.append("position",position);
 		
 		const videoInput=$("#video");
 		$.each(videoInput[0].files, (i,v)=>{
