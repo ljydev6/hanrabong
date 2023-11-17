@@ -61,7 +61,7 @@ public class InfoBoardWriteEndServlet extends HttpServlet {
 			String msg,loc;
 			if(result>0) {
 			    msg="게시글 등록성공";
-			    loc="/communitymain.do";
+			    loc="/infoBoardList.do";
 			}else {
 			    msg="게시글 등록실패";
 			    loc="/board/boardWrite.do";

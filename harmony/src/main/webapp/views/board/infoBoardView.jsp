@@ -14,10 +14,10 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
     <div class="infoboard">
         <div class="info-container">
             <h3 class="info">
-                <a href="<%=request.getContextPath()%>/communitymain.do">정보 게시판</a>
+                <a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
             </h3>
             <h3 class="free">
-                <a href="<%=request.getContextPath()%>/communitysub.do">자유 게시판</a>
+                <a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
             </h3>
         </div>
     </div>

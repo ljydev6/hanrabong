@@ -59,7 +59,7 @@ public class FreeBoardWriteEndServlet extends HttpServlet {
 			String msg,loc;
 			if(result>0) {
 			    msg="게시글 등록성공";
-			    loc="/communitysub.do";
+			    loc="/freeBoardList.do";
 			}else {
 			    msg="게시글 등록실패";
 			    loc="/board/freeboardWrite.do";

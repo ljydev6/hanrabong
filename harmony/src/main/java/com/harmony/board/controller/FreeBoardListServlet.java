@@ -16,7 +16,7 @@ import com.harmony.common.PageBarBuilder;
 /**
  * Servlet implementation class FreeBoardListServlet
  */
-@WebServlet("/communitysub.do")
+@WebServlet("/freeBoardList.do")
 public class FreeBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
