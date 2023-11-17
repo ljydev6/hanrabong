@@ -46,7 +46,7 @@ public class MemberService {
 		MemberInfo result= null;
 		int resultAdd = dao.addintroduce(conn,mi);
 		if(resultAdd>0) {
-			if(mi.getMemberMusic().isEmpty()) {
+			if(!mi.getMemberMusic().isEmpty()) {
 				for(MemberMusic mm:mi.getMemberMusic()) {
 					mm.setMemNo(mi.getMemNo());
 					int resultmusic=dao.insertMusic(conn,mm);
@@ -56,7 +56,7 @@ public class MemberService {
 					}
 				}
 			}
-			if(mi.getMemberVideo().isEmpty()) {
+			if(!mi.getMemberVideo().isEmpty()) {
 				for(MemberVideo mv:mi.getMemberVideo()) {
 					mv.setMemNo(mi.getMemNo());
 					int resultVideo=dao.insertVideo(conn,mv);

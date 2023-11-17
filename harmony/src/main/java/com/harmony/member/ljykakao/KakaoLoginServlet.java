@@ -62,6 +62,8 @@ public class KakaoLoginServlet extends HttpServlet {
 //	         member 객체와 memberInfo객체를 전달해서 DB에 입력후, 저장된 member 정보를 가져옴
 	         member = new MemberService().insertMember(member, memInfo);
 //	         가입축하메세지 + 다른 정보 추가 창으로 이동하는 경로 지정
+	        
+	         request.getSession().setAttribute("MemberInfo", memInfo);
 	         path = request.getContextPath()+"/member/addIntroduce.do";
 	        }
 	        
