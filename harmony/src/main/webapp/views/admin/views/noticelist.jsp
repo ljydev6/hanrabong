@@ -57,7 +57,8 @@
           </div>
         </main>
         <script>
-        	const contextPath = '<%=request.getContextPath()%>';
+        	const viewPath = '<%=request.getContextPath()%>/admin/notice.do';
+        	const writePath = '<%=request.getContextPath()%>/admin/notice/write.do';
         </script>
-        <script src="<%=request.getContextPath()%>/views/admin/assets/js/noticeList.js"></script>
+        <script src="<%=request.getContextPath()%>/views/admin/assets/js/boardList.js"></script>
 <%@ include file="/views/admin/views/common/footer.jsp" %>
