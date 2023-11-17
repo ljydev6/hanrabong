@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.boardContainer{
+	height: 75vh;
+	display: flex;
+	border:1px solid purple; 
+	flex-direction:column;	
+	justify-content: space-around;
+}

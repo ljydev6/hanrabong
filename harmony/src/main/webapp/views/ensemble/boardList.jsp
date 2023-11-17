@@ -205,6 +205,7 @@
 
 <section>
 	<input type="button" value="합주팀등록" onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
+	<input type="button" value="팀 페이지" onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
 	<article>
       <div class="board">
       
