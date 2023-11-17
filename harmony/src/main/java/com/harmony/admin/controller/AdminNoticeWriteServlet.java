@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.harmony.admin.model.dto.Notice;
 import com.harmony.admin.service.AdminService;
 import com.harmony.common.exception.HarmonyException;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
  * Servlet implementation class AdminNoticeWriteServlet
@@ -31,12 +33,15 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int no = -1;
+		String type = "";
 		try {
 			no = Integer.parseInt(request.getParameter("no"));
+			type = "edit";
 		}catch(NumberFormatException e) {
 			no = -1;
+			type = "write";
 		}
-		System.out.println(no);
+		request.setAttribute("type", type);
 		if(no>0) {
 			Notice notice = AdminService.getService().selectNoticeByNo(no,false);
 			if(notice!=null) {
@@ -53,7 +58,15 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 	 */
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect(getServletInfo());
+		
+		String path = getServletContext().getRealPath("/image/carousel/");
+		int fileMaxSize = 1024*1024*100;
+		String encode = "UTF-8";
+		DefaultFileRenamePolicy renamePolicy = new DefaultFileRenamePolicy();
+		MultipartRequest req = new MultipartRequest(request, path, fileMaxSize, encode, renamePolicy);
+		String type = req.getParameter("type");
+		
+		response.sendRedirect("");
 	}
 
 }

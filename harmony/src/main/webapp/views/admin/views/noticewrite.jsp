@@ -25,6 +25,7 @@ com.harmony.admin.model.dto.AdminMember" %>
 	          </h2>
 	          <div class="w-full bg-white whitespace-no-wrap rounded-lg px-2 py-1">
 	          <form action="<%=request.getContextPath() %>/admin/notice/write.do" method="post" enctype="multipart/form-data">
+	          <input type="hidden"  value="<%=request.getAttribute("type")%>" readOnly>
 	          <table class="w-full">
 	          	<thead class="bg-gray-50 text-gray-500">
 	          		<tr class="tracking-wide border-b">
@@ -34,19 +35,42 @@ com.harmony.admin.model.dto.AdminMember" %>
 	          	<tbody class="border-b">
 	          		<tr>
 	          			<td colspan="4">
-	          				<div class="container"  style="min-height: 300px">
-	          					<div class="col d-flex justify-content-end">
+	          				<div class="container" style="min-height: 300px">
+	          					<div class="row justify-content-between">
+	          					<div class="col-sm-2">AttachFile</div>
+	          					<div class="col-sm-auto inline-flex">
+	          					<div class="row d-flex justify-content-end">
 	          					<%if(notice!=null&&notice.getAttachFileList().size()>0){ %>
+	          						<div id="delFileChkboxList">
 									  <%for(NoticeAttachFile f : notice.getAttachFileList()){ %>
 									  <input type="checkbox" name="delFile" value="<%=f.getNoticeFileNo() %>" style="display:none;">
 									  <%} %>
+								  </div>
 							  	<%} %>
+		          						<ul class="row" id="attachFileList">
 								  <%if(notice!=null&&notice.getAttachFileList().size()>0){ %>
 									  <%for(NoticeAttachFile f : notice.getAttachFileList()){ %>
-		          						<p><img src="<%=request.getContextPath()%>/image/admin/common/file.png" width="15" height="15">
-									  </p>
+		          							<li class="inline-flex justify-content-end items-center w-full" value="<%=f.getNoticeFileNo() %>">
+			          							<img src="<%=request.getContextPath()%>/image/admin/common/file.png" width="15" height="15">
+				          						<span><%=f.getOriName() %></span>
+				          						<button type="button" name="delFileBtn" onclick="addDelfile(event);">
+				          							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#fc3f3f" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+													  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+													</svg>
+				          						</button>
+		          							</li>
 									  <%} %>
 							  	<%} %>
+									  </ul>
+								</div>
+									  <div class="inline-flex items-center mx-3">
+									  <a class="btn btn-success btn-lg" name="addFileBtn" onclick="addfile(event);">
+			          						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#ffffff" class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+											  <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"/>
+											</svg>
+											</a>
+									  </div>
+	          					</div>
 	          					</div>
 	          					<div id="editor">
 		          				<%=notice!=null?notice.getContent():"" %>
@@ -95,4 +119,8 @@ com.harmony.admin.model.dto.AdminMember" %>
 					console.log(error);
 				});
 		</script>
+		<script>
+		const contextpath = '<%=request.getContextPath()%>';
+		</script>
+		<script src="<%=request.getContextPath()%>/views/admin/assets/js/boardWrite.js"></script>
 <%@ include file="/views/admin/views/common/footer.jsp" %>

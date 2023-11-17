@@ -19,6 +19,7 @@ import com.harmony.admin.service.AdminService;
 import com.harmony.common.exception.HarmonyException;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.oreilly.servlet.multipart.MultipartParser;
 
 /**
  * Servlet implementation class AjaxCarouselManageServlet
@@ -46,6 +47,7 @@ public class AjaxCarouselManageServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String path = getServletContext().getRealPath("/image/carousel/");
 		int fileMaxSize = 1024*1024*100;
 		String encode = "UTF-8";
