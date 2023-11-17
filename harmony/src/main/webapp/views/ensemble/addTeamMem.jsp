@@ -12,8 +12,8 @@
 <meta charset="UTF-8">
 <%
 List<Inst> inst = (List<Inst>)request.getAttribute("inst");
-Member member = (Member)request.getAttribute("member");
-String memberChk = (String)request.getAttribute("memberChk");
+/* Member member = (Member)request.getAttribute("member");
+String memberChk = (String)request.getAttribute("memberChk"); */
 
 %>
 <title>Insert title here</title>
@@ -32,7 +32,6 @@ String memberChk = (String)request.getAttribute("memberChk");
 
 <div class="add_mem_container">
 	
-	
 
 	<div>
 		<label for="inst">파트</label>
@@ -49,8 +48,8 @@ String memberChk = (String)request.getAttribute("memberChk");
 	</div>
 	<div>
 		<p>구분</p>
-		<label><input type="radio" name="position" class="position" value="리더">리더</label>		
-		<label><input type="radio" name="position" class="position" value="멤버">멤버</label> 
+		<label><input type="radio" name="position" class="position" value="LEADER">리더</label>		
+		<label><input type="radio" name="position" class="position" value="MEMBER">멤버</label> 
 	</div>
 	
 	<div class="submit-container">
@@ -60,15 +59,25 @@ String memberChk = (String)request.getAttribute("memberChk");
 
 <script>
 
+
+$(document).ready(()=>{
+	if('<%=request.getAttribute("result")%>'=='fail'){
+	 	alert('<%=request.getAttribute("msg")%>'); 
+	 	close();
+	}
+});
+
 $('#addMember').click((e)=>{
 	
 	if($('#inst option:selected').val() != null &&
 		$('.position:checked').val() !=null){ 
+			
 			$("#inst",opener.document).val($('#inst option:selected').val());
 			$(".position",opener.document).val($('.position:checked').val());
 			
+			$("#add_result",opener.document).append($('#searchKeyword',opener.document).val()+ " ");
 			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
-			$("#add_result",opener.document).append($('.position:checked').val()+ "), ");
+			$("#add_result",opener.document).append($('.position:checked').val()+ "), <br>");
 			
 			close();
 	}else{

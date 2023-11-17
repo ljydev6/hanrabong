@@ -385,6 +385,7 @@
 		$.each(fileInput[0].files,(i,f)=>{
 			/* console.log(f); */
 			form.append("upfile"+i,f);
+			
 
 		});
 		$.ajax({
