@@ -52,8 +52,6 @@ public class FreeBoardService {
     public FreeBoard selectBoardByNo(int no,boolean readResult) {
 	    Connection conn = getConnection();
 	    FreeBoard b = dao.selectFreeBoardByNo(conn, no);
-	    System.out.println(readResult);
-	    System.out.println(no);
 
 	    if(b!=null&&readResult) {
 			int result=dao.updateBoardReadCount(conn,no);

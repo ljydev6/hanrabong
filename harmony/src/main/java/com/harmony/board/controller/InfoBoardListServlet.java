@@ -42,6 +42,14 @@ public class InfoBoardListServlet extends HttpServlet {
 		List<InfoBoard> boards=new InfoBoardService().selectBoard(cPage, numPerpage);
 		//1~5 6~10 페이징처리하여 boards에 넣음
 		
+		for (InfoBoard board : boards) {
+	        String categoryName = new InfoBoardService().selectCategoryNameByNo(board.getInfBrdCatNo());
+	        String tagName = new InfoBoardService().selectTagNameByNo(board.getInfBrdTagNo());
+	        request.setAttribute("categoryName" + board.getInfBrdNo(), categoryName);
+	        request.setAttribute("tagName" + board.getInfBrdNo(), tagName);
+
+	    }
+		
 		int totalData=new InfoBoardService().selectBoardCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		int pageBarSize=5;

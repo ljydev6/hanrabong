@@ -358,6 +358,47 @@ public class InfoBoardDao {
 	    return count;
 	}
 	
+	public String selectCategoryNameByNo(Connection conn, String no) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String categoryName = null;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("selectCategoryNameByNo"));
+	        pstmt.setString(1, no);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            categoryName = rs.getString("INF_CAT_NAME");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    return categoryName;
+	}
+
+	public String selectTagNameByNo(Connection conn, String no) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String tagName = null;
+        try {
+            pstmt = conn.prepareStatement(sql.getProperty("selectTagNameByNo"));
+            pstmt.setString(1, no);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                tagName = rs.getString("INF_BRD_TAG_NAME");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+        return tagName;
+    }
+	
+	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
 		return InfoBoard.builder()
 				.infBrdNo(rs.getInt("inf_brd_no"))

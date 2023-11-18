@@ -114,5 +114,19 @@ public class InfoBoardService {
         close(conn);
         return count;
     }
+	
+	public String selectCategoryNameByNo(String no) {
+	    Connection conn = getConnection();
+	    String categoryName = dao.selectCategoryNameByNo(conn, no);
+	    close(conn);
+	    return categoryName;
+	}
+	
+	public String selectTagNameByNo(String no) {
+        Connection conn = getConnection();
+        String tagName = dao.selectTagNameByNo(conn, no);
+        close(conn);
+        return tagName;
+    }
 
 }

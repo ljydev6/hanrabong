@@ -14,6 +14,9 @@ if (request.getAttribute("searchResults") != null) {
 %>
 
 <%@ include file="/views/common/header.jsp"%>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoCommunity.css"
@@ -21,106 +24,126 @@ if (request.getAttribute("searchResults") != null) {
 
 
 <div class="content">
-	<div class="infoboard">
-		<div class="info-container">
-			<h3 class="info">
-				<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
-			</h3>
-			<h3 class="free">
-				<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
-			</h3>
-		</div>
-	</div>
-	<div class="main-sort-container">
-		<div class="main">
-			<div class="category">
-				<select id="infocategory-select" name="infocategory">
-					<option value="all">카테고리</option>
-					<option value="cat1">공연</option>
-					<option value="cat2">입시</option>
-					<option value="cat3">오디션</option>
-					<option value="cat4">버스킹</option>
-				</select>
-			</div>
-			<script>
-				 
-				</script>
-			<div>
-				<select id="infotag-select" name="infotag">
-					<option value="all">태그</option>
-					<option value="tag1">정보</option>
-					<option value="tag2">후기</option>
-					<option value="tag3">TIP</option>
-					<option value="tag4">이벤트</option>
-				</select>
-			</div>
-			<div>
-				<select id="region-select" name="region">
-					<option value="all">지역</option>
-					<option value="서울">서울</option>
-					<option value="경기도">경기도</option>
-					<option value="강원도">강원도</option>
-					<option value="충청북도">충청북도</option>
-					<option value="충청남도">충청남도</option>
-					<option value="전라북도">전라북도</option>
-					<option value="전라남도">전라남도</option>
-					<option value="경상북도">경상북도</option>
-					<option value="경상남도">경상남도</option>
-					<option value="제주도">제주도</option>
-				</select>
-			</div>
-			<div class="info-sort">
-				<select id="sort-select" name="sort">
-					<option value="최신등록순">최신등록순</option>
-					<option value="오래된순">오래된순</option>
-					<option value="조회수">조회수</option>
-					<option value="댓글수">댓글수</option>
-				</select>
+	<div class="main">
+		<div class="board">
+			<div class="info-container">
+				<h3 class="info-board">
+					<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
+				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
+				</h3>
 			</div>
 		</div>
 
+		<div class="main-container">
+			<div class="filter">
+				<div class="category-select">
+					<select id="infocategory-select" name="infocategory">
+						<option value="all">카테고리</option>
+						<option value="cat1">공연</option>
+						<option value="cat2">입시</option>
+						<option value="cat3">오디션</option>
+						<option value="cat4">버스킹</option>
+					</select>
+				</div>
 
-		<div class="posts">
-			<%
-			if (!boards.isEmpty()) {
-				for (InfoBoard post : boards) {
-			%>
+				<div class="tag-select">
+					<select id="infotag-select" name="infotag">
+						<option value="all">태그</option>
+						<option value="tag1">정보</option>
+						<option value="tag2">후기</option>
+						<option value="tag3">TIP</option>
+						<option value="tag4">이벤트</option>
+					</select>
+				</div>
+
+				<div class="region-select">
+					<select id="inforegion-select" name="region">
+						<option value="all">지역</option>
+						<option value="서울">서울</option>
+						<option value="경기도">경기도</option>
+						<option value="강원도">강원도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="충청남도">충청남도</option>
+						<option value="전라북도">전라북도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="경상남도">경상남도</option>
+						<option value="제주도">제주도</option>
+					</select>
+				</div>
+
+				<div class="post-writer-button-div">
+					<button class="post-writer-button"
+						onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')">
+						글쓰기</button>
+				</div>
+			</div>
+
 			<div class="post">
-				<h4><%=post.getInfBrdTitle()%></h4>
-				<a
-					href="<%=request.getContextPath()%>/board/boardView.do?no=<%=post.getInfBrdNo()%>">
-					<%=post.getInfBrdTitle()%>
-				</a>
-				<p><%=post.getInfBrdContent()%></p>
+				<%
+				if (!boards.isEmpty()) {
+					for (InfoBoard post : boards) {
+				%>
+				<div class="individual-post">
+					<a
+						href="<%=request.getContextPath()%>/board/boardView.do?no=<%=post.getInfBrdNo()%>">
+						<p class="categorytag"><%=request.getAttribute("categoryName" + post.getInfBrdNo())%>
+							(<%=request.getAttribute("tagName" + post.getInfBrdNo())%>)
+						</p>
+						<div class="post-main">
+							<div>
+								<section class="post-content">
+									<h3><%=post.getInfBrdTitle()%></h3>
+									<p><%=post.getInfBrdContent()%></p>
+								</section>
+								<%--<p class="post-writer"><%=post.getInfBrdWriter()%></p>--%>
+								<p class="post-writer">작성자(임시)</p>
+								<p class="post-region"><%=post.getInfBrdRegion()%></p>
+							</div>
+							<%--<img src="<%=request.getContextPath()%>/image/board/No1.png"> --%>
+						</div>
+
+						<div class="post-footer">
+							<div class="view-comment">
+								<div class="views-comments-container">
+									<span class="post-comment"> 댓글 7
+									</span>
+								</div>
+								<span class="post-date"><%=post.getInfBrdRegDate()%></span>
+							</div>
+						</div>
+					</a>
+				</div>
+				<%
+				}
+				}
+				%>
 			</div>
-			<%
-			}
-			}
-			%>
-		</div>
 
-		<div class="text-center">
-			<ul class="pagination">
-				<%=request.getAttribute("pageBar")%>
-			</ul>
-		</div>
+			<form action="<%=request.getContextPath()%>/board/InfoBoardSearch.do"
+				method="get" class="search-form">
+				<select name="searchType" class="search-select">
+					<option value="both">제목+본문</option>
+					<option value="title">제목</option>
+					<option value="content">본문</option>
+				</select> <input type="text" name="query" placeholder="검색어 입력"
+					class="search-input">
+				<button type="submit" class="search-button">
+					<img src="IMG/search2.png">
+				</button>
+			</form>
 
-	</div>
-	<div class="write-button-container">
-		<button
-			onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')">
-			정보게시판글쓰기</button>
+			<div class="pagination-form">
+				<ul class="pagination">
+					<%=request.getAttribute("pageBar")%>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
-<form action="<%=request.getContextPath()%>/board/InfoBoardSearch.do"
-		method="get">
-		<select name="searchType">
-			<option value="both">제목+본문</option>
-			<option value="title">제목</option>
-			<option value="content">본문</option>
-		</select> <input type="text" name="query" placeholder="검색어 입력">
-		<button type="submit">검색</button>
-	</form>
+
 <script>
 		<%-- document.querySelectorAll(".main select").forEach(e=>{
 			// 각 <select> 요소에 'change' 이벤트 리스너를 추가합니다.
