@@ -204,8 +204,12 @@
 </aside>
 
 <section>
-	<input type="button" value="합주팀등록" onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
-	<input type="button" value="팀 페이지" onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
+	<div class="button_container">
+		<input type="button" value="합주팀등록" class="top_btn"
+				onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
+		<input type="button" value="팀 페이지" class="top_btn" 
+				onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
+	</div>
 	<article>
       <div class="board">
       
