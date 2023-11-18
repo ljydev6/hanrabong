@@ -5,10 +5,8 @@
 	display: flex;
 /*	border:1px solid purple; */
 	flex-direction:column;	
-/*	justify-content: flex-start;*/
 	justify-content : center;
 	 align-items: center;
-	 border:1px solid red;
 }
 
 .enroll_container > div{
@@ -16,7 +14,7 @@
 }
 
 .submit_container{
-	border:1px solid blue;
+/*	border:1px solid blue;*/
 	display: flex;
 	width : 100%;
 	padding-left : 70%;

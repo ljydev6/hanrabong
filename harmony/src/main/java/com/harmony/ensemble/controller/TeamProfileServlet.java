@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.ensemble.model.dto.EnsembleTeam;
+import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
+import com.harmony.ensemble.model.dto.EnsembleTeamTime;
+import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.service.EnsembleService;
 import com.harmony.model.dto.Member;
 
@@ -32,9 +35,8 @@ public class TeamProfileServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		EnsembleService es = new EnsembleService();
-	
+		
 		//로그인한 멤버의 회원번호와 일치하는 회원의 팀 번호 가져오기.
 		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
 		String loginMemNo = loginMember.getMemNo();
@@ -48,6 +50,18 @@ public class TeamProfileServlet extends HttpServlet {
 		request.setAttribute("team", team);
 //		request.setAttribute("comments", comments);
 
+		
+		//팀 번호 일치하는 time, music, video 테이블 정보
+		List<EnsembleTeamTime> time = es.selectTimes(teamNo);
+		request.setAttribute("time", time);
+		
+		List<EnsembleTeamMusic> music = es.selectMusics(teamNo);
+		request.setAttribute("music", music);
+		
+		List<EnsembleTeamVideo> video = es.selectVideos(teamNo);
+		request.setAttribute("video", video);
+		
+		
 		request.getRequestDispatcher("/views/ensemble/teamProfile.jsp").forward(request, response);
 	
 	

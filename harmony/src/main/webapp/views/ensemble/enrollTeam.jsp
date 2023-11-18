@@ -18,6 +18,7 @@
 		<span>팀명</span>
 		<input type="text" id="teamName">
 	</div>
+
 	<div>	
 		<label for="genre">장르</label>
 		<select name="genre" id="genre">
@@ -40,10 +41,12 @@
 			<span class="single_chk_span">전문</span>
 		</label>
 	</div>
-	<input type="button" value="합주일정추가" name="schedule" id="schedule" 
-			onclick="addSchedule();">
-	<span id="sch_result">
-		
+	
+	<div>
+		<input type="button" value="합주일정추가" name="schedule" id="schedule" 
+				onclick="addSchedule();">
+		<span id="sch_result">
+	</div>
 	</span>
 	<div>
 		<p>한 줄 소개</p>
@@ -59,11 +62,10 @@
 	</div>
 	<div class="add_mem">
 	
-	<input type="text" name="searchKeyword" size="25" id="searchKeyword"
-       				placeholder="검색할 이메일" >
-	<input type="button" value="멤버추가" onclick="addTeamMem();"> 
+		<input type="text" name="searchKeyword" size="25" id="searchKeyword"
+	       				placeholder="검색할 이메일" >
+		<input type="button" value="멤버추가" onclick="addTeamMem();"> 
 	</div>
-
 	<div>
 		<span id="add_result">
 			

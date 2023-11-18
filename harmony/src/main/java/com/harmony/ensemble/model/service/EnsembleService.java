@@ -101,6 +101,28 @@ public class EnsembleService {
 		return result;
 	}
 	
+	public List<EnsembleTeamTime> selectTimes(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamTime> result = dao.selectTimes(conn,teamNo);
+		close(conn);
+		return result;
+	}
+	
+	public List<EnsembleTeamMusic> selectMusics(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamMusic> result = dao.selectMusics(conn, teamNo);
+		close(conn);
+		return result;
+	}
+	
+	public List<EnsembleTeamVideo> selectVideos(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamVideo> result = dao.selectVideos(conn, teamNo);
+		close(conn);
+		return result;
+	}
+	
+	
 	public List<Inst> searchAllInst(){
 		Connection conn=getConnection();
 		List<Inst> result=dao.searchAllInst(conn);

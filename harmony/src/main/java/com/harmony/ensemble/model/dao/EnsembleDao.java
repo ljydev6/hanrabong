@@ -41,7 +41,6 @@ private Properties sql=new Properties();
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		String teamNo = "";
-		System.out.println("로그인멤버 넘버: "+ loginMemNo);
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("selectTeamNoByMemNo"));
 			pstmt.setString(1, loginMemNo);
@@ -61,7 +60,6 @@ private Properties sql=new Properties();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		EnsembleTeam team = null;
-		System.out.println("dao selectTeamByNo 팀넘버: " + teamNo);
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("selectTeamByNo"));
 			pstmt.setString(1, teamNo);
@@ -107,11 +105,6 @@ private Properties sql=new Properties();
 	public int insertEnsMember(Connection conn, EnsembleMember eMem) {
 		PreparedStatement pstmt=null;
 		int result=0;
-//		System.out.println(eMem.getEnsMemPosition());
-		System.out.println("멤버테이블 팀번호: "+eMem.getEnsTeamNo());
-//		System.out.println(eMem.getEnsInstCode());
-//		System.out.println(eMem.getEnsMemNo());
-		System.out.println("여기가 원인??? dao insertEnsMember ENS_MEM_NO : "+ eMem.getEnsMemNo());
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
 			pstmt.setString(1, eMem.getEnsTeamNo());
@@ -132,7 +125,6 @@ private Properties sql=new Properties();
 	
 	public int compareMemNo(Connection conn, String loginMemNo) {
 		PreparedStatement pstmt =null;
-//		ResultSet rs = null;
 		int result = 0;
 		
 		try {
@@ -148,7 +140,75 @@ private Properties sql=new Properties();
 		return result;
 	}
 	
+	public List<EnsembleTeamTime> selectTimes(Connection conn, String teamNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<EnsembleTeamTime> result = new ArrayList<>();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectTimes"));
+			pstmt.setString(1, teamNo);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result.add(getTime(rs));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(conn);
+			
+		}
+		return result;
+	}
 
+	public List<EnsembleTeamMusic> selectMusics(Connection conn, String teamNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<EnsembleTeamMusic> result = new ArrayList<>();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectMusics"));
+			pstmt.setString(1, teamNo);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result.add(getMusic(rs));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(conn);
+			
+		}
+		return result;
+	}
+
+	public List<EnsembleTeamVideo> selectVideos(Connection conn, String teamNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<EnsembleTeamVideo> result = new ArrayList<>();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVideos"));
+			pstmt.setString(1, teamNo);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				result.add(getVideo(rs));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(conn);
+			
+		}
+		return result;
+	}
+	
 	
 	public List<Inst> searchAllInst(Connection conn){
 		PreparedStatement pstmt=null;
@@ -196,7 +256,7 @@ private Properties sql=new Properties();
 			pstmt=conn.prepareStatement(sql.getProperty("insertTime"));
 			pstmt.setString(1, time.getEnsTeamNo());
 			pstmt.setString(2, time.getEnsDayOfWeek());
-			pstmt.setTimestamp(3, time.getEnsStarTime());
+			pstmt.setTimestamp(3, time.getEnsStartTime());
 			pstmt.setTimestamp(4, time.getEnsEndTime());
 			
 			result=pstmt.executeUpdate();
@@ -213,7 +273,7 @@ private Properties sql=new Properties();
 	public int insertTeam(Connection conn, EnsembleTeam ensTeam) {
 		PreparedStatement pstmt=null;
 		int result=0;
-		System.out.println("팀테이블 팀번호: "+ensTeam.getEnsTeamNo());
+//		System.out.println("팀테이블 팀번호: "+ensTeam.getEnsTeamNo());
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertTeam"));
 			pstmt.setString(1, ensTeam.getEnsTeamNo());
@@ -285,6 +345,31 @@ private Properties sql=new Properties();
 		
 		return seq;
 	}
+	
+	private EnsembleTeamTime getTime(ResultSet rs) throws SQLException{
+		return EnsembleTeamTime.builder()
+					.ensDayOfWeek(rs.getString("ENS_DAY_OF_WEEK"))
+					.ensStartTime(rs.getTimestamp("ENS_START_TIME"))
+					.ensEndTime(rs.getTimestamp("ENS_END_TIME"))
+					.build();
+	}
+	
+	private EnsembleTeamMusic getMusic(ResultSet rs) throws SQLException{
+		return EnsembleTeamMusic.builder()
+					.mNo(rs.getString("M_NO"))
+					.mOriName(rs.getString("M_ORI_NAME"))
+					.mReName(rs.getString("M_RE_NAME"))
+					.build();
+	}
+	
+	private EnsembleTeamVideo getVideo(ResultSet rs) throws SQLException{
+		return EnsembleTeamVideo.builder()
+					.vNo(rs.getString("V_NO"))
+					.vOriName(rs.getString("V_ORI_NAME"))
+					.vReName(rs.getString("V_RE_NAME"))
+					.build();
+	}
+	
 	
 	private EnsembleTeam getTeam(ResultSet rs) throws SQLException{
 		return EnsembleTeam.builder()
