@@ -84,6 +84,8 @@
 <input type="hidden" class="position" name="position">
 <input type="hidden" id="inst">
 
+<input type="hidden" id="memNo" name="memNo">
+
 
 </section>
 
@@ -128,6 +130,7 @@ $(document).ready(function(){
 		const endTime = $("#endTime").val();
 		const inst = $("#inst").val();
 		const position = $(".position").val();
+		const memNo = $("#memNo").val();
 		
 		
 		form.append("teamName", teamName);
@@ -139,6 +142,7 @@ $(document).ready(function(){
 		form.append("endTime",endTime);
 		form.append("inst",inst);
 		form.append("position",position);
+		form.append("memNo", memNo);
 		
 		const videoInput=$("#video");
 		$.each(videoInput[0].files, (i,v)=>{

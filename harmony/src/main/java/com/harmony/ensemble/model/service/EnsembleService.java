@@ -122,13 +122,26 @@ public class EnsembleService {
 		return memNo;
 	}
 	
-	public String selectSeq() {
+	public String selectSeq() { //팀 번호 가져오는 메소드
 		Connection conn = getConnection();
 		
 		String seq = dao.selectSeq(conn);
 		
 		return seq;
 		
+	}
+	
+	public String selectTeamNoByMemNo(String loginMemNo) { 
+		
+		Connection conn = getConnection();
+		String teamNo = dao.selectTeamNoByMemNo(conn, loginMemNo);
+		return teamNo;
+	}
+	
+	public EnsembleTeam selectTeamByNo(String teamNo) {
+		Connection conn = getConnection();
+		EnsembleTeam team = dao.selectTeamByNo(conn, teamNo);
+		return team;
 	}
 	
 }

@@ -5,26 +5,25 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.ensemble.model.dto.EnsembleTeam;
-import com.harmony.ensemble.model.dto.EnsembleTeamComment;
 import com.harmony.ensemble.model.service.EnsembleService;
+import com.harmony.model.dto.Member;
 
 /**
  * Servlet implementation class TeamProfile
  */
 @WebServlet("/ensemble/teamProfile.do")
-public class TeamProfile extends HttpServlet {
+public class TeamProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TeamProfile() {
+    public TeamProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,8 +35,22 @@ public class TeamProfile extends HttpServlet {
 		
 		EnsembleService es = new EnsembleService();
 	
+		//로그인한 멤버의 회원번호와 일치하는 회원의 팀 번호 가져오기.
+		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+		String loginMemNo = loginMember.getMemNo();
 		
+		String teamNo = es.selectTeamNoByMemNo(loginMemNo);
+		
+		//팀 번호로 팀 정보 가져오기
+		EnsembleTeam team= es.selectTeamByNo(teamNo);
+//		List<EnsembleTeam> comments=es.selectTeamComment(teamNo);
+		
+		request.setAttribute("team", team);
+//		request.setAttribute("comments", comments);
+
 		request.getRequestDispatcher("/views/ensemble/teamProfile.jsp").forward(request, response);
+	
+	
 	}
 
 	/**
