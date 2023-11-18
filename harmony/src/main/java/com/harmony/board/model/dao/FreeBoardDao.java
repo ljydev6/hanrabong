@@ -2,6 +2,7 @@ package com.harmony.board.model.dao;
 
 import static com.harmony.common.JDBCTemplate.close;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -160,17 +161,31 @@ public class FreeBoardDao {
 	    return comments;
 	}
 	
+	public int updateBoardReadCount(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateFreeBoardReadcount"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	
 	
 	private FreeBoard getFreeBoard(ResultSet rs) throws SQLException {
 	    return FreeBoard.builder()
-	            .freBrdNo(rs.getInt("fre_brd_no"))
-	            .freBrdWriter(rs.getString("fre_brd_writer"))
-	            .freBrdTitle(rs.getString("fre_brd_title"))
-	            .freBrdContent(rs.getString("fre_brd_content"))
-	            .freBrdTitleImg(rs.getString("fre_brd_title_img"))
-	            .freBrdDate(rs.getDate("fre_brd_date"))
-	            .freBrdViews(rs.getInt("fre_brd_views"))
+	            .freBrdNo(rs.getInt("FRE_BRD_NO"))
+	            .freBrdWriter(rs.getString("FRE_BRD_WRITER"))
+	            .freBrdTitle(rs.getString("FRE_BRD_TITLE"))
+	            .freBrdContent(rs.getString("FRE_BRD_CONTENT"))
+	            .freBrdTitleImg(rs.getString("FRE_BRD_TITLE_IMG"))
+	            .freBrdDate(rs.getDate("FRE_BRD_DATE"))
+	            .freBrdViews(rs.getInt("FRE_BRD_VIEWS"))
 	            .build();
 	}
 	//esultSet으로부터 데이터를 읽어와 FreeBoard 객체를 생성하는 메소드
@@ -188,5 +203,7 @@ public class FreeBoardDao {
 	            .build();
 	
   }
+	
 }
+	
 

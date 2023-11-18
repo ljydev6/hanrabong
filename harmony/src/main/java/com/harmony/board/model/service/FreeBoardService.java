@@ -49,11 +49,23 @@ public class FreeBoardService {
         return result;
     }
     
-    public FreeBoard selectBoardByNo(int no) {
+    public FreeBoard selectBoardByNo(int no,boolean readResult) {
 	    Connection conn = getConnection();
 	    FreeBoard b = dao.selectFreeBoardByNo(conn, no);
-	    close(conn);
-	    return b;
+	    System.out.println(readResult);
+	    System.out.println(no);
+
+	    if(b!=null&&readResult) {
+			int result=dao.updateBoardReadCount(conn,no);
+			
+			if(result>0) { 
+				commit(conn);
+				b.setFreBrdViews(b.getFreBrdViews()+1);
+			}
+			else rollback(conn);
+		}
+		close(conn);
+		return b;
 	}
     
     public int insertFreeBoardComment(FreeCommentBoard fc) {
@@ -71,7 +83,5 @@ public class FreeBoardService {
         close(conn);
         return comments;
     }
-    
-    
     //특정 게시판의 댓글 목록을 가져오는 것
 }

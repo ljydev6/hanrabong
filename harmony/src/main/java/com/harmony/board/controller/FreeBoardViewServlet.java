@@ -36,7 +36,7 @@ public class FreeBoardViewServlet extends HttpServlet {
         int no = noParam != null ? Integer.parseInt(noParam) : 0;
 
         FreeBoardService freeBoardService = new FreeBoardService();
-        FreeBoard b = freeBoardService.selectBoardByNo(no);
+        FreeBoard b = freeBoardService.selectBoardByNo(no,true);
         List<FreeCommentBoard> comments = freeBoardService.selectFreeBoardComments(no);
 
         request.setAttribute("FreeBoard", b);
