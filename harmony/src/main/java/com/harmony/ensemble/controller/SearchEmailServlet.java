@@ -31,11 +31,6 @@ public class SearchEmailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		//확인결과를 저장
-		// null이면 사용이 가능, null이 아니면 사용이 불가능
-//		request.setAttribute("result", m==null);
-		//아이디 중복확인 결과를 출력해주는 화면출력
-		
 		//이메일 검색 
 		//사용자가 전달한 이메일이 DB(TBL_MEMBER_INFO)에 있는지 확인
 		

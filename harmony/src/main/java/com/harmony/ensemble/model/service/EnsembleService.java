@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.ensemble.model.dao.EnsembleDao;
+import com.harmony.ensemble.model.dto.EnsembleBoard;
+import com.harmony.ensemble.model.dto.EnsembleBoardWantPart;
 import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
@@ -15,36 +17,31 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
-import com.harmony.ensemble.model.dto.MemberEns;
-import com.harmony.model.dto.MemberInfo;
 
 
 public class EnsembleService {
 
 	private EnsembleDao dao = new EnsembleDao();
 	
-	public List<Genre> searchAllGenre(){
-		Connection conn=getConnection();
-		List<Genre> result=dao.searchAllGenre(conn);
-		close(conn);
-		return result;
+	
+	public EnsembleTeam writeBoard(EnsembleBoard board ,List<EnsembleBoardWantPart> partList) {
+		
+		Connection conn = getConnection();
+		
+//		dao.selectTeamNo();
+//		dao.select
+//		
+//		int result = dao.insertBoard();
+//		
+//		if(result>0) {
+//			int result2 = dao.insertWantPart();
+//			}else {
+//				rollback(conn);
+//				throw new IllegalArgumentException("글 등록 에러");
+//		}
+		
+		return null;
 	}
-	
-	public List<Inst> searchAllInst(){
-		Connection conn=getConnection();
-		List<Inst> result=dao.searchAllInst(conn);
-		close(conn);
-		return result;
-	}
-	
-	
-	public String selectMemberByEmail(String userEmail) {
-		Connection conn=getConnection();
-		String memNo = dao.selectMemberByEmail(conn, userEmail);
-		close(conn);
-		return memNo;
-	}
-	
 
 	
 	
@@ -66,7 +63,6 @@ public class EnsembleService {
 					}
 				}
 			}
-			
 			
 			if(!musicList.isEmpty()) {
 				for(EnsembleTeamMusic music : musicList) {
@@ -103,6 +99,27 @@ public class EnsembleService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	public List<Inst> searchAllInst(){
+		Connection conn=getConnection();
+		List<Inst> result=dao.searchAllInst(conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<Genre> searchAllGenre(){
+		Connection conn=getConnection();
+		List<Genre> result=dao.searchAllGenre(conn);
+		close(conn);
+		return result;
+	}
+	
+	public String selectMemberByEmail(String userEmail) {
+		Connection conn=getConnection();
+		String memNo = dao.selectMemberByEmail(conn, userEmail);
+		close(conn);
+		return memNo;
 	}
 	
 	public String selectSeq() {

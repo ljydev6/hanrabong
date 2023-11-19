@@ -127,7 +127,7 @@ $(document).ready(function(){
 		const startTime = $("#startTime").val();
 		const endTime = $("#endTime").val();
 		const inst = $("#inst").val();
-		const position = $("#position").val();
+		const position = $(".position").val();
 		
 		
 		form.append("teamName", teamName);

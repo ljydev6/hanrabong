@@ -1,73 +1,9 @@
 @charset "UTF-8";
 
-input[type=button]{
-cursor : pointer;
-background-color: rgb(123, 119, 118);
-width: 80px;
-height: 28px;
-border: none;
-color:white;
-border-radius: 10%;
-
+.boardContainer{
+	height: 75vh;
+	display: flex;
+	border:1px solid purple; 
+	flex-direction:column;	
+	justify-content: space-around;
 }
-
-input[type=submit]{
-    cursor : pointer;
-    background-color: rgb(218, 106, 65);
-    width: 100px;
-    height: 40px;
-    border: none;
-    color:white;
-    border-radius: 10%;
-}
-
-input[type=submit]:hover{
-    cursor : pointer;
-    background-color: rgb(232, 72, 13);
-    width: 100px;
-    height: 40px;
-    border: none;
-    color:white;
-    border-radius: 10%;
-}
-
-
-/*   table td{*/
-/*        border:1px solid red;*/
-/*    }*/
-/*    table tr{*/
-/*        border:1px solid blue;*/
-/*    } */
-    
-    #detail{
-        text-align: left;
-    }
-    
-    .form_container{
-		padding-top : 6%;
-		padding-bottom: 6%;
-	/*	border:1px solid red;*/
-	}
-    
-    .submit-container{
-      /* border:1px solid blue;*/
-        display: flex;
-        justify-content: end;
-        padding-right:20%;
-        padding-bottom: 5%;
-    }
-
-    table tr>td,.inst_chk_span:not(.day):hover{
-        cursor : pointer;
-        color:rgb(250, 112, 61);
-        font-weight: bold;
-    }
-
-   
-    
-  	.day{letter-spacing:40px}
-    
-    .selected{
-		color : orange;
-		font-weight : bold;
-	}

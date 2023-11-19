@@ -38,7 +38,7 @@ String memberChk = (String)request.getAttribute("memberChk"); */
 		<select name="inst" id="inst">
 			<%if(!inst.isEmpty()) {
 				for(Inst i : inst){ %>
-					<option value="<%=i.getInstName() %>">
+					<option value="<%=i.getInstCode() %>">
 						<%=i.getInstName() %>
 					</option>
 			
@@ -76,7 +76,7 @@ $('#addMember').click((e)=>{
 			$(".position",opener.document).val($('.position:checked').val());
 			
 			$("#add_result",opener.document).append($('#searchKeyword',opener.document).val()+ " ");
-			$("#add_result",opener.document).append($('#inst option:selected').val() +" (" );
+			$("#add_result",opener.document).append($('#inst option:selected').text() +" (" );
 			$("#add_result",opener.document).append($('.position:checked').val()+ "), <br>");
 			
 			close();
