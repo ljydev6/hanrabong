@@ -73,7 +73,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			
 			String userEmail = request.getParameter("keyword");
 			
-			//검색한 이메일의 회원넘
+			//검색한 이메일의 회원넘버
 			String memNo = mr.getParameter("memNo");
 			
 			

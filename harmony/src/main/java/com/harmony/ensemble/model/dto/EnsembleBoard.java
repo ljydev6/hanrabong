@@ -10,13 +10,15 @@ import lombok.Data;
 @Builder
 public class EnsembleBoard {
 
-	private String ensBoardTitle;
 	private String ensBoardNo; 
-	private String boardDetail;
-	private Date ensBoardDate;
 	private String ensTeamNo;
-	private int ensBoardView;
 	private String ensWriter;
+	private String ensLocation;
+	private String ensPlace;
+	private String ensDetail;
+	private Date ensBoardDate;
+	private int ensBoardView;
+	private String ensBoardTitle;
 	
 	private List<EnsembleTeam> teamList;
 	private List<EnsembleBoardWantPart> wantPartList;
