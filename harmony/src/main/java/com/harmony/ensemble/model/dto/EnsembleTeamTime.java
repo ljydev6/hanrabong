@@ -11,7 +11,7 @@ public class EnsembleTeamTime {
 
 	private String ensTeamNo;
 	private String ensDayOfWeek;
-	private Timestamp ensStarTime;
+	private Timestamp ensStartTime;
 	private Timestamp ensEndTime;
 	
 }

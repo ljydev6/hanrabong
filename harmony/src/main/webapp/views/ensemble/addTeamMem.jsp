@@ -72,13 +72,19 @@ $('#addMember').click((e)=>{
 	if($('#inst option:selected').val() != null &&
 		$('.position:checked').val() !=null){ 
 			
+		const memNo = '<%=request.getAttribute("memNo")%>'
+		console.log(memNo);
 			$("#inst",opener.document).val($('#inst option:selected').val());
 			$(".position",opener.document).val($('.position:checked').val());
+			$("#memNo",opener.document).val(memNo);
+			
+			
 			
 			$("#add_result",opener.document).append($('#searchKeyword',opener.document).val()+ " ");
 			$("#add_result",opener.document).append($('#inst option:selected').text() +" (" );
 			$("#add_result",opener.document).append($('.position:checked').val()+ "), <br>");
 			
+		
 			close();
 	}else{
 		

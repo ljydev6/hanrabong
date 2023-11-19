@@ -1,30 +1,132 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
+    
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardWrite.css" type="text/css">
+<%@ page import= "java.util.List, 
+					com.harmony.ensemble.model.dto.Inst" %>
+<%
+	List<Inst> inst = (List<Inst>)request.getAttribute("inst");
+%>
+
 <%@ include file="/views/common/header.jsp" %>  
 
 <section>
-<form action="<%=request.getContextPath()%>/ensemble/boardWriteEnd.do">
-	<div class="boardContainer">
-	합주 멤버 모집 글 등록
+<form id="myForm">
+<div class="boardContainer">
 		<div>
-			글 제목
+			<span class="title_span">제목</span>
 			<input type="text" name="title" id="title">
 		</div>
-		<div>
-			지역
-			<input type="select" name="location" id="location">
-		</div>
-		<div>
-			장소	      
-			<input type="text" id="sample6_postcode" placeholder="우편번호">
-			<input type="button" onclick="sample6_execDaumPostcode()" value="주소 검색"><br>
-			<input type="text" id="sample6_address" placeholder="주소"><br>
-			<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br>
-			<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+		
+		
+		<div class="part_container">
+				<span class="title_span">모집 파트</span>
+			<table class="part_table">
+			<tr>
+				<td>
+			   		<input class="inst_chk" type="checkbox" name="inst" value="INST_1" style="display:none">
+					<span class="inst_chk_span">드럼</span>
+		   		</td>
+		   		<td>
+			   		<input class="inst_chk" type="checkbox" name="inst" value="INST_2" style="display:none">
+					<span class="inst_chk_span">베이스</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_3" style="display:none">
+					<span class="inst_chk_span">더블베이스</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_4" style="display:none">
+					<span class="inst_chk_span">기타</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_5" style="display:none">
+					<span class="inst_chk_span">피아노</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_6" style="display:none">
+					<span class="inst_chk_span">작곡</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_7" style="display:none">
+					<span class="inst_chk_span">색소폰</span>
+		    	</td>
+		    </tr>	
+		    <tr>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_8" style="display:none">
+					<span class="inst_chk_span">트럼펫</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_9" style="display:none">
+					<span class="inst_chk_span">플룻</span>
+		    	</td>
+		    	<td>	
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_10" style="display:none">
+					<span class="inst_chk_span">바이올린</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_11" style="display:none">
+					<span class="inst_chk_span">첼로</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_12" style="display:none">
+					<span class="inst_chk_span">퍼커션</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_13" style="display:none">
+					<span class="inst_chk_span">보컬</span>
+		        </td>
+		        <td>
+		        <input class="inst_chk" type="checkbox" name="inst" value="INST_14" style="display:none">
+				<span class="inst_chk_span">믹싱(DAW)</span>
+				</td>
+			</tr>
+		</table>
 	
-			
+		</div>
+		
+		
+		
+		
+		<div class="loc_container">
+			<table class="loc_table">
+				<tr>
+					<td>
+						<span class="title_span">지역</span>
+					</td>
+					<td>	
+						<input type="text" name="location" id="location"><br>
+					</td>		
+				<tr>	
+					<td>
+						<span class="title_span">장소</span>
+					</td>
+					<td>	
+						<input type="text" id="sample6_postcode" placeholder="우편번호">
+					</td>
+				
+					<td>
+						<input type="button" onclick="sample6_execDaumPostcode()" id="addr_btn" value="주소 검색"><br>
+					</td>
+				</tr>	
+				<tr>	
+					<td>	
+			<!-- 			<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br> -->
+					</td>
+					<td>
+						<input type="text" id="sample6_address" placeholder="주소"><br>
+				
+						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+					</td>
+				</tr>
+			</table>
+				<input type="hidden" name="place" id="place">
+		</div>		
 			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 			
 			<script>
@@ -71,24 +173,155 @@
 			                document.getElementById('sample6_postcode').value = data.zonecode;
 			                document.getElementById("sample6_address").value = addr;
 			                // 커서를 상세주소 필드로 이동한다.
-			                document.getElementById("sample6_detailAddress").focus();
+// 			                document.getElementById("sample6_detailAddress").focus();
+			                
+			                //합쳐서 hidden 인풋에 넣기!
+			                document.getElementById("place").value= addr+ " "+extraAddr;
+			                
 			            }
 			        }).open();
 			    }
 			</script>
-		</div>
-		<div>
-			상세설명
-			  <textarea rows="5" cols="50"></textarea>
-		</div>
 	
 		<div>
-			<input type="submit">
+			<p class="title_span">상세 설명</p>
+			  <textarea rows="5" cols="50" name="detail" id="detail"></textarea>
 		</div>
-	</div>
+	
+		<div class="btn_container">
+			<input type="button" id="board_end" value="등록">
+<!-- 				<input type="button" onclick="submit_form()">등록</button> -->
+		</div>
+</div>
 </form>
 </section>
+<script>
+///	function submit_form(){   2번째꺼,, gson이 안됨ㅜ
+// 		let parts = $('input[name="inst"]:checked').map(function(){
+// 			return $(this).val();
+// 		}).get();
+		
+// 		let location = $('#location').val();
+// 		let title= $('#title').val();
+// 		let place = $('#place').val();
+// 		let detail = $('#detail').val();
+		
+// 		let formData = new FormData();
+// 		formData.append("parts", JSON.stringify(parts));
+// 		formData.append("location", location);
+// 		formData.append("title",title);
+// 		formData.append("detail",detail);
+		
+// 		$.ajax({
+// 			type: "POST",
+<%-- 			url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
+// 			data: formData,
+// 			processData: false,
+// 			contentType: false,
+// 			success: function(data){
+// 				console.log(data);
+// 			},
+// 			error: function(error){
+// 				console.log(error);
+// 			}
+// 		});
+// 	}
+</script>
+
+<script>
+ $("#board_end").click(e=>{
+
+	
+	const form = new FormData();
+	
+	const parts = $('.inst_chk:checked').map(function(){
+		return $(this).val();
+	}).get();
+	
+	const location = $('#location').val();
+	const place =  $('#place').val();
+	const detail = $('#detail').val();
+	const title = $('#title').val();
+	
+	
+	form.append("parts", parts);
+	form.append("location", location);
+	form.append("place", place);
+	form.append("detail", detail);
+	form.append("title",title);
+	
+	
+	$.ajax({
+		url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do",
+		data:form,
+		type:"post",
+		processData:false,
+		contentType:false,
+		success:data=>{
+			alert("등록 성공");
+		},
+		error:(r,e)=>{
+			alert("등록 실패");
+		},
+		complete:()=>{
+		}
+	});
+	
+});	
+	
+
+</script>
 
 
+<script>
+	
+// 	$("#board_end").click(e=>{   첫 번째거... gson 안됨..\
+// 		const want_part = $('.inst_chk:checked').map(function(){
+// 			return $(this).next().text();
+// 		}).get();
+		
+// 		const location = $('#location').val();
+// 		const place =  $('#place').val();
+// 		const detail = $('#detail').val();
+// 		const title = $('#title').val();
+
+// 		const ensBoard = {
+// 			ensLocation: location,
+// 			ensPlace: place,
+// 			ensDetail: detail,
+// 			ensBoardTitle: title
+// 		};
+		
+// 		const ensembleBoardWantPart = {
+// 			ensInstNo : want_part
+// 		};
+		
+// 		console.log(want_part);
+// 		console.log(ensembleBoardWantPart);
+		
+<%-- 		$.post("<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
+// 					{
+// 						data: JSON.stringify(ensBoard), 
+// 						part: JSON.stringify(ensembleBoardWantPart)		
+// 					},
+// 					data=>{
+// 						console.log(data);
+// 					}
+// 				);
+// 	});
+</script>
+<script>
+$('.inst_chk_span').click((e)=>{
+	const $target = $(e.target);
+	$target.prev().click();		
+});
+$('.inst_chk').click((e)=>{
+	const $target = $(e.target);
+	console.log($target.next());
+	$target.next().toggleClass('selected');
+});
+
+
+</script>
 
 <%@ include file="/views/common/footer.jsp" %>

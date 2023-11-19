@@ -1,11 +1,25 @@
 @charset "UTF-8";
 
+section{
+	display: flex;
+	margin-left: 33%;
+	margin-right: 30%;
+	font-family: 'Hi Melody', sans-serif;
+  	font-size: 20px;
+}
+
 .enroll_container{
 	height: 75vh;
+	width: 70vh;
 	display: flex;
 /*	border:1px solid purple; */
 	flex-direction:column;	
-	justify-content: flex-start;
+	justify-content : center;
+	align-items: center;
+	border: 1px solid #ddd;
+ 	background-color: #f9f9f9;
+ 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	 
 }
 
 .enroll_container > div{
@@ -15,12 +29,11 @@
 .submit_container{
 /*	border:1px solid blue;*/
 	display: flex;
-	justify-content: end;
-	padding-right:50%;
-	padding-bottom: 5%;
+	width : 100%;
+	padding-left : 70%;
 }
 
-input[type=button]{
+#submit{
     cursor : pointer;
     background-color: rgb(218, 106, 65);
     width: 100px;
@@ -30,7 +43,7 @@ input[type=button]{
     border-radius: 10%;
 }
 
-input[type=button]:hover{
+#submit:hover{
     cursor : pointer;
     background-color: rgb(232, 72, 13);
     width: 100px;

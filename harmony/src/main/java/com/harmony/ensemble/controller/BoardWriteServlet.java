@@ -1,11 +1,16 @@
 package com.harmony.ensemble.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.service.EnsembleService;
 
 /**
  * Servlet implementation class BoardWrite
@@ -26,6 +31,10 @@ public class BoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Inst> inst = new EnsembleService().searchAllInst();
+		
+		request.setAttribute("inst", inst);
+		
 		request.getRequestDispatcher("/views/ensemble/boardWrite.jsp")
 		.forward(request, response);
 	}
