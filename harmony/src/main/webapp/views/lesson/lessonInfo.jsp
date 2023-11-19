@@ -1,3 +1,4 @@
+<%@page import="com.harmony.lesson.dto.LessonComment"%>
 <%@page import="com.harmony.lesson.dto.LessonApply"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.Timestamp"%>
@@ -10,6 +11,7 @@
 	Lesson time = (Lesson)request.getAttribute("time");
 	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
 	int reviewsCount = (int)request.getAttribute("reviewsCount");
+	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -60,14 +62,14 @@
                                       >
                  </div>
                  <!--  -->
-                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %>
+                <%-- <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %> --%>
                 <div class="mb-3">
                 <!-- 레슨게시글번호로 강사번호를 찾아야함 -->
                 <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
-                <%} %>
+                <%-- <%} %> --%>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
@@ -267,7 +269,7 @@
                               <div class="mb-3">리뷰</div>
                               <%for(LessonApply l : reviews){ %>
                               <div class="avataMemberStarDate">
-                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></i></div>
+                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></div>
                               	<div class="memberStarDate">
                               		<div>
                                			<%=l.getMemNo() %>
@@ -286,16 +288,40 @@
                                	<div class="review">
                                		<%=l.getReview() %>
                                	</div>
+                               	<br>
+                               	
+                               	<%for(LessonComment co : cos){ %>
+                               	<%if(!cos.isEmpty() && co.getReviewNo()==l.getReviewNo()) {%>
+                               	<div class="teacher-comment">
+                               		<div class="avataMemberStarDate">
+                               			<div><i class="fa-solid fa-comment-dots"></i></div>
+		                              	<div class="memberStarDate">
+		                              		<div>
+		                              			TEACHER
+		                               		</div>
+		                               		<div class="starDate">
+		                                		<%=co.getCommentDate() %>
+		                               		</div>
+		                              	</div>
+	                              	</div>
+	                              	<div class="review">
+                               			<%=co.getCommentContent() %>
+                               			<%if(loginMember!=null) {%>
+                               			<button id="deleteReply" class="btn btn-warning" 
+                               			onclick="location.href='<%=request.getContextPath()%>/lesson/deletereply.do?reviewNo=<%=l.getReviewNo()%>&boardNo=<%=lesson.getBoardNo()%>'">삭제</button>
+                               			<%} %>
+                               		</div>
+                               	</div>
+                               	<%} %>
+                               	<%} %>
                                	<div id="comment-container">
 									<div class="comment-editor">
 										<form action="<%=request.getContextPath() %>/lesson/insertComment.do" method="post">
-											<input type="hidden" name="boardRef" value="">
-											<input type="hidden" name="level" value="1">
-											<input type="hidden" name="writer" value="">
-											<input type="hidden" name="boardCommentRef" value="0">
+											<input type="hidden" name="boardNo" value="<%=lesson.getBoardNo()%>">
+											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
-											<button class="btn btn-outline-warning" type="submit" id="btn-insert">등록</button>
+											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
 										</form>
 									</div>
 								</div>
@@ -308,6 +334,13 @@
             </article>
 		</div>
 	</section>
+	<script>
+		$(".comment-editor>form>textarea[name=content]").click(e=>{
+			if (<%=loginMember==null%>) {
+				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
+			}
+		});
+	</script>
 	<script>
 		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
 		console.log(rect); */

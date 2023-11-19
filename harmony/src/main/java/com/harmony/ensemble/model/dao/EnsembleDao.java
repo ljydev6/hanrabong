@@ -87,6 +87,10 @@ private Properties sql=new Properties();
 	public int insertEnsMember(Connection conn, EnsembleMember eMem) {
 		PreparedStatement pstmt=null;
 		int result=0;
+//		System.out.println(eMem.getEnsMemPosition());
+//		System.out.println(eMem.getEnsTeamNo());
+//		System.out.println(eMem.getEnsInstCode());
+//		System.out.println(eMem.getEnsMemNo());
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertEnsMember"));
 			pstmt.setString(1, eMem.getEnsTeamNo());
