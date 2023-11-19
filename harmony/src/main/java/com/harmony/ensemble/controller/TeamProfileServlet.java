@@ -13,6 +13,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
+import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.service.EnsembleService;
 import com.harmony.model.dto.Member;
 
@@ -49,6 +50,10 @@ public class TeamProfileServlet extends HttpServlet {
 		
 		request.setAttribute("team", team);
 //		request.setAttribute("comments", comments);
+		
+		//장르
+		List<Genre> genre = new EnsembleService().searchAllGenre();
+		request.setAttribute("genre", genre);
 
 		
 		//팀 번호 일치하는 time, music, video 테이블 정보

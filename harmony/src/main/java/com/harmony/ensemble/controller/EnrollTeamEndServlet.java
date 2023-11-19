@@ -104,7 +104,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 		         EnsembleTeamTime.builder()
 						.ensTeamNo(ensTeamNo)
 						.ensDayOfWeek(mr.getParameter("dayOfWeek"))
-						.ensStarTime(startTime)
+						.ensStartTime(startTime)
 						.ensEndTime(endTime)
 						.build());
 			
