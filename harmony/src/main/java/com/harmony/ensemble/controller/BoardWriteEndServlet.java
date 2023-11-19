@@ -76,10 +76,10 @@ public class BoardWriteEndServlet extends HttpServlet {
 		Gson gson = new Gson();
 		EnsembleBoard board  = gson.fromJson(data, EnsembleBoard.class);
 		System.out.println("보드" + board);
-		List<String> parts = (List<String>)gson.fromJson(part, List.class);
+//		List<String> parts = (List<String>)gson.fromJson(part, List.class);
 		
 		
-		System.out.println(": 여기: " + parts);
+//		System.out.println(": 여기: " + parts);
 		
 		
 //		String location = request.getParameter("location");

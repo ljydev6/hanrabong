@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardWrite.css" type="text/css">
 <%@ page import= "java.util.List, 
 					com.harmony.ensemble.model.dto.Inst" %>
@@ -12,14 +16,15 @@
 
 <section>
 <form id="myForm">
+<div class="boardContainer">
 		<div>
-			글 제목
+			<span class="title_span">제목</span>
 			<input type="text" name="title" id="title">
 		</div>
 		
 		
 		<div class="part_container">
-			모집파트<br>
+				<span class="title_span">모집 파트</span>
 			<table class="part_table">
 			<tr>
 				<td>
@@ -88,20 +93,40 @@
 		
 		
 		
-		<div>
-			지역
-			<input type="select" name="location" id="location">
-		</div>
-		<div>
-			장소	      
-			<input type="text" id="sample6_postcode" placeholder="우편번호">
-			<input type="button" onclick="sample6_execDaumPostcode()" value="주소 검색"><br>
-			<input type="text" id="sample6_address" placeholder="주소"><br>
-<!-- 			<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br> -->
-			<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-	
-			<input type="hidden" name="place" id="place">
-			
+		<div class="loc_container">
+			<table class="loc_table">
+				<tr>
+					<td>
+						<span class="title_span">지역</span>
+					</td>
+					<td>	
+						<input type="text" name="location" id="location"><br>
+					</td>		
+				<tr>	
+					<td>
+						<span class="title_span">장소</span>
+					</td>
+					<td>	
+						<input type="text" id="sample6_postcode" placeholder="우편번호">
+					</td>
+				
+					<td>
+						<input type="button" onclick="sample6_execDaumPostcode()" id="addr_btn" value="주소 검색"><br>
+					</td>
+				</tr>	
+				<tr>	
+					<td>	
+			<!-- 			<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br> -->
+					</td>
+					<td>
+						<input type="text" id="sample6_address" placeholder="주소"><br>
+				
+						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+					</td>
+				</tr>
+			</table>
+				<input type="hidden" name="place" id="place">
+		</div>		
 			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 			
 			<script>
@@ -157,16 +182,17 @@
 			        }).open();
 			    }
 			</script>
-		</div>
+	
 		<div>
-			상세설명
+			<p class="title_span">상세 설명</p>
 			  <textarea rows="5" cols="50" name="detail" id="detail"></textarea>
 		</div>
 	
-		<div>
-			<button id="board_end">글 등록</button>	
+		<div class="btn_container">
+			<input type="button" id="board_end" value="등록">
 <!-- 				<input type="button" onclick="submit_form()">등록</button> -->
 		</div>
+</div>
 </form>
 </section>
 <script>
@@ -269,17 +295,18 @@
 			ensInstNo : want_part
 		};
 		
+		console.log(want_part);
+		console.log(ensembleBoardWantPart);
 		
-		
-		$.post("<%=request.getContextPath()%>/ensemble/boardWriteEnd.do",
-					{
-						data: JSON.stringify(ensBoard), 
-						part: JSON.stringify(ensembleBoardWantPart)		
-					},
-					data=>{
-						console.log(data);
-					}
-				);
+<%-- 		$.post("<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
+// 					{
+// 						data: JSON.stringify(ensBoard), 
+// 						part: JSON.stringify(ensembleBoardWantPart)		
+// 					},
+// 					data=>{
+// 						console.log(data);
+// 					}
+// 				);
 	});
 </script>
 <script>

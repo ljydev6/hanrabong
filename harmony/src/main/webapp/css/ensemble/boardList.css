@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+main{
+	font-family: 'Hi Melody', sans-serif;
+	font-size: 20px;
+}
+
 .button_container{
 	
 /*	border: 1px solid black;*/
@@ -8,7 +13,6 @@
 	margin-left: 80%;
 	
 	}
-
 
 .board_container{
 	display: flex;
@@ -23,6 +27,27 @@
  cursor : pointer;
  
  }
+ 
+ 
+input[type=button]{
+    cursor : pointer;
+    background-color: rgb(218, 106, 65);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+input[type=button]:hover{
+    cursor : pointer;
+    background-color: rgb(232, 72, 13);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
  
 ul li{
 	list-style:none;
