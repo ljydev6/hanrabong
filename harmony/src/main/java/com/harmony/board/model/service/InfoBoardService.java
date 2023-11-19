@@ -128,5 +128,12 @@ public class InfoBoardService {
         close(conn);
         return tagName;
     }
+	
+	public int getCommentCount(int boardNo) {
+        Connection conn = getConnection();
+        int commentCount = dao.selectBoardCommentCount(conn, boardNo);
+        close(conn);
+        return commentCount;
+    }
 
 }

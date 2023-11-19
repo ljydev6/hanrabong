@@ -82,4 +82,22 @@ public class FreeBoardService {
         return comments;
     }
     //특정 게시판의 댓글 목록을 가져오는 것
+    
+	public int deleteFreeBoard(int boardNo) {
+        Connection conn = getConnection();
+        int result = dao.deleteFreeBoard(conn, boardNo);
+        if (result > 0) commit(conn);
+        else rollback(conn);
+        close(conn);
+        return result;
+    }
+
+	public int deleteFreeComment(int commentNo) {
+        Connection conn = getConnection();
+        int result = dao.deleteFreeComment(conn, commentNo);
+        if (result > 0) commit(conn);
+        else rollback(conn);
+        close(conn);
+        return result;
+    }
 }

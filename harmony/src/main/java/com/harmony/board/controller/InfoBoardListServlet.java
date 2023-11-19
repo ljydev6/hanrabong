@@ -45,8 +45,10 @@ public class InfoBoardListServlet extends HttpServlet {
 		for (InfoBoard board : boards) {
 	        String categoryName = new InfoBoardService().selectCategoryNameByNo(board.getInfBrdCatNo());
 	        String tagName = new InfoBoardService().selectTagNameByNo(board.getInfBrdTagNo());
+	        int commentCount = new InfoBoardService().getCommentCount(board.getInfBrdNo());
 	        request.setAttribute("categoryName" + board.getInfBrdNo(), categoryName);
 	        request.setAttribute("tagName" + board.getInfBrdNo(), tagName);
+	        request.setAttribute("commentCount" + board.getInfBrdNo(), commentCount);
 
 	    }
 		

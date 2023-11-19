@@ -5,10 +5,8 @@
 <%
 List<InfoBoard> boards = null;
 if (request.getAttribute("searchResults") != null) {
-	// 검색 결과가 있는 경우
 	boards = (List<InfoBoard>) request.getAttribute("searchResults");
 } else {
-	// 검색 결과가 없는 경우, 일반 게시글 목록을 표시
 	boards = (List<InfoBoard>) request.getAttribute("boards");
 }
 %>
@@ -99,19 +97,17 @@ if (request.getAttribute("searchResults") != null) {
 									<p><%=post.getInfBrdContent()%></p>
 								</section>
 								<%--<p class="post-writer"><%=post.getInfBrdWriter()%></p>--%>
-								<p class="post-writer">작성자(임시)</p>
+								<p class="post-writer"><%=post.getInfBrdWriter()%></p>
 								<p class="post-region"><%=post.getInfBrdRegion()%></p>
 							</div>
-							<%--<img src="<%=request.getContextPath()%>/image/board/No1.png"> --%>
+							<img src="<%=request.getContextPath()%>/image/board/No1.png">
 						</div>
 
 						<div class="post-footer">
 							<div class="view-comment">
 								<div class="views-comments-container">
-									<span class="post-comment"> 댓글 7
-									</span>
+									<span>댓글 <%= request.getAttribute("commentCount" + post.getInfBrdNo()) %></span>
 								</div>
-								<span class="post-date"><%=post.getInfBrdRegDate()%></span>
 							</div>
 						</div>
 					</a>
@@ -131,7 +127,7 @@ if (request.getAttribute("searchResults") != null) {
 				</select> <input type="text" name="query" placeholder="검색어 입력"
 					class="search-input">
 				<button type="submit" class="search-button">
-					<img src="IMG/search2.png">
+					<img src="<%=request.getContextPath()%>/image/board/search2.png">
 				</button>
 			</form>
 

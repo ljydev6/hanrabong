@@ -175,6 +175,41 @@ public class FreeBoardDao {
 		}return result;
 	}
 	
+	public int deleteFreeBoard(Connection conn, int boardNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeBoardComment"));
+	        pstmt.setInt(1, boardNo);
+	        pstmt.executeUpdate();
+
+	        close(pstmt); 
+
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeBorad"));
+	        pstmt.setInt(1, boardNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt); 
+	    }
+	    return result;
+	}
+	
+	public int deleteFreeComment(Connection conn, int commentNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeComment"));
+	        pstmt.setInt(1, commentNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt);
+	    }
+	    return result;
+	}
 	
 	
 	private FreeBoard getFreeBoard(ResultSet rs) throws SQLException {

@@ -398,6 +398,26 @@ public class InfoBoardDao {
         return tagName;
     }
 	
+	 public int selectBoardCommentCount(Connection conn, int boardNo) {
+	        PreparedStatement pstmt = null;
+	        ResultSet rs = null;
+	        int commentCount = 0;
+	        try {
+	            pstmt = conn.prepareStatement(sql.getProperty("selectBoardCommentCount"));
+	            pstmt.setInt(1, boardNo);
+	            rs = pstmt.executeQuery();
+	            if (rs.next()) {
+	                commentCount = rs.getInt(1);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            close(rs);
+	            close(pstmt);
+	        }
+	        return commentCount;
+	    }
+
 	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
 		return InfoBoard.builder()

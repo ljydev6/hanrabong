@@ -165,22 +165,15 @@ body {
     align-items: center; 
 }
 
-/* 조회수 및 코멘트수 */
-.post-view, .post-comment {
+/* 코멘트수 */
+.post-comment {
     margin-right: 10px;
     font-size: 14px;
     color: #343a40;
 }
 
-/* 조회수 이미지 */
-.post-view img {
-    width: 20px;
-    height: auto;
-    vertical-align: middle; 
-}
-
 /* 코멘트 이미지 */
-.post-comment img {
+#commentIcon {
     width: 20px;
     height: auto;
     vertical-align: middle; 

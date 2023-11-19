@@ -46,7 +46,6 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 					<input type="hidden" name="boardRef"
 						value="<%=board.getInfBrdNo()%>"> <input type="hidden"
 						name="level" value="1"> <input type="hidden"
-						name="infComWriter" value="temp001"> <input type="hidden"
 						name="infComNoRef" value="">
 					<textarea name="content" cols="55" rows="3"></textarea>
 					<button type="submit" id="btn-insert">등록</button>
@@ -77,7 +76,8 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 				<tr class="level2">
 					<td><sub><%=comment.getInfComWriter()%></sub> <sub><%=comment.getInfComDate()%></sub><br>
 						<%=comment.getInfComContent()%></td>
-					<td></td>
+					<td>
+						<button onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button></td>
 				</tr>
 				<%
 				}
