@@ -43,7 +43,7 @@ public class SaveLessonServlet extends HttpServlet {
 			int result = new LessonService().saveLesson(boardNo, userNo);
 			if (result>0) {
 				msg ="해당 레슨 찜성공";
-				loc ="/lesson/findLesson.do";
+				loc ="/lesson/lessonInfo.do?no="+boardNo;
 				
 				request.setAttribute("loc", loc);
 				request.setAttribute("msg", msg);
@@ -54,7 +54,7 @@ public class SaveLessonServlet extends HttpServlet {
 			int result = new LessonService().deleteSavedLesson(boardNo, userNo);
 			if(result>0) {
 				msg ="이미 찜이 되어있습니다. 찜 해제를 합니다";
-				loc ="/lesson/findLesson.do";
+				loc ="/lesson/lessonInfo.do?no="+boardNo;
 				
 				request.setAttribute("loc", loc);
 				request.setAttribute("msg", msg);
