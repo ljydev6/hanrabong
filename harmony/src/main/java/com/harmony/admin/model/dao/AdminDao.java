@@ -4,11 +4,13 @@ import static com.harmony.common.JDBCTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -80,7 +82,7 @@ public class AdminDao {
 			if(rs.next()) {
 				member = AdminMember.builder().adminId(rs.getString("ADMIN_ID"))
 											  .adminName(rs.getString("ADMIN_NAME"))
-											  .adminNo(rs.getString("ADMIN_PW"))
+											  .adminNo(rs.getString("ADMIN_NO"))
 											  .build();
 			}
 		}catch(SQLException e) {
@@ -431,4 +433,147 @@ public class AdminDao {
 		return result;
 	}
 
+	public int insertNotice(Connection conn, Notice notice) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertNotice"));
+			pstmt.setInt(1, notice.getNoticeNo());
+			pstmt.setString(2, notice.getNoticeWriter());
+			pstmt.setString(3, notice.getTitle());
+			pstmt.setCharacterStream(4, new StringReader(notice.getContent()), notice.getContent().length());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertNoticeFile(Connection conn, Notice notice) {
+		PreparedStatement pstmt = null;
+		int[] resultArray = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertNoticeFile"));
+			for(NoticeAttachFile f :notice.getAttachFileList()) {
+				pstmt.setInt(1, notice.getNoticeNo());
+				pstmt.setString(2, f.getOriName());
+				pstmt.setString(3, f.getReName());
+				pstmt.addBatch();
+				pstmt.clearParameters();
+			}
+			resultArray = pstmt.executeBatch();
+			System.out.println(Arrays.toString(resultArray));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		if(resultArray!=null&& resultArray.length>0) {
+			int temp = 1;
+			for(int i:resultArray) {
+				System.out.println(i);
+				if(i==-2) {
+					temp *= 1;
+				}else if(i==-3) {
+					temp *= 0;
+				}else {
+					temp *=i;
+				}
+			}
+			System.out.println(temp);
+			result = result + temp;
+		}
+		System.out.println(result);
+		return result;
+	}
+	
+	public int getNoticeSequence(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getNoticeSequence"));
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateNotice(Connection conn, Notice notice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("updateNotice"));
+			pstmt.setString(1, notice.getTitle());
+			pstmt.setCharacterStream(2, new StringReader(notice.getContent()), notice.getContent().length());
+			pstmt.setInt(3, notice.getNoticeNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteNoticeFileByBrdNo(Connection conn, Notice notice) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteNoticeFileByBrdNo"));
+			pstmt.setInt(1, notice.getNoticeNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteNoticeFileByFileNo(Connection conn, String[] delFile) {
+		PreparedStatement pstmt = null;
+		int[] results = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteNoticeFileByFileNo"));
+			for(String f : delFile) {
+				pstmt.setString(1, f);
+				pstmt.addBatch();
+			}
+			results = pstmt.executeBatch();
+			System.out.println(Arrays.toString(results));
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		if(results != null && results.length>0) {
+			int temp = 1;
+			for(int i:results) {
+				System.out.println(i);
+				if(i==-2) {
+					temp *= 1;
+				}else if(i==-3) {
+					temp *= 0;
+				}else {
+					temp *=i;
+				}
+			}
+			System.out.println(temp);
+			result = result + temp;
+		}
+		System.out.println(result);
+		return result;
+	}
 }
