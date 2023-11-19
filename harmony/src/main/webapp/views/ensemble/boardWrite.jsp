@@ -3,8 +3,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
+    
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardWrite.css" type="text/css">
 <%@ page import= "java.util.List, 
 					com.harmony.ensemble.model.dto.Inst" %>
@@ -28,62 +28,62 @@
 			<table class="part_table">
 			<tr>
 				<td>
-			   		<input class="inst_chk" type="checkbox" name="inst" value="vocal" style="display:none">
-					<span class="inst_chk_span">보컬</span>
+			   		<input class="inst_chk" type="checkbox" name="inst" value="INST_1" style="display:none">
+					<span class="inst_chk_span">드럼</span>
 		   		</td>
 		   		<td>
-			   		<input class="inst_chk" type="checkbox" name="inst" value="piano" style="display:none">
-					<span class="inst_chk_span">건반</span>
-		    	</td>
-		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="drum" style="display:none">
-					<span class="inst_chk_span">드럼</span>
-		    	</td>
-		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="guitar" style="display:none">
-					<span class="inst_chk_span">기타</span>
-		    	</td>
-		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="bass" style="display:none">
+			   		<input class="inst_chk" type="checkbox" name="inst" value="INST_2" style="display:none">
 					<span class="inst_chk_span">베이스</span>
 		    	</td>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="violin" style="display:none">
-					<span class="inst_chk_span">바이올린</span>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_3" style="display:none">
+					<span class="inst_chk_span">더블베이스</span>
 		    	</td>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="percussion" style="display:none">
-					<span class="inst_chk_span">퍼커션</span>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_4" style="display:none">
+					<span class="inst_chk_span">기타</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_5" style="display:none">
+					<span class="inst_chk_span">피아노</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_6" style="display:none">
+					<span class="inst_chk_span">작곡</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_7" style="display:none">
+					<span class="inst_chk_span">색소폰</span>
 		    	</td>
 		    </tr>	
 		    <tr>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="saxophone" style="display:none">
-					<span class="inst_chk_span">색소폰</span>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_8" style="display:none">
+					<span class="inst_chk_span">트럼펫</span>
 		    	</td>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="flute" style="display:none">
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_9" style="display:none">
 					<span class="inst_chk_span">플룻</span>
 		    	</td>
 		    	<td>	
-			    	<input class="inst_chk" type="checkbox" name="inst" value="electronic" style="display:none">
-					<span class="inst_chk_span">일렉트로닉</span>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_10" style="display:none">
+					<span class="inst_chk_span">바이올린</span>
 		    	</td>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="contra" style="display:none">
-					<span class="inst_chk_span">더블베이스</span>
-		    	</td>
-		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="cello" style="display:none">
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_11" style="display:none">
 					<span class="inst_chk_span">첼로</span>
 		    	</td>
 		    	<td>
-			    	<input class="inst_chk" type="checkbox" name="inst" value="trumpet" style="display:none">
-					<span class="inst_chk_span">트럼펫</span>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_12" style="display:none">
+					<span class="inst_chk_span">퍼커션</span>
+		    	</td>
+		    	<td>
+			    	<input class="inst_chk" type="checkbox" name="inst" value="INST_13" style="display:none">
+					<span class="inst_chk_span">보컬</span>
 		        </td>
 		        <td>
-		        <input class="inst_chk" type="checkbox" name="inst" value="etc" style="display:none">
-				<span class="inst_chk_span">etc</span>
+		        <input class="inst_chk" type="checkbox" name="inst" value="INST_14" style="display:none">
+				<span class="inst_chk_span">믹싱(DAW)</span>
 				</td>
 			</tr>
 		</table>
@@ -196,77 +196,78 @@
 </form>
 </section>
 <script>
-	function submit_form(){
-		let parts = $('input[name="inst"]:checked').map(function(){
-			return $(this).val();
-		}).get();
+///	function submit_form(){   2번째꺼,, gson이 안됨ㅜ
+// 		let parts = $('input[name="inst"]:checked').map(function(){
+// 			return $(this).val();
+// 		}).get();
 		
-		let location = $('#location').val();
-		let title= $('#title').val();
-		let place = $('#place').val();
-		let detail = $('#detail').val();
+// 		let location = $('#location').val();
+// 		let title= $('#title').val();
+// 		let place = $('#place').val();
+// 		let detail = $('#detail').val();
 		
-		let formData = new FormData();
-		formData.append("parts", JSON.stringify(parts));
-		formData.append("location", location);
-		formData.append("title",title);
-		formData.append("detail",detail);
+// 		let formData = new FormData();
+// 		formData.append("parts", JSON.stringify(parts));
+// 		formData.append("location", location);
+// 		formData.append("title",title);
+// 		formData.append("detail",detail);
 		
-		$.ajax({
-			type: "POST",
-			url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(data){
-				console.log(data);
-			},
-			error: function(error){
-				console.log(error);
-			}
-		});
-	}
+// 		$.ajax({
+// 			type: "POST",
+<%-- 			url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
+// 			data: formData,
+// 			processData: false,
+// 			contentType: false,
+// 			success: function(data){
+// 				console.log(data);
+// 			},
+// 			error: function(error){
+// 				console.log(error);
+// 			}
+// 		});
+// 	}
 </script>
 
 <script>
-//// $("#submit").click(e=>{
+ $("#board_end").click(e=>{
 
 	
-// 	const form = new FormData();
+	const form = new FormData();
 	
-// 	const parts = $('.inst_chk:checked').map(function(){
-// 		return $(this).next().text();
-// 	}).get();
-// 	const location = $('#location').val();
-// 	const place =  $('#place').val();
-// 	const detail = $('#detail').val();
-// 	const title = $('#title').val();
+	const parts = $('.inst_chk:checked').map(function(){
+		return $(this).val();
+	}).get();
 	
-	
-// 	form.append("parts", parts);
-// 	form.append("location", location);
-// 	form.append("place", place);
-// 	form.append("detail", detail);
-// 	form.append("title",title);
+	const location = $('#location').val();
+	const place =  $('#place').val();
+	const detail = $('#detail').val();
+	const title = $('#title').val();
 	
 	
-// 	$.ajax({
-<%-- 		url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
-// 		data:form,
-// 		type:"post",
-// 		processData:false,
-// 		contentType:false,
-// 		success:data=>{
-// 			alert("등록 성공");
-// 		},
-// 		error:(r,e)=>{
-// 			alert("등록 실패");
-// 		},
-// 		complete:()=>{
-// 		}
-// 	});
+	form.append("parts", parts);
+	form.append("location", location);
+	form.append("place", place);
+	form.append("detail", detail);
+	form.append("title",title);
 	
-// });	
+	
+	$.ajax({
+		url: "<%=request.getContextPath()%>/ensemble/boardWriteEnd.do",
+		data:form,
+		type:"post",
+		processData:false,
+		contentType:false,
+		success:data=>{
+			alert("등록 성공");
+		},
+		error:(r,e)=>{
+			alert("등록 실패");
+		},
+		complete:()=>{
+		}
+	});
+	
+});	
 	
 
 </script>
@@ -274,29 +275,29 @@
 
 <script>
 	
-	$("#board_end").click(e=>{
-		const want_part = $('.inst_chk:checked').map(function(){
-			return $(this).next().text();
-		}).get();
+// 	$("#board_end").click(e=>{   첫 번째거... gson 안됨..\
+// 		const want_part = $('.inst_chk:checked').map(function(){
+// 			return $(this).next().text();
+// 		}).get();
 		
-		const location = $('#location').val();
-		const place =  $('#place').val();
-		const detail = $('#detail').val();
-		const title = $('#title').val();
+// 		const location = $('#location').val();
+// 		const place =  $('#place').val();
+// 		const detail = $('#detail').val();
+// 		const title = $('#title').val();
 
-		const ensBoard = {
-			ensLocation: location,
-			ensPlace: place,
-			ensDetail: detail,
-			ensBoardTitle: title
-		};
+// 		const ensBoard = {
+// 			ensLocation: location,
+// 			ensPlace: place,
+// 			ensDetail: detail,
+// 			ensBoardTitle: title
+// 		};
 		
-		const ensembleBoardWantPart = {
-			ensInstNo : want_part
-		};
+// 		const ensembleBoardWantPart = {
+// 			ensInstNo : want_part
+// 		};
 		
-		console.log(want_part);
-		console.log(ensembleBoardWantPart);
+// 		console.log(want_part);
+// 		console.log(ensembleBoardWantPart);
 		
 <%-- 		$.post("<%=request.getContextPath()%>/ensemble/boardWriteEnd.do", --%>
 // 					{
@@ -307,7 +308,7 @@
 // 						console.log(data);
 // 					}
 // 				);
-	});
+// 	});
 </script>
 <script>
 $('.inst_chk_span').click((e)=>{

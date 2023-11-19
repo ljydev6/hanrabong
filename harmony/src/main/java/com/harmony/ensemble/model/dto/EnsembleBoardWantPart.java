@@ -8,7 +8,7 @@ import lombok.Data;
 public class EnsembleBoardWantPart {
 
 	private String ensPartIndex;
-	private String esnBoardNo;
+	private String ensBoardNo;
 	private String ensInstNo;
 	
 	

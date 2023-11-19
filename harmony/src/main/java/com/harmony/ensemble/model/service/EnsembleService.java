@@ -24,25 +24,40 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 	
 	
-	public EnsembleTeam writeBoard(EnsembleBoard board ,List<EnsembleBoardWantPart> partList) {
+//	public String selectInstNoByName(String instName) {
+//		Connection conn=getConnection();
+//		String result = dao.selectInstNoByName(conn, instName);
+//		close(conn);
+//		return result;
+//		
+//	}
+
+	
+	public int insertEnsBoard(EnsembleBoard board ,List<EnsembleBoardWantPart> partList) {
 		
 		Connection conn = getConnection();
 		
-//		dao.selectTeamNo();
-//		dao.select
-//		
-//		int result = dao.insertBoard();
-//		
-//		if(result>0) {
-//			int result2 = dao.insertWantPart();
-//			}else {
-//				rollback(conn);
-//				throw new IllegalArgumentException("글 등록 에러");
-//		}
 		
-		return null;
+		int result = dao.insertEnsBoard(conn, board);
+		
+		if(result>0) {
+			if(!partList.isEmpty()) {
+				for(EnsembleBoardWantPart part : partList) {
+					System.out.println(part+ "서비스!");
+					int result2 = dao.insertWantPart(conn, part);
+					if(result2==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("모집파트 등록 에러");
+					}
+				}
+			}
+		}else {
+			rollback(conn);
+			throw new IllegalArgumentException("글 등록 에러");
+		}
+		close(conn);
+		return result;
 	}
-
 	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
@@ -152,6 +167,16 @@ public class EnsembleService {
 		return seq;
 		
 	}
+	
+	public String selectBoardSeq() { 
+		Connection conn = getConnection();
+		
+		String seq = dao.selectBoardSeq(conn);
+		
+		return seq;
+		
+	}
+	
 	
 	public String selectTeamNoByMemNo(String loginMemNo) { 
 		

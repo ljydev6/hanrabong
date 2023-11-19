@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.harmony.ensemble.model.dto.EnsembleBoard;
+import com.harmony.ensemble.model.dto.EnsembleBoardWantPart;
 import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
@@ -19,8 +21,6 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
-import com.harmony.ensemble.model.dto.MemberEns;
-import com.harmony.ensemble.model.service.EnsembleService;
 
 
 public class EnsembleDao {
@@ -35,6 +35,26 @@ private Properties sql=new Properties();
 			e.printStackTrace();
 		}
 	}
+	
+	
+//	public String selectInstNoByName(Connection conn, String instName) {
+//		PreparedStatement pstmt=null;
+//		ResultSet rs = null;
+//		String instNo="";
+//		try{
+//			pstmt = conn.prepareStatement(sql.getProperty("selectInstNoByName"));
+//			pstmt.setString(1, instName);
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) instNo = rs.getString("INST_CODE");
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return instNo;
+//	}
 	
 	
 	public String selectTeamNoByMemNo(Connection conn, String loginMemNo) {
@@ -100,6 +120,44 @@ private Properties sql=new Properties();
 	}
 
 	
+	public int insertWantPart(Connection conn, EnsembleBoardWantPart part) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		System.out.println(part.getEnsInstNo() + " 여기 dao!");
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertWantPart"));
+			pstmt.setString(1, part.getEnsBoardNo());
+			pstmt.setString(2, part.getEnsInstNo());
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertEnsBoard(Connection conn, EnsembleBoard board) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertEnsBoard"));
+			pstmt.setString(1, board.getEnsBoardNo());
+			pstmt.setString(2, board.getEnsTeamNo());
+			pstmt.setString(3, board.getEnsWriter());
+			pstmt.setString(4, board.getEnsLocation());
+			pstmt.setString(5, board.getEnsPlace());
+			pstmt.setString(6, board.getEnsDetail());
+			pstmt.setString(7, board.getEnsBoardTitle());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	public int insertEnsMember(Connection conn, EnsembleMember eMem) {
@@ -345,6 +403,26 @@ private Properties sql=new Properties();
 		
 		return seq;
 	}
+	
+	public String selectBoardSeq(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String seq = "";
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoardSeq"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) seq =  rs.getString(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return seq;
+	}
+	
+
 	
 	private EnsembleTeamTime getTime(ResultSet rs) throws SQLException{
 		return EnsembleTeamTime.builder()
