@@ -57,6 +57,9 @@ a{
 	flex-wrap: wrap;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
+	justify-content: center;
+	gap: 20px;
+	margin-bottom: 3rem;
 }
 .lessonListBox>div:hover{
 	scale: 1.02;
@@ -77,6 +80,12 @@ a{
 	position: absolute;
 	right: 20px;
 	top: 20px;
+}
+.lessonStars{
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	color: coral;
 }
 
 .dropdown>button{

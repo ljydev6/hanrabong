@@ -15,10 +15,10 @@
                 <div>레슨 검색</div>
             
                 <div class="filterBtns p-2">
-                  <button>조회수</button>
-                  <button>별점순</button>
-                  <button>최근등록순</button>
-                  <button>클래스진행순</button>
+                  <button onclick="searchOrderByViews();">조회수</button>
+                  <button onclick="searchOrderByDate()">최근등록순</button>
+                  <button onclick="searchOrderByStar()">별점순</button>
+                  <button onclick="searchOrderByReviews()">리뷰순</button>
                 </div>
                 <!-- <div>
                     <input type="text">
@@ -80,8 +80,8 @@
                     </div>
                 </article>
                 
-                <article class="rightLessonLists w-100 p-5">
-                    <div class="lessonListBox justify-content-center gap-3">
+                <article class="rightLessonLists w-100 p-5" id="rightLessonLists">
+                    <div class="lessonListBox">
                    	<%for(Lesson l : lessons){
                    	if(!lessons.isEmpty()) {%>
                       <div class="lessonList" onclick="location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=<%=l.getBoardNo() %>'">
@@ -91,6 +91,9 @@
                         <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/images/default.jpg" width="200px" height="200px"></div>
                         <%} %>
                         <div class="lessonListTitle"><%=l.getBoardTitle() %>&nbsp;</div>
+                        <div class="lessonStars">
+                        	<i class="fa-solid fa-star"><%=l.getReviewPoint() %></i>
+                        </div>
                         <div class="lessonView">
                         	<i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
                         </div>
@@ -98,9 +101,209 @@
                       		<%} %>
                      	<%} %>
                     </div>
-                    <br><br>
-                    <div><%=request.getAttribute("pageBar") %></div>
+                    <div class="pageBar"><%=request.getAttribute("pageBar") %></div>
                 </article>
+                <script>
+	                function searchOrderByViews() {
+	            		$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?viewAndRecent=BOARD_VIEW_COUNT",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+		       						
+		       						const pageBar = $("<div>")
+		       						pageBar.addClass('pageBar')
+		       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+	                function searchOrderByDate() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?viewAndRecent=BOARD_DATE",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       								       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const viewi = $("<i>");
+		       						viewi.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(viewi);
+		       						
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+                /* 평균별점순 */
+	                function searchOrderByStar() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+                /* 리뷰순 */
+	                function searchOrderByReviews() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?no='리뷰'",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+	       							console.log(goToLessonInfoPath);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                
             </div>
         </div>
     </section>

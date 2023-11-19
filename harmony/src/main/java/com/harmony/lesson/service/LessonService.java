@@ -11,6 +11,7 @@ import java.util.List;
 import com.harmony.lesson.dao.LessonDao;
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.dto.SaveLesson;
 
 
@@ -21,6 +22,26 @@ public class LessonService {
 	public List<Lesson> printLessonAll(int cPage,int numPerpage){
 		Connection conn=getConnection();
 		List<Lesson> result=dao.printLessonAll(conn, cPage, numPerpage);
+		close(conn);
+		return result;
+	}
+	// 리뷰순정렬
+	public List<Lesson> printLessonByReviews(int cPage,int numPerpage){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByReviews(conn, cPage, numPerpage);
+		close(conn);
+		return result;
+	}
+	// 별점평균순정렬
+		public List<Lesson> printLessonByStarAvg(int cPage,int numPerpage){
+			Connection conn=getConnection();
+			List<Lesson> result=dao.printLessonByStarAvg(conn, cPage, numPerpage);
+			close(conn);
+			return result;
+		}
+	public List<Lesson> printLessonByKeyword(String viewAndRecent,int cPage,int numPerpage){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByKeyword(conn, viewAndRecent, cPage, numPerpage);
 		close(conn);
 		return result;
 	}
@@ -121,7 +142,7 @@ public class LessonService {
 		int result2=dao.deleteLessonTime(conn, no);
 		int result=dao.deleteLesson(conn, no);
 		
-		if(result>0 && result2>0) commit(conn);
+		if(result2>0 && result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
 		return result;
@@ -152,22 +173,30 @@ public class LessonService {
 		return result;
 	}
 	
+	public int insertLessonComment(LessonComment lc) {
+		Connection conn = getConnection();
+		int result= dao.insertLessonComment(conn,lc);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
-	//댓글기능
-//	public int insertBoardComment(BoardComment bc) {
-//		Connection conn = getConnection();
-//		int result= dao.insertBoardComment(conn,bc);
-//		if(result>0) commit(conn);
-//		else rollback(conn);
-//		close(conn);
-//		return result;
-//	}
-//	public List<BoardComment> selectBoardComment(int no) {
-//		Connection conn = getConnection();
-//		List<BoardComment> list = dao.selectBoardComment(conn, no);
-//		close(conn);
-//		return list;
-//	}
+	public List<LessonComment> selectReviewComment(int no) {
+		Connection conn = getConnection();
+		List<LessonComment> list = dao.selectReviewComment(conn, no);
+		close(conn);
+		return list;
+	}
+	
+	public int deleteReply(int reviewNo) {
+		Connection conn=getConnection();
+		int result=dao.deleteReply(conn, reviewNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	
 	

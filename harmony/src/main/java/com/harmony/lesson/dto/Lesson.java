@@ -21,4 +21,7 @@ public class Lesson {
 	private Timestamp lessonStartTime;
 	private Timestamp lessonEndTime;
 	private String[] day;
+	
+	private int viewCnt;
+	private double reviewPoint;
 }

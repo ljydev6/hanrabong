@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.dto.SaveLesson;
 
 public class LessonDao {
@@ -33,7 +34,69 @@ public class LessonDao {
 			ResultSet rs=null;
 			List<Lesson> result=new ArrayList<>();
 			try {
-				pstmt=conn.prepareCall(sql.getProperty("printLessonAll"));
+				pstmt=conn.prepareStatement(sql.getProperty("printLessonAll"));
+				pstmt.setInt(1, (cPage-1)*numPerpage+1);
+				pstmt.setInt(2, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					result.add(getLesson(rs));
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		// 리뷰순 정렬
+		public List<Lesson> printLessonByReviews(Connection conn, int cPage,int numPerpage){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<Lesson> result=new ArrayList<>();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("printLessonByReviews"));
+				pstmt.setInt(1, (cPage-1)*numPerpage+1);
+				pstmt.setInt(2, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					result.add(getLesson(rs));
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		// 별점평균순 정렬
+			public List<Lesson> printLessonByStarAvg(Connection conn, int cPage,int numPerpage){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				List<Lesson> result=new ArrayList<>();
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("printLessonByStarAvg"));
+					pstmt.setInt(1, (cPage-1)*numPerpage+1);
+					pstmt.setInt(2, cPage*numPerpage);
+					rs=pstmt.executeQuery();
+					while(rs.next()) {
+						result.add(getLesson(rs));
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
+		// 조회수 최근등록순 정렬
+		public List<Lesson> printLessonByKeyword(Connection conn, String viewAndRecent,int cPage,int numPerpage){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<Lesson> result=new ArrayList<>();
+			String query = sql.getProperty("printLessonByKeyword");
+			query=query.replace("#COL", viewAndRecent);
+			try {
+				pstmt=conn.prepareStatement(query);
 				pstmt.setInt(1, (cPage-1)*numPerpage+1);
 				pstmt.setInt(2, cPage*numPerpage);
 				rs=pstmt.executeQuery();
@@ -81,22 +144,26 @@ public class LessonDao {
 			}return l;
 		}
 		// 게시글번호로 레슨찾기 join사용
-				public Lesson selectLessonByNoJoin(Connection conn, int boardNo) {
-					PreparedStatement pstmt=null;
-					ResultSet rs=null;
-					Lesson l=null;
-					try {
-						pstmt=conn.prepareStatement(sql.getProperty("selectLessonByNoJoin"));
-						pstmt.setInt(1, boardNo);
-						rs=pstmt.executeQuery();
-						if(rs.next()) l=getLesson(rs);
-					}catch(SQLException e) {
-						e.printStackTrace();
-					}finally {
-						close(rs);
-						close(pstmt);
-					}return l;
-				}
+			public Lesson selectLessonByNoJoin(Connection conn, int boardNo) {
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				Lesson l=null;
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("selectLessonByNoJoin"));
+					pstmt.setInt(1, boardNo);
+					rs=pstmt.executeQuery();
+					//if(rs.next()) l=getLesson(rs);
+					if(rs.next()) l=Lesson.builder()
+							.teacherNo(rs.getString("teacher_number"))
+							.boardNo(rs.getInt("board_no"))
+							.build();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return l;
+			}
 		// 번호로 레슨 요일정보찾기
 		public Lesson selectTimeByNo(Connection conn, int no) {
 			PreparedStatement pstmt=null;
@@ -222,35 +289,34 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
-		// lesson 삭제
-		public int deleteLesson(Connection conn, int no) {
-			PreparedStatement pstmt=null;
-			int result=0;
-			try {
-				pstmt=conn.prepareStatement(sql.getProperty("deleteLesson"));
-				pstmt.setInt(1, no);
-				result=pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}return result;
-		}
 		// lesson 시간, 요일정보 삭제
-		public int deleteLessonTime(Connection conn, int no) {
-			PreparedStatement pstmt=null;
-			int result=0;
-			try {
-				pstmt=conn.prepareStatement(sql.getProperty("deleteLessonTime"));
-				pstmt.setInt(1, no);
-				result=pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}return result;
-		}
-			
+			public int deleteLessonTime(Connection conn, int no) {
+				PreparedStatement pstmt=null;
+				int result=0;
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("deleteLessonTime"));
+					pstmt.setInt(1, no);
+					result=pstmt.executeUpdate();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(pstmt);
+				}return result;
+			}
+		// lesson 삭제
+			public int deleteLesson(Connection conn, int no) {
+				PreparedStatement pstmt=null;
+				int result=0;
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("deleteLesson"));
+					pstmt.setInt(1, no);
+					result=pstmt.executeUpdate();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(pstmt);
+				}return result;
+			}
 		// lesson 조회수 카운트
 		public int updateLessonReadCount(Connection conn, int no) {
 			PreparedStatement pstmt=null;
@@ -356,45 +422,64 @@ public class LessonDao {
 		
 		
 		
-//		public int insertBoardComment(Connection conn, BoardComment bc) {
-//			PreparedStatement pstmt = null;
-//			int result = 0;
-//			try {
-//				pstmt = conn.prepareStatement(sql.getProperty("insertBoardComment"));
-//				pstmt.setInt(1, bc.getLevel());
-//				pstmt.setString(2, bc.getBoardCommentWriter());
-//				pstmt.setString(3, bc.getBoardCommentContent());
-//				pstmt.setInt(4, bc.getBoardRef());
-//				pstmt.setString(5, bc.getBoardCommentRef()==0?null:
-//									String.valueOf(bc.getBoardCommentRef()));
-//				//문자로들어오면 알아서 숫자로 형변환해서 오라클에 들어간다
-//				result = pstmt.executeUpdate();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			} finally {
-//				close(pstmt);
-//			} return result;
-//			
-//		}
+		public int insertLessonComment(Connection conn, LessonComment lc) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			try {
+				pstmt = conn.prepareStatement(sql.getProperty("insertLessonComment"));
+				pstmt.setInt(1, lc.getReviewNo());
+				pstmt.setString(2, lc.getCommentContent());
+				//pstmt.setString(5, lc.getCommentRef()==0?null:
+				//					String.valueOf(lc.getCommentRef()));
+				//문자로들어오면 알아서 숫자로 형변환해서 오라클에 들어간다
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			} return result;
+			
+		}
 		
-//		public List<BoardComment> selectBoardComment(Connection conn, int no){
-//			PreparedStatement pstmt = null;
-//			ResultSet rs = null;
-//			List<BoardComment> result = new ArrayList<>();
-//			try {
-//				pstmt= conn.prepareStatement(sql.getProperty("selectBoardComment"));
+		public List<LessonComment> selectReviewComment(Connection conn, int no){
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<LessonComment> result = new ArrayList<>();
+			try {
+				pstmt= conn.prepareStatement(sql.getProperty("selectReviewComment"));
 //				pstmt.setInt(1, no);
-//				rs=pstmt.executeQuery();
-//				while(rs.next()) {
-//					result.add(getBoardComment(rs));
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			} finally {
-//				close(rs);
-//				close(pstmt);
-//			} return result;
-//		}
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					result.add(
+							LessonComment.builder()
+							.commentNo(rs.getInt("comment_no"))
+							.reviewNo(rs.getInt("lesson_review_no"))
+							.commentContent(rs.getString("comment_content"))
+							.commentDate(rs.getDate("comment_enroll_date"))
+							.build()
+							);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			} return result;
+		}
+		
+		public int deleteReply(Connection conn,int reviewNo) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			try {
+				pstmt= conn.prepareStatement(sql.getProperty("deleteReply"));
+				pstmt.setInt(1, reviewNo);
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			} return result;
+		}
 	//	
 //		private BoardComment getBoardComment(ResultSet rs) throws SQLException{
 //			return BoardComment.builder()
@@ -421,6 +506,8 @@ public class LessonDao {
 					.boardPrice(rs.getString("board_price"))
 					.boardImg(rs.getString("board_image"))
 					.boardDeadline(rs.getString("board_deadline").charAt(0))
+					.viewCnt(rs.getInt("cnt"))
+					.reviewPoint(rs.getDouble("avg"))
 					.build();
 		}
 		private Lesson getLessonTime(ResultSet rs) throws SQLException {
@@ -445,6 +532,7 @@ public class LessonDao {
 		private LessonApply getLessonApplyReview(ResultSet rs) throws SQLException {
 			return LessonApply.builder()
 					.boardNo(rs.getInt("board_no"))
+					.reviewNo(rs.getInt("review_no"))
 					.memNo(rs.getString("mem_no"))
 					.reviewPoint(rs.getInt("lesson_review_point"))
 					.review(rs.getString("lesson_review"))
