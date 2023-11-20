@@ -1,6 +1,6 @@
 package com.harmony.ensemble.model.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Builder;
@@ -16,11 +16,11 @@ public class EnsembleBoard {
 	private String ensLocation;
 	private String ensPlace;
 	private String ensDetail;
-	private Date ensBoardDate;
+	private Timestamp ensBoardDate;
 	private int ensBoardView;
 	private String ensBoardTitle;
 	
-	private List<EnsembleTeam> teamList;
+	private EnsembleTeam teamList;
 	private List<EnsembleBoardWantPart> wantPartList;
 	
 	}
