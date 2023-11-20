@@ -1,11 +1,16 @@
 package com.harmony.ensemble.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.harmony.ensemble.model.dto.VEnsList;
+import com.harmony.ensemble.model.service.EnsembleService;
 
 /**
  * Servlet implementation class BoardList
@@ -26,6 +31,55 @@ public class BoardListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		EnsembleService es = new EnsembleService();
+		//DB에서 전체 게시글 가져오기
+		int cPage,numPerpage=5;
+		try {
+			cPage=Integer.parseInt(request.getParameter("cPage"));
+		}catch(NumberFormatException e) {
+			cPage=1;
+		}
+		List<VEnsList> boards = es.selectBoardList(cPage, numPerpage);
+		
+		int totalData=es.selectBoardCount();
+		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
+		int pageBarSize=5;
+		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
+		int pageEnd=pageNo+pageBarSize-1;
+		
+		StringBuffer pageBar=new StringBuffer();
+		if(pageNo==1) {
+			pageBar.append("<span>[이전]</span>");
+		}else {
+			pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+(pageNo-1)+"'>");
+			pageBar.append("[이전]</a>");
+		}
+		
+		while(!(pageNo>pageEnd||pageNo>totalPage)) {
+			if(cPage==pageNo) {
+				pageBar.append("<span>"+pageNo+"</span>");
+			}else {
+				pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>");
+				pageBar.append(pageNo);
+				pageBar.append("</a>");
+			}
+			pageNo++;
+		}
+		
+		if(pageNo>totalPage) {
+			pageBar.append("<span>[다음]</span>");
+		}else {
+			pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>");
+			pageBar.append("[다음]");
+			pageBar.append("</a>");
+		}
+		
+		 
+		request.setAttribute("boards", boards); 
+		request.setAttribute("pageBar",pageBar);
+		
+		
 		request.getRequestDispatcher("/views/ensemble/boardList.jsp")
 		.forward(request, response);
 	}

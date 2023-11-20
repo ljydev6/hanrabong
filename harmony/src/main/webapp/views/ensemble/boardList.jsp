@@ -6,13 +6,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
     
 <%@ page import="java.util.List, 
-				com.harmony.ensemble.model.dto.EnsembleBoard,
-				com.harmony.ensemble.model.dto.EnsembleTeam,
-				com.harmony.ensemble.model.dto.EnsembleMember,
-				com.harmony.ensemble.model.dto.EnsembleBoardWantPart,
-				com.harmony.ensemble.model.dto.EnsembleTeamTime" %>
+				com.harmony.ensemble.model.dto.VEnsList" %>
 <%
-	List<EnsembleBoard> boards=(List<EnsembleBoard>)request.getAttribute("boards");
+	List<VEnsList> boards = (List<VEnsList>)request.getAttribute("boards");
+	
 %>   
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardList.css" type="text/css">
 <%@ include file="/views/common/header.jsp" %>  
@@ -214,68 +211,31 @@
 	</div>
 	<article>
       <div class="board">
-      
-<%--       <%if(!boards.isEmpty()){  --%>
-<%-- 			for(Board b:boards){%> --%>
+   
+    <%if(!boards.isEmpty()){  
+			for(VEnsList b:boards){%> 
       
         <div class="board_list">
-<%--         <%=b.getEnsBoardTitle() %> --%>
+        <%=b.getEnsBoardTitle() %>
         	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
         	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
         	class="profile_img">
-       		<h4>얍</h4>
+       		<h4><%=b.getEnsBoardTitle() %></h4>
+      
        		<hr/>
         </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-      
-      </div>
-    </article>
-
-    <article>
-      <div class="board">
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-       		<h4>얍</h4>
-        </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-       
-      </div>
+		<%}
+	}%> -
     </article>
     
-     <article>
-      <div class="board">
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-       		<h4>얍</h4>
-        </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-      
-      </div>
-    </article>
-    
-<!--     	<div id="pageBar"> -->
-<%-- 		<%= request.getAttribute("pageBar") %> --%>
-<!-- 	</div> -->
+     <div id="pageBar"> 
+ 		<%= request.getAttribute("pageBar") %> 
+	</div> 
 
 </section>
 </main>
 <script>
+
 
 	$(".toggle1").next().hide();
 
