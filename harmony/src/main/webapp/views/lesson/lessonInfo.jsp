@@ -329,7 +329,11 @@
 											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
+											<%if(loginMember!=null){ %>
 											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
+											<%} else{%>
+											<button class="btn btn-outline-warning" disabled>댓글등록</button>
+											<%} %>
 										</form>
 									</div>
 								</div>
@@ -344,7 +348,7 @@
 	</section>
 	<script>
 		$(".comment-editor>form>textarea[name=content]").click(e=>{
-			if (<%=loginMember==null%>) {
+			if (<%=loginMember==null %>) {
 				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
 			}
 		});
