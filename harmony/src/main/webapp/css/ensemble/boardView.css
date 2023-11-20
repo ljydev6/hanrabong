@@ -7,7 +7,86 @@ section{
 	justify-content: center;
 	padding : 3%;
 /*	border : 1px solid red;*/
+	overflow: auto;
 	
+}
+
+.top_container{
+	display: flex;
+/*	border: 1px solid red;*/
+/*	flex-direction: row;*/
+}
+
+.title{
+	width: 70%;
+	font-size: 40px;	
+	padding-left : 200px;
+	margin-bottom: 5%;
+}
+
+.team_btn_container{
+	display: flex;
+/*	border: 1px solid darkblue;*/
+	width: 90%;
+}
+
+.teamName{
+	width: 80%;
+/*	border: 1px solid darkblue;*/
+	padding-left: 20%;
+}
+
+.team_btn{
+	 cursor : pointer;
+	 margin-top: 25px;
+    background-color: rgb(218, 106, 65);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+/*    border: 1px solid darkblue;*/
+    margin-right: 50px; 
+    font-size: 18px;
+}
+
+.apply_btn{
+    cursor : pointer;
+    background-color: rgb(218, 106, 65);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+    font-size: 20px;
+}
+
+button:hover{
+    cursor : pointer;
+    background-color: rgb(232, 72, 13);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+.type_shape{
+	background-color: rgb(255, 169, 53);
+	border-radius: 40%;
+	font-size: 18;
+	width: 90px;
+	border : none;
+}
+
+.type{
+	width:20%;
+}
+
+span{
+	margin-right: 20px;
+	margin-left : -10px;
+	font-weight: bold;
 }
 
 .board_container{
@@ -17,11 +96,13 @@ section{
 	transition: transform 0.3s ease-in-out;
 	width: 50vw;
 	height: 75vh;
-	padding: 5%;
+	overflow: auto;
+	padding: 2%;
 	text-align: center;
 /*	border : 1px solid blue;*/
 }
 
 .board_container div{
-	border : 1px solid mediumslateblue;
+/*	border : 1px solid mediumslateblue;*/
+	margin : 5%;
 }
