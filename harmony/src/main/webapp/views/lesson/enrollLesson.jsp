@@ -21,7 +21,7 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50 d-flex flex-column">
                         <h5>이미지업로드</h5>
-                        <input type="file" name="upfile" class="imgUpload form-control" accept="image/*">
+                        <input type="file" name="upfile" class="imgUpload form-control" accept="image/*" required="required">
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">

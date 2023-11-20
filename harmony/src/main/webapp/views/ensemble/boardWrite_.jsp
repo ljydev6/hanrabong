@@ -97,9 +97,11 @@
 		    	<input class="inst_chk" type="checkbox" name="inst" value="trumpet" style="display:none">
 				<span class="inst_chk_span">트럼펫</span>
 		    </td>
-		    <td colspan="2">
-		        <input type="text" name="inst" size=10 placeholder="직접 입력">
+		    <td>
+		    	<input class="inst_chk" type="checkbox" name="inst" value="etc" style="display:none">
+				<span class="inst_chk_span">etc</span>
 		    </td>
+		   
 	    
 	</tr>
 	<tr>

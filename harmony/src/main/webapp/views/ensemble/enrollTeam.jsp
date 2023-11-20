@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
+    
+    
   <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <%@ include file="/views/common/header.jsp" %>  
 <%@ page import= "java.util.List, 
@@ -18,6 +24,7 @@
 		<span>팀명</span>
 		<input type="text" id="teamName">
 	</div>
+
 	<div>	
 		<label for="genre">장르</label>
 		<select name="genre" id="genre">
@@ -28,7 +35,7 @@
 			<%	} 
 			}%>
 		</select>
-	</div>
+	</div>		
 	<div>
 		<p>구분</p>
 		<label>
@@ -39,12 +46,13 @@
 		 	<input type='radio' class="single_chk" name='type' value='전문' style="display:none">
 			<span class="single_chk_span">전문</span>
 		</label>
+	</div>		
+	<div>
+		<input type="button" value="합주일정추가" name="schedule" id="schedule" 
+				onclick="addSchedule();">
 	</div>
-	<input type="button" value="합주일정추가" name="schedule" id="schedule" 
-			onclick="addSchedule();">
-	<span id="sch_result">
-		
-	</span>
+		<span id="sch_result">
+		</span>
 	<div>
 		<p>한 줄 소개</p>
 		<textarea cols="30" rows="3" id="detail"></textarea>
@@ -59,11 +67,10 @@
 	</div>
 	<div class="add_mem">
 	
-	<input type="text" name="searchKeyword" size="25" id="searchKeyword"
-       				placeholder="검색할 이메일" >
-	<input type="button" value="멤버추가" onclick="addTeamMem();"> 
+		<input type="text" name="searchKeyword" size="25" id="searchKeyword"
+	       				placeholder="검색할 이메일" >
+		<input type="button" value="멤버추가" onclick="addTeamMem();"> 
 	</div>
-
 	<div>
 		<span id="add_result">
 			
@@ -83,6 +90,8 @@
 
 <input type="hidden" class="position" name="position">
 <input type="hidden" id="inst">
+
+<input type="hidden" id="memNo" name="memNo">
 
 
 </section>
@@ -128,6 +137,7 @@ $(document).ready(function(){
 		const endTime = $("#endTime").val();
 		const inst = $("#inst").val();
 		const position = $(".position").val();
+		const memNo = $("#memNo").val();
 		
 		
 		form.append("teamName", teamName);
@@ -139,6 +149,7 @@ $(document).ready(function(){
 		form.append("endTime",endTime);
 		form.append("inst",inst);
 		form.append("position",position);
+		form.append("memNo", memNo);
 		
 		const videoInput=$("#video");
 		$.each(videoInput[0].files, (i,v)=>{

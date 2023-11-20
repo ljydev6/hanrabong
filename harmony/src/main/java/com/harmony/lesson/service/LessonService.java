@@ -19,9 +19,36 @@ public class LessonService {
 	private LessonDao dao=new LessonDao();
 	
 	//모든 레슨정보 출력
-	public List<Lesson> printLessonAll(int cPage,int numPerpage){
+		public List<Lesson> printLessonAll(int cPage,int numPerpage){
+			Connection conn=getConnection();
+			List<Lesson> result=dao.printLessonAll(conn, cPage, numPerpage);
+			close(conn);
+			return result;
+		}
+	
+	// 악기로 필터한 레슨정보 출력
+	public List<Lesson> printLessonByFilterInst(String keyword){
 		Connection conn=getConnection();
-		List<Lesson> result=dao.printLessonAll(conn, cPage, numPerpage);
+		List<Lesson> result=dao.printLessonByFilterInst(conn, keyword);
+		close(conn);
+		return result;
+	}
+	// 장소로 필터한 레슨정보 출력
+	public List<Lesson> printLessonByFilterPlace(String keyword){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByFilterPlace(conn, keyword);
+		close(conn);
+		return result;
+	}
+	public List<Lesson> printLessonByFilterPrice(String keyword){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByFilterPrice(conn, keyword);
+		close(conn);
+		return result;
+	}
+	public List<Lesson> printLessonByFilterTime(String keyword){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByFilterTime(conn, keyword);
 		close(conn);
 		return result;
 	}

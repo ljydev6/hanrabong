@@ -44,8 +44,8 @@ public class SearchEmailServlet extends HttpServlet {
 		String userEmail = request.getParameter("keyword");
 		String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
 		
-		System.out.println(userEmail);
-		System.out.println(memNo);
+		System.out.println("searchEmailServlet 검색한이메일: "+ userEmail);
+		System.out.println("검색한 이메일의 회원 넘버: " + memNo);
 		
 		if(!memNo.equals("")) {
 			//검색한 이메일이 회원 테이블에 있으면

@@ -69,10 +69,20 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			String ensTeamNo = es.selectSeq();
 			System.out.println(ensTeamNo);
 	
-			String userEmail = request.getParameter("keyword");
-			String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
 			
-
+			
+			String userEmail = request.getParameter("keyword");
+			
+			//검색한 이메일의 회원넘버
+			String memNo = mr.getParameter("memNo");
+			
+			
+//			System.out.println("userEmail: " + userEmail);
+//			System.out.println("memNo" + memNo);
+//			System.out.println("memNo2" + memNo2);
+//			System.out.println("원인찾기중 EnrollTeamEndServlet ensTeam빌더 위!");
+				//문제 : EnsembleMember테이블의 ENS_MEM_NO이 안들어감. (팀멤버 테이블의 회원넘버)
+				//검색한 이메일의 회원 넘버 -> 팀멤버 테이블에 회원 넘버로 저장 -> 팀 등록시 팀번호 생성
 			
 			EnsembleTeam ensTeam = EnsembleTeam.builder()
 					.ensTeamNo(ensTeamNo)
@@ -94,7 +104,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 		         EnsembleTeamTime.builder()
 						.ensTeamNo(ensTeamNo)
 						.ensDayOfWeek(mr.getParameter("dayOfWeek"))
-						.ensStarTime(startTime)
+						.ensStartTime(startTime)
 						.ensEndTime(endTime)
 						.build());
 			
@@ -128,7 +138,7 @@ public class EnrollTeamEndServlet extends HttpServlet {
 				
 			}
 		
-			
+			System.out.println("EnrollTeamEndServlet EnsembleMember builder 위  memNo: "+ memNo );
 			ensMemList.add(EnsembleMember.builder()
 									.ensTeamNo(ensTeamNo) //팀번호
 									.ensInstCode(mr.getParameter("inst"))
@@ -139,10 +149,10 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			
 			int result = es.insertTeam(ensTeam, musicList, videoList, timeList, ensMemList);
 			
-			if(result>0) System.out.println("성공!");
+			if(result>0) System.out.println("팀 등록 성공");
 			
 			
-			
+			request.getRequestDispatcher("/views/ensemble/boardList.jsp").forward(request, response);
 		}
 	}
 
