@@ -1,4 +1,4 @@
-package com.harmony.member.controller;
+package com.harmony.admin.controller;
 
 import java.io.IOException;
 
@@ -8,23 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.member.service.MemberService;
-import com.harmony.model.dto.Member;
-import com.harmony.model.dto.MemberInfo;
-import com.harmony.model.dto.MemberVideo;
-
+import com.harmony.admin.model.dto.Qna;
+import com.harmony.admin.service.AdminService;
+import com.harmony.common.exception.HarmonyException;
 
 /**
- * Servlet implementation class MyPageServlet
+ * Servlet implementation class AdminQnAServlet
  */
-@WebServlet("/member/myPageServlet.do")
-public class MyPageServlet extends HttpServlet {
+@WebServlet("/admin/qna.do")
+public class AdminQnAServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageServlet() {
+    public AdminQnAServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,23 +31,29 @@ public class MyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = (Member)request.getSession().getAttribute("loginMember");
-		System.out.println(m);
-		MemberInfo mi = new MemberService().selectMemberInfo(m.getMemNo());
-//		MemberVideo mv = new MemberService().selectVideoLink(m.getMemNo());
-//		System.out.println("내가찾는"+mv);
-		System.out.println(mi);
-		request.setAttribute("MemberInfo", mi);
-//		request.setAttribute("mv", mv);
-		request.getRequestDispatcher("/views/member/mypage.jsp").forward(request, response);
+		int no = -1;
+		Qna qna = null;
+		try {
+			no = Integer.parseInt(request.getParameter("no"));
+			if(no<=0) {
+				throw new RuntimeException();
+			}
+			qna = AdminService.getService().getQnaByQnaNo(no);
+			if(qna == null) {
+				throw new RuntimeException();
+			}
+		}catch(Exception e) {
+			throw new HarmonyException("유효하지 않은 글 번호입니다.");
+		}
+		request.setAttribute("qna", qna);
 		
+		request.getRequestDispatcher("/views/admin/views/qnaview.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

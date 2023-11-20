@@ -1,6 +1,9 @@
 package com.harmony.admin.service;
 
-import static com.harmony.common.JDBCTemplate.*;
+import static com.harmony.common.JDBCTemplate.close;
+import static com.harmony.common.JDBCTemplate.commit;
+import static com.harmony.common.JDBCTemplate.getConnection;
+import static com.harmony.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -9,7 +12,10 @@ import com.harmony.admin.model.dao.AdminDao;
 import com.harmony.admin.model.dto.AdminMember;
 import com.harmony.admin.model.dto.Carousel;
 import com.harmony.admin.model.dto.Notice;
+import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
+import com.harmony.admin.model.dto.QNAList;
+import com.harmony.admin.model.dto.Qna;
 
 public class AdminService {
 	private static AdminService service = new AdminService();
@@ -81,9 +87,9 @@ public class AdminService {
 		return cResult;
 	}
 
-	public List<NoticeList> selectNoticeList(String type, String keyword) {
+	public List<NoticeList> selectNoticeList(String type, String keyword, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<NoticeList> result = AdminDao.getDao().selectNoticeList(conn, type, keyword);
+		List<NoticeList> result = AdminDao.getDao().selectNoticeList(conn, type, keyword, cPage, numPerPage);
 		close(conn);
 		return result;
 	}
@@ -152,11 +158,6 @@ public class AdminService {
 				deleteFlag = true;
 				deleteResult = AdminDao.getDao().deleteNoticeFileByFileNo(conn, delFile);
 			}
-			System.out.println("editresult:"+result);
-			System.out.println("insertFlag:"+insertFlag);
-			System.out.println("deleteFlag:"+deleteFlag);
-			System.out.println("insertResult:"+insertResult);
-			System.out.println("deleteResult:"+deleteResult);
 			if (insertFlag && deleteFlag) {
 				result = insertResult * deleteResult;
 			} else if (insertFlag || deleteFlag) {
@@ -170,6 +171,59 @@ public class AdminService {
 		} else {
 			rollback(conn);
 		}
+		return result;
+	}
+
+	public String[] getDelFileList(String[] delFile) {
+		Connection conn = getConnection();
+		String[] result = AdminDao.getDao().getDelFileList(conn, delFile);
+		close(conn);
+		return result;
+	}
+
+	public List<NoticeAttachFile> deleteNotice(int noticeNo) {
+		Connection conn = getConnection();
+		List<NoticeAttachFile> result = AdminDao.getDao().getDelFIleListByNoticeNo(conn, noticeNo);
+		int delNoticeFileResult = -1;
+		if(result != null && result.size()>0) {
+			delNoticeFileResult = AdminDao.getDao().deleteNoticeFileByBrdNo(conn, noticeNo);
+		}else {
+			delNoticeFileResult = 1;
+		}
+		if(delNoticeFileResult>0) {
+			int delNotice = AdminDao.getDao().deleteNotice(conn, noticeNo);
+			if(delNotice>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+				result = null;
+			}
+		}else {
+			rollback(conn);
+			result = null;
+		}
+		close(conn);
+		return result;
+	}
+
+	public int getQNATotalData(String type, String keyword) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().getQNATotalData(conn, type, keyword);
+		close(conn);
+		return result;
+	}
+
+	public List<QNAList> selectQNAList(String type, String keyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<QNAList> result = AdminDao.getDao().selectQNAList(conn, type, keyword, cPage, numPerPage);
+		close(conn);
+		return result;
+	}
+
+	public Qna getQnaByQnaNo(int no) {
+		Connection conn = getConnection();
+		Qna result = null;
+		close(conn);
 		return result;
 	}
 
