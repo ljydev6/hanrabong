@@ -99,7 +99,7 @@
                         	<i class="fa-solid fa-star"><%=l.getReviewPoint() %></i>
                         </div>
                         <div class="lessonView">
-                        	<i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
+                        	<i class="fa-solid fa-binoculars"></i>&nbsp;<%=l.getBoardView() %>
                         </div>
                       </div>
                       		<%} %>
@@ -116,10 +116,12 @@
 	        				type:'GET',
 	        				dataType:"json",
 	       					success:function(data){
+	       						console.log(data)
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
 	       							let boardNo = e['boardNo'];
+	       							let teacherNo = e['teacherNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
 	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
@@ -137,9 +139,8 @@
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
 		       						const i = $("<i>");
-		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
 		       						lessonView.append(i);
-	       							
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
@@ -191,7 +192,7 @@
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
 		       						const viewi = $("<i>");
-		       						viewi.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						viewi.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
 		       						lessonView.append(viewi);
 		       						
 		       						const lessonStars = $("<div>");
@@ -241,7 +242,7 @@
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
 		       						const i = $("<i>");
-		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
 		       						lessonView.append(i);
 	       							
 		       						const lessonStars = $("<div>");
@@ -292,7 +293,7 @@
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
 		       						const i = $("<i>");
-		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
 		       						lessonView.append(i);
 	       							
 		       						const lessonStars = $("<div>");
@@ -328,7 +329,7 @@
 				    });
 				</script>
                 <script>
-                /* 악기별 */
+                /* 왼쪽필터 */
 	                function searchOrderByKeyword(keyword) {
 	                	$.ajax({
 	        				url:"<%=request.getContextPath()%>/LeftBarFilterServlet.do?keyword="+keyword,
@@ -357,7 +358,7 @@
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
 		       						const i = $("<i>");
-		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
 		       						lessonView.append(i);
 	       							
 		       						const lessonStars = $("<div>");

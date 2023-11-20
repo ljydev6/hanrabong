@@ -25,7 +25,7 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50 d-flex flex-column">
                         <h5>이미지업로드</h5>
-                        <input type="file" name="upfile" class="imgUpload" accept="image/*">
+                        <input type="file" name="upfile" class="imgUpload form-control" accept="image/*">
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
@@ -43,10 +43,7 @@
                     <div>
                         <div class="detailInfoBar d-flex justify-content-center gap-3">
                             <div>지역정보</div>
-                            <!-- 시간대, 가격 등등... -->
                             <div>레슨정보</div>
-                            <div>강사정보</div>
-                            <!-- teacherNum -->
                             <input type="hidden" value="<%=lesson.getTeacherNo() %>" name="teacherNum">
                         </div>
                         <div class="detailInfo d-flex mt-3">
@@ -157,15 +154,6 @@
                                     </div> 
                                 </div>
                             </div>
-                            <div class="detailsContainer">
-                                <div class="detailsContainer_title">
-                                    <div>강사정보</div>
-                                </div>
-                                <div class="detailsContainer_content">
-                                    <div>내용</div>
-                                </div>
-                            </div>
-                            <!-- 시간대, 가격 등등... -->
                         </div>
                     </div>
                 </div>

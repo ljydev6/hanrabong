@@ -24,8 +24,9 @@ a{
 	border-radius: 10px;
 }
 .filterBtns>button:hover{
-    scale: 1.02;
+    scale: 1.01;
     cursor: pointer;
+    transition: .3s;
 }
 .slideToggle{
 	color: var(--orange-color);
@@ -69,11 +70,12 @@ a{
 .lessonListBox>div:hover{
 	scale: 1.02;
 	cursor: pointer;
+	transition: .5s;
 }
 .lessonList{
 	width: 200px;
 	height: 250px;
-	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+	box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 5px;
 	position: relative;
 }
 .lessonListTitle{
@@ -110,41 +112,6 @@ a{
 	border: none;
 }
 
-/*.menu{
-	width:100px;
-	height:50px;
-	text-align:center;
-	line-height: 30px;
-  }
-  
-  .menu>.sub{
-	display:none;
-	height:0px;
-	list-style:none;
-	overflow:hidden;
-  }
-  
-  .menu>.sub li{
-	border-top:1px white solid;
-  }
-  
-  .menu>.sub li>a{
-	text-decoration:none;
-	color:black;
-  }
-  
-  .menu>.sub.up{
-	height:0px;
-	animation-name:slide_up;
-	animation-duration:1s;
-  }
-  
-  .menu>.sub.down{
-	height:500px;
-	animation-name:slide_down;
-	animation-duration:1s;
-  }*/
-
 @keyframes slide_up{
 	0%{
 	  height:500px;
@@ -164,7 +131,8 @@ a{
 	}
   }
 
-/*li input[type="checkbox"] {
+/*	체크박스디자인
+	li input[type="checkbox"] {
 	-webkit-appearance: none;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;

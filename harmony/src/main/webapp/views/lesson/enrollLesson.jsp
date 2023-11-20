@@ -41,7 +41,6 @@
                             <div>지역정보</div>
                             <!-- 시간대, 가격 등등... -->
                             <div>레슨정보</div>
-                            <div>강사정보</div>
                             <!-- teacherNum 회원정보(memNo)를 사용해 Join으로 강사번호 가져오기-->
                             <input type="hidden" value="<%=lesson.getTeacherNo() %>" name="teacherNum">
                         </div>
@@ -153,15 +152,6 @@
                                     </div> 
                                 </div>
                             </div>
-                            <div class="detailsContainer">
-                                <div class="detailsContainer_title">
-                                    <div>강사정보</div>
-                                </div>
-                                <div class="detailsContainer_content">
-                                    <div>내용</div>
-                                </div>
-                            </div>
-                            <!-- 시간대, 가격 등등... -->
                         </div>
                     </div>
                 </div>

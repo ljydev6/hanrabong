@@ -14,6 +14,9 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.service.LessonService;
+import com.harmony.member.service.MemberService;
+import com.harmony.model.dto.Member;
+import com.harmony.model.dto.MemberInfo;
 
 /**
  * Servlet implementation class LessonInfo
@@ -36,7 +39,8 @@ public class LessonInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//레슨 게시글번호
 		int no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
+		
+		//강사번호 가져오기
 		
 		Cookie[] cookies = request.getCookies();
 		String readLesson ="";
@@ -59,8 +63,9 @@ public class LessonInfoServlet extends HttpServlet {
 		}
 		
 		
-		//레슨 게시글번호로 레슨정보가져오기
+		//레슨 게시글번호로 레슨정보가져오기 + 조회수
 		Lesson lesson = new LessonService().selectLessonByNo(no,readResult);
+		String tNo= lesson.getTeacherNo();
 		//레슨 게시글번호로 레슨시간,요일정보
 		Lesson time = new LessonService().selectTimeByNo(no);
 		//레슨 게시글 번호로 리뷰가져오기
@@ -69,8 +74,10 @@ public class LessonInfoServlet extends HttpServlet {
 		int reviewsCount = new LessonService().selectReviewCountByNo(no);
 		// 레슨 게시글번호로 레슨 리뷰댓글가져오기
 		List<LessonComment> co = new LessonService().selectReviewComment(no);
-		System.out.println(co);
-		System.out.println(reviews);
+		// 강사정보 가져오기
+		MemberInfo mi = new LessonService().selectMemberInfoByTeacherNo(tNo);
+		
+		request.setAttribute("teacherInfo", mi);
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("review", reviews);

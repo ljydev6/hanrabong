@@ -1,3 +1,4 @@
+<%@page import="com.harmony.model.dto.MemberInfo"%>
 <%@page import="com.harmony.lesson.dto.LessonComment"%>
 <%@page import="com.harmony.lesson.dto.LessonApply"%>
 <%@page import="java.util.Arrays"%>
@@ -12,6 +13,7 @@
 	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
 	int reviewsCount = (int)request.getAttribute("reviewsCount");
 	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
+	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -269,7 +271,15 @@
                                   <div>강사정보</div>
                               </div>
                               <div class="detailsContainer_content">
-                                  <div></div>
+                                  <div>
+                                  	활동지역 <%=tInfo.getActivityArea() %> <br>
+                                  	한줄소개 <%=tInfo.getIntroduce() %> <br>
+                                  	학교 <%=tInfo.getSchool() %> <br>
+                                  	학과 <%=tInfo.getDepartment() %> <br>
+                                  	재학정보 <%=tInfo.getSchoolState() %> <br>
+                                  	성별 <%=tInfo.getGender() %> <br>
+                                  	경력 <%=tInfo.getMemCareer() %> 
+                                  </div>
                               </div>
                           </div>
                           <!-- 리뷰 -->
@@ -297,8 +307,9 @@
                                		<%=l.getReview() %>
                                	</div>
                                	<br>
-                               	
+                               	<!-- 코멘트를 반복문으로 가져옴 -->
                                	<%for(LessonComment co : cos){ %>
+                               	<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같으면 가져오기-->
                                	<%if(!cos.isEmpty() && co.getReviewNo()==l.getReviewNo()) {%>
                                	<div class="teacher-comment">
                                		<div class="avataMemberStarDate">
@@ -330,6 +341,7 @@
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
 											<%if(loginMember!=null){ %>
+											<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같게만들어서 등록-->
 											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
 											<%} else{%>
 											<button class="btn btn-outline-warning" disabled>댓글등록</button>
