@@ -49,11 +49,11 @@ input[type=button]:hover{
     border-radius: 10%;
 }
  
-ul li{
+.menu_bar ul li{
 	list-style:none;
 }
 
-ul li:hover{
+.menu_bar ul li:hover{
 	cursor : pointer;
     color:rgb(250, 112, 61);
     font-weight: bold;
@@ -84,27 +84,66 @@ ul li:hover{
 }
 
 section {
-  width: 80%;
-  max-height: calc(100vh - 400px); 
+  width: 70%;
+  height : 90%;
+/*  max-height: calc(100vh - 400px); */
   overflow-y: auto;  
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   padding-left: 5%;
   padding-right: 5%;
+/*  border : 1px solid darkslateblue;*/
+}
+
+.board_container{
+/*	border : 1px solid blue;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-column-gap: 100px;
+	
 }
 
 .board_list {
-  width: 400px;
-  height: 300px;
-  margin-top: 80px;
-  margin-bottom: 80px;
+  width: 380px;
+  height: 280px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   box-sizing: border-box;
   border: 1px solid #ddd;
   padding: 10px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  cursor : pointer;
+/*  border : 1px solid RED;*/
+
+}
+.title_container{
+/*	border: 1px solid mediumpurple;*/
+	width: 85%;
+}
+
+.list_top_container{
+	display:flex;
+}
+
+.type_container{
+/*	border: 1px solid mediumpurple;*/
+	width:15%;
+}
+
+.img_container{
+	display: flex;
+/*	border: 1px solid mediumpurple;*/
+}
+
+hr{
+	height: 10px;
+	border: 0;
+	box-shadow: 0 10px 10px -10px rgb(255, 128, 64) inset;
+
+/*	margin: 0;*/
 }
 
 
@@ -119,13 +158,18 @@ body {
 }
 
 
-/*footer {*/
-  
-/*  padding: 10px;*/
-/*  position: fixed;*/
-/*  bottom: 0;*/
-/*  width: 100%;*/
-/*}*/
+
+.pageBar_container{
+	display: flex;
+	justify-content: space-between;
+}
+
+#pageBar{
+/*	border : 1px solid crimson;*/
+	margin-left : 40%;
+	width: 500px;
+}
+
 
 
 main{

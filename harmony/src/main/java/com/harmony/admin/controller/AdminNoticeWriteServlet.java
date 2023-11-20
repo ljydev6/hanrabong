@@ -73,7 +73,6 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 		DefaultFileRenamePolicy renamePolicy = new DefaultFileRenamePolicy();
 		MultipartRequest req = new MultipartRequest(request, path, fileMaxSize, encode, renamePolicy);
 		String type = req.getParameter("type");
-		System.out.println(type);
 		// 파일 여러개 등록할 때는 MultipartParser
 //		MultipartParser parser = new MultipartParser(request, fileMaxSize);
 //		parser.setEncoding("UTF-8");
@@ -103,9 +102,7 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 
 		String title = req.getParameter("title");
 		String[] delFile = req.getParameterValues("delFile");
-		System.out.println(Arrays.toString(delFile));
-		String[] delFileName = req.getParameterValues("dFileName");
-		System.out.println(Arrays.toString(delFileName));
+		String[] delFileName = null;
 		String writer = req.getParameter("writer");
 		String content = req.getParameter("content");
 
@@ -137,12 +134,14 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 				notice.setNoticeNo(noticeNo);
 			}
 			int result = -1;
-			System.out.println(notice);
 			switch (type) {
 			case "write":
 				result = AdminService.getService().insertNotice(notice);
 				break;
 			case "edit":
+				if(delFile!=null && delFile.length>0) {
+					delFileName=AdminService.getService().getDelFileList(delFile);
+				}
 				result = AdminService.getService().updateNotice(notice, delFile);
 				if(result >0 && delFile.length>0) {
 					for(String f : delFileName) {
@@ -153,7 +152,6 @@ public class AdminNoticeWriteServlet extends HttpServlet {
 				break;
 			}
 			
-			System.out.println("result:"+result);
 			if (result > 0 && type.equals("edit")) {
 				redirectPath = "/admin/notice.do?no=" + noticeNo;
 			} else if (result > 0 && type.equals("write")) {

@@ -6,7 +6,6 @@ import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
-import java.util.List;
 
 import com.harmony.model.dao.MemberDao;
 import com.harmony.model.dto.Member;
@@ -23,6 +22,14 @@ public class MemberService {
 	close(conn);
 	return result;
 	}
+	
+//	public MemberVideo selectVideoLink(String memNo) {
+//		
+//		Connection conn = getConnection();
+//		MemberVideo result = dao.selectVideoLink(conn,memNo);
+//		close(conn);
+//		return result;
+//	}
 	
 	public Member insertMember(Member m,MemberInfo mi) {
 		Connection conn = getConnection();
@@ -45,34 +52,61 @@ public class MemberService {
 		Connection conn = getConnection();
 		MemberInfo result= null;
 		int resultAdd = dao.addintroduce(conn,mi);
+		int resultGenre = 0;
+		int resultInterest =0;
+		int resultMusic = 0;
+		int resultVideo = 0;
+		try {
 		if(resultAdd>0) {
+			if(mi.getGenre()!=null) {
+				resultGenre = dao.insertGenre(conn,mi.getMemNo(),mi);
+				if(resultGenre==0) {
+					resultGenre=1;
+				}
+			}
+			if(mi.getInterest()!=null) {
+				resultInterest =dao.insertInstrument(conn,mi.getMemNo(),mi);
+				if(resultInterest==0) {
+					resultInterest=1;
+				}
+			}
 			if(!mi.getMemberMusic().isEmpty()) {
 				for(MemberMusic mm:mi.getMemberMusic()) {
 					mm.setMemNo(mi.getMemNo());
-					int resultmusic=dao.insertMusic(conn,mm);
-					if(resultmusic==0) {
+					resultMusic=dao.insertMusic(conn,mm);
+					if(resultMusic==0) {
 						rollback(conn);
 						throw new IllegalArgumentException("입력실패");
 					}
 				}
+			}else {
+				resultMusic=1;
 			}
 			if(!mi.getMemberVideo().isEmpty()) {
 				for(MemberVideo mv:mi.getMemberVideo()) {
 					mv.setMemNo(mi.getMemNo());
-					int resultVideo=dao.insertVideo(conn,mv);
+					 resultVideo=dao.insertVideo(conn,mv);
 					if(resultVideo==0) {
 						rollback(conn);
 						throw new IllegalArgumentException("입력실패");
 					}
 				}
+			}else {
+				resultVideo=1;
+			}
+			if(resultGenre!=1||resultMusic!=1||resultVideo!=1||resultInterest!=1) {
+				rollback(conn);
 			}
 			commit(conn);
 		}else {
 			rollback(conn);
 			throw new IllegalArgumentException("입력실패");
 		}
-		close(conn);
-		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}
 		
 		return resultAdd;
 	}

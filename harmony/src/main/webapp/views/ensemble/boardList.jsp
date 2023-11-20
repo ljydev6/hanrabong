@@ -6,13 +6,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
     
 <%@ page import="java.util.List, 
-				com.harmony.ensemble.model.dto.EnsembleBoard,
-				com.harmony.ensemble.model.dto.EnsembleTeam,
-				com.harmony.ensemble.model.dto.EnsembleMember,
-				com.harmony.ensemble.model.dto.EnsembleBoardWantPart,
-				com.harmony.ensemble.model.dto.EnsembleTeamTime" %>
+				com.harmony.ensemble.model.dto.VEnsList" %>
 <%
-	List<EnsembleBoard> boards=(List<EnsembleBoard>)request.getAttribute("boards");
+	List<VEnsList> boards = (List<VEnsList>)request.getAttribute("boards");
+	
 %>   
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardList.css" type="text/css">
 <%@ include file="/views/common/header.jsp" %>  
@@ -206,76 +203,56 @@
 </aside>
 
 <section>
+<!-- <div class="include_pageBar"> -->
 	<div class="button_container">
 		<input type="button" value="합주팀등록" class="top_btn"
 				onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
 		<input type="button" value="팀 페이지" class="top_btn" 
 				onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
 	</div>
-	<article>
-      <div class="board">
-      
-<%--       <%if(!boards.isEmpty()){  --%>
-<%-- 			for(Board b:boards){%> --%>
-      
-        <div class="board_list">
-<%--         <%=b.getEnsBoardTitle() %> --%>
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-       		<h4>얍</h4>
-       		<hr/>
-        </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-      
-      </div>
-    </article>
-
-    <article>
-      <div class="board">
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-       		<h4>얍</h4>
-        </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-       
-      </div>
-    </article>
-    
-     <article>
-      <div class="board">
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-       		<h4>얍</h4>
-        </div>
-        <div class="board_list">
-        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=100px; height:100px;"
-        	class="profile_img">
-        </div>
-      
-      </div>
-    </article>
-    
-<!--     	<div id="pageBar"> -->
-<%-- 		<%= request.getAttribute("pageBar") %> --%>
-<!-- 	</div> -->
-
+		<article>
+	      <div class="board_container">
+	   
+	    <%if(!boards.isEmpty()){  
+				for(VEnsList b:boards){%> 
+	      	
+	        <div class="board_list" onclick="location.assign('<%=request.getContextPath()%>/ensemble/boardView.do?ensBoardNo=<%=b.getEnsBoardNo()%>')">
+	        	<div class="list_top_container">
+		        	<div class="title_container">
+			       		<h3><%=b.getEnsBoardTitle()%></h3>
+			      	
+		        	</div>
+		        	<div class="type_container">
+		        			<h5><%=b.getEnsTeamType() %></h5>
+		        	</div>
+	        	</div>
+	        	<div class="img_container">
+		        	<img src = "https://previews.123rf.com/images/valentint/valentint1702/valentint170201265/71753888-%EC%9D%8C%ED%91%9C-%EC%95%84%EC%9D%B4%EC%BD%98%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%9D%B0%EC%83%89-%EB%B0%94%ED%83%95%EC%97%90-%EC%A3%BC%ED%99%A9%EC%83%89-%EC%9D%B8%ED%84%B0%EB%84%B7-%EB%B2%84%ED%8A%BC%EC%9E%85%EB%8B%88%EB%8B%A4.jpg" 
+		        	style="width=80px; height:80px; border-radius: 50%;" class="profile_img">
+	      		<h4><%=b.getEnsTeamName() %></h4>
+	        	</div>
+	       		<hr>
+	       		<ul>
+	       			<li><%=b.getGenreName() %></li>
+	       			<li><%=b.getInstrument() %></li>
+	       			<li><%=b.getEnsLocation() %></li>
+	       		</ul>
+	        </div>
+			<%}
+		}%> 
+	    </article>
+	<div class="pageBar_container">
+		<div id="pageBar"> 
+		 		<%= request.getAttribute("pageBar") %> 
+		</div>    
+	</div>  
+	    
+<!-- </div> -->
 </section>
+
 </main>
 <script>
+
 
 	$(".toggle1").next().hide();
 

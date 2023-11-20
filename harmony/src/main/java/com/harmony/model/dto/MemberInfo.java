@@ -19,6 +19,8 @@ public class MemberInfo {
 	private String gender;
 	private int age;
 	private String email;
+	private String[] genre;
+	private String[] interest;
 	private List<MemberVideo> memberVideo;
 	private List<MemberMusic> memberMusic;
 	private String memCareer;
