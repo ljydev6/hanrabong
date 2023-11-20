@@ -75,7 +75,7 @@ public class BoardListServlet extends HttpServlet {
 			pageBar.append("</a>");
 		}
 		
-		 
+		System.out.println(boards);
 		request.setAttribute("boards", boards); 
 		request.setAttribute("pageBar",pageBar);
 		

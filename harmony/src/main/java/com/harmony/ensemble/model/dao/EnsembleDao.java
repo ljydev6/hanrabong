@@ -86,11 +86,10 @@ public class EnsembleDao {
 		ResultSet rs = null;
 		List<VEnsList> boardList = new ArrayList<VEnsList>();
 		try {
-			pstmt = conn.prepareStatement(sql.getProperty("V_ENS_LIST"));
+			pstmt = conn.prepareStatement(sql.getProperty("selectBoardList"));
 			pstmt.setInt(1, (cPage-1)*numPerpage+1);
 			pstmt.setInt(2, cPage*numPerpage);
 			rs = pstmt.executeQuery();
-			
 			while(rs.next()) boardList.add(getBoardList(rs));
 			
 		}catch(SQLException e) {
@@ -99,6 +98,7 @@ public class EnsembleDao {
 			close(rs);
 			close(pstmt);
 		}
+		System.out.println("dao: "+ boardList);
 		return boardList;
 		
 		
