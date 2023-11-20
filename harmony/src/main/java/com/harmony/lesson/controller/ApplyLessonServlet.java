@@ -35,7 +35,7 @@ public class ApplyLessonServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("UTF-8");
-		int boardNo = Integer.parseInt(request.getParameter("no"));
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		String memNo = request.getParameter("memNo");
 		String place = request.getParameter("place");
 		int count = Integer.parseInt(request.getParameter("count"));

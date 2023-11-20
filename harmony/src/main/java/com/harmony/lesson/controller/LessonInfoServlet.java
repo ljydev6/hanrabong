@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.service.LessonService;
 
 /**
@@ -35,6 +36,7 @@ public class LessonInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//레슨 게시글번호
 		int no = Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
 		
 		Cookie[] cookies = request.getCookies();
 		String readLesson ="";
@@ -65,12 +67,15 @@ public class LessonInfoServlet extends HttpServlet {
 		List<LessonApply> reviews = new LessonService().selectReviewByNo(no);
 		// 리뷰개수 가져오기
 		int reviewsCount = new LessonService().selectReviewCountByNo(no);
+		// 레슨 게시글번호로 레슨 리뷰댓글가져오기
+		List<LessonComment> co = new LessonService().selectReviewComment(no);
+		System.out.println(co);
 		System.out.println(reviews);
-		
 		request.setAttribute("time", time);
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("review", reviews);
 		request.setAttribute("reviewsCount", reviewsCount);
+		request.setAttribute("co", co);
 		request.getRequestDispatcher("/views/lesson/lessonInfo.jsp")
 			.forward(request, response);
 	}

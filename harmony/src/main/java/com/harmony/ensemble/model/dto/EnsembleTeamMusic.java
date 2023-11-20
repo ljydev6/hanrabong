@@ -9,7 +9,6 @@ public class EnsembleTeamMusic {
 
 	private String mNo;
 	private String teamNo;
-	private String mMusicName;
 	private String mOriName;
 	private String mReName;
 	

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>  
+ 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
+    
 <%@ page import="java.util.List, 
 				com.harmony.ensemble.model.dto.EnsembleBoard,
 				com.harmony.ensemble.model.dto.EnsembleTeam,
@@ -10,10 +14,8 @@
 <%
 	List<EnsembleBoard> boards=(List<EnsembleBoard>)request.getAttribute("boards");
 %>   
-
-
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardList.css" type="text/css">
-<script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
+<%@ include file="/views/common/header.jsp" %>  
 <main>
 <aside>
 
@@ -204,7 +206,12 @@
 </aside>
 
 <section>
-	<input type="button" value="합주팀등록" onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
+	<div class="button_container">
+		<input type="button" value="합주팀등록" class="top_btn"
+				onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
+		<input type="button" value="팀 페이지" class="top_btn" 
+				onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
+	</div>
 	<article>
       <div class="board">
       

@@ -1,3 +1,4 @@
+<%@page import="com.harmony.lesson.dto.LessonComment"%>
 <%@page import="com.harmony.lesson.dto.LessonApply"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.Timestamp"%>
@@ -10,6 +11,7 @@
 	Lesson time = (Lesson)request.getAttribute("time");
 	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
 	int reviewsCount = (int)request.getAttribute("reviewsCount");
+	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -67,16 +69,21 @@
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
-                <%} %>
+                <%} %> 
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
-                        <%-- <div class="saveLesson" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?no=<%=lesson.getBoardNo()%>')"> --%>
-                        <div class="saveLesson">
+                        <%if(loginMember!=null){ %>
+                        <div class="saveLesson" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
                             <i class="fa-solid fa-heart fa-xs"></i>
                     	</div>
+                    	<%}else{ %>
+                    	<div class="saveLesson" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
+                            <i class="fa-solid fa-heart fa-xs"></i>
+                    	</div>
+                    	<%} %>
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
                         <%} else { %>
@@ -86,9 +93,12 @@
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
-                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do?no=<%=lesson.getBoardNo()%>" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
-                        	<!-- 강사번호 바꿔야함 -->
-                        	<input type="hidden" value="MEM_11" name="memNo">
+                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
+                        	<!-- 93번째줄때문에 로그인 해야함 분기처리중요!-->
+                        	<%if(loginMember!=null){ %>
+                        	<input type="hidden" value="<%=loginMember.getMemNo() %>" name="memNo">
+                        	<%} %>
+                        	<input type="hidden" value="<%=lesson.getBoardNo()%>" name="boardNo">
                             <div class="labelBox d-flex flex-column p-4 mb-4">
                                 <div class="mb-3"><h5>레슨상담신청</h5></div>
                                 <label>
@@ -176,11 +186,11 @@
                                 
                             </div>
                             <div>
-                            <%if(loginMember!=null) {%>
-                                <input type="submit" value="상담신청">
-                            <%} else {%>
-                            	<input type="button" value="상담신청" readonly="readonly" onclick="alert('로그인이 필요한 서비스입니다.');">
-                            <%} %>
+	                            <%if(loginMember!=null) {%>
+	                                <input type="submit" value="상담신청">
+	                            <%} else {%>
+	                            	<input type="button" value="상담신청" readonly="readonly" onclick="alert('로그인이 필요한 서비스입니다.');">
+	                            <%} %>
                             </div>
                             </form>
                         </div>
@@ -267,7 +277,7 @@
                               <div class="mb-3">리뷰</div>
                               <%for(LessonApply l : reviews){ %>
                               <div class="avataMemberStarDate">
-                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></i></div>
+                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></div>
                               	<div class="memberStarDate">
                               		<div>
                                			<%=l.getMemNo() %>
@@ -286,16 +296,44 @@
                                	<div class="review">
                                		<%=l.getReview() %>
                                	</div>
+                               	<br>
+                               	
+                               	<%for(LessonComment co : cos){ %>
+                               	<%if(!cos.isEmpty() && co.getReviewNo()==l.getReviewNo()) {%>
+                               	<div class="teacher-comment">
+                               		<div class="avataMemberStarDate">
+                               			<div><i class="fa-solid fa-comment-dots"></i></div>
+		                              	<div class="memberStarDate">
+		                              		<div>
+		                              			TEACHER
+		                               		</div>
+		                               		<div class="starDate">
+		                                		<%=co.getCommentDate() %>
+		                               		</div>
+		                              	</div>
+	                              	</div>
+	                              	<div class="review">
+                               			<%=co.getCommentContent() %>
+                               			<%if(loginMember!=null) {%>
+                               			<button id="deleteReply" class="btn btn-warning" 
+                               			onclick="location.href='<%=request.getContextPath()%>/lesson/deletereply.do?reviewNo=<%=l.getReviewNo()%>&boardNo=<%=lesson.getBoardNo()%>'">삭제</button>
+                               			<%} %>
+                               		</div>
+                               	</div>
+                               	<%} %>
+                               	<%} %>
                                	<div id="comment-container">
 									<div class="comment-editor">
 										<form action="<%=request.getContextPath() %>/lesson/insertComment.do" method="post">
-											<input type="hidden" name="boardRef" value="">
-											<input type="hidden" name="level" value="1">
-											<input type="hidden" name="writer" value="">
-											<input type="hidden" name="boardCommentRef" value="0">
+											<input type="hidden" name="boardNo" value="<%=lesson.getBoardNo()%>">
+											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
-											<button class="btn btn-outline-warning" type="submit" id="btn-insert">등록</button>
+											<%if(loginMember!=null){ %>
+											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
+											<%} else{%>
+											<button class="btn btn-outline-warning" disabled>댓글등록</button>
+											<%} %>
 										</form>
 									</div>
 								</div>
@@ -308,6 +346,13 @@
             </article>
 		</div>
 	</section>
+	<script>
+		$(".comment-editor>form>textarea[name=content]").click(e=>{
+			if (<%=loginMember==null %>) {
+				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
+			}
+		});
+	</script>
 	<script>
 		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
 		console.log(rect); */
@@ -352,13 +397,13 @@
 	    
 	</script>
 	<script>
-		$(".saveLesson").click(()=>{
+		<%-- $(".saveLesson").click(()=>{
 			if (confirm('찜하시겠습니까?')==true) {
-				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?no=<%=lesson.getBoardNo()%>')
+				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')
 			} else {
 				return false;
 			}
-		});
+		}); --%>
 	
 		$("#startTime").change(()=>{
 	        let startTime = ($("#startTime").val()).substr(0,2);

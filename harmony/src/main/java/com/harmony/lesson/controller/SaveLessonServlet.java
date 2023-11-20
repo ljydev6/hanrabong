@@ -31,19 +31,18 @@ public class SaveLessonServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardNo = Integer.parseInt(request.getParameter("no"));
-		//하드
-		String userNo = "MEM_11";
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		String memNo = request.getParameter("memNo");
 		
 		String loc,msg;
 		// 찜 이력이 있는지 확인
-		SaveLesson s = new LessonService().saveLessonConfirm(boardNo, userNo);
+		SaveLesson s = new LessonService().saveLessonConfirm(boardNo, memNo);
 		
 		if(s==null) {
-			int result = new LessonService().saveLesson(boardNo, userNo);
+			int result = new LessonService().saveLesson(boardNo, memNo);
 			if (result>0) {
-				msg ="해당 레슨 찜성공";
-				loc ="/lesson/findLesson.do";
+				msg ="레슨 찜성공 :)";
+				loc ="/lesson/lessonInfo.do?no="+boardNo;
 				
 				request.setAttribute("loc", loc);
 				request.setAttribute("msg", msg);
@@ -51,10 +50,10 @@ public class SaveLessonServlet extends HttpServlet {
 						.forward(request, response);
 			}
 		}else {
-			int result = new LessonService().deleteSavedLesson(boardNo, userNo);
+			int result = new LessonService().deleteSavedLesson(boardNo, memNo);
 			if(result>0) {
-				msg ="이미 찜이 되어있습니다. 찜 해제를 합니다";
-				loc ="/lesson/findLesson.do";
+				msg ="이미 찜이 되어있습니다. 찜 해제를 합니다 :(";
+				loc ="/lesson/lessonInfo.do?no="+boardNo;
 				
 				request.setAttribute("loc", loc);
 				request.setAttribute("msg", msg);
@@ -62,8 +61,6 @@ public class SaveLessonServlet extends HttpServlet {
 						.forward(request, response);
 			}
 		}
-		
-		
 		
 	}
 

@@ -31,11 +31,6 @@ public class SearchEmailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		//확인결과를 저장
-		// null이면 사용이 가능, null이 아니면 사용이 불가능
-//		request.setAttribute("result", m==null);
-		//아이디 중복확인 결과를 출력해주는 화면출력
-		
 		//이메일 검색 
 		//사용자가 전달한 이메일이 DB(TBL_MEMBER_INFO)에 있는지 확인
 		
@@ -49,8 +44,8 @@ public class SearchEmailServlet extends HttpServlet {
 		String userEmail = request.getParameter("keyword");
 		String memNo= es.selectMemberByEmail(userEmail); //검색한 이메일의 회원넘버
 		
-		System.out.println(userEmail);
-		System.out.println(memNo);
+		System.out.println("searchEmailServlet 검색한이메일: "+ userEmail);
+		System.out.println("검색한 이메일의 회원 넘버: " + memNo);
 		
 		if(!memNo.equals("")) {
 			//검색한 이메일이 회원 테이블에 있으면

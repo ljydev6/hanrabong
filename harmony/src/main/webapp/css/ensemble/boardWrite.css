@@ -1,73 +1,102 @@
 @charset "UTF-8";
 
-input[type=button]{
-cursor : pointer;
-background-color: rgb(123, 119, 118);
-width: 80px;
-height: 28px;
-border: none;
-color:white;
-border-radius: 10%;
-
+section{
+	height: 90vh;
+	display: flex;
+  	justify-content: center;
+  	align-items: center; 
+	font-family: 'Hi Melody', sans-serif;
+  	font-size: 15px;
 }
 
-input[type=submit]{
-    cursor : pointer;
-    background-color: rgb(218, 106, 65);
-    width: 100px;
-    height: 40px;
-    border: none;
-    color:white;
-    border-radius: 10%;
+span{
+	font-size: 19px;
 }
 
-input[type=submit]:hover{
-    cursor : pointer;
-    background-color: rgb(232, 72, 13);
-    width: 100px;
-    height: 40px;
-    border: none;
-    color:white;
-    border-radius: 10%;
+.title_span{
+	font-weight: bold;
+	font-size: 21px;
 }
 
 
-/*   table td{*/
-/*        border:1px solid red;*/
-/*    }*/
-/*    table tr{*/
-/*        border:1px solid blue;*/
-/*    } */
-    
-    #detail{
-        text-align: left;
-    }
-    
-    .form_container{
-		padding-top : 6%;
-		padding-bottom: 6%;
-	/*	border:1px solid red;*/
-	}
-    
-    .submit-container{
-      /* border:1px solid blue;*/
-        display: flex;
-        justify-content: end;
-        padding-right:20%;
-        padding-bottom: 5%;
-    }
+.boardContainer{
+	height: 80vh;
+	display: flex;
+/*	border:1px solid purple; */
+	flex-direction:column;	
+	justify-content: space-around;
+	border: 1px solid #ddd;
+ 	background-color: #f9f9f9;
+ 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 	width: 100%;
+}
 
-    table tr>td,.inst_chk_span:not(.day):hover{
+.boardContainer > div{
+	margin: 15px;
+	text-align: center;
+	
+
+}
+
+.part_container{
+	margin-right:20px;
+/*	border: 1px solid red;*/
+}
+
+.part_table td{
+/*    border:1px solid rgb(139, 99, 183);*/
+    width : 100px;
+    height: 50px;
+   
+}
+
+.part_table tr{
+/*    border:1px solid blue;*/
+
+} 
+
+.part_container{
+	padding-left: 5%;
+}
+
+.loc_table{
+	
+	margin-left: 33%;
+}
+
+.part_table tr>td:hover{
         cursor : pointer;
         color:rgb(250, 112, 61);
         font-weight: bold;
     }
 
-   
-    
-  	.day{letter-spacing:40px}
-    
-    .selected{
-		color : orange;
-		font-weight : bold;
-	}
+.selected{
+	color : rgb(240, 182, 9); 
+	font-weight :bold;
+}
+
+#board_end{
+    cursor : pointer;
+    background-color: rgb(240, 182, 9);
+    border-radius: 10%;
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    font-size: 19px;
+}
+
+#board_end:hover{
+    cursor : pointer;
+    background-color: rgb(232, 94, 24);
+    width: 100px;
+    height: 40px;
+    border: none;
+    color:white;
+    border-radius: 10%;
+}
+
+
+input[type="text"] {
+    border-color:rgb(196, 196, 196);
+  }

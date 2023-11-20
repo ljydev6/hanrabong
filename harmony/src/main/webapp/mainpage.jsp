@@ -32,4 +32,6 @@
 	</div>
 	<%} %>
 </section>
+<div class="footer_box">
 <%@ include file="/views/common/footer.jsp" %>
+</div>

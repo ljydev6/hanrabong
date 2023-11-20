@@ -1,15 +1,19 @@
 @charset "UTF-8";
 :root{
-	/* color */
 	--orange-color: #f19066;
 }
-
 body{
-	height: 1500px;
+	height: 1600px;
 }
 ul,li{
    list-style:none;
-
+}
+.liLists{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+li{
+	margin-bottom: 5px;
 }
 a{
 	text-decoration: none;
@@ -29,6 +33,7 @@ a{
 .contentContainer{
 	display: flex;
 	justify-content: space-between;
+	height: 100%;
 }
 .filterBtns>button{
 	background-color: white;
@@ -42,6 +47,7 @@ a{
 }
 .leftCategory{
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+	height: 100%;
 }
 .leftCategory>div{
 	margin: 10px;
@@ -50,13 +56,15 @@ a{
 	font-weight: 600;
 	cursor: pointer;
 }
-
 .lessonListBox{
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
+	justify-content: center;
+	gap: 20px;
+	margin-bottom: 3rem;
 }
 .lessonListBox>div:hover{
 	scale: 1.02;
@@ -78,7 +86,12 @@ a{
 	right: 20px;
 	top: 20px;
 }
-
+.lessonStars{
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	color: coral;
+}
 .dropdown>button{
 	background-color: white;
 	margin: 0px;
@@ -89,7 +102,6 @@ a{
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 	color: var(--orange-color);
 }
-
 .slide{
 	height: 450px;
 	display: none;
@@ -98,7 +110,7 @@ a{
 	border: none;
 }
 
-.menu{
+/*.menu{
 	width:100px;
 	height:50px;
 	text-align:center;
@@ -131,7 +143,7 @@ a{
 	height:500px;
 	animation-name:slide_down;
 	animation-duration:1s;
-  }
+  }*/
 
 @keyframes slide_up{
 	0%{
@@ -152,7 +164,7 @@ a{
 	}
   }
 
-li input[type="checkbox"] {
+/*li input[type="checkbox"] {
 	-webkit-appearance: none;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -182,11 +194,15 @@ li input[type="checkbox"]:checked {
 li input[type="checkbox"]:checked::before {
     border-radius: 4px;
     transform: scale(1) translate(-50%, -50%)
-}
+}*/
 .slideToggle{
 	color: var(--orange-color);
 	height: 45px;	
 	border-radius: 5px;
 	padding: 10px
 }
+.slideToggle>ul>li{
+	margin-bottom: 20px;
+}
+
 

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.ensemble.model.dao.EnsembleDao;
+import com.harmony.ensemble.model.dto.EnsembleBoard;
+import com.harmony.ensemble.model.dto.EnsembleBoardWantPart;
 import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
@@ -15,37 +17,47 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
-import com.harmony.ensemble.model.dto.MemberEns;
-import com.harmony.model.dto.MemberInfo;
 
 
 public class EnsembleService {
 
 	private EnsembleDao dao = new EnsembleDao();
 	
-	public List<Genre> searchAllGenre(){
-		Connection conn=getConnection();
-		List<Genre> result=dao.searchAllGenre(conn);
-		close(conn);
-		return result;
-	}
 	
-	public List<Inst> searchAllInst(){
-		Connection conn=getConnection();
-		List<Inst> result=dao.searchAllInst(conn);
-		close(conn);
-		return result;
-	}
-	
-	
-	public String selectMemberByEmail(String userEmail) {
-		Connection conn=getConnection();
-		String memNo = dao.selectMemberByEmail(conn, userEmail);
-		close(conn);
-		return memNo;
-	}
-	
+//	public String selectInstNoByName(String instName) {
+//		Connection conn=getConnection();
+//		String result = dao.selectInstNoByName(conn, instName);
+//		close(conn);
+//		return result;
+//		
+//	}
 
+	
+	public int insertEnsBoard(EnsembleBoard board ,List<EnsembleBoardWantPart> partList) {
+		
+		Connection conn = getConnection();
+		
+		
+		int result = dao.insertEnsBoard(conn, board);
+		
+		if(result>0) {
+			if(!partList.isEmpty()) {
+				for(EnsembleBoardWantPart part : partList) {
+					System.out.println(part+ "서비스!");
+					int result2 = dao.insertWantPart(conn, part);
+					if(result2==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("모집파트 등록 에러");
+					}
+				}
+			}
+		}else {
+			rollback(conn);
+			throw new IllegalArgumentException("글 등록 에러");
+		}
+		close(conn);
+		return result;
+	}
 	
 	
 	public int insertTeam(EnsembleTeam ensTeam, List<EnsembleTeamMusic> musicList, 
@@ -66,7 +78,6 @@ public class EnsembleService {
 					}
 				}
 			}
-			
 			
 			if(!musicList.isEmpty()) {
 				for(EnsembleTeamMusic music : musicList) {
@@ -105,13 +116,79 @@ public class EnsembleService {
 		return result;
 	}
 	
-	public String selectSeq() {
+	public List<EnsembleTeamTime> selectTimes(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamTime> result = dao.selectTimes(conn,teamNo);
+		close(conn);
+		return result;
+	}
+	
+	public List<EnsembleTeamMusic> selectMusics(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamMusic> result = dao.selectMusics(conn, teamNo);
+		close(conn);
+		return result;
+	}
+	
+	public List<EnsembleTeamVideo> selectVideos(String teamNo){
+		Connection conn=getConnection();
+		List<EnsembleTeamVideo> result = dao.selectVideos(conn, teamNo);
+		close(conn);
+		return result;
+	}
+	
+	
+	public List<Inst> searchAllInst(){
+		Connection conn=getConnection();
+		List<Inst> result=dao.searchAllInst(conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<Genre> searchAllGenre(){
+		Connection conn=getConnection();
+		List<Genre> result=dao.searchAllGenre(conn);
+		close(conn);
+		return result;
+	}
+	
+	public String selectMemberByEmail(String userEmail) {
+		Connection conn=getConnection();
+		String memNo = dao.selectMemberByEmail(conn, userEmail);
+		close(conn);
+		return memNo;
+	}
+	
+	public String selectSeq() { //팀 번호 가져오는 메소드
 		Connection conn = getConnection();
 		
 		String seq = dao.selectSeq(conn);
 		
 		return seq;
 		
+	}
+	
+	public String selectBoardSeq() { 
+		Connection conn = getConnection();
+		
+		String seq = dao.selectBoardSeq(conn);
+		
+		return seq;
+		
+	}
+	
+	
+	public String selectTeamNoByMemNo(String loginMemNo) { 
+		
+		Connection conn = getConnection();
+		String teamNo = dao.selectTeamNoByMemNo(conn, loginMemNo);
+		return teamNo;
+	}
+	
+	public EnsembleTeam selectTeamByNo(String teamNo) {
+		Connection conn = getConnection();
+		EnsembleTeam team = dao.selectTeamByNo(conn, teamNo);
+		return team;
 	}
 	
 }

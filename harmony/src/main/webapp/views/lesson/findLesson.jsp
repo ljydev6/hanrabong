@@ -15,10 +15,10 @@
                 <div>레슨 검색</div>
             
                 <div class="filterBtns p-2">
-                  <button>조회수</button>
-                  <button>별점순</button>
-                  <button>최근등록순</button>
-                  <button>클래스진행순</button>
+                  <button onclick="searchOrderByViews();">조회수</button>
+                  <button onclick="searchOrderByDate()">최근등록순</button>
+                  <button onclick="searchOrderByStar()">별점순</button>
+                  <button onclick="searchOrderByReviews()">리뷰순</button>
                 </div>
                 <!-- <div>
                     <input type="text">
@@ -26,62 +26,66 @@
                 </div> -->
             </div>
             <div class="contentContainer d-flex justify-content-between">
-                <article class="leftCategory w-50 align-items-center">
+                <article class="leftCategory w-25 align-items-center">
                     <div>
                       <div class="slideToggle" id="instrument"><i class="fa-solid fa-drum"></i> 악기별</div>
                       <ul>
-                        <li><input type="checkbox" name="instrument" value="INST_1" id="drum"><label for="drum">드럼</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_2" id="bass"><label for="bass">베이스</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_3" id="doublebass"><label for="doublebass">더블베이스</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_4" id="gittar"><label for="gittar">기타</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_5" id="piano"><label for="piano">피아노</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_6" id="composition" ><label for="composition">작곡</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_7" id="percussion"><label for="percussion">색소폰</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_8" id="trumpet"><label for="trumpet">트럼펫</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_9" id="flute"><label for="flute">플룻</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_10" id="violin"><label for="violin">바이올린</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_11" id="cello"><label for="cello">첼로</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_12" id="percussion"><label for="percussion">퍼커션</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_13" id="vocal" ><label for="vocal">보컬</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_14" id="daw"><label for="daw">믹싱(DAW)</label></li>
-                        <li><input type="checkbox" name="instrument" value="INST_15" id="etc"><label for="etc">ETC</label></li>
+                      	<!-- <li><input class="btn-check" type="radio" name="instrument" value="I" id="instAll"><label class="btn btn-outline-warning" for="instAll">전체</label></li> -->
+                        <li><input class="btn-check" type="radio" name="f" value="INST_1" id="drum"><label class="btn btn-outline-warning" for="drum">드럼</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_2" id="bass"><label class="btn btn-outline-warning" for="bass">베이스</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_3" id="doublebass"><label class="btn btn-outline-warning" for="doublebass">더블베이스</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_4" id="gittar"><label class="btn btn-outline-warning" for="gittar">기타</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_5" id="piano"><label class="btn btn-outline-warning" for="piano">피아노</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_6" id="composition" ><label class="btn btn-outline-warning" for="composition">작곡</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_7" id="saxophone"><label class="btn btn-outline-warning" for="saxophone">색소폰</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_8" id="trumpet"><label class="btn btn-outline-warning" for="trumpet">트럼펫</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_9" id="flute"><label class="btn btn-outline-warning" for="flute">플룻</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_10" id="violin"><label class="btn btn-outline-warning" for="violin">바이올린</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_11" id="cello"><label class="btn btn-outline-warning" for="cello">첼로</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_12" id="percussion"><label class="btn btn-outline-warning" for="percussion">퍼커션</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_13" id="vocal" ><label class="btn btn-outline-warning" for="vocal">보컬</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_14" id="daw"><label class="btn btn-outline-warning" for="daw">믹싱(DAW)</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="INST_15" id="etc"><label class="btn btn-outline-warning" for="etc">ETC</label></li>
                       </ul>
                     </div>
                     <div>
                       <div class="slideToggle"><i class="fa-solid fa-location-dot"></i> 장소별</div>
-                      <ul>
-                        <li><input type="checkbox" name="place" value="서울" id="seoul" ><label for="seoul">서울</label></li>
-                        <li><input type="checkbox" name="place" value="인천" id="incheon" ><label for="incheon">인천</label></li>
-                        <li><input type="checkbox" name="place" value="경기" id="gyeonggi" ><label for="gyeonggi">경기</label></li>
-                        <li><input type="checkbox" name="place" value="강원" id="gangwon" ><label for="gangwon">강원</label></li>
-                        <li><input type="checkbox" name="place" value="충청" id="choungcheong" ><label for="choungcheong">충청</label></li>
-                        <li><input type="checkbox" name="place" value="전라" id="jeolla" ><label for="jeolla">전라</label></li>
-                        <li><input type="checkbox" name="place" value="경상" id="gyeongsang" ><label for="gyeongsang">경상</label></li>
-                        <li><input type="checkbox" name="place" value="제주" id="jeju" ><label for="jeju">제주</label></li>
+                      <ul class="liLists">
+                        <li><input class="btn-check" type="radio" name="f" value="서울" id="seoul" ><label class="btn btn-outline-warning" for="seoul">서울</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="인천" id="incheon" ><label class="btn btn-outline-warning" for="incheon">인천</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="경기" id="gyeonggi" ><label class="btn btn-outline-warning" for="gyeonggi">경기</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="강원" id="gangwon" ><label class="btn btn-outline-warning" for="gangwon">강원</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="충북" id="choungbuk" ><label class="btn btn-outline-warning" for="choungbuk">충북</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="충남" id="choungnam" ><label class="btn btn-outline-warning" for="choungnam">충남</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="전북" id="jeonbuk" ><label class="btn btn-outline-warning" for="jeonbuk">전북</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="전남" id="jeonnam" ><label class="btn btn-outline-warning" for="jeonnam">전남</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="경북" id="gyeongbuk" ><label class="btn btn-outline-warning" for="gyeongbuk">경북</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="경남" id="gyeongnam" ><label class="btn btn-outline-warning" for="gyeongnam">경남</label></li>
+                        <li><input class="btn-check" type="radio" name="f" value="제주" id="jeju" ><label class="btn btn-outline-warning" for="jeju">제주</label></li>
                       </ul>
                     </div>
                     <div>
                         <div class="slideToggle"><i class="fa-solid fa-barcode"></i> 가격별</div>
-	                      <ul>
-	                        <li><input type="checkbox" name="price" value="10" id="less10" ><label for="less10">10만원이하</label></li>
-	                        <li><input type="checkbox" name="price" value="20" id="less20" ><label for="less20">20만원이하</label></li>
-	                        <li><input type="checkbox" name="price" value="30" id="less30" ><label for="less30">30만원이하</label></li>
-	                        <li><input type="checkbox" name="price" value="50" id="less50" ><label for="less50">50만원이하</label></li>
-	                        <li><input type="checkbox" name="price" value="협의가능" id="discuss" ><label for="discuss">협의가능</label></li>
+	                      <ul class="liLists">
+	                        <li><input class="btn-check" type="radio" name="f" value="100,000" id="10" ><label class="btn btn-outline-warning" for="10">10만원</label></li>
+	                        <li><input class="btn-check" type="radio" name="f" value="150,000" id="15" ><label class="btn btn-outline-warning" for="15">15만원</label></li>
+	                        <li><input class="btn-check" type="radio" name="f" value="200,000" id="20" ><label class="btn btn-outline-warning" for="20">20만원</label></li>
+	                        <li><input class="btn-check" type="radio" name="f" value="250,000" id="25" ><label class="btn btn-outline-warning" for="25">25만원</label></li>
+	                        <li><input class="btn-check" type="radio" name="f" value="협의가능" id="discuss" ><label class="btn btn-outline-warning" for="discuss">협의가능</label></li>
 	                      </ul>
                     </div>
                     <div>
                         <div class="slideToggle"><i class="fa-regular fa-clock"></i> 시간대별</div>
-	                      <ul>
-	                        <li><input type="checkbox" name="time" value="오전" id="morning" ><label for="morning">오전</label></a></li>
-	                        <li><input type="checkbox" name="time" value="오후" id="evening" ><label for="evening">오후</label></a></li>
-	                        <li><input type="checkbox" name="time" value="야간" id="night" ><label for="night">야간</label></a></li>
+	                      <ul class="liLists">
+	                        <li><input class="btn-check" type="radio" name="f" value=12 id="morning" ><label class="btn btn-outline-warning" for="morning">오전</label></a></li>
+	                        <li><input class="btn-check" type="radio" name="f" value=18 id="evening" ><label class="btn btn-outline-warning" for="evening">오후</label></a></li>
+	                        <li><input class="btn-check" type="radio" name="f" value=24 id="night" ><label class="btn btn-outline-warning" for="night">야간</label></a></li>
 	                      </ul>
                     </div>
                 </article>
                 
-                <article class="rightLessonLists w-100 p-5">
-                    <div class="lessonListBox justify-content-center gap-3">
+                <article class="rightLessonLists w-100 p-5" id="rightLessonLists">
+                    <div class="lessonListBox">
                    	<%for(Lesson l : lessons){
                    	if(!lessons.isEmpty()) {%>
                       <div class="lessonList" onclick="location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=<%=l.getBoardNo() %>'">
@@ -91,6 +95,9 @@
                         <div class="lessonListImageBox"><img src="<%=request.getContextPath()%>/images/default.jpg" width="200px" height="200px"></div>
                         <%} %>
                         <div class="lessonListTitle"><%=l.getBoardTitle() %>&nbsp;</div>
+                        <div class="lessonStars">
+                        	<i class="fa-solid fa-star"><%=l.getReviewPoint() %></i>
+                        </div>
                         <div class="lessonView">
                         	<i class="fa-regular fa-eye fa-sm">&nbsp;<%=l.getBoardView() %></i>
                         </div>
@@ -98,26 +105,279 @@
                       		<%} %>
                      	<%} %>
                     </div>
-                    <br><br>
-                    <div><%=request.getAttribute("pageBar") %></div>
+                    <div class="pageBar"><%=request.getAttribute("pageBar") %></div>
                 </article>
+                
+                <!-- 조회수순 -->
+                <script>
+	                function searchOrderByViews() {
+	            		$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?viewAndRecent=BOARD_VIEW_COUNT",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+		       						
+		       						const pageBar = $("<div>")
+		       						pageBar.addClass('pageBar')
+		       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <!-- 최근등록순 -->
+                <script>
+	                function searchOrderByDate() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?viewAndRecent=BOARD_DATE",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       								       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const viewi = $("<i>");
+		       						viewi.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(viewi);
+		       						
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+                /* 평균별점순 */
+	                function searchOrderByStar() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+                /* 리뷰순 */
+	                function searchOrderByReviews() {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/FindLessonFilterContentsServlet.do?no='리뷰'",
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
+	       						
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+	       							console.log(goToLessonInfoPath);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       				
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
+	       					}
+	        			});
+					}
+                </script>
+                <script>
+				 // 필터링하기
+				    let searchFilter = $("input[type=radio]");
+				
+				    searchFilter.click(function(){
+				    	
+				          let targetValue = [];//체크할때 비우고 새로체크된것만 넣는다!
+				          searchFilter.filter(':checked').each(function(){ // 체크된것들만 가져오기위해 필터를한다
+				        	  targetValue.push($(this).val());
+				          });//each
+				         let targetClass = targetValue.join("");
+				         console.log(targetValue)
+				         console.log(targetClass)
+				         
+				         searchOrderByKeyword(targetClass);
+				    });
+				</script>
+                <script>
+                /* 악기별 */
+	                function searchOrderByKeyword(keyword) {
+	                	$.ajax({
+	        				url:"<%=request.getContextPath()%>/LeftBarFilterServlet.do?keyword="+keyword,
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+	       							console.log(goToLessonInfoPath);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-regular fa-eye fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox);
+	       					}
+	        			});
+					}
+                </script>
             </div>
         </div>
     </section>
-    <script>
-	 // 필터링하기
-	    let searchFilter = $("input[type=checkbox]");
-	
-	    searchFilter.click(function(){
-	          let targetValue = [];//체크할때 비우고 새로체크된것만 넣는다!
-	          searchFilter.filter(':checked').each(function(){
-	        	  targetValue.push("." + $(this).val());
-	          });//each
-	          let targetClass = targetValue.join(",");
-	         console.log(targetValue)
-	         console.log(targetClass)
-	    });
-	</script>
+    
     <script>
       $(document).ready(function(){
            $(".slideToggle").click(function(e){
