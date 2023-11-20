@@ -54,7 +54,7 @@ public class AdminNoticeListServlet extends HttpServlet {
 			filters.add(Map.of(type, keyword));
 		}
 		int totalData = AdminService.getService().getNoticeTotalData(type,keyword);
-		List<NoticeList> noticeList = AdminService.getService().selectNoticeList(type,keyword);
+		List<NoticeList> noticeList = AdminService.getService().selectNoticeList(type,keyword,cPage, numPerPage);
 		
 		request.setAttribute("noticeList", noticeList);
 		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, totalData, pageBarSize, request.getRequestURI(),filters));

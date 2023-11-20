@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,6 +18,7 @@ import com.harmony.admin.model.dto.Carousel;
 import com.harmony.admin.model.dto.Notice;
 import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
+import com.harmony.admin.model.dto.QNAList;
 
 public class AdminDao {
 	private static AdminDao dao = new AdminDao();
@@ -185,7 +185,6 @@ public class AdminDao {
 		}
 		query = query.replace("#cols", cols.substring(0, cols.length()-1).toString());
 		query = query.replace("#vals", vals.substring(0, vals.length()-1).toString());
-		System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
 			int count = 1;
@@ -269,7 +268,6 @@ public class AdminDao {
 		}
 		
 		query = query.replace("#cols", cols.substring(0, cols.length()-1).toString());
-		System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
 			int count = 1;
@@ -304,11 +302,13 @@ public class AdminDao {
 		return result;
 	}
 	
-	public List<NoticeList> selectNoticeList(Connection conn, String type, String keyword) {
+	public List<NoticeList> selectNoticeList(Connection conn, String type, String keyword, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<NoticeList> result = new ArrayList<>();
 		String query = sql.getProperty("selectNoticeList");
+		int startData = (cPage -1)*numPerPage +1;
+		int endData = cPage * numPerPage;
 		if(type!=null&&keyword!=null) {
 			query = query.replace("#where","WHERE "+type+"=?");
 		}else {
@@ -316,9 +316,12 @@ public class AdminDao {
 		}
 		try{
 			pstmt = conn.prepareStatement(query);
+			int count = 1;
 			if(type!=null&&keyword!=null) {
-				pstmt.setString(1, keyword);
+				pstmt.setString(count++, keyword);
 			}
+			pstmt.setInt(count++, startData);
+			pstmt.setInt(count++, endData);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				result.add(getNoticeList(rs));
@@ -465,7 +468,6 @@ public class AdminDao {
 				pstmt.clearParameters();
 			}
 			resultArray = pstmt.executeBatch();
-			System.out.println(Arrays.toString(resultArray));
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -474,7 +476,6 @@ public class AdminDao {
 		if(resultArray!=null&& resultArray.length>0) {
 			int temp = 1;
 			for(int i:resultArray) {
-				System.out.println(i);
 				if(i==-2) {
 					temp *= 1;
 				}else if(i==-3) {
@@ -483,10 +484,8 @@ public class AdminDao {
 					temp *=i;
 				}
 			}
-			System.out.println(temp);
 			result = result + temp;
 		}
-		System.out.println(result);
 		return result;
 	}
 	
@@ -526,12 +525,12 @@ public class AdminDao {
 		return result;
 	}
 
-	public int deleteNoticeFileByBrdNo(Connection conn, Notice notice) {
+	public int deleteNoticeFileByBrdNo(Connection conn, int noticeNo) {
 		PreparedStatement pstmt = null;
 		int result = -1;
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("deleteNoticeFileByBrdNo"));
-			pstmt.setInt(1, notice.getNoticeNo());
+			pstmt.setInt(1, noticeNo);
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -552,7 +551,6 @@ public class AdminDao {
 				pstmt.addBatch();
 			}
 			results = pstmt.executeBatch();
-			System.out.println(Arrays.toString(results));
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -561,7 +559,6 @@ public class AdminDao {
 		if(results != null && results.length>0) {
 			int temp = 1;
 			for(int i:results) {
-				System.out.println(i);
 				if(i==-2) {
 					temp *= 1;
 				}else if(i==-3) {
@@ -570,10 +567,157 @@ public class AdminDao {
 					temp *=i;
 				}
 			}
-			System.out.println(temp);
 			result = result + temp;
 		}
-		System.out.println(result);
 		return result;
+	}
+
+	public String[] getDelFileList(Connection conn, String[] delFile) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String[] result = new String[delFile.length];
+		String query = sql.getProperty("getDelFileList");
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("?");
+		sb.append(", ?".repeat(delFile.length-1));
+		
+		query = query.replace("#vals", sb.toString());
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty(query));
+			for(int i=0; i<delFile.length; i++) {
+				pstmt.setString(i+1, delFile[i]);
+			}
+			rs = pstmt.executeQuery();
+			for(int i=0; i<delFile.length; i++) {
+				if(rs.next()) {
+					result[i] = rs.getString(1);
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<NoticeAttachFile> getDelFIleListByNoticeNo(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<NoticeAttachFile> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getDelFileListByBrdNo"));
+			pstmt.setInt(1, noticeNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getNoticeAttachFile(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private NoticeAttachFile getNoticeAttachFile(ResultSet rs) throws SQLException{
+		return NoticeAttachFile.builder().reName(rs.getString(1)).build();
+	}
+
+	public int deleteNotice(Connection conn, int noticeNo) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteNotice"));
+			pstmt.setInt(1, noticeNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getQNATotalData(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = sql.getProperty("getQNATotalData");
+		int result = -1;
+		if(type!=null && !type.equals("")) {
+			switch(type) {
+				case "code": query = query.replace("#cols", "WHERE QST_CODE = ?"); break;
+				case "category": query = query.replace("#cols", "WHERE QST_CATEGORY = ?");break;
+			}
+		}else {
+			query = query.replace("#cols", "");
+		}
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			if(type!=null && !type.equals("")) {
+				pstmt.setString(count++, keyword);
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<QNAList> selectQNAList(Connection conn, String type, String keyword, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<QNAList> result = new ArrayList<>();
+		String query = sql.getProperty("selectQNAList");
+		int startData = (cPage -1)*numPerPage +1;
+		int endData = cPage * numPerPage;
+		if(type!=null && !type.equals("")) {
+			switch(type) {
+			case "code":query = query.replace("#cols", "WHERE QST_CODE = ?"); break;
+			case "category":query = query.replace("#cols", "WHERE QST_CATEGORY = ?");break;
+			}
+		}else {
+			query = query.replace("#cols", "");
+		}
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			if(type!=null && !type.equals("")) {
+				pstmt.setString(count++, keyword);
+			}
+			pstmt.setInt(count++, startData);
+			pstmt.setInt(count++, endData);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getQNAList(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private QNAList getQNAList(ResultSet rs) throws SQLException{
+		return QNAList.builder()
+				.qstNo(rs.getInt("QST_NO"))
+				.qstWriter(rs.getString("QST_WRITER"))
+				.qstCategory(rs.getString("QST_CATEGORY"))
+				.qstCode(rs.getString("QST_CODE"))
+				.writeDate(rs.getDate("WRITE_DATE"))
+				.qstCategoryName(rs.getString("QST_CATEGORY_NAME"))
+				.build();
 	}
 }
