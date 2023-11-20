@@ -2,10 +2,21 @@
 	pageEncoding="UTF-8"%>
 <%@ page
 	import="java.util.List,com.harmony.board.free.model.dto.FreeBoard"%>
-<%
+<%-- <%
+
 List<FreeBoard> boards = (List<FreeBoard>) request.getAttribute("boards");
 String pageBar = (String) request.getAttribute("pageBar");
+%> --%>
+<%
+List<FreeBoard> boards = null;
+if (request.getAttribute("searchResults") != null) {
+	boards = (List<FreeBoard>) request.getAttribute("searchResults");
+} else {
+	boards = (List<FreeBoard>) request.getAttribute("boards");
+}
+String pageBar = (String) request.getAttribute("pageBar");
 %>
+
 <%@ include file="/views/common/header.jsp"%>
 
 <link rel="stylesheet" href="styles.css">

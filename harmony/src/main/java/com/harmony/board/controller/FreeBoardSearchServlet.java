@@ -18,7 +18,7 @@ import com.harmony.common.PageBarBuilder;
 /**
  * Servlet implementation class FreeBoardSearchServlet
  */
-@WebServlet("/FreeBoardSearch.do")
+@WebServlet("/board/FreeBoardSearch.do")
 public class FreeBoardSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -58,7 +58,7 @@ public class FreeBoardSearchServlet extends HttpServlet {
 		request.setAttribute("searchResults", searchResults);
 		request.setAttribute("pageBar", pageBar);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/board/FreeBoardList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/views/board/freeBoardList.jsp");
 		dispatcher.forward(request, response);
 	}
 
