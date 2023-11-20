@@ -28,7 +28,7 @@ public class LessonDao {
 			e.printStackTrace();
 		}
 	}
-	// 검색창에 있는 레슨 다 나오게하기
+		// 검색창에 있는 레슨 다 나오게하기
 		public List<Lesson> printLessonAll(Connection conn,int cPage,int numPerpage){
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
@@ -48,6 +48,84 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
+		// 음악으로 필터한 레슨 다 나오게하기
+			public List<Lesson> printLessonByFilterInst(Connection conn, String keyword){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				List<Lesson> result=new ArrayList<>();
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterInst"));
+					pstmt.setString(1, keyword);
+					rs=pstmt.executeQuery();
+					while(rs.next()) {
+						result.add(getLesson(rs));
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
+			// 장소으로 필터한 레슨 다 나오게하기
+			public List<Lesson> printLessonByFilterPlace(Connection conn, String keyword){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				List<Lesson> result=new ArrayList<>();
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterPlace"));
+					pstmt.setString(1, "%"+keyword+"%");
+					rs=pstmt.executeQuery();
+					while(rs.next()) {
+						result.add(getLesson(rs));
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
+			// 가격으로 필터한 레슨 다 나오게하기
+			public List<Lesson> printLessonByFilterPrice(Connection conn, String keyword){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				List<Lesson> result=new ArrayList<>();
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterPrice"));
+					pstmt.setString(1, keyword);
+					rs=pstmt.executeQuery();
+					while(rs.next()) {
+						result.add(getLesson(rs));
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
+			// 시간대로 필터한 레슨 다 나오게하기
+			public List<Lesson> printLessonByFilterTime(Connection conn, String keyword){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				List<Lesson> result=new ArrayList<>();
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterTime"));
+					System.out.println(sql);
+					pstmt.setString(1, keyword);
+					pstmt.setString(2, keyword);
+					rs=pstmt.executeQuery();
+					while(rs.next()) {
+						result.add(getLesson(rs));
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
 		// 리뷰순 정렬
 		public List<Lesson> printLessonByReviews(Connection conn, int cPage,int numPerpage){
 			PreparedStatement pstmt=null;
