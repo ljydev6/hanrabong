@@ -203,49 +203,53 @@
 </aside>
 
 <section>
+<!-- <div class="include_pageBar"> -->
 	<div class="button_container">
 		<input type="button" value="합주팀등록" class="top_btn"
 				onclick="location.assign('<%=request.getContextPath()%>/ensemble/enrollTeam.do')">
 		<input type="button" value="팀 페이지" class="top_btn" 
 				onclick="location.assign('<%=request.getContextPath()%>/ensemble/teamProfile.do')">
 	</div>
-	<article>
-      <div class="board_container">
-   
-    <%if(!boards.isEmpty()){  
-			for(VEnsList b:boards){%> 
-      
-        <div class="board_list">
-        	<div class="list_top_container">
-	        	<div class="title_container">
-		       		<h3><%=b.getEnsBoardTitle() %></h3>
-		      	
+		<article>
+	      <div class="board_container">
+	   
+	    <%if(!boards.isEmpty()){  
+				for(VEnsList b:boards){%> 
+	      
+	        <div class="board_list">
+	        	<div class="list_top_container">
+		        	<div class="title_container">
+			       		<h3><%=b.getEnsBoardTitle() %></h3>
+			      	
+		        	</div>
+		        	<div class="type_container">
+		        			<h5><%=b.getEnsTeamType() %></h5>
+		        	</div>
 	        	</div>
-	        	<div class="type_container">
-	        			<h5><%=b.getEnsTeamType() %></h5>
+	        	<div class="img_container">
+		        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
+		        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=80px; height:80px;"class="profile_img">
+	      		<h4><%=b.getEnsTeamName() %></h4>
 	        	</div>
-        	</div>
-        	<div class="img_container">
-	        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-	        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=80px; height:80px;"class="profile_img">
-      		<h4><%=b.getEnsTeamName() %></h4>
-        	</div>
-       		<hr>
-       		<ul>
-       			<li><%=b.getGenreName() %></li>
-       			<li><%=b.getInstrument() %></li>
-       			<li><%=b.getEnsLocation() %></li>
-       		</ul>
-        </div>
-		<%}
-	}%> 
-    </article>
-    
-     <div id="pageBar"> 
- 		<%= request.getAttribute("pageBar") %> 
-	</div> 
-
+	       		<hr>
+	       		<ul>
+	       			<li><%=b.getGenreName() %></li>
+	       			<li><%=b.getInstrument() %></li>
+	       			<li><%=b.getEnsLocation() %></li>
+	       		</ul>
+	        </div>
+			<%}
+		}%> 
+	    </article>
+	<div class="pageBar_container">
+		<div id="pageBar"> 
+		 		<%= request.getAttribute("pageBar") %> 
+		</div>    
+	</div>  
+	    
+<!-- </div> -->
 </section>
+
 </main>
 <script>
 
