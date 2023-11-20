@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.harmony.member.service.MemberService;
 import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
+import com.harmony.model.dto.MemberVideo;
 
 
 /**
@@ -35,8 +36,11 @@ public class MyPageServlet extends HttpServlet {
 		Member m = (Member)request.getSession().getAttribute("loginMember");
 		System.out.println(m);
 		MemberInfo mi = new MemberService().selectMemberInfo(m.getMemNo());
+//		MemberVideo mv = new MemberService().selectVideoLink(m.getMemNo());
+//		System.out.println("내가찾는"+mv);
 		System.out.println(mi);
 		request.setAttribute("MemberInfo", mi);
+//		request.setAttribute("mv", mv);
 		request.getRequestDispatcher("/views/member/mypage.jsp").forward(request, response);
 		
 	}

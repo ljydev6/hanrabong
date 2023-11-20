@@ -44,7 +44,7 @@
 			</div>
 			<div>
 				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduceServlet.do" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="memNo" value="<%=mi.getMemNo()%>">
+					<input type="hidden" name="memNo" value="<%=m.getMemNo()%>">
 	
 					<p>
 						<label>프로필사진</label> 
@@ -107,6 +107,20 @@
 					</p>
 					<p>
 						<label>관심장르</label>
+						재즈 <input type="checkbox" class="w3-checkbox" name="genre" value="G_1">
+						클래식 <input type="checkbox" class="w3-checkbox" name="genre" value="G_2">
+						일렉트로닉 <input type="checkbox" class="w3-checkbox" name="genre" value="G_3">
+						힙합 <input type="checkbox" class="w3-checkbox" name="genre" value="G_4">
+						인디 <input type="checkbox" class="w3-checkbox" name="genre" value="G_5">
+						락 <input type="checkbox" class="w3-checkbox" name="genre" value="G_6">
+						케이팝 <input type="checkbox" class="w3-checkbox" name="genre" value="G_7">
+						기타 <input type="checkbox" class="w3-checkbox" name="genre" value="G_8">
+				
+						
+						
+					</p>
+					<!-- <p>
+						<label>관심장르</label>
 						<select class="w3-select" name="genre" >
 							<option value="jazz">재즈</option>
 							<option value="classic">클래식</option>
@@ -117,8 +131,27 @@
 							<option value="kpop">케이팝</option>
 							<option value="others">기타</option>
 						</select>
+					</p> -->
+						<p>
+						<label>관심분야</label>
+				드럼	<input class="w3-checkbox" type="checkbox"  name="interest" value="INST_1">
+				베이스	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_2">
+				기타	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_4">
+				피아노	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_5">	
+				작곡	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_6">
+				색소폰	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_7">
+				트럼펫	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_8">					
+				플룻	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_9">	
+				바이올린 <input type="checkbox" class="w3-checkbox" name="interest" value="INST_10">	
+				첼로	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_11">	
+				더블베이스 <input type="checkbox" class="w3-checkbox" name="interest" value="INST_3">	
+				퍼커션	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_12">	
+				보컬	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_13">
+				믹싱	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_14">	
+				기타(오카리나,하모니카 등)	<input type="checkbox" class="w3-checkbox" name="interest" value="INST_15">
+					
 					</p>
-					<p>
+					<!-- <p>
 						<label>관심분야</label>
 						<select class="w3-select" name="interest">
 							<option value="drum">드럼</option>
@@ -137,7 +170,7 @@
 							<option value="mixing">믹싱(DAW)</option>
 							<option value="others">기타(오카리나,하모니카 등)</option>
 						</select>
-					</p>
+					</p> -->
 					<p>
 						<label>경력</label>				
 						<input class="w3-input" type="text"  name="memcareer" >						
