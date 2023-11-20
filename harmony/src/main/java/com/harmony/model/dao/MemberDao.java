@@ -44,6 +44,25 @@ public class MemberDao {
 	}
 		return m;
 	}
+//	public MemberVideo selectVideoLink(Connection conn, String memNo) {
+//		PreparedStatement pstmt=null;
+//		ResultSet rs = null;
+//		MemberVideo result = null;
+//		try {
+//			pstmt=conn.prepareStatement(sql.getProperty("selectVideoLink"));
+//			pstmt.setString(1, memNo);
+//			rs=pstmt.executeQuery();
+//			while(rs.next()) {
+//				result=getMemberVideo(rs);
+//			}
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return result;
+//	}
 	public int insertMember(Connection conn,Member m) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -168,6 +187,68 @@ public class MemberDao {
 			close(pstmt);
 		}return mi;
 	}
+	public int insertGenre(Connection conn,String memNo,MemberInfo mi) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try{
+			pstmt=conn.prepareStatement(sql.getProperty("insertGenre"));
+//			String[] genres = mi.getGenre();
+			
+			for(String genre : mi.getGenre()) {
+			pstmt.setString(1, memNo);
+			pstmt.setString(2, genre);
+			pstmt.addBatch();
+			pstmt.clearParameters();
+			}
+			int[] results = pstmt.executeBatch();
+			result = 1;
+			
+			for(int i : results) {
+				if(i== -2) {// 실행은 했는데 몇번째거를 실행했는지 모를땐 -2가 뜨고 
+					i=1;
+				}else if(i==-3) { //실패했을땐 -3 이뜬다
+					i=0;
+				}
+				result *= i;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	public int insertInstrument(Connection conn,String memNo,MemberInfo mi) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try{
+			pstmt=conn.prepareStatement(sql.getProperty("insertInstrument"));
+//			String[] genres = mi.getGenre();
+			
+			for(String interest : mi.getInterest()) {
+			pstmt.setString(1, memNo);
+			pstmt.setString(2, interest);
+			pstmt.addBatch();
+			pstmt.clearParameters();
+			}
+			int[] results = pstmt.executeBatch();
+			result = 1;
+			
+			for(int i : results) {
+				if(i== -2) {// 실행은 했는데 몇번째거를 실행했는지 모를땐 -2가 뜨고 
+					i=1;
+				}else if(i==-3) { //실패했을땐 -3 이뜬다
+					i=0;
+				}
+				result *= i;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
 	
 	public static Member getMember(ResultSet rs) throws SQLException{
 		return Member.builder()
@@ -192,6 +273,12 @@ public class MemberDao {
 				.email(rs.getString("MEM_INFO_EMAIL"))
 				.memCareer(rs.getString("MEM_INFO_CAREER"))
 
+				.build();
+	}
+	public static MemberVideo getMemberVideo(ResultSet rs) throws SQLException{
+		return MemberVideo.builder()
+				.memNo(rs.getString("MEM_NO"))
+				.videoLink(rs.getString("MEM_VIDEO_LINK"))
 				.build();
 	}
 }

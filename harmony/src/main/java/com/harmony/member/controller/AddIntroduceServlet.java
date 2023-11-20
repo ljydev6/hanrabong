@@ -3,6 +3,7 @@ package com.harmony.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -16,7 +17,9 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.harmony.board.exception.BadAccessException;
 import com.harmony.member.service.MemberService;
+import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
+
 import com.harmony.model.dto.MemberMusic;
 import com.harmony.model.dto.MemberVideo;
 import com.oreilly.servlet.MultipartRequest;
@@ -60,17 +63,16 @@ public class AddIntroduceServlet extends HttpServlet {
 		String schoolstate=mr.getParameter("schoolstate");
 		String gender =mr.getParameter("gender");
 		String activityarea = mr.getParameter("activityarea");
-		String genre = mr.getParameter("genre");
-		String interest = mr.getParameter("interest");
+		String genre[] = mr.getParameterValues("genre");
+		String interest[] = mr.getParameterValues("interest");
 		String introduce = mr.getParameter("introduce");
-		String videolink =mr.getParameter("videolink");
+		String videolink = mr.getParameter("videolink");
 		String musiclink = mr.getParameter("musiclink");
 		String memCareer = mr.getParameter("memcareer");
 			List<MemberVideo> memberVideo =new ArrayList<>();
 			List<MemberMusic> memberMusic =new ArrayList<>();
 			
-			
-		Enumeration<String> filenames= mr.getFileNames();
+			Enumeration<String> filenames= mr.getFileNames();
 		while(filenames.hasMoreElements()) {
 			
 			String filename=filenames.nextElement();
@@ -102,13 +104,16 @@ public class AddIntroduceServlet extends HttpServlet {
 							.gender(gender)
 							.age(age)
 							.email(email)
+							.interest(interest)
+							.genre(genre)
 							.memCareer(memCareer)
 							.memberVideo(memberVideo)
 							.memberMusic(memberMusic)
 							.build();
+	
 		 int result = new MemberService().addintroduce(mi);
 		 if(result>0) {
-			 
+			 System.out.println("나의확인용"+mi);
 			response.sendRedirect(request.getContextPath()+"/main.do");
 		 }
 		}
