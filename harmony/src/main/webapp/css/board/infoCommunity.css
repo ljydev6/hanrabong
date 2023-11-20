@@ -107,15 +107,15 @@ body {
 /* 게시글 메인 컨테이너 */
 .post-main {
     display: flex;
-    align-items: flex-start;
+    justify-content: space-between; /* 요소들을 양 끝으로 정렬 */
+    align-items: center; /* 요소들을 세로 중앙에 정렬 */
 }
 
 /* 게시글 포함된 이미지 */
 .post-main img {
-    max-width: 100px;
+    max-width: 150px;
     height: auto;
-    margin-top: 5%;
-    margin-left: 10%;
+    margin-left: auto;
     border-radius: 4px;
 }
 

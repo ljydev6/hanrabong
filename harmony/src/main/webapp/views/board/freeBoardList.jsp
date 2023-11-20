@@ -44,6 +44,7 @@ String pageBar = (String) request.getAttribute("pageBar");
 						<th>날짜</th>
 						<th>첨부파일</th>
 						<th>조회수</th>
+						<th>댓글수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,16 +57,29 @@ String pageBar = (String) request.getAttribute("pageBar");
 							href="<%=request.getContextPath()%>/board/freeboardView.do?no=<%=board.getFreBrdNo()%>">
 								<%=board.getFreBrdTitle()%>
 						</a></td>
-						<td style="text-align: center;"><%=board.getFreBrdWriter()%></td>
+						<td style="text-align: center;"><%=board.getFreBrdWriter()%></td> 
 						<td style="text-align: center;"><%=board.getFreBrdDate()%></td>
 						<td style="text-align: center;"><%=board.getFreBrdTitleImg() != null ? "Yes" : "No"%></td>
 						<td style="text-align: center;"><%=board.getFreBrdViews()%></td>
+						<td style="text-align: center;"><%=request.getAttribute("commentCount" + board.getFreBrdNo())%></td>
 					</tr>
 					<%
 					}
 					%>
 				</tbody>
 			</table>
+			<form action="<%=request.getContextPath()%>/board/FreeBoardSearch.do"
+				method="get" class="search-form">
+				<select name="searchType" class="search-select">
+					<option value="both">제목+본문</option>
+					<option value="title">제목</option>
+					<option value="content">본문</option>
+				</select> <input type="text" name="query" placeholder="검색어 입력"
+					class="search-input">
+				<button type="submit" class="search-button">
+					<img src="<%=request.getContextPath()%>/image/board/search2.png">
+				</button>
+			</form>
 			<div class="text-center">
 				<ul class="pagintion">
 					<%=pageBar%>

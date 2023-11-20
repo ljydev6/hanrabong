@@ -106,7 +106,7 @@ if (request.getAttribute("searchResults") != null) {
 						<div class="post-footer">
 							<div class="view-comment">
 								<div class="views-comments-container">
-									<span>댓글 <%= request.getAttribute("commentCount" + post.getInfBrdNo()) %></span>
+									<span>댓글 <%=request.getAttribute("commentCount" + post.getInfBrdNo())%></span>
 								</div>
 							</div>
 						</div>
@@ -142,16 +142,9 @@ if (request.getAttribute("searchResults") != null) {
 
 <script>
 		<%-- document.querySelectorAll(".main select").forEach(e=>{
-			// 각 <select> 요소에 'change' 이벤트 리스너를 추가합니다.
-		    // 이 리스너는 사용자가 드롭다운의 옵션을 변경할 때마다 실행됩니다.
 			e.addEventListener("change",e=>{
-			      // e.target은 이벤트가 발생한 <select> 요소를 가리킵니다.
-		        // value는 선택된 옵션의 값을 가져옵니다.
 				const value=e.target.value;
-				 // name은 <select> 요소의 name 속성 값을 가져옵니다.
 				const name=e.target.name;
-				 // location.assign을 사용하여 새 URL로 페이지를 이동시킵니다.
-		        // 여기서 URL은 사용자가 선택한 카테고리와 값을 기반으로 동적으로 생성됩니다.
 				location.assign("<%=request.getContextPath()%>/community/searchcommunity.do?" + name + "=" + value);				
 				 
 			});

@@ -66,7 +66,8 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 						<%=comment.getInfComContent()%></td>
 					<td>
 						<button class="btn-reply" value="<%=comment.getInfComNo()%>">답글</button>
-						<button onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+						<button
+							onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
 
 					</td>
 				</tr>
@@ -77,7 +78,9 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 					<td><sub><%=comment.getInfComWriter()%></sub> <sub><%=comment.getInfComDate()%></sub><br>
 						<%=comment.getInfComContent()%></td>
 					<td>
-						<button onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button></td>
+						<button
+							onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+					</td>
 				</tr>
 				<%
 				}
@@ -102,22 +105,27 @@ function confirmCommentDeletion(deleteUrl, commentNo, boardNo) {
         window.location.href = deleteUrl + '?no=' + commentNo + '&boardNo=' + boardNo;
     }
 }
-    	$(".btn-reply").click(e=>{
-    		
-    		const $tr=$("<tr>");
-    		const $td=$("<td>").attr("colspan","2");
-    		const $form=$(".comment-editor>form").clone();
-    		console.log($form);
-    		$form.find("input[name=level]").val("2"); //대댓글번호 찾는
-    		$form.find("textarea").attr("rows","1");  //답글 쓰는곳 크기 줄이기
-    		$form.find("button").removeAttr("id").addClass("btn-insert2"); //아이디 지우기
-    		$form.find("input[name=infComNoRef]").val($(e.target).val()); //대글의 번호를 대댓글에 넣는..?
-    		$td.append($form);
-    		$tr.append($td);
-    		
-    		$(e.target).parents("tr")
-    			.after($tr);	
-    	});
+$(".btn-reply").click(e=>{
+    // 답글 입력창이 이미 존재하면 함수를 종료
+    if ($(e.target).parents("tr").next().hasClass("reply-form")) {
+        return;
+    }
+
+    const $tr=$("<tr>").addClass("reply-form");
+    const $td=$("<td>").attr("colspan","2");
+    const $form=$(".comment-editor>form").clone();
+    console.log($form);
+    $form.find("input[name=level]").val("2"); //대댓글번호 찾는
+    $form.find("textarea").attr("rows","1");  //답글 쓰는곳 크기 줄이기
+    $form.find("button").removeAttr("id").addClass("btn-insert2"); //아이디 지우기
+    $form.find("input[name=infComNoRef]").val($(e.target).val()); //대글의 번호를 대댓글에 넣는..?
+    $td.append($form);
+    $tr.append($td).addClass("reply-form"); // 'reply-form' 클래스 추가
+    
+    $(e.target).parents("tr")
+        .after($tr);	
+});
+
     	
     	
     </script>

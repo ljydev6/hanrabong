@@ -14,6 +14,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.harmony.board.exception.BadAccessException;
 import com.harmony.board.free.model.dto.FreeBoard;
 import com.harmony.board.model.service.FreeBoardService;
+import com.harmony.model.dto.Member;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -47,8 +48,12 @@ public class FreeBoardWriteEndServlet extends HttpServlet {
 					request, path,1024*1024*100,"UTF-8",
 					new DefaultFileRenamePolicy());
 			
+			Member loginMember = (Member) request.getSession().getAttribute("loginMember");
+			 String memNo = loginMember.getMemNo();
+			
 			FreeBoard b = FreeBoard.builder()
-				    .freBrdWriter(mr.getParameter("freBrdWriter"))  
+					.freBrdWriter(memNo)
+					/* .freBrdWriter(mr.getParameter("freBrdWriter")) */
 				    .freBrdTitle(mr.getParameter("title"))  
 				    .freBrdContent(mr.getParameter("content"))  
 				    .freBrdTitleImg(mr.getFilesystemName("upfile"))  

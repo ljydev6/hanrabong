@@ -40,6 +40,12 @@ public class FreeBoardListServlet extends HttpServlet {
         }
         
         List<FreeBoard> boards = new FreeBoardService().selectFreeBoard(cPage, numPerpage);
+        
+		for (FreeBoard board : boards) {
+		    int commentCount = new FreeBoardService().getCommentCount(board.getFreBrdNo());
+		    request.setAttribute("commentCount" + board.getFreBrdNo(), commentCount);
+		}
+       
         int totalData = new FreeBoardService().selectFreeBoardCount();
         int totalPage = (int)Math.ceil((double)totalData / numPerpage);
         int pageBarSize = 5;

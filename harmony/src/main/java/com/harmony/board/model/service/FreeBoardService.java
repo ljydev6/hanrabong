@@ -83,6 +83,14 @@ public class FreeBoardService {
     }
     //특정 게시판의 댓글 목록을 가져오는 것
     
+    
+    public int getSearchResultCount(String searchType, String query) {
+        Connection conn = getConnection();
+        int count = dao.getSearchResultCount(conn, searchType, query);
+        close(conn);
+        return count;
+    }
+    
 	public int deleteFreeBoard(int boardNo) {
         Connection conn = getConnection();
         int result = dao.deleteFreeBoard(conn, boardNo);
@@ -99,5 +107,17 @@ public class FreeBoardService {
         else rollback(conn);
         close(conn);
         return result;
+    }
+	public List<FreeBoard> searchBoards(String searchType, String query, int cPage, int numPerPage) {
+        Connection conn = getConnection();
+        List<FreeBoard> results = dao.searchFreeBoards(conn, searchType, query, cPage, numPerPage);
+        close(conn);
+        return results;
+    }
+	public int getCommentCount(int boardNo) {
+        Connection conn = getConnection();
+        int commentCount = dao.selectFreeBoardCommentCount(conn, boardNo);
+        close(conn);
+        return commentCount;
     }
 }

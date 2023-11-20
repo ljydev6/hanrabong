@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.harmony.board.free.model.dto.FreeBoard;
 import com.harmony.board.free.model.dto.FreeCommentBoard;
+import com.harmony.board.info.model.dto.InfoBoard;
 
 public class FreeBoardDao {
 	
@@ -160,6 +161,90 @@ public class FreeBoardDao {
 	    
 	    return comments;
 	}
+	public List<FreeBoard> searchFreeBoards(Connection conn, String searchType, String query, int cPage, int numPerPage) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<FreeBoard> results = new ArrayList<>();
+	    String sqlQuery = "";
+
+	    int startRow = (cPage - 1) * numPerPage + 1;
+	    int endRow = cPage * numPerPage;
+
+	    switch (searchType) {
+	        case "title":
+	            sqlQuery = sql.getProperty("searchFreeBoardTitle");
+	            break;
+	        case "content":
+	            sqlQuery = sql.getProperty("searchFreeBoardContent");
+	            break;
+	        case "both":
+	            sqlQuery = sql.getProperty("searchFreeBoardBoth");
+	            break;
+	    }
+
+	    try {
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	            pstmt.setInt(3, startRow);
+	            pstmt.setInt(4, endRow);
+	        } else {
+	            pstmt.setInt(2, startRow);
+	            pstmt.setInt(3, endRow);
+	        }
+
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            results.add(getFreeBoard(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    return results;
+	}
+	public int getSearchResultCount(Connection conn, String searchType, String query) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    int count = 0;
+
+	    try {
+	        String sqlKey = "";
+	        switch (searchType) {
+	            case "title":
+	                sqlKey = "countSearchFreeBoardTitle";
+	                break;
+	            case "content":
+	                sqlKey = "countSearchFreeBoardContent";
+	                break;
+	            case "both":
+	                sqlKey = "countSearchFreeBoardBoth";
+	                break;
+	        }
+
+	        String sqlQuery = sql.getProperty(sqlKey);
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	        }
+
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+
+	    return count;
+	}
 	
 	public int updateBoardReadCount(Connection conn, int no) {
 		PreparedStatement pstmt=null;
@@ -210,6 +295,26 @@ public class FreeBoardDao {
 	    }
 	    return result;
 	}
+	public int selectFreeBoardCommentCount(Connection conn, int boardNo) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int commentCount = 0;
+        try {
+            pstmt = conn.prepareStatement(sql.getProperty("selectFreeBoardCommentCount"));
+            pstmt.setInt(1, boardNo);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                commentCount = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+        return commentCount;
+    }
+
 	
 	
 	private FreeBoard getFreeBoard(ResultSet rs) throws SQLException {
