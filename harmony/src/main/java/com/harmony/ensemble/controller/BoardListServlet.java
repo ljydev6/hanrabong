@@ -34,7 +34,8 @@ public class BoardListServlet extends HttpServlet {
 		
 		EnsembleService es = new EnsembleService();
 		//DB에서 전체 게시글 가져오기
-		int cPage,numPerpage=5;
+		int cPage=5;
+		int numPerpage=6;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {

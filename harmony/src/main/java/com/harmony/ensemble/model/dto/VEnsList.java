@@ -16,6 +16,6 @@ public class VEnsList {
 	private String ensLocation;
 	private String ensTeamType;
 	private Timestamp ensBoardDate;
-	private String[] instrument;
+	private String instrument;
 	
 }

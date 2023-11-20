@@ -538,7 +538,7 @@ public class EnsembleDao {
 							.ensLocation(rs.getString("ENS_LOCATION"))
 							.ensTeamType(rs.getString("ENS_TEAM_TYPE"))
 							.ensBoardDate(rs.getTimestamp("ENS_BOARD_DATE"))
-							.instrument(rs.getString("ENS_BOARD_DATE").split(","))
+							.instrument(rs.getString("INSTRUMENT"))
 							.build();
 	}
 	
