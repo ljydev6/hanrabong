@@ -7,14 +7,15 @@
 %>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
 	<section class="container w-75">
         <div class="d-flex flex-column">
-            <div class="mainImg" style="height: 100px;">
-            	
+            <div class="mainTitle">
+            	<h1 id="title">음악과 우리를 이어줄 레슨찾기</h1>
             </div>
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
-                <div class="p-3" style="color: white;">레슨 검색</div>
+                <div class="p-3" style="color: white;">카테고리</div>
             
                 <div class="filterBtns p-2">
                   <button onclick="searchOrderByViews();">조회수</button>
@@ -379,7 +380,33 @@
             </div>
         </div>
     </section>
-    
+	<script>
+		let observer = new IntersectionObserver((e)=>{
+			/* 감시중인 박스가 화면에 등장하면 여기 코드를 실행해준다 */
+			e.forEach((boxs)=>{
+				if (boxs.isIntersecting) {
+					boxs.target.style.opacity = 1;
+				} else {
+					boxs.target.style.opacity = 0;
+				}
+			});
+		});
+		let div = document.querySelectorAll('div');
+		console.log(div.length);
+		for (let i = 0; i < div.length; i++) {
+			observer.observe(div[i])
+		};
+		
+		/* 내가원하는 html요소를 감시해줌 */
+	</script>    
+    <!-- 타이틀 타이핑효과 -->
+    <script>
+		document.addEventListener('DOMContentLoaded', () => {
+			new TypeIt('#title')
+			.pause(1000)
+			.go();
+		});
+	</script>
     <script>
       $(document).ready(function(){
            $(".slideToggle").click(function(e){
