@@ -215,11 +215,11 @@
 	   
 	    <%if(!boards.isEmpty()){  
 				for(VEnsList b:boards){%> 
-	      
-	        <div class="board_list">
+	      	
+	        <div class="board_list" onclick="location.assign('<%=request.getContextPath()%>/ensemble/boardView.do?ensBoardNo=<%=b.getEnsBoardNo()%>')">
 	        	<div class="list_top_container">
 		        	<div class="title_container">
-			       		<h3><%=b.getEnsBoardTitle() %></h3>
+			       		<h3><%=b.getEnsBoardTitle()%></h3>
 			      	
 		        	</div>
 		        	<div class="type_container">
@@ -227,8 +227,8 @@
 		        	</div>
 	        	</div>
 	        	<div class="img_container">
-		        	<img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRedCm0dGzQzPcnxZEod-
-		        	odzH7HE_c7fH4Bg&usqp=CAU" style="width=80px; height:80px;"class="profile_img">
+		        	<img src = "https://previews.123rf.com/images/valentint/valentint1702/valentint170201265/71753888-%EC%9D%8C%ED%91%9C-%EC%95%84%EC%9D%B4%EC%BD%98%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%9D%B0%EC%83%89-%EB%B0%94%ED%83%95%EC%97%90-%EC%A3%BC%ED%99%A9%EC%83%89-%EC%9D%B8%ED%84%B0%EB%84%B7-%EB%B2%84%ED%8A%BC%EC%9E%85%EB%8B%88%EB%8B%A4.jpg" 
+		        	style="width=80px; height:80px; border-radius: 50%;" class="profile_img">
 	      		<h4><%=b.getEnsTeamName() %></h4>
 	        	</div>
 	       		<hr>

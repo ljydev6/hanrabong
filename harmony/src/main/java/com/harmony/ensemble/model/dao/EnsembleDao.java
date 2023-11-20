@@ -21,6 +21,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.VBoardView;
 import com.harmony.ensemble.model.dto.VEnsList;
 
 public class EnsembleDao {
@@ -35,52 +36,25 @@ public class EnsembleDao {
 		}
 	}
 	
-		
-
-	/*
-	 * public List<EnsembleBoard> selectBoard(Connection conn,int cPage,int
-	 * numPerpage){ 
-	 * PreparedStatement pstmt=null; ResultSet rs=null;
-	 * List<EnsembleBoard> result=new ArrayList<>(); try {
-	 * pstmt=conn.prepareStatement(sql.getProperty("selectBoard")); pstmt.setInt(1,
-	 * (cPage-1)*numPerpage+1); pstmt.setInt(2, cPage*numPerpage);
-	 * rs=pstmt.executeQuery(); while(rs.next()) { result.add(getEnsBoard(rs)); }
-	 * }catch(SQLException e) { e.printStackTrace(); }finally { close(rs);
-	 * close(pstmt); } System.out.println("dao selectBoard result : " + result);
-	 * return result; }
-	 */
-	 
-
-	/*
-	 * public List<EnsembleBoardWantPart> selectPartsByBoardNo(Connection conn,
-	 * EnsembleBoard board){ PreparedStatement pstmt = null; ResultSet rs = null;
-	 * List<EnsembleBoardWantPart> parts = new ArrayList<EnsembleBoardWantPart>();
-	 * try { pstmt = conn.prepareStatement(sql.getProperty("selectPartsByBoardNo"));
-	 * pstmt.setString(1, board.getEnsBoardNo()); rs=pstmt.executeQuery();
-	 * 
-	 * if(rs.next()) parts.add(getWantPart(rs));
-	 * 
-	 * }catch(SQLException e) { e.printStackTrace(); }finally { close(rs);
-	 * close(pstmt); }
-	 * 
-	 * return parts; }
-	 */
-
-	/*
-	 * public List<EnsembleTeam> selectTeamByTeamNo(Connection conn, EnsembleBoard
-	 * board) { PreparedStatement pstmt=null; ResultSet rs = null;
-	 * List<EnsembleTeam> team = new ArrayList<>(); try { pstmt =
-	 * conn.prepareStatement(sql.getProperty("selectTeamTypeByTeamNo"));
-	 * pstmt.setString(1, board.getEnsTeamNo()); rs=pstmt.executeQuery();
-	 * 
-	 * if(rs.next()) team.add(getEnsTeam(rs));
-	 * 
-	 * }catch(SQLException e) { e.printStackTrace(); }finally { close(rs);
-	 * close(pstmt);
-	 * 
-	 * } return team; }
-	 */
 	
+	public VBoardView selectBoardView(Connection conn, String ensBoardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		VBoardView board = null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoardView"));
+			pstmt.setString(1, ensBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) board = getVBoardView(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return board;
+	}
+
 	public List<VEnsList> selectBoardList(Connection conn,int cPage, int numPerpage){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -98,7 +72,7 @@ public class EnsembleDao {
 			close(rs);
 			close(pstmt);
 		}
-		System.out.println("dao: "+ boardList);
+		System.out.println("dao selectBoardList : "+ boardList);
 		return boardList;
 		
 		
@@ -122,24 +96,6 @@ public class EnsembleDao {
 		return result;
 	}
 
-//	public EnsembleBoard selectBoardByNo(Connection conn, int boardNo) {
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		EnsembleBoard b = null;
-//		try {
-//			pstmt = conn.prepareStatement(sql.getProperty("selectBoardByNo"));
-//			pstmt.setInt(1, boardNo);
-//			rs = pstmt.executeQuery();
-//			if (rs.next())
-//				b = getBoardList(rs);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			close(rs);
-//			close(pstmt);
-//		}
-//		return b;
-//	}
 
 	public String selectTeamNoByMemNo(Connection conn, String loginMemNo) {
 		PreparedStatement pstmt = null;
@@ -208,7 +164,6 @@ public class EnsembleDao {
 	public int insertWantPart(Connection conn, EnsembleBoardWantPart part) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		System.out.println(part.getEnsInstNo() + " 여기 dao!");
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertWantPart"));
 			pstmt.setString(1, part.getEnsBoardNo());
@@ -507,27 +462,21 @@ public class EnsembleDao {
 		return seq;
 	}
 
-//	private EnsembleBoardWantPart getWantPart(ResultSet rs) throws SQLException {
-//		return EnsembleBoardWantPart.builder().ensPartIndex(rs.getString("ENS_PART_INDEX"))
-//				.ensBoardNo(rs.getString("ENS_BOARD_NO")).ensInstNo(rs.getString("ENS_INST_NO")).build();
-//
-//	}
-//
-//	private EnsembleTeam getEnsTeam(ResultSet rs) throws SQLException {
-//		return EnsembleTeam.builder().ensTeamNo(rs.getString("ENS_TEAM_NO")).ensTeamName(rs.getString("ENS_TEAM_NAME"))
-//				.ensGenreNo(rs.getString("ENS_GENRE_NO")).ensTeamType(rs.getString("ENS_TEAM_TYPE"))
-//				.ensTeamInfo(rs.getString("ENS_TEAM_INFO")).build();
-//
-//	}
-//
-//	private EnsembleBoard getEnsBoard(ResultSet rs) throws SQLException {
-//		return EnsembleBoard.builder().ensBoardNo(rs.getString("ENS_BOARD_NO")).ensTeamNo(rs.getString("ENS_TEAM_NO"))
-//				.ensWriter(rs.getString("ENS_WRITER")).ensLocation(rs.getString("ENS_LOCATION"))
-//				.ensPlace(rs.getString("ENS_PLACE")).ensDetail(rs.getString("ENS_DETAIL"))
-//				.ensBoardDate(rs.getTimestamp("ENS_BOARD_DATE")).ensBoardTitle(rs.getString("ENS_BOARD_TITLE"))
-//				.ensBoardView(rs.getInt("ENS_BOARD_VIEW")).build();
-//	}
-
+	private VBoardView getVBoardView(ResultSet rs) throws SQLException{
+		return VBoardView.builder()
+						.ensWriter(rs.getString("ENS_WRITER"))
+						.ensLocation(rs.getString("ENS_LOCATION"))
+						.ensPlace(rs.getString("ENS_PLACE"))
+						.ensDetail(rs.getString("ENS_DETAIL"))
+						.ensBoardDate(rs.getTimestamp("ENS_BOARD_DATE"))
+						.ensBoardTitle(rs.getString("ENS_BOARD_TITLE"))
+						.ensTeamName(rs.getString("ENS_TEAM_NAME"))
+						.ensTeamType(rs.getString("ENS_TEAM_TYPE"))
+						.genreName(rs.getString("GENRE_NAME"))
+						.instrument(rs.getString("INSTRUMENT"))
+						.build();
+		
+	}
 	
 	private VEnsList getBoardList(ResultSet rs) throws SQLException{
 		return VEnsList.builder()

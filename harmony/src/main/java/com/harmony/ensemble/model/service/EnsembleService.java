@@ -17,27 +17,27 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.VBoardView;
 import com.harmony.ensemble.model.dto.VEnsList;
 
 public class EnsembleService {
 
 	private EnsembleDao dao = new EnsembleDao();
 
-//	public String selectInstNoByName(String instName) {
-//		Connection conn=getConnection();
-//		String result = dao.selectInstNoByName(conn, instName);
-//		close(conn);
-//		return result;
-//		
-//	}
-
 	
-	  public List<VEnsList> selectBoardList(int cPage,int numPerpage){ 
-			  Connection conn=getConnection();
-			  List<VEnsList> result=dao.selectBoardList(conn, cPage, numPerpage);
-			  close(conn); 
-			  return result; 
-		  }
+	public VBoardView selectBoardView(String ensBoardNo) {
+		Connection conn = getConnection();
+		VBoardView board = dao.selectBoardView(conn, ensBoardNo);
+		close(conn);
+		return board;
+	}
+	
+  public List<VEnsList> selectBoardList(int cPage,int numPerpage){ 
+		  Connection conn=getConnection();
+		  List<VEnsList> result=dao.selectBoardList(conn, cPage, numPerpage);
+		  close(conn); 
+		  return result; 
+	  }
 	  
 	public int selectBoardCount() {
 		Connection conn=getConnection();

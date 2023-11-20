@@ -115,7 +115,9 @@ section {
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  cursor : pointer;
 /*  border : 1px solid RED;*/
+
 }
 .title_container{
 /*	border: 1px solid mediumpurple;*/
@@ -156,13 +158,6 @@ body {
 }
 
 
-/*footer {*/
-  
-/*  padding: 10px;*/
-/*  position: fixed;*/
-/*  bottom: 0;*/
-/*  width: 100%;*/
-/*}*/
 
 .pageBar_container{
 	display: flex;
