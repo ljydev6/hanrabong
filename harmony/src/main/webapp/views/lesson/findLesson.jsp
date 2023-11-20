@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
 	<section class="container w-75">
         <div class="d-flex flex-column">
-            <div style="height: 50px;"></div>
+            <div class="mainImg" style="height: 100px;">
+            	
+            </div>
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
-                <div>레슨 검색</div>
+                <div class="p-3" style="color: white;">레슨 검색</div>
             
                 <div class="filterBtns p-2">
                   <button onclick="searchOrderByViews();">조회수</button>
@@ -84,7 +86,7 @@
                     </div>
                 </article>
                 
-                <article class="rightLessonLists w-100 p-5" id="rightLessonLists">
+                <article class="rightLessonLists w-100 p-3" id="rightLessonLists">
                     <div class="lessonListBox">
                    	<%for(Lesson l : lessons){
                    	if(!lessons.isEmpty()) {%>
@@ -96,10 +98,10 @@
                         <%} %>
                         <div class="lessonListTitle"><%=l.getBoardTitle() %>&nbsp;</div>
                         <div class="lessonStars">
-                        	<i class="fa-solid fa-star"><%=l.getReviewPoint() %></i>
+                        	<i class="fa-solid fa-star"></i><%=l.getReviewPoint() %>
                         </div>
                         <div class="lessonView">
-                        	<i class="fa-solid fa-binoculars"></i>&nbsp;<%=l.getBoardView() %>
+                        	<i class="fa-solid fa-binoculars"></i><%=l.getBoardView() %>
                         </div>
                       </div>
                       		<%} %>
@@ -117,6 +119,8 @@
 	        				dataType:"json",
 	       					success:function(data){
 	       						console.log(data)
+	       						const pageBar = $("<div>")
+	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
@@ -152,9 +156,6 @@
 		       				
 		       						lessonListBox.append(lessonList);
 		       						
-		       						const pageBar = $("<div>")
-		       						pageBar.addClass('pageBar')
-		       						pageBar.append("<%=request.getAttribute("pageBar") %>");
 	       						});
 	       						$(".rightLessonLists").html(lessonListBox).append(pageBar);
 	       					}

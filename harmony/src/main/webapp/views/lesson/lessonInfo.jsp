@@ -39,7 +39,6 @@
 	<section class="container w-50">
         <div><h2><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
-            <!-- 카데고리, 수정, 삭제버튼 -->
 			<div class="upperBar">
 				<div class="category">
 					<input class="btn" value="악기 >" onclick="location.href='<%=request.getContextPath()%>/lesson/findLesson.do'" readonly>
@@ -65,9 +64,8 @@
                  </div>
                  <!--  -->
                 <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %>
-                <div class="mb-3">
-                <!-- 레슨게시글번호로 강사번호를 찾아야함 -->
-                <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
+                <div class="cud">
+                	<a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>

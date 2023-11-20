@@ -1,18 +1,44 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 *{
 	box-sizing: border-box;
+	font-family: 'GangwonEdu_OTFBoldA';
 }
 a{
 	text-decoration: none;
-	color: coral;
+	color: white;
+}
+:root{
+	--coral-color: #f19066;
+	--orange-color: rgb(255, 185, 1);
 }
 html,body{
 	height: 100%;
 }
+.btn-warning{
+	color: white;	
+}
+button:focus, .btn{ 	
+    border: none;
+    outline:none;
+}
 .upperBar {
 	width: 100%;
+	height: 70px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
+	align-items: center;
+	background-color: var(--orange-color);
+}
+
+.cud>button{
+	color: var(--orange-color);
+	margin-left: 10px;
 }
 .category{
 	display: flex;
@@ -20,6 +46,7 @@ html,body{
 .category>input{
 	padding: 0;
 	margin: 0;
+	color: white;
 }
 .category>input:first-child{
 	text-align: left;
@@ -201,7 +228,7 @@ input[type=submit],input[type=button]{
 	margin-left: 10px;
 }
 .starDate>i{
-	color: coral;
+	color: var(--coral-color);
 }
 
 @keyframes heartBeat {
@@ -210,7 +237,7 @@ input[type=submit],input[type=button]{
         transform: none;
     }
     50%{
-        color: rgb(216, 82, 212);
+        color: var(--orange-color);
         transform: scale(1.5);
     }
     100%{

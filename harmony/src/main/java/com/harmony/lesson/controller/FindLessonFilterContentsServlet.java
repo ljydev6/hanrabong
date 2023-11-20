@@ -57,8 +57,6 @@ public class FindLessonFilterContentsServlet extends HttpServlet {
 			lessons = new LessonService().printLessonByStarAvg(cPage, numPerpage);
 		}
 		
-		System.out.println(lessons);
-		
 		
 		int totalData=new LessonService().printLessonCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
