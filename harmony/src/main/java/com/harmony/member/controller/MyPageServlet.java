@@ -1,6 +1,7 @@
 package com.harmony.member.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,10 +37,22 @@ public class MyPageServlet extends HttpServlet {
 		Member m = (Member)request.getSession().getAttribute("loginMember");
 		System.out.println(m);
 		MemberInfo mi = new MemberService().selectMemberInfo(m.getMemNo());
-//		MemberVideo mv = new MemberService().selectVideoLink(m.getMemNo());
+//		List genreList=List.of(Map.of("genre",value,"genreNo",no),
+//				Map.of("genre",value,"genreNo",no),
+//				Map.of("genre",value,"genreNo",no)
+//				)
+		List<String> genreAll = new MemberService().selectGenreAll(); 
+//		List<String> interestAll= new MemberService();
+		System.out.println(genreAll);
+//		for(int i = 0; i<mi.getMemberVideo().size(); i++) {
+//			String link = mi.getMemberVideo().get(i).getVideoLink();
+//		}
+//		List<MemberVideo> mv = new MemberService().selectVideoLink(m.getMemNo());
 //		System.out.println("내가찾는"+mv);
 		System.out.println(mi);
 		request.setAttribute("MemberInfo", mi);
+		request.setAttribute("GenreAll",genreAll);
+//		request.setAttribute("MemberVideo", mv);
 //		request.setAttribute("mv", mv);
 		request.getRequestDispatcher("/views/member/mypage.jsp").forward(request, response);
 		
