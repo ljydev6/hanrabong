@@ -71,6 +71,11 @@
 			<button type="button" onclick="apply_btn();" class="apply_btn">
 				신청하기
 			</button>
+<%-- 			<%if(b.getEnsWriter().equals(loginMember.getMemNo()) {%> --%>
+				<button type="button" onclick="check_apply();" class="check_apply">
+					신청자 확인
+				</button>
+<%-- 			<%} %> --%>
 		</div>
 	</div>
 
