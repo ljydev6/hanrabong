@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.dto.LessonComment;
+import com.harmony.lesson.dto.SaveLesson;
 import com.harmony.lesson.service.LessonService;
 import com.harmony.member.service.MemberService;
 import com.harmony.model.dto.Member;
@@ -76,6 +77,15 @@ public class LessonInfoServlet extends HttpServlet {
 		List<LessonComment> co = new LessonService().selectReviewComment(no);
 		// 강사정보 가져오기
 		MemberInfo mi = new LessonService().selectMemberInfoByTeacherNo(tNo);
+		// 로그인한 회원번호가져오기
+		
+		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+		if(loginMember!=null) {
+			// 찜이력가져오기
+			SaveLesson heart = new LessonService().saveLessonConfirm(no, loginMember.getMemNo());
+			System.out.println(heart);
+			request.setAttribute("heart", heart);
+		}
 		
 		request.setAttribute("teacherInfo", mi);
 		request.setAttribute("time", time);

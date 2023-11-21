@@ -1,3 +1,4 @@
+<%@page import="com.harmony.lesson.dto.SaveLesson"%>
 <%@page import="com.harmony.model.dto.MemberInfo"%>
 <%@page import="com.harmony.lesson.dto.LessonComment"%>
 <%@page import="com.harmony.lesson.dto.LessonApply"%>
@@ -14,6 +15,7 @@
 	int reviewsCount = (int)request.getAttribute("reviewsCount");
 	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
+	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -31,6 +33,8 @@
 	
 	//악기 변환
 	String inst = lesson.getInstNo();
+	//마감정보
+	char deadline = lesson.getBoardDeadline();
 %>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
@@ -38,6 +42,11 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/lessonInfo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>
 	<section class="container w-50">
+		<%if(deadline=='N'){ %>
+		<div class="recruit">모집중</div>
+		<%} else {%>
+		<div>마감</div>
+		<%} %>
         <div><h2 id="title"><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
 			<div class="upperBar">
@@ -64,9 +73,9 @@
                                       >
                  </div>
                  <!--  -->
-                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %>
+                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
                 <div class="cud">
-                	<a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
+                	<a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
@@ -76,15 +85,22 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
-                        <%if(loginMember!=null){ %>
-                        <div class="saveLesson" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
-                            <i class="fa-solid fa-heart fa-xs"></i>
-                    	</div>
-                    	<%}else{ %>
-                    	<div class="saveLesson" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
-                            <i class="fa-solid fa-heart fa-xs"></i>
-                    	</div>
-                    	<%} %>
+	                        <%if(loginMember!=null){ %>
+		                        <div class="saveLessonPosition d-flex" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
+		                            <%if(heart!=null){ %>
+		                            	<i class="saveLesson fa-solid fa-heart fa-xs"></i>
+		                    			<div class="">찜하고 있어요!</div>
+			                    	<%}else{ %>
+			                    		<i class="fa-solid fa-heart fa-xs"></i>
+			                    		<div>찜해주세요 :)</div>
+			                    	<%} %>
+		                    	</div>
+	                    	<%}else{ %>
+		                    	<div class="saveLessonPosition d-flex" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
+		                            <i class="fa-solid fa-heart fa-xs"></i>
+		                    	</div>
+	                    	<%} %>	
+                    	
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
                         <%} else { %>
@@ -324,8 +340,8 @@
 	                              	</div>
 	                              	<div class="review">
                                			<%=co.getCommentContent() %>
-                               			<%if(loginMember!=null) {%>
-                               			<button id="deleteReply" class="btn btn-warning" 
+                               			<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())) {%>
+                               			<button id="deleteReply" class="btn btn-sm btn-warning" 
                                			onclick="location.href='<%=request.getContextPath()%>/lesson/deletereply.do?reviewNo=<%=l.getReviewNo()%>&boardNo=<%=lesson.getBoardNo()%>'">삭제</button>
                                			<%} %>
                                		</div>
@@ -339,7 +355,7 @@
 											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
-											<%if(loginMember!=null){ %>
+											<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
 											<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같게만들어서 등록-->
 											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
 											<%} else{%>
@@ -446,7 +462,6 @@
 		} */
 			 
 	</script>
-	
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
@@ -485,4 +500,5 @@
 	    } 
 	});
 	</script>
+	
 <%@ include file="/views/common/footer.jsp" %>

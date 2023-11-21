@@ -18,7 +18,10 @@
                 <div class="p-3" style="color: white;">카테고리</div>
             
                 <div class="filterBtns p-2">
-					<input id="searchTitle" type="text">
+                	<label>
+						<input id="searchTitle" type="text">
+						<i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+                	</label>
 					<button onclick="searchOrderByViews();">조회수</button>
 					<button onclick="searchOrderByDate()">최근등록순</button>
 					<button onclick="searchOrderByStar()">별점순</button>
@@ -105,7 +108,12 @@
                         <div class="lessonView">
                         	<i class="fa-solid fa-binoculars"></i><%=l.getBoardView() %>
                         </div>
-                      </div>
+                       	<%if(l.getBoardDeadline()=='N'){ %>
+							<div class="recruit">모집중</div>
+							<%} else {%>
+							<div>마감</div>
+							<%} %>
+                      	</div>
                       		<%} %>
                      	<%} %>
                     </div>
@@ -120,12 +128,20 @@
 	        				type:'GET',
 	        				dataType:"json",
 	       					success:function(data){
-	       						console.log(data)
+	       						console.log(data);
+	       						
 	       						const pageBar = $("<div>")
 	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let teacherNo = e['teacherNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
@@ -154,7 +170,7 @@
 	       							lessonStars.append(starsi);
 	       							
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       						lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
 		       						lessonListBox.append(lessonList);
 		       						
@@ -177,6 +193,13 @@
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
@@ -205,7 +228,7 @@
 	       							lessonStars.append(starsi);
 	       							
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -227,6 +250,13 @@
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
@@ -254,7 +284,7 @@
 	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -277,6 +307,13 @@
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
@@ -305,7 +342,7 @@
 	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -342,6 +379,13 @@
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
@@ -370,7 +414,8 @@
 	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							
 		       						lessonListBox.append(lessonList);
 	       						});
 	       						$(".rightLessonLists").html(lessonListBox);
@@ -379,7 +424,7 @@
 					}
                 </script>
                 <script>
-                /* 검색으로 필터ㄹ */
+                /* 검색으로 필터 */
                 	$("#searchTitle").keyup(e=>{
                 		const keyword = e.target.value;
                 		$.ajax({
@@ -390,6 +435,13 @@
 	       						const lessonListBox = $("<div>");
 	       						lessonListBox.addClass('lessonListBox');
 	       						data.forEach(e=>{
+	       							const deadline = e['boardDeadline'];
+		       						const recruit = $("<div>");
+		       						if(deadline=='N'){
+			       						recruit.attr('class','recruit').text('모집중');
+		       						} else{
+		       							recruit.text('마감');
+		       						}
 	       							let boardNo = e['boardNo'];
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
@@ -418,7 +470,8 @@
 	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
 	       							
-		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							
 		       						lessonListBox.append(lessonList);
 	       						});
 	       						$(".rightLessonLists").html(lessonListBox);

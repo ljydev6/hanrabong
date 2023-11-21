@@ -13,6 +13,10 @@ a{
 	text-decoration: none;
 	color: white;
 }
+
+.nav-link{
+	color: rgba(0, 0, 0, 0.65);
+}
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
@@ -30,8 +34,17 @@ button:focus, .btn{
     border: none;
     outline:none;
 }
-.btn-warning{
-	color: white;	
+.btn-warning:not(li>a){
+	color: white;
+}
+.recruit{
+	color: var(--coral-color);
+	animation: blink-effect 1s step-end infinite;
+}
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
 }
 .upperBar {
 	width: 100%;
@@ -84,6 +97,7 @@ button{
 .imgSubmitSection{
 	width: 100%;
 	margin: 2px;
+	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 .detailImg{
 	width: 100%;
@@ -92,26 +106,31 @@ button{
 	display: flex;
 	align-items: center;
 }
-.saveLesson{
+.saveLessonPosition{
 	position: absolute;
 	left: 20px;
 	top: 20px;
+	cursor: pointer;
+}
+.saveLesson{
+    will-change: transform;
+    /* 애니메이션을 안정적으로 보이도록 브라우저를 도와준다. */
+    /* 브라우저에게 어떤 것이 변할 것인지 예고해주는것 */
+    /* 그래픽 카드를 이용해서 애니메이션을 가속화 한다. */
+    animation: heartBeat 1s linear infinite;
+    cursor: pointer;
 }
 .detailImg>img{
 	padding: 5px;
-	/*box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;*/
-	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 	margin: 5px;
+}
+.upperBar{
+	margin-bottom: 10px;
 }
 .upperBar>div>button{
 	width: 100px;
 	height: 40px;
 }
-.submitContainer{
-	/*box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 12px;*/
-	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-}
-
 .labelBox{
 	text-align: center;
 }
@@ -157,6 +176,7 @@ input[type=submit],input[type=button]{
 	box-shadow: rgba(255, 185, 1, 0.1) 0px 4px 12px;
 	position: sticky;
 	top: 0px;
+	transition: 0.3s;
 }
 .detailInfoBar>button{
 	color: var(--orange-color);
@@ -250,14 +270,6 @@ input[type=submit],input[type=button]{
     }
 }
 
-.saveLesson:hover i {
-    will-change: transform;
-    /* 애니메이션을 안정적으로 보이도록 브라우저를 도와준다. */
-    /* 브라우저에게 어떤 것이 변할 것인지 예고해주는것 */
-    /* 그래픽 카드를 이용해서 애니메이션을 가속화 한다. */
-    animation: heartBeat 1s linear infinite;
-    cursor: pointer;
-}
 
 .upup{
 	position: sticky;

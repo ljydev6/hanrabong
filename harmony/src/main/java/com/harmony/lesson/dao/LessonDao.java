@@ -584,13 +584,13 @@ public class LessonDao {
 			MemberInfo m = null;
 			try {
 				pstmt= conn.prepareStatement(sql.getProperty("selectMemberInfoByTeacherNo"));
-				System.out.println(sql);
 				pstmt.setString(1, no);
 				rs=pstmt.executeQuery();
 				if(rs.next()) m=getMemberInfo(rs);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
+				close(rs);
 				close(pstmt);
 			} return m;
 		}
@@ -644,6 +644,7 @@ public class LessonDao {
 		
 		public static MemberInfo getMemberInfo(ResultSet rs) throws SQLException{
 			return MemberInfo.builder()
+					.teacherNo(rs.getString("TEACHER_NUMBER"))
 				    .memNo(rs.getString("MEM_NO"))
 					.activityArea(rs.getString("MEM_INFO_ACTIVITY_AREA"))
 					.introduce(rs.getString("MEM_INFO_INTRODUCE"))

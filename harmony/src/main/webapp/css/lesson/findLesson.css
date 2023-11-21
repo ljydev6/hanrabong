@@ -40,6 +40,18 @@ div{
 input{
 	caret-color: var(--orange-color);
 }
+.recruit{
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: var(--orange-color);
+	animation: blink-effect 3s ease-in-out infinite;
+}
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
 .mainTitle{
 	display: flex;
 	justify-content: center;
@@ -55,6 +67,7 @@ input{
 	background-color: var(--orange-color);
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 	border-radius: 5px;
+	margin-bottom: 10px;
 }
 .searchBtn{
 	border: none;
@@ -235,5 +248,21 @@ li input[type="checkbox"]:checked::before {
   background-color: white; 
   border-color: white;
 }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.lessonListBox {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+} 
+@media (min-width: 575px) and (max-width: 992px){
+	.lessonListBox {
+		grid-template-columns: 1fr 1fr;
+	}
+} 
+@media (max-width: 575px){
+	.lessonListBox {
+		grid-template-columns: 1fr;
+	}
+} 
 
 

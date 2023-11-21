@@ -52,7 +52,7 @@ public class SaveLessonServlet extends HttpServlet {
 		}else {
 			int result = new LessonService().deleteSavedLesson(boardNo, memNo);
 			if(result>0) {
-				msg ="이미 찜이 되어있습니다. 찜 해제를 합니다 :(";
+				msg ="찜 해제 :(";
 				loc ="/lesson/lessonInfo.do?no="+boardNo;
 				
 				request.setAttribute("loc", loc);
@@ -61,7 +61,6 @@ public class SaveLessonServlet extends HttpServlet {
 						.forward(request, response);
 			}
 		}
-		
 	}
 
 	/**
