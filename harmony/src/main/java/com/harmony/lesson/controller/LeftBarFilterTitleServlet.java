@@ -18,14 +18,14 @@ import com.harmony.lesson.service.LessonService;
 /**
  * Servlet implementation class LeftBarFilterServlet
  */
-@WebServlet("/LeftBarFilterServlet.do")
-public class LeftBarFilterServlet extends HttpServlet {
+@WebServlet("/LeftBarFilterTitleServlet.do")
+public class LeftBarFilterTitleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LeftBarFilterServlet() {
+    public LeftBarFilterTitleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,20 +38,7 @@ public class LeftBarFilterServlet extends HttpServlet {
 		String keyword = request.getParameter("keyword");
 		System.out.println(keyword);
 		
-		List<Lesson> lessons = null;
-		if(keyword.length()>5 && keyword.contains("INST_")) { // 악기
-			lessons = new LessonService().printLessonByFilterInst(keyword);
-		} else if (keyword.length()==2) { // 장소
-			lessons = new LessonService().printLessonByFilterPlace(keyword);
-		} else if (keyword.length()==7 || keyword.equals("협의가능")) { // 가격
-			lessons = new LessonService().printLessonByFilterPrice(keyword);
-		} else if (keyword.length()==4){ // 시간대
-			lessons = new LessonService().printLessonByFilterTime(keyword);
-		}
-		
-//		else if (keyword.equals("12")||keyword.equals("18")||keyword.equals("24")){ // 시간대
-//			lessons = new LessonService().printLessonByFilterTime(keyword);
-//		}
+		List<Lesson> lessons = new LessonService().printLessonByFilterTitle(keyword);
 		
 		request.setAttribute("lessons", lessons);
 		response.setContentType("application/json;charset=utf-8");

@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 public class VBoardView {
 
+	private String ensBoardNo;
 	private String ensWriter;
 	private String ensLocation;
 	private String ensPlace;

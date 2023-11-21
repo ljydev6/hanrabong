@@ -101,7 +101,6 @@
                                     
                                     <div>
                                         <div>희망 시작 시간</div>
-                                        <!-- <input class="form-select" type="time" name="startTime"> -->
                                         	<select class="form-select" name="startTime" id="startTime">
                                                 <option value="09:00:00.0">09:00</option>
                                                 <option value="10:00:00.0">10:00</option>
@@ -121,7 +120,6 @@
                                     </div>
                                     <div>
                                         <div>희망 종료 시간</div>
-                                        <!-- input class="form-select" type="time" name="endTime"> -->
                                             <select class="form-select" name="endTime" id="endTime">
                                                 <option value="09:00:00.0">09:00</option>
                                                 <option value="10:00:00.0">10:00</option>
@@ -175,7 +173,7 @@
             for(let i=0; i<=startTime-9;i++){
                 $("#endTime option:eq("+i+")").attr("disabled", true);
             }
-        })
+        });
         
         const imgUpload = document.querySelector('.imgUpload');
         function getImageFiles(e) {

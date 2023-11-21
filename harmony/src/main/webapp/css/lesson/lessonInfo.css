@@ -77,9 +77,6 @@ button{
 .submitContainer input[type=submit]{
 	border-radius: 5px;
 }
-.lessonInfo{
-	
-}
 .form-select{
 	width: 150px;
 	height: 35px;
@@ -87,9 +84,6 @@ button{
 .imgSubmitSection{
 	width: 100%;
 	margin: 2px;
-}
-.imgContainer{
-
 }
 .detailImg{
 	width: 100%;
