@@ -42,7 +42,7 @@ public class AjaxFilterServlet extends HttpServlet {
 		System.out.println(Arrays.toString(values));
 		
 		List<VEnsList> result = es.filterValues(values);
-		request.setAttribute("filterBoard", result);
+		gson.toJson(gson.toJson(result),response.getWriter());
 	}
 
 	/**

@@ -289,42 +289,74 @@ $(document).ready(function() {
 		   			traditional: true,
 		   			datatype: "json",
 		   			data : {filter_values:JSON.stringify(filter_values)},
-		   			success : function(data){
-		   				console.log("확인");
+		   			success : data=>{
+		   								console.log(data);
+		   								console.log(data.length)
+		   								const $data = JSON.parse(data);
+		   								$('.board_container').html('');
+		   								$data.forEach((ens,i)=>{
+		   									
+		   									console.log(ens);
+// 		   								  $('div').remove('.board_list');
+		   									
+		   								  const board_list = $('<div class="board_list">').attr('onclick','location.assign("<%=request.getContextPath()%>/ensemble/boardView.do?ensBoardNo='+ens.ensBoardNo+'")');
+								  	       const list_top_container = $('<div class="list_top_container">');
+								  	   	   const title_container = $('<div class="title_container">');
+								  	   	   const h3 = $('<h3>');
+								  	   	   const type_container = $('<div class="type_container">');
+								  	   	   const h5 = $('<h5>');
+								  	   	   const img_container = $('<div class="img_container">');
+								  	   	   const img = $('<img src = "<%=request.getContextPath()%>/image/ensemble/ensembleDefault.jpg" style="width=80px; height:80px; border-radius: 50%;" class="profile_img">');
+								  	   	   const h4 = $('<h4>');
+								  	   	   const hr = $('<hr>');
+								  	   	   const ul = $('<ul>');
+								  	   	   const li1 = $('<li>');
+								  	   	   const li2 = $('<li>');
+								  	   	   const li3 = $('<li>');
+								  	   	   
+								  	   	   $(title_container).append(h3);
+								  	   	   $(list_top_container).append(title_container);
+								  	 
+								  	   	   $(type_container).append(h5);
+								  	   	   $(list_top_container).append(type_container);
+								  	   	   $(board_list).append(list_top_container);
+								  	   	  
+								  	   	   $(img_container).append(img);
+								  	   	   $(img_container).append(h4);
+								  	   	   $(board_list).append(img_container);
+								  	  	   $(board_list).append(hr);
+								  	
+								  	  	   $(ul).append(li1);
+								  	  	   $(ul).append(li2);
+								  	  	   $(ul).append(li3);
+								  	  	   $(board_list).append(ul);
+			  	  	   
+								  	 	h3.text(ens.ensBoardTitle);
+									    h5.text(ens.ensTeamType);
+									    h4.text(ens.ensTeamName);
+									    
+									    li1.text(ens.genreName);
+									    li2.text(ens.instrument);
+									    li3.text(ens.ensLocation);
+							 
+
+									    $('.board_container').append(board_list);
+									    
+		   								});
+							   		
 		   			}
 		   		});
 	   	   
-	   	   const div=$()
-	   	   
-	   	   const board_list = $('<div class="board_list" onclick="location.assign('<%=request.getContextPath()%>/ensemble/boardView.do?ensBoardNo=<%=b.getEnsBoardNo()%>')"></div>');
-	       const list_top_container = $('<div class="list_top_container"></div>');
-	   	   const title_container = $('<div class="title_container"></div>');
-	   	   const h3 = $('<h3></h3>');
-	   	   const type_container = $('<div class="type_container"></div>');
-	   	   const img_container = $('<div class="img_container"></div>');
-	   	   const img = $('<img src = "https://previews.123rf.com/images/valentint/valentint1702/valentint170201265/71753888-%EC%9D%8C%ED%91%9C-%EC%95%84%EC%9D%B4%EC%BD%98%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%9D%B0%EC%83%89-%EB%B0%94%ED%83%95%EC%97%90-%EC%A3%BC%ED%99%A9%EC%83%89-%EC%9D%B8%ED%84%B0%EB%84%B7-%EB%B2%84%ED%8A%BC%EC%9E%85%EB%8B%88%EB%8B%A4.jpg" 
-  		        	style="width=80px; height:80px; border-radius: 50%;" class="profile_img">');
-	   	   const h4 = $('<h4></h4>');
-	   	   const hr = $('<hr>');
-	   	   const ul = $('<ul></ul>');
-	   	   const li = $('<li></li>');
-	   	   
-	   	   $(title_container).append(h3);
-	   	   $(list_top_container).append(title_container);
-	   	   $(list_top_container).append(type_container);
-	   	   $(board_list).append(list_top_container);
-	   	  
-	   	   $(img_container).append(img);
-	   	   $(img_container).append(h4);
-	   	   $(board_list).append(img_container);
-	  	   $(board_list).append(hr);
-	
-	  	   $(ul).append(li);
-	  	   $(ul).append(li);
-	  	   $(ul).append(li);
-	  	   $(board_list).append(ul);
 	  	   
-<%-- 	   	   h3.text("<%=b.getEnsBoardTitle()%>"); --%>
+	   	<%--    h3.text("<%=b.getEnsBoardTitle()%>");
+	   	   h5.text("<%=b.getEnsTeamType() %>");
+	   	   h4.text("<%=b.getEnsTeamName() %>");
+	   	   
+	   	   li1.text("<%=b.getGenreName() %>");
+	   	   li2.text("<%=b.getInstrument() %>");
+	   	   li3.text("<%=b.getEnsLocation() %>"); --%>
+	   	   
+	   	   
 	   	   
 		<%--    	    
 	   	    $('.board_container').remove();
