@@ -25,6 +25,16 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+	public List<VEnsList> filterValues(String[] values) {
+		Connection conn = getConnection();
+		List<VEnsList> result = null;
+		
+		for(String value : values) {
+			result = dao.filterValues(conn, value);
+		}
+		return result;
+	}
+	
 	public VBoardView selectBoardView(String ensBoardNo) {
 		Connection conn = getConnection();
 		VBoardView board = dao.selectBoardView(conn, ensBoardNo);

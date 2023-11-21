@@ -36,6 +36,29 @@ public class EnsembleDao {
 		}
 	}
 	
+	public List<VEnsList> filterValues(Connection conn, String value) {
+		PreparedStatement pstmt = null;
+		ResultSet rs =  null;
+		List<VEnsList> result = new ArrayList<VEnsList>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("filterValues"));
+			pstmt.setString(1, value);
+			pstmt.setString(2, value);
+			pstmt.setString(3, value);
+			pstmt.setString(4, "%"+value+"%");
+			rs=pstmt.executeQuery();
+//			System.out.println("dao filterValues: "+ getBoardList(rs));
+			while(rs.next()) result.add(getBoardList(rs));
+		
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	
 	public VBoardView selectBoardView(Connection conn, String ensBoardNo) {
 		PreparedStatement pstmt = null;
@@ -72,7 +95,6 @@ public class EnsembleDao {
 			close(rs);
 			close(pstmt);
 		}
-		System.out.println("dao selectBoardList : "+ boardList);
 		return boardList;
 		
 		
