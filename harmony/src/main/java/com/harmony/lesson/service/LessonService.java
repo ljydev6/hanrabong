@@ -53,6 +53,13 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
+	// 제목검색으로 필터
+	public List<Lesson> printLessonByFilterTitle(String keyword){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByFilterTitle(conn, keyword);
+		close(conn);
+		return result;
+	}
 	// 리뷰순정렬
 	public List<Lesson> printLessonByReviews(int cPage,int numPerpage){
 		Connection conn=getConnection();

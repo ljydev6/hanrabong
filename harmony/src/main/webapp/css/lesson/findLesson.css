@@ -37,13 +37,22 @@ a{
 div{
 	transition: all 0.5s;
 }
+input{
+	caret-color: var(--orange-color);
+}
 .mainTitle{
 	display: flex;
 	justify-content: center;
 	height: 100px;
+	color: var(--orange-color);
+}
+#searchTitle{
+	border: none;
+	border-radius: 5px;
+	outline: none;
 }
 .searchFilter{
-	background-color: rgb(255, 185, 1);
+	background-color: var(--orange-color);
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 	border-radius: 5px;
 }

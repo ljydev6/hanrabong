@@ -392,29 +392,6 @@
 		});
 	</script>
 	<script>
-		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
-		console.log(rect); */
-		//스크롤
-		/* <button id="areaBtn">지역정보</button>
-	    <button id="lessonBtn">레슨정보</button>
-	    <button id="teacherBtn">강사정보</button>
-	    <button id="reviewBtn">리뷰</button> */
-	    
-		/* const areaBtn = document.getElementById('areaBtn');
-	    const lessonBtn = document.getElementById('lessonBtn');
-	    const teacherBtn = document.getElementById('teacherBtn');
-	    const reviewBtn = document.getElementById('reviewBtn');
-	    
-	    const areaInfo = document.getElementById('areaInfo');
-	    const lessonInfo = document.getElementById('lessonInfo');
-	    const teacherInfo = document.getElementById('teacherInfo');
-	    const reviewInfo = document.getElementById('reviewInfo'); */
-	
-	    /* areaBtn.addEventListener('click', () => {
-	    	 window.scrollTo({top: document.querySelector('#areaInfo').getBoundingClientRect().top, behavior: "smooth" }); 
-	    	window.scrollTo(0, document.querySelector('#areaInfo').getBoundingClientRect().bottom);
-	    }); */
-	    
 	    areaBtn.addEventListener('click', () => {
 	        window.scrollBy({top: areaInfo.getBoundingClientRect().top, behavior: 'smooth'});
 	    });
@@ -435,14 +412,7 @@
 	    
 	</script>
 	<script>
-		<%-- $(".saveLesson").click(()=>{
-			if (confirm('찜하시겠습니까?')==true) {
-				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')
-			} else {
-				return false;
-			}
-		}); --%>
-	
+	/* 시간선택변경시 */
 		$("#startTime").change(()=>{
 	        let startTime = ($("#startTime").val()).substr(0,2);
 	        let endTime = ($("#endTime").val()).substr(0,2);
