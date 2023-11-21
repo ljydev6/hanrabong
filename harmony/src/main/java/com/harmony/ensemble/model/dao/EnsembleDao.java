@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.harmony.ensemble.model.dto.EnsembleBoard;
+import com.harmony.ensemble.model.dto.EnsembleBoardApply;
 import com.harmony.ensemble.model.dto.EnsembleBoardWantPart;
 import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
@@ -35,31 +36,40 @@ public class EnsembleDao {
 			e.printStackTrace();
 		}
 	}
+
 	
-	public List<EnsembleBoardWantPart> selectWantPart(Connection conn, String boardNo) {
-		PreparedStatement pstmt= null;
+	public EnsembleBoardApply selectPartIndex(Connection conn, String boardNo, String instNo
+																		, String loginMemNo) {
+		PreparedStatement pstmt=null;
 		ResultSet rs = null;
-		List<EnsembleBoardWantPart> wantPart = new ArrayList<EnsembleBoardWantPart>();
-		try {
-			pstmt = conn.prepareStatement(sql.getProperty("selectWantPart"));
-			pstmt.setString(1 ,boardNo);
+		EnsembleBoardApply apply = null;
+		
+		System.out.println("dao 실험실 selectPartIndex boardNo : " + boardNo);
+		System.out.println("dao 실험실 selectPartIndex instNo : " + instNo);
+		System.out.println("dao 실험실 selectPartIndex loginMemNo : " + loginMemNo);
+		try{
+			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndex"));
+			pstmt.setString(1, boardNo);
+			pstmt.setString(2, instNo);
 			rs = pstmt.executeQuery();
-			while(rs.next()) wantPart.add(getWantPart(rs));
+			if(rs.next()) apply = getApply(rs, loginMemNo);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(pstmt);
 		}
-		return wantPart;
+		return apply;
 	}
 	
-	public int insertApply(Connection conn, String wantPart) {
+	
+	public int insertApply(Connection conn, EnsembleBoardApply apply) {
 		PreparedStatement pstmt = null;
 		int result=0;
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertApply"));
-			pstmt.setString(1, wantPart);
+			pstmt.setString(1, apply.getEnsPartIndex());
+			pstmt.setString(2, apply.getEnsMemNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -68,6 +78,25 @@ public class EnsembleDao {
 		}
 		return result;
 	}
+	
+	public String selectInstNoByName(Connection conn, String instName) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String instNo = "";
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectInstNoByName"));
+			pstmt.setString(1, instName);
+			rs = pstmt.executeQuery();
+			if(rs.next()) instNo = rs.getString("INST_CODE");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return instNo;
+	}
+	
 	
 	public List<VEnsList> filterValues(Connection conn, String value) {
 		PreparedStatement pstmt = null;
@@ -80,7 +109,6 @@ public class EnsembleDao {
 			pstmt.setString(3, value);
 			pstmt.setString(4, "%"+value+"%");
 			rs=pstmt.executeQuery();
-//			System.out.println("dao filterValues: "+ getBoardList(rs));
 			while(rs.next()) result.add(getBoardList(rs));
 		
 		}catch(SQLException e) {
@@ -517,14 +545,22 @@ public class EnsembleDao {
 		return seq;
 	}
 
-	private EnsembleBoardWantPart getWantPart(ResultSet rs) throws SQLException{
-		return EnsembleBoardWantPart.builder()
-					.ensInstNo(rs.getString("ENS_INST_NO"))
+	private EnsembleBoardApply getApply(ResultSet rs, String loginMemNo) throws SQLException{
+		return EnsembleBoardApply.builder()
+					.ensPartIndex(rs.getString("ENS_PART_INDEX"))
+					.ensMemNo(loginMemNo)
 					.build();
 	}
 	
+//	private EnsembleBoardWantPart getWantPart(ResultSet rs) throws SQLException{
+//		return EnsembleBoardWantPart.builder()
+//					.ensInstNo(rs.getString("ENS_INST_NO"))
+//					.build();
+//	}
+	
 	private VBoardView getVBoardView(ResultSet rs) throws SQLException{
 		return VBoardView.builder()
+						.ensBoardNo(rs.getString("ENS_BOARD_NO"))
 						.ensWriter(rs.getString("ENS_WRITER"))
 						.ensLocation(rs.getString("ENS_LOCATION"))
 						.ensPlace(rs.getString("ENS_PLACE"))

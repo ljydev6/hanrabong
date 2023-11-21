@@ -31,17 +31,7 @@ public class ApplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EnsembleService es = new EnsembleService();
-		
-		String boardNo = (String)request.getParameter("boardNo");
-//		
-		System.out.println("boardNo : " + boardNo );
-		
-		List<EnsembleBoardWantPart> wantPart = es.selectWantPart(boardNo);
-		
-		System.out.println("ApplyServlet: " + wantPart);
-		request.setAttribute("wantPart", wantPart);
-//		
+
 		request.getRequestDispatcher("/views/ensemble/applyEns.jsp").forward(request, response);
 	}
 

@@ -90,8 +90,8 @@ public class BoardWriteEndServlet extends HttpServlet {
 				
 				int result = es.insertEnsBoard(board, partList);
 				
-				if(result<0) System.out.println("실패");
-				else System.out.println("성공");
+				if(result<0) System.out.println("글 등록 실패");
+				else System.out.println("글 등록 성공");
 		}
 	
 	
