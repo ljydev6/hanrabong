@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,9 @@ import com.harmony.admin.model.dto.Notice;
 import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
 import com.harmony.admin.model.dto.QNAList;
+import com.harmony.admin.model.dto.Qna;
+import com.harmony.admin.model.dto.Report;
+import com.harmony.admin.model.dto.ReportList;
 
 public class AdminDao {
 	private static AdminDao dao = new AdminDao();
@@ -719,5 +723,237 @@ public class AdminDao {
 				.writeDate(rs.getDate("WRITE_DATE"))
 				.qstCategoryName(rs.getString("QST_CATEGORY_NAME"))
 				.build();
+	}
+
+	public Qna getQnaByQnaNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Qna result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectQNAbyQNAno"));
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getQna(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private Qna getQna(ResultSet rs) throws SQLException{
+		return Qna.builder()
+				.qstNo(rs.getInt("BRD_QST_NO"))
+				.qstWriter(rs.getString("BRD_QST_WRITER"))
+				.catNo(rs.getString("BRD_QST_CAT_NO"))
+				.catName(rs.getString("BRD_ADMIN_CAT_NAME"))
+				.processCode(rs.getString("BRD_QST_PROCESS_CODE"))
+				.content(rs.getString("BRD_QST_CONTENT"))
+				.writeDate(rs.getDate("BRD_QST_WRITE_DATE"))
+				.answer(rs.getString("BRD_QST_ANSWER"))
+				.answerName(rs.getString("ADMIN_NAME"))
+				.answerContent(rs.getString("BRD_QST_ANSWER_CONTENT"))
+				.ansDate(rs.getDate("BRD_QST_ANSWER_WRITE_DATE")!=null?rs.getDate("BRD_QST_ANSWER_WRITE_DATE"):new Date(System.currentTimeMillis()))
+				.build();
+	}
+
+	public List<String[]> getQnaCatList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String[]> result = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getQnaCatList"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(new String[] {rs.getString("BRD_ADMIN_CAT_CODE"),rs.getString("BRD_ADMIN_CAT_NAME")});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<String[]> getQnaProList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String[]> result = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getQnaProList"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(new String[] {rs.getString("BRD_ADMIN_PROCESS_CODE"),rs.getString("BRD_ADMIN_PROCESS_NAME")});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateQNA(Connection conn, Qna qna) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		System.out.println(qna);
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("updateQNA"));
+			pstmt.setString(1, qna.getProcessCode());
+			pstmt.setString(2, qna.getAnswer());
+			pstmt.setString(3, qna.getAnswerContent());
+			pstmt.setInt(4, qna.getQstNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getReportTotalData(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = sql.getProperty("getReportTotalData");
+		query = query.replace("#where", type!=null?"WHERE "+type+" = ? ":"");
+		int result = -1;
+		try{
+			pstmt = conn.prepareStatement(query);
+			if(type!=null) {
+				pstmt.setString(1, keyword);
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<ReportList> getReportList(Connection conn, String type, String keyword, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReportList> result = new ArrayList<>();
+		String query = sql.getProperty("getReportList");
+		int startData = (cPage -1)*numPerPage +1;
+		int endData = cPage * numPerPage;
+		query = query.replace("#where", type!=null?"WHERE "+type+" = ? ":"");
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			if(type!=null) {
+				pstmt.setString(count++, keyword);
+			}
+			pstmt.setInt(count++, startData);
+			pstmt.setInt(count++, endData);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getReportList(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private ReportList getReportList(ResultSet rs) throws SQLException{
+		return ReportList.builder()
+				.reportNo(rs.getInt("NO"))
+				.catCode(rs.getString("CAT_CODE"))
+				.proCode(rs.getString("PRO_CODE"))
+				.reporter(rs.getString("REPORTER"))
+				.reportee(rs.getString("REPORTEE"))
+				.reportDate(rs.getDate("REPORT_DATE"))
+				.build();
+	}
+
+	public Report selectReportByNo(Connection conn, int rptNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Report result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectReportByNo"));
+			pstmt.setInt(1, rptNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getReport(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private Report getReport(ResultSet rs) throws SQLException{
+		return Report.builder()
+				.reportNo(rs.getInt("BRD_REPORT_NO"))
+				.catCode(rs.getString("BRD_REPORT_CAT_CODE"))
+				.catName(rs.getString("BRD_ADMIN_CAT_NAME"))
+				.proCode(rs.getString("BRD_REPORT_PROCESS_CODE"))
+				.reporter(rs.getString("BRD_REPORT_REPORTER"))
+				.reportee(rs.getString("BRD_REPORT_REPORTEE"))
+				.content(rs.getString("BRD_REPORT_CONTENT"))
+				.reportDate(rs.getDate("BRD_REPORT_DATE"))
+				.result(rs.getString("BRD_REPORT_PROCESS_RESULT"))
+				.resultDate(rs.getDate("BRD_REPORT_PROCESS_DATE"))
+				.build();
+	}
+
+	public List<String[]> getReportCatList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String[]> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getReportCatList"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(new String[] {rs.getString("BRD_ADMIN_CAT_CODE"),rs.getString("BRD_ADMIN_CAT_NAME")});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<String[]> getReportProCode(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String[]> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getReportProList"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(new String[]{rs.getString("BRD_ADMIN_PROCESS_CODE"),rs.getString("BRD_ADMIN_PROCESS_NAME")});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
 	}
 }

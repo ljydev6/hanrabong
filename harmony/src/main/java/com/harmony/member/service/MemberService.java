@@ -6,6 +6,7 @@ import static com.harmony.common.JDBCTemplate.getConnection;
 import static com.harmony.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.harmony.model.dao.MemberDao;
 import com.harmony.model.dto.Member;
@@ -22,11 +23,16 @@ public class MemberService {
 	close(conn);
 	return result;
 	}
-	
-//	public MemberVideo selectVideoLink(String memNo) {
+	public List<String> selectGenreAll() {
+		Connection conn =getConnection();
+		List<String> result = dao.selectGenreAll(conn);
+		close(conn);
+		return result;
+	}
+//	public List<MemberVideo> selectVideoLink(String memNo) {
 //		
 //		Connection conn = getConnection();
-//		MemberVideo result = dao.selectVideoLink(conn,memNo);
+//		List<MemberVideo> result = dao.selectVideoLink(conn,memNo);
 //		close(conn);
 //		return result;
 //	}
@@ -106,15 +112,90 @@ public class MemberService {
 			e.printStackTrace();
 		}finally {
 			close(conn);
-		}
-		
+		}		
 		return resultAdd;
 	}
+	public int UpdateIntroduce(MemberInfo mi) { 
+		Connection conn = getConnection();
+		MemberInfo result= null;
+		int resultAdd = dao.updateIntroduce(conn,mi);
+		int resultGenre = 0;
+		int resultInterest =0;
+		int resultMusic = 0;
+		int resultVideo = 0;
+		try {
+		if(resultAdd>0) {
+			if(mi.getGenre()!=null) {
+				resultGenre = dao.updateGenre(conn,mi.getMemNo(),mi);
+				if(resultGenre==0) {
+					resultGenre=1;
+				}
+			}
+			if(mi.getInterest()!=null) {
+				resultInterest =dao.updateInstrument(conn,mi.getMemNo(),mi);
+				if(resultInterest==0) {
+					resultInterest=1;
+				}
+			}
+			if(!mi.getMemberMusic().isEmpty()) {
+				for(MemberMusic mm:mi.getMemberMusic()) {
+					mm.setMemNo(mi.getMemNo());
+					resultMusic=dao.updateMusic(conn,mm);
+					if(resultMusic==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("입력실패");
+					}
+				}
+			}else {
+				resultMusic=1;
+			}
+			if(!mi.getMemberVideo().isEmpty()) {
+				for(MemberVideo mv:mi.getMemberVideo()) {
+					mv.setMemNo(mi.getMemNo());
+					 resultVideo=dao.updateVideo(conn,mv);
+					if(resultVideo==0) {
+						rollback(conn);
+						throw new IllegalArgumentException("입력실패");
+					}
+				}
+			}else {
+				resultVideo=1;
+			}
+			if(resultGenre!=1||resultMusic!=1||resultVideo!=1||resultInterest!=1) {
+				rollback(conn);
+			}
+			commit(conn);
+		}else {
+			rollback(conn);
+			throw new IllegalArgumentException("입력실패");
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(conn);
+		}		
+		return resultAdd;
+	}
+	
 	public MemberInfo selectMemberInfo(String memNo) {//memNo와 같은 아이의 memberInfo 가져오기
 		MemberInfo result=null;
+		List<MemberVideo> videoInfo = null;
+		List<MemberMusic> musicInfo = null;
+		String []genre = null;
+		String []interest=null;
 		Connection conn=getConnection();
 		
 		result=dao.selectMemberInfo(conn,memNo);
+		if(result!=null) {
+			videoInfo = dao.selectMemberVideoByMemberNo(conn,memNo);
+			musicInfo = dao.selectMemberMusicByMemberNo(conn,memNo);
+			genre = dao.selectMemberGenreByMemberNo(conn,memNo);
+			interest = dao.selectMemberInterestByMemberNo(conn, memNo);
+		}
+		result.setMemberVideo(videoInfo);
+		result.setMemberMusic(musicInfo);
+		result.setGenre(genre);
+		result.setInterest(interest);
 		close(conn);
 		return result;
 		

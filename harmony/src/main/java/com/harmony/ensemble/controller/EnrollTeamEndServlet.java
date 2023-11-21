@@ -152,7 +152,6 @@ public class EnrollTeamEndServlet extends HttpServlet {
 			if(result>0) System.out.println("팀 등록 성공");
 			
 			
-			request.getRequestDispatcher("/views/ensemble/boardList.jsp").forward(request, response);
 		}
 	}
 

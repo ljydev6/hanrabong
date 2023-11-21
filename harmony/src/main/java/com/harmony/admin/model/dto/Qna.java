@@ -18,5 +18,6 @@ public class Qna {
 	private String answer;
 	private String answerContent;
 	private Date ansDate;
+	private String answerName;
 }
  

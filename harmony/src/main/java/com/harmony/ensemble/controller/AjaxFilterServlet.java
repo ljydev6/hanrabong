@@ -1,6 +1,7 @@
-package com.harmony.mainpage.controller;
+package com.harmony.ensemble.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.admin.model.dto.Carousel;
-import com.harmony.admin.service.AdminService;
+import com.google.gson.Gson;
+import com.harmony.ensemble.model.dto.VEnsList;
+import com.harmony.ensemble.model.service.EnsembleService;
 
 /**
- * Servlet implementation class MainPageServlet
+ * Servlet implementation class AjaxFilter
  */
-@WebServlet(urlPatterns = {"/","/main.do"})
-public class MainPageServlet extends HttpServlet {
+@WebServlet("/ensemble/ajaxFilter.do")
+public class AjaxFilterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainPageServlet() {
+    public AjaxFilterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +33,23 @@ public class MainPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Carousel> carouselList = AdminService.getService().selectActiveCarousels();
-		request.setAttribute("carouselList", carouselList);
-		request.getRequestDispatcher("/mainpage.jsp").forward(request, response);
+		response.setContentType("application/json;charset=utf-8");
+		Gson gson = new Gson();
+		
+		EnsembleService es = new EnsembleService();
+	    
+		String[] values = gson.fromJson(request.getParameter("filter_values"), String[].class);
+		System.out.println(Arrays.toString(values));
+		
+		List<VEnsList> result = es.filterValues(values);
+		gson.toJson(gson.toJson(result),response.getWriter());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
