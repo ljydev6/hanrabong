@@ -60,7 +60,6 @@ public class KakaoService {
 			        scanner.useDelimiter("\\Z");
 			        response = scanner.next();
 			    }
-			    System.out.println("response : "+response);
 			    throw new HarmonyException("이 메세지가 보이면 재연에게 알려주세요\r\n"+response);
 		    }
 	        
@@ -72,14 +71,11 @@ public class KakaoService {
 	        while ((line = bufferedReader.readLine()) != null) {
 	            result.append(line);
 	        }
-	        System.out.println("response body : " + result);
 
 	        JsonElement element = JsonParser.parseString(result.toString());
 
 	        accessToken = element.getAsJsonObject().get("access_token").getAsString();
 	        refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-	        System.out.println("accessToken : " + accessToken);
-	        System.out.println("refreshToken : " + refreshToken);
 	        tokens.put("accessToken", accessToken);
 	        tokens.put("refreshToken", refreshToken);
 
@@ -103,7 +99,6 @@ public class KakaoService {
 	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
 	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
 	        
 	        InputStream stream = conn.getErrorStream();
 		    if (stream != null) {
@@ -122,7 +117,6 @@ public class KakaoService {
 	        while ((line = br.readLine()) != null) {
 	            result.append(line);
 	        }
-	        System.out.println("response body : " + result);
 
 	        JsonElement element = JsonParser.parseString(result.toString());
 	        JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
