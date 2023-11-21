@@ -135,5 +135,18 @@ public class InfoBoardService {
         close(conn);
         return commentCount;
     }
+	
+	 public int updateBoard(InfoBoard b) {
+	        Connection conn = getConnection();
+	        int result = dao.updateBoard(conn, b);
+	        if(result > 0) {
+	            commit(conn);
+	        } else {
+	            rollback(conn);
+	        }
+	        close(conn);
+	        return result;
+	    }
+
 
 }

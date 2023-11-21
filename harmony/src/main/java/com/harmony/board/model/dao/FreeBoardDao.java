@@ -28,17 +28,27 @@ public class FreeBoardDao {
 			e.printStackTrace();
 		}
 	}
-	public List<FreeBoard> selectFreeBoard(Connection conn, int cPage, int numPerpage) {
+	public List<FreeBoard> selectFreeBoard(Connection conn, int cPage, int numPerPage, String sortOption) {
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
 	    List<FreeBoard> result = new ArrayList<>();
+	    String sqlQuery = sql.getProperty("selectFreeBoard"); 
+
+	    if (sortOption.equals("oldest")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardOldest");
+	    } else if (sortOption.equals("views")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardByViews");
+	    } else if (sortOption.equals("comments")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardByComments");
+	    }
+
 	    try {
-	        pstmt = conn.prepareCall(sql.getProperty("selectFreeBoard")); 
-	        pstmt.setInt(1, (cPage - 1) * numPerpage + 1);
-	        pstmt.setInt(2, cPage * numPerpage);
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setInt(1, (cPage - 1) * numPerPage + 1);
+	        pstmt.setInt(2, cPage * numPerPage);
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	            result.add(getFreeBoard(rs)); 
+	            result.add(getFreeBoard(rs));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -47,7 +57,6 @@ public class FreeBoardDao {
 	        close(pstmt);
 	    }
 	    return result;
-	    //페이지네이션을 위한 게시판 목록 조회
 	}
 	
 	public int selectFreeBoardCount(Connection conn) {
@@ -246,6 +255,24 @@ public class FreeBoardDao {
 	    return count;
 	}
 	
+	public int updateFreeBoard(Connection conn, FreeBoard b) {
+        PreparedStatement pstmt=null;
+        int result=0;
+        try {
+            pstmt=conn.prepareStatement(sql.getProperty("updateFreeBoard"));
+            pstmt.setString(1, b.getFreBrdTitle());
+            pstmt.setString(2, b.getFreBrdContent());
+            pstmt.setString(3, b.getFreBrdTitleImg());
+            pstmt.setInt(4, b.getFreBrdNo());
+            result=pstmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+        return result;
+    }
+	
 	public int updateBoardReadCount(Connection conn, int no) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -314,6 +341,9 @@ public class FreeBoardDao {
         }
         return commentCount;
     }
+	
+	
+	
 
 	
 	

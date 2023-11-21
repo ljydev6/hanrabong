@@ -6,128 +6,190 @@
 InfoBoard board = (InfoBoard) request.getAttribute("InfoBoard");
 List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute("comments");
 %>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <%@ include file="/views/common/header.jsp"%>
 
-
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoboardView.css"
 	type="text/css">
-<div class="main-container">
-	<div class="infoboard">
-		<div class="info-container">
-			<h3 class="info">
-				<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
-			</h3>
-			<h3 class="free">
-				<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
-			</h3>
-		</div>
-	</div>
 
-	<div class="content-container">
-		<table>
-			<tr>
-				<td><h3><%=board.getInfBrdTitle()%></h3></td>
-			</tr>
-			<tr>
-				<td><p><%=board.getInfBrdContent()%></p></td>
-			</tr>
-		</table>
-
-		<button onclick="confirmDeletion(<%=board.getInfBrdNo()%>)">게시글
-			삭제</button>
-
-		<div id="comment-container">
-			<div class="comment-editor">
-				<form action="<%=request.getContextPath()%>/board/insertComment.do"
-					method="post">
-					<input type="hidden" name="boardRef"
-						value="<%=board.getInfBrdNo()%>"> <input type="hidden"
-						name="level" value="1"> <input type="hidden"
-						name="infComNoRef" value="">
-					<textarea name="content" cols="55" rows="3"></textarea>
-					<button type="submit" id="btn-insert">등록</button>
-				</form>
+<div class="content">
+	<div class="main">
+		<div class="board">
+			<div class="info-container">
+				<h3 class="info-board">
+					<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
+				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
+				</h3>
 			</div>
+		</div>
 
-			<%
-			if (comments != null && !comments.isEmpty()) {
-			%>
-			<table id="tbl-comment">
-				<%
-				for (InfoCommentBoard comment : comments) {
-					if (comment.getInfComLevel() == 1) {
-				%>
-				<tr class="level1">
-					<td><sub class="comment-writer"><%=comment.getInfComWriter()%></sub>
-						<sub class="comment-date"><%=comment.getInfComDate()%></sub><br>
-						<%=comment.getInfComContent()%></td>
-					<td>
-						<button class="btn-reply" value="<%=comment.getInfComNo()%>">답글</button>
-						<button
-							onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+		<div class="infoboardviewcontainer">
+			<div class="infoboardview">
+				<div class="header">
+					<div class="boradselect">
+						<a href="#">정보 게시판</a> > <a href="#">공연</a>
+					</div>
+					<div class="title">
+						<h1>
+							<span class="highlight">[정보]</span>
+							<%=board.getInfBrdTitle()%></h1>
+						<p>
+							지역 |
+							<%=board.getInfBrdRegion()%></p>
+					</div>
+				</div>
 
-					</td>
-				</tr>
-				<%
-				} else {
-				%>
-				<tr class="level2">
-					<td><sub><%=comment.getInfComWriter()%></sub> <sub><%=comment.getInfComDate()%></sub><br>
-						<%=comment.getInfComContent()%></td>
-					<td>
-						<button
-							onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
-					</td>
-				</tr>
-				<%
-				}
-				}
-				%>
-			</table>
-			<%
-			}
-			%>
+				<div class="user-profile">
+					<div class="profile-info">
+						<img
+							src="<%=request.getContextPath()%>/image/board/write-user.png"
+							class="write-user"> <span>작성자 | MEM_81</span>
+					</div>
+					<div class="profile-icon">
+						<span> <a href="#comments-section"><img
+								src="<%=request.getContextPath()%>/image/board/comment3.png"></a></span>
+					</div>
+				</div>
+
+				<div class="post-content">
+					<p><%=board.getInfBrdContent()%></p>
+				</div>
+
+				<div class="post-buttons">
+					<button class="post-edit-btn"
+						onclick="editBoard(<%=board.getInfBrdNo()%>)">글 수정</button>
+					<button class="post-delete-btn"
+						onclick="confirmDeletion(<%=board.getInfBrdNo()%>)">글 삭제</button>
+				</div>
+
+				<div class="comment-container" id="comments-section">
+					<div class="comment-form">
+						<div class="comments-view">
+							<h2>댓글</h2>
+						</div>
+
+
+						<div class="comment-editor">
+							<form class="comment-editor-form"
+								action="<%=request.getContextPath()%>/board/insertComment.do"
+								method="post">
+								<input type="hidden" name="boardRef"
+									value="<%=board.getInfBrdNo()%>"> <input type="hidden"
+									name="level" value="1"> <input type="hidden"
+									name="infComNoRef" value=""> <input type="text"
+									id="post-comment" name="content" placeholder="댓글을 입력해주세요.">
+
+								<button type="submit" id="btn-insert" class="comment-btn">등록</button>
+							</form>
+						</div>
+
+
+
+
+						<%
+						if (comments != null && !comments.isEmpty()) {
+						%>
+
+
+						<div class="comment-text-buttons">
+							<%
+							for (InfoCommentBoard comment : comments) {
+								if (comment.getInfComLevel() == 1) {
+							%>
+
+
+							<div class="comment-content">
+								<div>
+									<img
+										src="<%=request.getContextPath()%>/image/board/comment_user.png"
+										class="write-user"> <span><%=comment.getInfComWriter()%>
+										| <%=board.getInfBrdRegion()%></span>
+								</div>
+								<div class="comment_buttons">
+									<div class="comment-text">
+										<p><%=comment.getInfComContent()%></p>
+									</div>
+									<div class="buttons-container">
+										<button class="btn-reply" value="<%=comment.getInfComNo()%>">답글</button>
+										<button class="delete-btn"
+											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+									</div>
+								</div>
+							</div>
+							<%
+							} else {
+							%>
+
+							<div class="reply-container">
+								<div class="reply-user">
+									<img src="<%=request.getContextPath()%>/image/board/comment_user.png"> <span><%=comment.getInfComWriter()%>
+										| <%=board.getInfBrdRegion()%></span>
+								</div>
+								<div class="reply-comment">
+									<p><%=comment.getInfComContent()%></p>
+									<div class="buttons-container">
+										<button class="delete-btn"
+											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+									</div>
+								</div>
+								<%
+								}
+								}
+								%>
+							</div>
+							<%
+							}
+							%>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 
-<script>
-function confirmDeletion(boardNo) {
-    if(confirm('게시글을 삭제하시겠습니까?')) {
-        window.location.href = '<%=request.getContextPath()%>/board/deleteBoard.do?no=' + boardNo;
-    }
-}
-function confirmCommentDeletion(deleteUrl, commentNo, boardNo) {
-    if (confirm('댓글을 삭제하시겠습니까?')) {
-        window.location.href = deleteUrl + '?no=' + commentNo + '&boardNo=' + boardNo;
-    }
-}
-$(".btn-reply").click(e=>{
-    // 답글 입력창이 이미 존재하면 함수를 종료
-    if ($(e.target).parents("tr").next().hasClass("reply-form")) {
-        return;
-    }
+	<script>
+	function confirmDeletion(boardNo) {
+	    if(confirm('게시글을 삭제하시겠습니까?')) {
+	        window.location.href = '<%=request.getContextPath()%>/board/deleteBoard.do?no=' + boardNo;
+	    }
+	}
+	function confirmCommentDeletion(deleteUrl, commentNo, boardNo) {
+	    if (confirm('댓글을 삭제하시겠습니까?')) {
+	        window.location.href = deleteUrl + '?no=' + commentNo + '&boardNo=' + boardNo;
+	    }
+	}
 
-    const $tr=$("<tr>").addClass("reply-form");
-    const $td=$("<td>").attr("colspan","2");
-    const $form=$(".comment-editor>form").clone();
-    console.log($form);
-    $form.find("input[name=level]").val("2"); //대댓글번호 찾는
-    $form.find("textarea").attr("rows","1");  //답글 쓰는곳 크기 줄이기
-    $form.find("button").removeAttr("id").addClass("btn-insert2"); //아이디 지우기
-    $form.find("input[name=infComNoRef]").val($(e.target).val()); //대글의 번호를 대댓글에 넣는..?
-    $td.append($form);
-    $tr.append($td).addClass("reply-form"); // 'reply-form' 클래스 추가
-    
-    $(e.target).parents("tr")
-        .after($tr);	
-});
+	$(".btn-reply").click(e => {
+	    // 답글 입력창이 이미 존재하면 함수를 종료
+	    if ($(e.target).closest(".comment-content").next().hasClass("reply-form")) {
+	        return;
+	    }
 
-    	
-    	
-    </script>
+	    // 새로운 reply-form div 생성
+	    const $div = $("<div>").addClass("reply-form");
+	    const $form = $(".comment-editor>form").clone();
+	    console.log($form);
+	    $form.find("input[name=level]").val("2"); // 대댓글 번호 설정
+	    $form.find("textarea").attr("rows", "1"); // 답글 입력창 크기 조정
+	    $form.find("button").removeAttr("id").addClass("btn-insert2"); // 버튼 ID 제거 및 클래스 추가
+	    $form.find("input[name=infComNoRef]").val($(e.target).val()); // 대댓글 참조 번호 설정
+	    $div.append($form);
 
-<%@ include file="/views/common/footer.jsp"%>
+	    // 해당 comment-content 다음에 reply-form div 삽입
+	    $(e.target).closest(".comment-content").after($div);
+	});
+
+
+	    </script>
+
+	<%@ include file="/views/common/footer.jsp"%>

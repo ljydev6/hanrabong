@@ -10,17 +10,18 @@ import java.util.List;
 
 import com.harmony.board.free.model.dto.FreeBoard;
 import com.harmony.board.free.model.dto.FreeCommentBoard;
+import com.harmony.board.info.model.dto.InfoBoard;
 import com.harmony.board.model.dao.FreeBoardDao;
 
 public class FreeBoardService {
     private FreeBoardDao dao = new FreeBoardDao();
 
-    public List<FreeBoard> selectFreeBoard(int cPage, int numPerpage) {
+    public List<FreeBoard> selectFreeBoard(int cPage, int numPerPage, String sortOption) {
         Connection conn = getConnection();
-        List<FreeBoard> result = dao.selectFreeBoard(conn, cPage, numPerpage);
+        List<FreeBoard> result = dao.selectFreeBoard(conn, cPage, numPerPage, sortOption);
         close(conn);
         return result;
-    }   
+    } 
     
     public int selectFreeBoardCount() {
         Connection conn = getConnection();
@@ -120,4 +121,16 @@ public class FreeBoardService {
         close(conn);
         return commentCount;
     }
+	public int updateFreeBoard(FreeBoard b) {
+        Connection conn = getConnection();
+        int result = dao.updateFreeBoard(conn, b);
+        if(result > 0) {
+            commit(conn);
+        } else {
+            rollback(conn);
+        }
+        close(conn);
+        return result;
+    }
+
 }

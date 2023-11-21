@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -418,6 +417,27 @@ public class InfoBoardDao {
 	        return commentCount;
 	    }
 
+	 public int updateBoard(Connection conn, InfoBoard b) {
+	        PreparedStatement pstmt=null;
+	        int result=0;
+	        try {
+	            pstmt=conn.prepareStatement(sql.getProperty("updateInfoBoard"));
+	            pstmt.setString(1, b.getInfBrdTitle());
+	            pstmt.setString(2, b.getInfBrdContent());
+	            pstmt.setString(3, b.getInfBrdTitleImg());
+	            pstmt.setString(4, b.getInfBrdRegion());
+	            pstmt.setString(5, b.getInfBrdCatNo());
+	            pstmt.setString(6, b.getInfBrdTagNo());
+	            pstmt.setInt(7, b.getInfBrdNo());
+	            result=pstmt.executeUpdate();
+	        } catch(SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            close(pstmt);
+	        }
+	        return result;
+	    }
+
 	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
 		return InfoBoard.builder()
@@ -447,7 +467,6 @@ public class InfoBoardDao {
 	            .infComLevel(rs.getInt("INF_COM_LEVEL"))
 	            .build();
 	}
-
 	
 	
 }

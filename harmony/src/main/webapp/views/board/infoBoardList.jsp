@@ -108,6 +108,7 @@ if (request.getAttribute("searchResults") != null) {
 								<div class="views-comments-container">
 									<span>댓글 <%=request.getAttribute("commentCount" + post.getInfBrdNo())%></span>
 								</div>
+								<span class="post-date"><%=post.getInfBrdRegDate()%></span>
 							</div>
 						</div>
 					</a>

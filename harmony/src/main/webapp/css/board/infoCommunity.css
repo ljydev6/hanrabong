@@ -26,7 +26,7 @@ body {
 .board {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 35%;
 }
 
 /* 정보게시판 자유게시판 DIV*/
@@ -82,7 +82,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 15px;
     transition: all 0.3s ease;
-    width: 80%;
+    width: 70%;
 }
 
 /* 전체 테이블 호버 효과 */
@@ -198,7 +198,7 @@ body {
     align-items: center;
     justify-content: start;
     gap: 10px; /* 요소 간 간격 */
-    width: 80%;
+    width: 70%;
     margin-bottom: 20px;
 }
 
@@ -271,7 +271,7 @@ body {
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 80%; 
+    width: 70%; 
     height: 35px;
 }
 
@@ -304,7 +304,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 70%;
     margin: 20px;
 }
 

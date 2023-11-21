@@ -33,9 +33,11 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 			<tr>
 				<td><p><%=board.getFreBrdContent()%></p></td>
 			</tr>
+			
 		</table>
-		<button onclick="confirmDeletion(<%=board.getFreBrdNo()%>)">게시글
-			삭제</button>
+		<button onclick="confirmDeletion(<%=board.getFreBrdNo()%>)">게시글 삭제</button>
+		<button onclick="editfreeBoard(<%=board.getFreBrdNo()%>)">수정하기</button>
+		
 
 
 		<!-- 댓글 입력 폼 -->
@@ -110,12 +112,15 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 		        window.location.href = '<%=request.getContextPath()%>/board/freeCommentDelete.do?no=' + commentNo + '&boardNo=' + boardNo;
 		    }
 		}
-		    	$(".btn-reply").click(e=>{
-		    		
-		    		const $tr=$("<tr>");
-		    		const $td=$("<td>").attr("colspan","2");
-		    		const $form=$(".comment-editor>form").clone();
-		    		console.log($form);
+		$(".btn-reply").click(e=>{
+		    // 답글 입력창이 이미 존재하면 함수를 종료
+		    if ($(e.target).parents("tr").next().hasClass("reply-form")) {
+		        return;
+		    }
+				    const $tr=$("<tr>").addClass("reply-form");
+				    const $td=$("<td>").attr("colspan","2");
+				    const $form=$(".comment-editor>form").clone();
+				    console.log($form);
 		    		$form.find("input[name=level]").val("2"); //대댓글번호 찾는
 		    		$form.find("textarea").attr("rows","1");  //답글 쓰는곳 크기 줄이기
 		    		$form.find("button").removeAttr("id").addClass("btn-insert2"); //아이디 지우기
@@ -126,6 +131,11 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 		    		$(e.target).parents("tr")
 		    			.after($tr);	
 		    	});
+		
+		function editfreeBoard(boardNo) {
+		    window.location.href = '<%=request.getContextPath()%>/board/freeBoardEdit.do?no=' + boardNo;
+		}
+
 		    </script>
 
 

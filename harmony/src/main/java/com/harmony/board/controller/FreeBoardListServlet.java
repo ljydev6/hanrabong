@@ -38,8 +38,13 @@ public class FreeBoardListServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             cPage = 1;
         }
+        String sortOption = request.getParameter("sort");
         
-        List<FreeBoard> boards = new FreeBoardService().selectFreeBoard(cPage, numPerpage);
+        if (sortOption == null || sortOption.isEmpty()) {
+            sortOption = "latest";
+        }
+        
+        List<FreeBoard> boards = new FreeBoardService().selectFreeBoard(cPage, numPerpage, sortOption);
         
 		for (FreeBoard board : boards) {
 		    int commentCount = new FreeBoardService().getCommentCount(board.getFreBrdNo());
@@ -50,7 +55,7 @@ public class FreeBoardListServlet extends HttpServlet {
         int totalPage = (int)Math.ceil((double)totalData / numPerpage);
         int pageBarSize = 5;
 
-        String pageBar = PageBarBuilder.pageBarBuilder(cPage, numPerpage, totalData, pageBarSize, request.getRequestURI());
+        String pageBar = PageBarBuilder.pageBarBuilderWithSortOption(cPage, numPerpage, totalData, pageBarSize, request.getRequestURI(), sortOption);
 
         request.setAttribute("boards", boards);
         request.setAttribute("pageBar", pageBar);

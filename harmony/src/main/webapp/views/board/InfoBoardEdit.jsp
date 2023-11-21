@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-
-<%@ page
-	import="java.util.List,com.harmony.board.info.model.dto.InfoBoard"%>
+<%@ page import="com.harmony.board.info.model.dto.InfoBoard"%>
 <%
-List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
+InfoBoard board = (InfoBoard) request.getAttribute("board");
 %>
 <%@ include file="/views/common/header.jsp"%>
 
@@ -22,6 +19,7 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 		<div class="board">
 			<div class="info-container">
 				<h3 class="info-board">
+				ddd
 					<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
 				</h3>
 				<h3 class="free-board">
@@ -31,9 +29,10 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 		</div>
 
 		<form id="postForm"
-			action='<%=request.getContextPath()%>/board/boardWriteEnd.do'
-			enctype="multipart/form-data" method="post"
-			onsubmit="return submitPost()">
+    action='<%=request.getContextPath()%>/board/boardEditEnd.do'
+    enctype="multipart/form-data" method="post"
+    onsubmit="return submitPost()">
+    <input type="hidden" name="no" value="<%=board.getInfBrdNo()%>">
 
 			<div class="form-field">
 				<label>카테고리</label>
@@ -74,25 +73,25 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 				</div>
 			</div>
 			<div class="write-title">
-				<input type="text" id="post-title" name="title"
-					placeholder="제목을 입력해 주세요.">
-			</div>
-			<div class="post-write">
-				<textarea class="form-control" rows="20" name="bo_content"
-					id="bo_content"></textarea>
-				<button type="submit" class="submit-post-button">글쓰기</button>
-			</div>
+        <input type="text" id="post-title" name="title"
+            value="<%=board.getInfBrdTitle()%>">
+    </div>
+    <div class="post-write">
+        <textarea class="form-control" rows="20" name="bo_content"
+            id="bo_content"><%=board.getInfBrdContent()%></textarea>
+        <button type="submit" class="submit-post-button">글쓰기</button>
+    </div>
 		</form>
 	</div>
 </div>
 
 <script>
-		var oEditors = [];
-		
-		nhn.husky.EZCreator.createInIFrame({
-		  oAppRef: oEditors,
-		  elPlaceHolder: "bo_content",
-		  sSkinURI: "<%=request.getContextPath()%>
+    var oEditors = [];
+    
+    nhn.husky.EZCreator.createInIFrame({
+      oAppRef: oEditors,
+      elPlaceHolder: "bo_content",
+      sSkinURI: "<%=request.getContextPath()%>
 	/board/smarteditor2/SmartEditor2Skin.html",
 				fCreator : "createSEditor2"
 			});
@@ -130,4 +129,5 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 		return true;
 	}
 </script>
+
 <%@ include file="/views/common/footer.jsp"%>
