@@ -5,43 +5,20 @@
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
-    font-family: 'KCC-Ganpan';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'SF_HambakSnow';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HambakSnow.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Cafe24Ssurround';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
+	--ti-cursor-margin-left: 1em;
+	--ti-cursor-color: var(--orange-color);
 }
+
 *{
 	box-sizing: border-box;
 	font-family: 'GangwonEdu_OTFBoldA';
 }
+
 body{
 	height: 1600px;
-}
-.mainImg{
-	
 }
 ul,li{
    list-style:none;
@@ -57,8 +34,25 @@ a{
 	text-decoration: none;
 	color: black;
 }
+div{
+	transition: all 0.5s;
+}
+input{
+	caret-color: var(--orange-color);
+}
+.mainTitle{
+	display: flex;
+	justify-content: center;
+	height: 100px;
+	color: var(--orange-color);
+}
+#searchTitle{
+	border: none;
+	border-radius: 5px;
+	outline: none;
+}
 .searchFilter{
-	background-color: rgb(255, 185, 1);
+	background-color: var(--orange-color);
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 	border-radius: 5px;
 }

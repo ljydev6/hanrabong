@@ -16,16 +16,22 @@ a{
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
+	--ti-cursor-margin-left: 1em;
+	--ti-cursor-color: var(--orange-color);
 }
 html,body{
 	height: 100%;
 }
-.btn-warning{
-	color: white;	
+div{
+	transition: all 0.5s;
 }
+
 button:focus, .btn{ 	
     border: none;
     outline:none;
+}
+.btn-warning{
+	color: white;	
 }
 .upperBar {
 	width: 100%;
@@ -71,9 +77,6 @@ button{
 .submitContainer input[type=submit]{
 	border-radius: 5px;
 }
-.lessonInfo{
-	
-}
 .form-select{
 	width: 150px;
 	height: 35px;
@@ -81,9 +84,6 @@ button{
 .imgSubmitSection{
 	width: 100%;
 	margin: 2px;
-}
-.imgContainer{
-
 }
 .detailImg{
 	width: 100%;
@@ -118,6 +118,7 @@ button{
 .labelBox>label{
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 15px;
 }
 .lessonSubmit{
@@ -153,15 +154,18 @@ input[type=submit],input[type=button]{
 	align-items: center;
 	z-index: 99;
 	background-color: white;
-	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
+	box-shadow: rgba(255, 185, 1, 0.1) 0px 4px 12px;
 	position: sticky;
 	top: 0px;
 }
-.detailInfo{
-	height: 500px;
-	box-shadow: rgba(240, 74, 74, 0.1) 0px 4px 12px;
-	align-items: center;
+.detailInfoBar>button{
+	color: var(--orange-color);
 }
+/*.detailInfo{
+	height: 500px;
+	box-shadow: rgba(255, 185, 1, 0.1) 0px 4px 12px;
+	align-items: center;
+}*/
 .teacher-comment{
 	padding-left: 50px;
 	margin-bottom: 20px;
@@ -259,6 +263,10 @@ input[type=submit],input[type=button]{
 	position: sticky;
 	display: flex;
 	justify-content: right;
+	
+}
+.upup>i{
+	color: var(--coral-color);
 }
 .upup:hover{
 	cursor: pointer;

@@ -7,20 +7,22 @@
 %>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/lesson/findLesson.css">
 	<section class="container w-75">
         <div class="d-flex flex-column">
-            <div class="mainImg" style="height: 100px;">
-            	
+            <div class="mainTitle">
+            	<h1 id="title">음악과 우리를 이어줄 레슨찾기</h1>
             </div>
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
-                <div class="p-3" style="color: white;">레슨 검색</div>
+                <div class="p-3" style="color: white;">카테고리</div>
             
                 <div class="filterBtns p-2">
-                  <button onclick="searchOrderByViews();">조회수</button>
-                  <button onclick="searchOrderByDate()">최근등록순</button>
-                  <button onclick="searchOrderByStar()">별점순</button>
-                  <button onclick="searchOrderByReviews()">리뷰순</button>
+					<input id="searchTitle" type="text">
+					<button onclick="searchOrderByViews();">조회수</button>
+					<button onclick="searchOrderByDate()">최근등록순</button>
+					<button onclick="searchOrderByStar()">별점순</button>
+					<button onclick="searchOrderByReviews()">리뷰순</button>
                 </div>
                 <!-- <div>
                     <input type="text">
@@ -79,9 +81,9 @@
                     <div>
                         <div class="slideToggle"><i class="fa-regular fa-clock"></i> 시간대별</div>
 	                      <ul class="liLists">
-	                        <li><input class="btn-check" type="radio" name="f" value=12 id="morning" ><label class="btn btn-outline-warning" for="morning">오전</label></a></li>
-	                        <li><input class="btn-check" type="radio" name="f" value=18 id="evening" ><label class="btn btn-outline-warning" for="evening">오후</label></a></li>
-	                        <li><input class="btn-check" type="radio" name="f" value=24 id="night" ><label class="btn btn-outline-warning" for="night">야간</label></a></li>
+	                        <li><input class="btn-check" type="radio" name="f" value=12.0 id="morning" ><label class="btn btn-outline-warning" for="morning">오전</label></a></li>
+	                        <li><input class="btn-check" type="radio" name="f" value=18.0 id="evening" ><label class="btn btn-outline-warning" for="evening">오후</label></a></li>
+	                        <li><input class="btn-check" type="radio" name="f" value=24.0 id="night" ><label class="btn btn-outline-warning" for="night">야간</label></a></li>
 	                      </ul>
                     </div>
                 </article>
@@ -330,7 +332,7 @@
 				    });
 				</script>
                 <script>
-                /* 왼쪽필터 */
+                /* 카테고리필터 */
 	                function searchOrderByKeyword(keyword) {
 	                	$.ajax({
 	        				url:"<%=request.getContextPath()%>/LeftBarFilterServlet.do?keyword="+keyword,
@@ -376,10 +378,84 @@
 	        			});
 					}
                 </script>
+                <script>
+                /* 검색으로 필터ㄹ */
+                	$("#searchTitle").keyup(e=>{
+                		const keyword = e.target.value;
+                		$.ajax({
+	        				url:"<%=request.getContextPath()%>/LeftBarFilterTitleServlet.do?keyword="+keyword,
+	        				type:'GET',
+	        				dataType:"json",
+	       					success:function(data){
+	       						const lessonListBox = $("<div>");
+	       						lessonListBox.addClass('lessonListBox');
+	       						data.forEach(e=>{
+	       							let boardNo = e['boardNo'];
+	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
+	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
+	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
+	       							console.log(goToLessonInfoPath);
+		       						const lessonList = $("<div>");
+		       						lessonList.addClass('lessonList');
+		       						lessonList.attr('onclick', goToLessonInfoPath);
+		       						const lessonListImageBox = $("<div>").addClass('lessonListImageBox');
+		       						const img = $("<img>");
+		       						img.attr('src', imgPath);
+		       						img.attr('width','100%').attr('height','200px');
+		       						lessonListImageBox.append(img);
+		       						
+		       						const lessonListTitle = $("<div>").addClass('lessonListTitle').text(e['boardTitle']);
+		       						
+		       						const lessonView = $("<div>");
+		       						lessonView.addClass('lessonView');
+		       						const i = $("<i>");
+		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
+		       						lessonView.append(i);
+	       							
+		       						const lessonStars = $("<div>");
+	       							lessonStars.addClass('lessonStars');
+	       							const starsi = $("<i>");
+	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							lessonStars.append(starsi);
+	       							
+		       						lessonList.append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       						lessonListBox.append(lessonList);
+	       						});
+	       						$(".rightLessonLists").html(lessonListBox);
+	       					}
+	        			});
+                	})
+                </script>
             </div>
         </div>
     </section>
-    
+	<script>
+		let observer = new IntersectionObserver((e)=>{
+			/* 감시중인 박스가 화면에 등장하면 여기 코드를 실행해준다 */
+			e.forEach((boxs)=>{
+				if (boxs.isIntersecting) {
+					boxs.target.style.opacity = 1;
+				} else {
+					boxs.target.style.opacity = 0;
+				}
+			});
+		});
+		let div = document.querySelectorAll('div');
+		console.log(div.length);
+		for (let i = 0; i < div.length; i++) {
+			observer.observe(div[i])
+		};
+		
+		/* 내가원하는 html요소를 감시해줌 */
+	</script>    
+    <!-- 타이틀 타이핑효과 -->
+    <script>
+		document.addEventListener('DOMContentLoaded', () => {
+			new TypeIt('#title')
+			.pause(1000)
+			.go();
+		});
+	</script>
     <script>
       $(document).ready(function(){
            $(".slideToggle").click(function(e){

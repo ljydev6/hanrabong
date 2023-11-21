@@ -113,7 +113,6 @@ public class LessonDao {
 				List<Lesson> result=new ArrayList<>();
 				try {
 					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterTime"));
-					System.out.println(sql);
 					pstmt.setString(1, keyword);
 					pstmt.setString(2, keyword);
 					rs=pstmt.executeQuery();
@@ -127,6 +126,25 @@ public class LessonDao {
 					close(pstmt);
 				}return result;
 			}
+			// 제목으로 필터한 레슨 다 나오게하기
+				public List<Lesson> printLessonByFilterTitle(Connection conn, String keyword){
+					PreparedStatement pstmt=null;
+					ResultSet rs=null;
+					List<Lesson> result=new ArrayList<>();
+					try {
+						pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterTitle"));
+						pstmt.setString(1, "%"+keyword+"%");
+						rs=pstmt.executeQuery();
+						while(rs.next()) {
+							result.add(getLesson(rs));
+						}
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}finally {
+						close(rs);
+						close(pstmt);
+					}return result;
+				}
 		// 리뷰순 정렬
 		public List<Lesson> printLessonByReviews(Connection conn, int cPage,int numPerpage){
 			PreparedStatement pstmt=null;

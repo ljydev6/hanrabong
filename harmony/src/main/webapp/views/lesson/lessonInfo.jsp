@@ -34,10 +34,11 @@
 %>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/lessonInfo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>
 	<section class="container w-50">
-        <div><h2><%=lesson.getBoardTitle() %></h2></div>
+        <div><h2 id="title"><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
 			<div class="upperBar">
 				<div class="category">
@@ -199,7 +200,7 @@
 
                 <div class="detailInfoSection">
                     	<div>
-	                        <div class="reviewInfo"> 리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
+	                        <div class="reviewInfo"> <i class="fa-solid fa-comment-dots"></i>&nbsp;리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-solid fa-binoculars"></i>&nbsp;조회수&nbsp;<%=lesson.getBoardView() %>회 </div>
 	                        <div class="detailInfoBar d-flex justify-content-center gap-3">
 	                            <button id="areaBtn">지역정보</button>
 	                            <button id="lessonBtn">레슨정보</button>
@@ -357,6 +358,33 @@
 		</div>
 	</section>
 	<script>
+		let observer = new IntersectionObserver((e)=>{
+			/* 감시중인 박스가 화면에 등장하면 여기 코드를 실행해준다 */
+			e.forEach((boxs)=>{
+				if (boxs.isIntersecting) {
+					boxs.target.style.opacity = 1;
+				} else {
+					boxs.target.style.opacity = 0;
+				}
+			});
+		});
+		let div = document.querySelectorAll('div');
+		console.log(div.length);
+		for (let i = 0; i < div.length; i++) {
+			observer.observe(div[i])
+		};
+		
+		/* 내가원하는 html요소를 감시해줌 */
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			new TypeIt('#title')
+			.pause(1000)
+			.go();
+		});
+	</script>
+	
+	<script>
 		$(".comment-editor>form>textarea[name=content]").click(e=>{
 			if (<%=loginMember==null %>) {
 				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
@@ -364,29 +392,6 @@
 		});
 	</script>
 	<script>
-		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
-		console.log(rect); */
-		//스크롤
-		/* <button id="areaBtn">지역정보</button>
-	    <button id="lessonBtn">레슨정보</button>
-	    <button id="teacherBtn">강사정보</button>
-	    <button id="reviewBtn">리뷰</button> */
-	    
-		/* const areaBtn = document.getElementById('areaBtn');
-	    const lessonBtn = document.getElementById('lessonBtn');
-	    const teacherBtn = document.getElementById('teacherBtn');
-	    const reviewBtn = document.getElementById('reviewBtn');
-	    
-	    const areaInfo = document.getElementById('areaInfo');
-	    const lessonInfo = document.getElementById('lessonInfo');
-	    const teacherInfo = document.getElementById('teacherInfo');
-	    const reviewInfo = document.getElementById('reviewInfo'); */
-	
-	    /* areaBtn.addEventListener('click', () => {
-	    	 window.scrollTo({top: document.querySelector('#areaInfo').getBoundingClientRect().top, behavior: "smooth" }); 
-	    	window.scrollTo(0, document.querySelector('#areaInfo').getBoundingClientRect().bottom);
-	    }); */
-	    
 	    areaBtn.addEventListener('click', () => {
 	        window.scrollBy({top: areaInfo.getBoundingClientRect().top, behavior: 'smooth'});
 	    });
@@ -407,14 +412,7 @@
 	    
 	</script>
 	<script>
-		<%-- $(".saveLesson").click(()=>{
-			if (confirm('찜하시겠습니까?')==true) {
-				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')
-			} else {
-				return false;
-			}
-		}); --%>
-	
+	/* 시간선택변경시 */
 		$("#startTime").change(()=>{
 	        let startTime = ($("#startTime").val()).substr(0,2);
 	        let endTime = ($("#endTime").val()).substr(0,2);
