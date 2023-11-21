@@ -13,6 +13,7 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.dto.SaveLesson;
+import com.harmony.model.dto.MemberInfo;
 
 
 public class LessonService {
@@ -49,6 +50,13 @@ public class LessonService {
 	public List<Lesson> printLessonByFilterTime(String keyword){
 		Connection conn=getConnection();
 		List<Lesson> result=dao.printLessonByFilterTime(conn, keyword);
+		close(conn);
+		return result;
+	}
+	// 제목검색으로 필터
+	public List<Lesson> printLessonByFilterTitle(String keyword){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByFilterTitle(conn, keyword);
 		close(conn);
 		return result;
 	}
@@ -225,6 +233,12 @@ public class LessonService {
 		return result;
 	}
 	
+	public MemberInfo selectMemberInfoByTeacherNo(String no) {
+		Connection conn=getConnection();
+		MemberInfo result=dao.selectMemberInfoByTeacherNo(conn, no);
+		close(conn);
+		return result;
+	}
 	
 	
 	

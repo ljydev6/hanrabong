@@ -16,6 +16,8 @@ import com.harmony.admin.model.dto.NoticeAttachFile;
 import com.harmony.admin.model.dto.NoticeList;
 import com.harmony.admin.model.dto.QNAList;
 import com.harmony.admin.model.dto.Qna;
+import com.harmony.admin.model.dto.Report;
+import com.harmony.admin.model.dto.ReportList;
 
 public class AdminService {
 	private static AdminService service = new AdminService();
@@ -222,7 +224,65 @@ public class AdminService {
 
 	public Qna getQnaByQnaNo(int no) {
 		Connection conn = getConnection();
-		Qna result = null;
+		Qna result = AdminDao.getDao().getQnaByQnaNo(conn,no);
+		close(conn);
+		return result;
+	}
+
+	public List<String[]> getQnaCatList() {
+		Connection conn = getConnection();
+		List<String[]> result = AdminDao.getDao().getQnaCatList(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<String[]> getQnaProList() {
+		Connection conn = getConnection();
+		List<String[]> result = AdminDao.getDao().getQnaProList(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateQNA(Qna qna) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().updateQNA(conn,qna);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int getReportTotalData(String type, String keyword) {
+		Connection conn = getConnection();
+		int result = AdminDao.getDao().getReportTotalData(conn, type, keyword);
+		close(conn);
+		return result;
+	}
+
+	public List<ReportList> selectReportList(String type, String keyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<ReportList> result = AdminDao.getDao().getReportList(conn, type, keyword, cPage, numPerPage);
+		close(conn);
+		return result;
+	}
+
+	public Report selectReportByNo(int rptNo) {
+		Connection conn = getConnection();
+		Report result = AdminDao.getDao().selectReportByNo(conn, rptNo);
+		close(conn);
+		return result;
+	}
+
+	public List<String[]> getReportCategory() {
+		Connection conn = getConnection();
+		List<String[]> rptCatList = AdminDao.getDao().getReportCatList(conn);
+		close(conn);
+		return rptCatList;
+	}
+
+	public List<String[]> getReportProCode() {
+		Connection conn = getConnection();
+		List<String[]> result = AdminDao.getDao().getReportProCode(conn);
 		close(conn);
 		return result;
 	}

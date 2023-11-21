@@ -45,11 +45,13 @@ public class LeftBarFilterServlet extends HttpServlet {
 			lessons = new LessonService().printLessonByFilterPlace(keyword);
 		} else if (keyword.length()==7 || keyword.equals("협의가능")) { // 가격
 			lessons = new LessonService().printLessonByFilterPrice(keyword);
-		} else if (keyword.equals("12")||keyword.equals("18")||keyword.equals("24")){ // 시간대
+		} else if (keyword.length()==4){ // 시간대
 			lessons = new LessonService().printLessonByFilterTime(keyword);
 		}
 		
-		
+//		else if (keyword.equals("12")||keyword.equals("18")||keyword.equals("24")){ // 시간대
+//			lessons = new LessonService().printLessonByFilterTime(keyword);
+//		}
 		
 		request.setAttribute("lessons", lessons);
 		response.setContentType("application/json;charset=utf-8");

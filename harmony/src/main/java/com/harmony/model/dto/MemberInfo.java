@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 @Data
 public class MemberInfo {
+	private String teacherNo;
+	
 	private String memNo;
 	private String activityArea;
 	private String introduce;

@@ -17,27 +17,53 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.VBoardView;
 import com.harmony.ensemble.model.dto.VEnsList;
 
 public class EnsembleService {
 
 	private EnsembleDao dao = new EnsembleDao();
 
-//	public String selectInstNoByName(String instName) {
-//		Connection conn=getConnection();
-//		String result = dao.selectInstNoByName(conn, instName);
-//		close(conn);
-//		return result;
-//		
-//	}
-
 	
-	  public List<VEnsList> selectBoardList(int cPage,int numPerpage){ 
-			  Connection conn=getConnection();
-			  List<VEnsList> result=dao.selectBoardList(conn, cPage, numPerpage);
-			  close(conn); 
-			  return result; 
-		  }
+	public List<EnsembleBoardWantPart> selectWantPart(String boardNo) {
+		Connection conn = getConnection();
+		List<EnsembleBoardWantPart> wantPart = dao.selectWantPart(conn, boardNo);
+		close(conn);
+		return wantPart;
+	}
+	
+	public int insertApply(String wantPart) {
+		Connection conn = getConnection();
+		int result = dao.insertApply(conn, wantPart);
+		close(conn);
+		return result;
+	}
+	
+	
+	public List<VEnsList> filterValues(String[] values) {
+		Connection conn = getConnection();
+		List<VEnsList> result = null;
+		
+		for(String value : values) {
+			result = dao.filterValues(conn, value);
+		}
+		close(conn);
+		return result;
+	}
+
+	public VBoardView selectBoardView(String ensBoardNo) {
+		Connection conn = getConnection();
+		VBoardView board = dao.selectBoardView(conn, ensBoardNo);
+		close(conn);
+		return board;
+	}
+	
+  public List<VEnsList> selectBoardList(int cPage,int numPerpage){ 
+		  Connection conn=getConnection();
+		  List<VEnsList> result=dao.selectBoardList(conn, cPage, numPerpage);
+		  close(conn); 
+		  return result; 
+	  }
 	  
 	public int selectBoardCount() {
 		Connection conn=getConnection();
@@ -210,7 +236,7 @@ public class EnsembleService {
 		Connection conn = getConnection();
 
 		String seq = dao.selectBoardSeq(conn);
-
+		close(conn);
 		return seq;
 
 	}
@@ -219,12 +245,14 @@ public class EnsembleService {
 
 		Connection conn = getConnection();
 		String teamNo = dao.selectTeamNoByMemNo(conn, loginMemNo);
+		close(conn);
 		return teamNo;
 	}
 
 	public EnsembleTeam selectTeamByNo(String teamNo) {
 		Connection conn = getConnection();
 		EnsembleTeam team = dao.selectTeamByNo(conn, teamNo);
+		close(conn);
 		return team;
 	}
 

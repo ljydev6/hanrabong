@@ -41,7 +41,6 @@
                             <div>지역정보</div>
                             <!-- 시간대, 가격 등등... -->
                             <div>레슨정보</div>
-                            <div>강사정보</div>
                             <!-- teacherNum 회원정보(memNo)를 사용해 Join으로 강사번호 가져오기-->
                             <input type="hidden" value="<%=lesson.getTeacherNo() %>" name="teacherNum">
                         </div>
@@ -102,7 +101,6 @@
                                     
                                     <div>
                                         <div>희망 시작 시간</div>
-                                        <!-- <input class="form-select" type="time" name="startTime"> -->
                                         	<select class="form-select" name="startTime" id="startTime">
                                                 <option value="09:00:00.0">09:00</option>
                                                 <option value="10:00:00.0">10:00</option>
@@ -122,7 +120,6 @@
                                     </div>
                                     <div>
                                         <div>희망 종료 시간</div>
-                                        <!-- input class="form-select" type="time" name="endTime"> -->
                                             <select class="form-select" name="endTime" id="endTime">
                                                 <option value="09:00:00.0">09:00</option>
                                                 <option value="10:00:00.0">10:00</option>
@@ -153,15 +150,6 @@
                                     </div> 
                                 </div>
                             </div>
-                            <div class="detailsContainer">
-                                <div class="detailsContainer_title">
-                                    <div>강사정보</div>
-                                </div>
-                                <div class="detailsContainer_content">
-                                    <div>내용</div>
-                                </div>
-                            </div>
-                            <!-- 시간대, 가격 등등... -->
                         </div>
                     </div>
                 </div>
@@ -185,7 +173,7 @@
             for(let i=0; i<=startTime-9;i++){
                 $("#endTime option:eq("+i+")").attr("disabled", true);
             }
-        })
+        });
         
         const imgUpload = document.querySelector('.imgUpload');
         function getImageFiles(e) {

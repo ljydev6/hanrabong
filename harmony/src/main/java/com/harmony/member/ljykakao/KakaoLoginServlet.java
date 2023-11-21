@@ -32,7 +32,6 @@ public class KakaoLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String code = request.getParameter("code");
-		System.out.println(code);
 		String kakaoNum ="";
 		Member member =null;
 		// 로그인 후 리다이렉트 될 경로 지정
@@ -41,11 +40,9 @@ public class KakaoLoginServlet extends HttpServlet {
 	        // URL에 포함된 code를 이용하여 액세스 토큰 발급
 			HashMap<String,Object> tokens =KakaoService.getKakaoService().getKakaoAccessToken(code); 
 	        String accessToken = String.valueOf(tokens.get("accessToken"));
-	        System.out.println(accessToken);
 	        
 	        // 액세스 토큰을 이용하여 카카오 서버에서 유저 정보(카카오ID, 닉네임, 이메일) 받아오기
 	        HashMap<String, Object> userInfo = KakaoService.getKakaoService().getUserInfo(accessToken);
-	        System.out.println("login Controller : " + userInfo);
 	        
 	        // 카카오 아이디 정보
 	         kakaoNum = String.valueOf(userInfo.get("id"));

@@ -1,6 +1,7 @@
 package com.harmony.admin.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,6 +47,10 @@ public class AdminQnAServlet extends HttpServlet {
 			throw new HarmonyException("유효하지 않은 글 번호입니다.");
 		}
 		request.setAttribute("qna", qna);
+		List<String[]> category = AdminService.getService().getQnaCatList();
+		request.setAttribute("catList", category);
+		List<String[]> process = AdminService.getService().getQnaProList();
+		request.setAttribute("proList",process);
 		
 		request.getRequestDispatcher("/views/admin/views/qnaview.jsp").forward(request, response);
 	}

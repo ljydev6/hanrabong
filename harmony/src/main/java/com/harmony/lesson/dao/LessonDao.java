@@ -16,6 +16,7 @@ import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.dto.SaveLesson;
+import com.harmony.model.dto.MemberInfo;
 
 public class LessonDao {
 	private Properties sql=new Properties();
@@ -112,7 +113,6 @@ public class LessonDao {
 				List<Lesson> result=new ArrayList<>();
 				try {
 					pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterTime"));
-					System.out.println(sql);
 					pstmt.setString(1, keyword);
 					pstmt.setString(2, keyword);
 					rs=pstmt.executeQuery();
@@ -126,6 +126,25 @@ public class LessonDao {
 					close(pstmt);
 				}return result;
 			}
+			// 제목으로 필터한 레슨 다 나오게하기
+				public List<Lesson> printLessonByFilterTitle(Connection conn, String keyword){
+					PreparedStatement pstmt=null;
+					ResultSet rs=null;
+					List<Lesson> result=new ArrayList<>();
+					try {
+						pstmt=conn.prepareStatement(sql.getProperty("printLessonByFilterTitle"));
+						pstmt.setString(1, "%"+keyword+"%");
+						rs=pstmt.executeQuery();
+						while(rs.next()) {
+							result.add(getLesson(rs));
+						}
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}finally {
+						close(rs);
+						close(pstmt);
+					}return result;
+				}
 		// 리뷰순 정렬
 		public List<Lesson> printLessonByReviews(Connection conn, int cPage,int numPerpage){
 			PreparedStatement pstmt=null;
@@ -558,18 +577,23 @@ public class LessonDao {
 				close(pstmt);
 			} return result;
 		}
-	//	
-//		private BoardComment getBoardComment(ResultSet rs) throws SQLException{
-//			return BoardComment.builder()
-//					.boardCommentNo(rs.getInt("board_comment_no"))
-//					.level(rs.getInt("board_comment_level"))
-//					.boardCommentWriter(rs.getString("board_comment_writer"))
-//					.boardCommentContent(rs.getString("board_comment_content"))
-//					.boardRef(rs.getInt("board_ref"))
-//					.boardCommentRef(rs.getInt("board_comment_ref"))
-//					.boardCommentDate(rs.getDate("board_comment_date"))
-//					.build();
-//		}
+		
+		public MemberInfo selectMemberInfoByTeacherNo(Connection conn, String no) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			MemberInfo m = null;
+			try {
+				pstmt= conn.prepareStatement(sql.getProperty("selectMemberInfoByTeacherNo"));
+				pstmt.setString(1, no);
+				rs=pstmt.executeQuery();
+				if(rs.next()) m=getMemberInfo(rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			} return m;
+		}
 		
 		private Lesson getLesson(ResultSet rs) throws SQLException {
 			return Lesson.builder()
@@ -615,6 +639,24 @@ public class LessonDao {
 					.reviewPoint(rs.getInt("lesson_review_point"))
 					.review(rs.getString("lesson_review"))
 					.reviewEnrollDate(rs.getDate("review_enroll_date"))
+					.build();
+		}
+		
+		public static MemberInfo getMemberInfo(ResultSet rs) throws SQLException{
+			return MemberInfo.builder()
+					.teacherNo(rs.getString("TEACHER_NUMBER"))
+				    .memNo(rs.getString("MEM_NO"))
+					.activityArea(rs.getString("MEM_INFO_ACTIVITY_AREA"))
+					.introduce(rs.getString("MEM_INFO_INTRODUCE"))
+					.profilPhoto(rs.getString("MEM_INFO_PROFIL_PHOTO"))
+					.school(rs.getString("MEM_INFO_SCHOOL"))
+					.department(rs.getString("MEM_INFO_DEPARTMENT"))
+					.schoolState(rs.getString("MEM_INFO_SCHOOL_STATE"))
+					.name(rs.getString("MEM_INFO_NAME"))
+					.gender(rs.getString("MEM_INFO_GENDER"))
+					.age(rs.getInt("MEM_INFO_AGE"))
+					.email(rs.getString("MEM_INFO_EMAIL"))
+					.memCareer(rs.getString("MEM_INFO_CAREER"))
 					.build();
 		}
 	

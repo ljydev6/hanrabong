@@ -1,3 +1,5 @@
+<%@page import="com.harmony.lesson.dto.SaveLesson"%>
+<%@page import="com.harmony.model.dto.MemberInfo"%>
 <%@page import="com.harmony.lesson.dto.LessonComment"%>
 <%@page import="com.harmony.lesson.dto.LessonApply"%>
 <%@page import="java.util.Arrays"%>
@@ -12,6 +14,8 @@
 	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
 	int reviewsCount = (int)request.getAttribute("reviewsCount");
 	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
+	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
+	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -29,15 +33,22 @@
 	
 	//악기 변환
 	String inst = lesson.getInstNo();
+	//마감정보
+	char deadline = lesson.getBoardDeadline();
 %>
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/lessonInfo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>
 	<section class="container w-50">
-        <div><h2><%=lesson.getBoardTitle() %></h2></div>
+		<%if(deadline=='N'){ %>
+		<div class="recruit">모집중</div>
+		<%} else {%>
+		<div>마감</div>
+		<%} %>
+        <div><h2 id="title"><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
-            <!-- 카데고리, 수정, 삭제버튼 -->
 			<div class="upperBar">
 				<div class="category">
 					<input class="btn" value="악기 >" onclick="location.href='<%=request.getContextPath()%>/lesson/findLesson.do'" readonly>
@@ -62,10 +73,9 @@
                                       >
                  </div>
                  <!--  -->
-                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER")){ %>
-                <div class="mb-3">
-                <!-- 레슨게시글번호로 강사번호를 찾아야함 -->
-                <a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨 등록</a>
+                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
+                <div class="cud">
+                	<a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨등록</a>
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
@@ -75,15 +85,22 @@
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
-                        <%if(loginMember!=null){ %>
-                        <div class="saveLesson" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
-                            <i class="fa-solid fa-heart fa-xs"></i>
-                    	</div>
-                    	<%}else{ %>
-                    	<div class="saveLesson" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
-                            <i class="fa-solid fa-heart fa-xs"></i>
-                    	</div>
-                    	<%} %>
+	                        <%if(loginMember!=null){ %>
+		                        <div class="saveLessonPosition d-flex" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
+		                            <%if(heart!=null){ %>
+		                            	<i class="saveLesson fa-solid fa-heart fa-xs"></i>
+		                    			<div class="">찜하고 있어요!</div>
+			                    	<%}else{ %>
+			                    		<i class="fa-solid fa-heart fa-xs"></i>
+			                    		<div>찜해주세요 :)</div>
+			                    	<%} %>
+		                    	</div>
+	                    	<%}else{ %>
+		                    	<div class="saveLessonPosition d-flex" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
+		                            <i class="fa-solid fa-heart fa-xs"></i>
+		                    	</div>
+	                    	<%} %>	
+                    	
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
                         <%} else { %>
@@ -199,7 +216,7 @@
 
                 <div class="detailInfoSection">
                     	<div>
-	                        <div class="reviewInfo"> 리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-regular fa-eye"></i>&nbsp;<%=lesson.getBoardView() %> </div>
+	                        <div class="reviewInfo"> <i class="fa-solid fa-comment-dots"></i>&nbsp;리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-solid fa-binoculars"></i>&nbsp;조회수&nbsp;<%=lesson.getBoardView() %>회 </div>
 	                        <div class="detailInfoBar d-flex justify-content-center gap-3">
 	                            <button id="areaBtn">지역정보</button>
 	                            <button id="lessonBtn">레슨정보</button>
@@ -269,7 +286,15 @@
                                   <div>강사정보</div>
                               </div>
                               <div class="detailsContainer_content">
-                                  <div></div>
+                                  <div>
+                                  	활동지역 <%=tInfo.getActivityArea() %> <br>
+                                  	한줄소개 <%=tInfo.getIntroduce() %> <br>
+                                  	학교 <%=tInfo.getSchool() %> <br>
+                                  	학과 <%=tInfo.getDepartment() %> <br>
+                                  	재학정보 <%=tInfo.getSchoolState() %> <br>
+                                  	성별 <%=tInfo.getGender() %> <br>
+                                  	경력 <%=tInfo.getMemCareer() %> 
+                                  </div>
                               </div>
                           </div>
                           <!-- 리뷰 -->
@@ -297,8 +322,9 @@
                                		<%=l.getReview() %>
                                	</div>
                                	<br>
-                               	
+                               	<!-- 코멘트를 반복문으로 가져옴 -->
                                	<%for(LessonComment co : cos){ %>
+                               	<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같으면 가져오기-->
                                	<%if(!cos.isEmpty() && co.getReviewNo()==l.getReviewNo()) {%>
                                	<div class="teacher-comment">
                                		<div class="avataMemberStarDate">
@@ -314,8 +340,8 @@
 	                              	</div>
 	                              	<div class="review">
                                			<%=co.getCommentContent() %>
-                               			<%if(loginMember!=null) {%>
-                               			<button id="deleteReply" class="btn btn-warning" 
+                               			<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())) {%>
+                               			<button id="deleteReply" class="btn btn-sm btn-warning" 
                                			onclick="location.href='<%=request.getContextPath()%>/lesson/deletereply.do?reviewNo=<%=l.getReviewNo()%>&boardNo=<%=lesson.getBoardNo()%>'">삭제</button>
                                			<%} %>
                                		</div>
@@ -329,7 +355,8 @@
 											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
 											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
 											<br>
-											<%if(loginMember!=null){ %>
+											<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
+											<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같게만들어서 등록-->
 											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
 											<%} else{%>
 											<button class="btn btn-outline-warning" disabled>댓글등록</button>
@@ -347,6 +374,33 @@
 		</div>
 	</section>
 	<script>
+		let observer = new IntersectionObserver((e)=>{
+			/* 감시중인 박스가 화면에 등장하면 여기 코드를 실행해준다 */
+			e.forEach((boxs)=>{
+				if (boxs.isIntersecting) {
+					boxs.target.style.opacity = 1;
+				} else {
+					boxs.target.style.opacity = 0;
+				}
+			});
+		});
+		let div = document.querySelectorAll('div');
+		console.log(div.length);
+		for (let i = 0; i < div.length; i++) {
+			observer.observe(div[i])
+		};
+		
+		/* 내가원하는 html요소를 감시해줌 */
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			new TypeIt('#title')
+			.pause(1000)
+			.go();
+		});
+	</script>
+	
+	<script>
 		$(".comment-editor>form>textarea[name=content]").click(e=>{
 			if (<%=loginMember==null %>) {
 				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
@@ -354,29 +408,6 @@
 		});
 	</script>
 	<script>
-		/* const rect = document.querySelector('#areaInfo').getBoundingClientRect();
-		console.log(rect); */
-		//스크롤
-		/* <button id="areaBtn">지역정보</button>
-	    <button id="lessonBtn">레슨정보</button>
-	    <button id="teacherBtn">강사정보</button>
-	    <button id="reviewBtn">리뷰</button> */
-	    
-		/* const areaBtn = document.getElementById('areaBtn');
-	    const lessonBtn = document.getElementById('lessonBtn');
-	    const teacherBtn = document.getElementById('teacherBtn');
-	    const reviewBtn = document.getElementById('reviewBtn');
-	    
-	    const areaInfo = document.getElementById('areaInfo');
-	    const lessonInfo = document.getElementById('lessonInfo');
-	    const teacherInfo = document.getElementById('teacherInfo');
-	    const reviewInfo = document.getElementById('reviewInfo'); */
-	
-	    /* areaBtn.addEventListener('click', () => {
-	    	 window.scrollTo({top: document.querySelector('#areaInfo').getBoundingClientRect().top, behavior: "smooth" }); 
-	    	window.scrollTo(0, document.querySelector('#areaInfo').getBoundingClientRect().bottom);
-	    }); */
-	    
 	    areaBtn.addEventListener('click', () => {
 	        window.scrollBy({top: areaInfo.getBoundingClientRect().top, behavior: 'smooth'});
 	    });
@@ -397,14 +428,7 @@
 	    
 	</script>
 	<script>
-		<%-- $(".saveLesson").click(()=>{
-			if (confirm('찜하시겠습니까?')==true) {
-				location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')
-			} else {
-				return false;
-			}
-		}); --%>
-	
+	/* 시간선택변경시 */
 		$("#startTime").change(()=>{
 	        let startTime = ($("#startTime").val()).substr(0,2);
 	        let endTime = ($("#endTime").val()).substr(0,2);
@@ -438,7 +462,6 @@
 		} */
 			 
 	</script>
-	
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
@@ -477,4 +500,5 @@
 	    } 
 	});
 	</script>
+	
 <%@ include file="/views/common/footer.jsp" %>

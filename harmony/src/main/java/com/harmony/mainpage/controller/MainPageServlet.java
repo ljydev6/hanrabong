@@ -15,7 +15,7 @@ import com.harmony.admin.service.AdminService;
 /**
  * Servlet implementation class MainPageServlet
  */
-@WebServlet("/main.do")
+@WebServlet(urlPatterns = {"/main.do"})
 public class MainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
