@@ -36,6 +36,39 @@ public class EnsembleDao {
 		}
 	}
 	
+	public List<EnsembleBoardWantPart> selectWantPart(Connection conn, String boardNo) {
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		List<EnsembleBoardWantPart> wantPart = new ArrayList<EnsembleBoardWantPart>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectWantPart"));
+			pstmt.setString(1 ,boardNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) wantPart.add(getWantPart(rs));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return wantPart;
+	}
+	
+	public int insertApply(Connection conn, String wantPart) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertApply"));
+			pstmt.setString(1, wantPart);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	public List<VEnsList> filterValues(Connection conn, String value) {
 		PreparedStatement pstmt = null;
 		ResultSet rs =  null;
@@ -484,6 +517,12 @@ public class EnsembleDao {
 		return seq;
 	}
 
+	private EnsembleBoardWantPart getWantPart(ResultSet rs) throws SQLException{
+		return EnsembleBoardWantPart.builder()
+					.ensInstNo(rs.getString("ENS_INST_NO"))
+					.build();
+	}
+	
 	private VBoardView getVBoardView(ResultSet rs) throws SQLException{
 		return VBoardView.builder()
 						.ensWriter(rs.getString("ENS_WRITER"))

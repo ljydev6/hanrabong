@@ -62,15 +62,26 @@
 			<span>등록 날짜:</span>
 			<%= b.getEnsBoardDate() %>		
 		</div>
-			
+			<input type="hidden" value="<%=b.getEnsBoardNo() %>" name=boardNo>
 		<%}%>
 		
+		
 		<div class="apply_container">
-			<button type="button" onclick="" class="apply_btn">
+			<button type="button" onclick="apply_btn();" class="apply_btn">
 				신청하기
 			</button>
 		</div>
 	</div>
 
+
+
 </section>
+<script>
+
+const apply_btn =()=>{
+	open("<%=request.getContextPath()%>/ensemble/insert.do?", "_blank", "width=500, height=400");
+		
+}
+
+</script>
 <%@ include file="/views/common/footer.jsp" %>  

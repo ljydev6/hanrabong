@@ -25,6 +25,21 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+	public List<EnsembleBoardWantPart> selectWantPart(String boardNo) {
+		Connection conn = getConnection();
+		List<EnsembleBoardWantPart> wantPart = dao.selectWantPart(conn, boardNo);
+		close(conn);
+		return wantPart;
+	}
+	
+	public int insertApply(String wantPart) {
+		Connection conn = getConnection();
+		int result = dao.insertApply(conn, wantPart);
+		close(conn);
+		return result;
+	}
+	
+	
 	public List<VEnsList> filterValues(String[] values) {
 		Connection conn = getConnection();
 		List<VEnsList> result = null;
@@ -32,9 +47,10 @@ public class EnsembleService {
 		for(String value : values) {
 			result = dao.filterValues(conn, value);
 		}
+		close(conn);
 		return result;
 	}
-	
+
 	public VBoardView selectBoardView(String ensBoardNo) {
 		Connection conn = getConnection();
 		VBoardView board = dao.selectBoardView(conn, ensBoardNo);
@@ -220,7 +236,7 @@ public class EnsembleService {
 		Connection conn = getConnection();
 
 		String seq = dao.selectBoardSeq(conn);
-
+		close(conn);
 		return seq;
 
 	}
@@ -229,12 +245,14 @@ public class EnsembleService {
 
 		Connection conn = getConnection();
 		String teamNo = dao.selectTeamNoByMemNo(conn, loginMemNo);
+		close(conn);
 		return teamNo;
 	}
 
 	public EnsembleTeam selectTeamByNo(String teamNo) {
 		Connection conn = getConnection();
 		EnsembleTeam team = dao.selectTeamByNo(conn, teamNo);
+		close(conn);
 		return team;
 	}
 
