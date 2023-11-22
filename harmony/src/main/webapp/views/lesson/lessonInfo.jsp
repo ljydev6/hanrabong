@@ -80,6 +80,7 @@
                     <button id="deleteLesson">삭제하기</button>
                 </div>
                 <%} %> 
+                <button id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
@@ -110,7 +111,7 @@
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
-                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
+                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do?teacherNo=<%=lesson.getTeacherNo() %>" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
                         	<!-- 93번째줄때문에 로그인 해야함 분기처리중요!-->
                         	<%if(loginMember!=null){ %>
                         	<input type="hidden" value="<%=loginMember.getMemNo() %>" name="memNo">

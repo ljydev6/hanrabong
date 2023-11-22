@@ -2,6 +2,7 @@ package com.harmony.board.model.dao;
 
 import static com.harmony.common.JDBCTemplate.close;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.util.Properties;
 
 import com.harmony.board.free.model.dto.FreeBoard;
 import com.harmony.board.free.model.dto.FreeCommentBoard;
+import com.harmony.board.info.model.dto.InfoBoard;
 
 public class FreeBoardDao {
 	
@@ -26,17 +28,27 @@ public class FreeBoardDao {
 			e.printStackTrace();
 		}
 	}
-	public List<FreeBoard> selectFreeBoard(Connection conn, int cPage, int numPerpage) {
+	public List<FreeBoard> selectFreeBoard(Connection conn, int cPage, int numPerPage, String sortOption) {
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
 	    List<FreeBoard> result = new ArrayList<>();
+	    String sqlQuery = sql.getProperty("selectFreeBoard"); 
+
+	    if (sortOption.equals("oldest")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardOldest");
+	    } else if (sortOption.equals("views")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardByViews");
+	    } else if (sortOption.equals("comments")) {
+	        sqlQuery = sql.getProperty("selectFreeBoardByComments");
+	    }
+
 	    try {
-	        pstmt = conn.prepareCall(sql.getProperty("selectFreeBoard")); 
-	        pstmt.setInt(1, (cPage - 1) * numPerpage + 1);
-	        pstmt.setInt(2, cPage * numPerpage);
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setInt(1, (cPage - 1) * numPerPage + 1);
+	        pstmt.setInt(2, cPage * numPerPage);
 	        rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	            result.add(getFreeBoard(rs)); 
+	            result.add(getFreeBoard(rs));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -45,7 +57,6 @@ public class FreeBoardDao {
 	        close(pstmt);
 	    }
 	    return result;
-	    //페이지네이션을 위한 게시판 목록 조회
 	}
 	
 	public int selectFreeBoardCount(Connection conn) {
@@ -159,18 +170,192 @@ public class FreeBoardDao {
 	    
 	    return comments;
 	}
+	public List<FreeBoard> searchFreeBoards(Connection conn, String searchType, String query, int cPage, int numPerPage) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<FreeBoard> results = new ArrayList<>();
+	    String sqlQuery = "";
+
+	    int startRow = (cPage - 1) * numPerPage + 1;
+	    int endRow = cPage * numPerPage;
+
+	    switch (searchType) {
+	        case "title":
+	            sqlQuery = sql.getProperty("searchFreeBoardTitle");
+	            break;
+	        case "content":
+	            sqlQuery = sql.getProperty("searchFreeBoardContent");
+	            break;
+	        case "both":
+	            sqlQuery = sql.getProperty("searchFreeBoardBoth");
+	            break;
+	    }
+
+	    try {
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	            pstmt.setInt(3, startRow);
+	            pstmt.setInt(4, endRow);
+	        } else {
+	            pstmt.setInt(2, startRow);
+	            pstmt.setInt(3, endRow);
+	        }
+
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            results.add(getFreeBoard(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    return results;
+	}
+	public int getSearchResultCount(Connection conn, String searchType, String query) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    int count = 0;
+
+	    try {
+	        String sqlKey = "";
+	        switch (searchType) {
+	            case "title":
+	                sqlKey = "countSearchFreeBoardTitle";
+	                break;
+	            case "content":
+	                sqlKey = "countSearchFreeBoardContent";
+	                break;
+	            case "both":
+	                sqlKey = "countSearchFreeBoardBoth";
+	                break;
+	        }
+
+	        String sqlQuery = sql.getProperty(sqlKey);
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	        }
+
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+
+	    return count;
+	}
 	
+	public int updateFreeBoard(Connection conn, FreeBoard b) {
+        PreparedStatement pstmt=null;
+        int result=0;
+        try {
+            pstmt=conn.prepareStatement(sql.getProperty("updateFreeBoard"));
+            pstmt.setString(1, b.getFreBrdTitle());
+            pstmt.setString(2, b.getFreBrdContent());
+            pstmt.setString(3, b.getFreBrdTitleImg());
+            pstmt.setInt(4, b.getFreBrdNo());
+            result=pstmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+        return result;
+    }
+	
+	public int updateBoardReadCount(Connection conn, int no) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateFreeBoardReadcount"));
+			pstmt.setInt(1, no);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int deleteFreeBoard(Connection conn, int boardNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeBoardComment"));
+	        pstmt.setInt(1, boardNo);
+	        pstmt.executeUpdate();
+
+	        close(pstmt); 
+
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeBorad"));
+	        pstmt.setInt(1, boardNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt); 
+	    }
+	    return result;
+	}
+	
+	public int deleteFreeComment(Connection conn, int commentNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteFreeComment"));
+	        pstmt.setInt(1, commentNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt);
+	    }
+	    return result;
+	}
+	public int selectFreeBoardCommentCount(Connection conn, int boardNo) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int commentCount = 0;
+        try {
+            pstmt = conn.prepareStatement(sql.getProperty("selectFreeBoardCommentCount"));
+            pstmt.setInt(1, boardNo);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                commentCount = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+        return commentCount;
+    }
+	
+	
+	
+
 	
 	
 	private FreeBoard getFreeBoard(ResultSet rs) throws SQLException {
 	    return FreeBoard.builder()
-	            .freBrdNo(rs.getInt("fre_brd_no"))
-	            .freBrdWriter(rs.getString("fre_brd_writer"))
-	            .freBrdTitle(rs.getString("fre_brd_title"))
-	            .freBrdContent(rs.getString("fre_brd_content"))
-	            .freBrdTitleImg(rs.getString("fre_brd_title_img"))
-	            .freBrdDate(rs.getDate("fre_brd_date"))
-	            .freBrdViews(rs.getInt("fre_brd_views"))
+	            .freBrdNo(rs.getInt("FRE_BRD_NO"))
+	            .freBrdWriter(rs.getString("FRE_BRD_WRITER"))
+	            .freBrdTitle(rs.getString("FRE_BRD_TITLE"))
+	            .freBrdContent(rs.getString("FRE_BRD_CONTENT"))
+	            .freBrdTitleImg(rs.getString("FRE_BRD_TITLE_IMG"))
+	            .freBrdDate(rs.getDate("FRE_BRD_DATE"))
+	            .freBrdViews(rs.getInt("FRE_BRD_VIEWS"))
 	            .build();
 	}
 	//esultSet으로부터 데이터를 읽어와 FreeBoard 객체를 생성하는 메소드
@@ -188,5 +373,7 @@ public class FreeBoardDao {
 	            .build();
 	
   }
+	
 }
+	
 

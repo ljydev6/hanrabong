@@ -1,56 +1,142 @@
 
-/* 글쓰기 */
-
-.write-post-container {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .write-post-container h3 {
-    margin-bottom: 15px;
-  }
-  
-  .form-field {
-    margin-bottom: 10px;
-  }
-  
-  .form-field label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  /* 버튼 */
-  .radio-group {
-  display: flex;
-  flex-wrap: wrap;
+*{
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
-.radio-group label {
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.radio-group input[type="radio"] {
-  margin-right: 5px;
-}
-.pagination {
-    list-style: none;
+.main {
     display: flex;
-    padding: 0;
-    margin: 0;
-}
-
-.pagination li {
-    margin-right: 5px;
-}
-
-.pagination li a, .pagination li span {
-    text-decoration: none;
-    color: #333;
-    padding: 5px 10px;
-    border: 1px solid #ddd;
+    align-items: flex-start;
+    margin-left: 100px;
+    background-color: #ffffff;
     border-radius: 5px;
+    margin-top: 5%;
 }
 
+
+#postForm{
+	width: 50%;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    margin-right: 100px;
+}
+
+/* 정보게시판 자유게시판 DIV*/
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+/* 게시판 부분 DIV */
+.info-container > h3 a {
+    text-decoration: none; 
+    color: #333; 
+    font-size: 18px; 
+    transition: all 0.3s ease; 
+}
+
+/* 정보 게시판 선택 백그라운드 */
+.info-board{
+    background-color: #FFFACD;
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+/* 자유게시판 선택안되어 있을때 */
+.free-board{
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+/* 게시판에 마우스올리면 호버효과 */
+.info-container > h3 a:hover {
+    color: #EC8F5E;
+    transform: scale(1.1); 
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.info-container > h3 a {
+    text-decoration: none; 
+    color: #333; 
+    font-size: 18px; 
+    transition: all 0.3s ease; 
+}
+
+.info-board{
+    background-color: #FFFACD;
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+.free-board{
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+
+.write-title{
+	margin-top: 10px;
+    margin-bottom: 4px;
+    margin-left: 0%;
+    margin-right: 16px;
+    padding: auto;
+}
+
+#post-title {
+    width: 100%;
+    padding: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    border: 1px solid #c2c2c2; 
+}
+
+
+
+.form-field-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+}
+
+.form-field {
+    display: flex;
+    align-items: center;
+	padding: 5px; /* 내부 패딩 */
+	background-color: #9ACCFE; /* 배경색 */
+	border-radius: 5px;
+
+}
+
+.form-field > label {
+    flex: 1;
+    text-align: right;
+    margin-right: 12px;
+}
+
+.form-field > select {
+    flex: 2;
+    padding: 5px;
+    font-size: 14px;
+    border: none; 
+	background-color: transparent; 
+}

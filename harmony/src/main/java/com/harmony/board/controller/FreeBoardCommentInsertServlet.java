@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.board.free.model.dto.FreeCommentBoard;
 import com.harmony.board.model.service.FreeBoardService;
+import com.harmony.model.dto.Member;
 
 /**
  * Servlet implementation class FreeBoardCommentInsertServlet
@@ -32,6 +33,11 @@ public class FreeBoardCommentInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		        request.setCharacterEncoding("UTF-8");
 		        int freBrdNo = Integer.parseInt(request.getParameter("boardRef"));
+		        Member loginMember = (Member) request.getSession().getAttribute("loginMember");
+		        if(loginMember == null) {
+		            response.sendRedirect(request.getContextPath() + "/loginServlet.do");
+		            return;
+		        }
 		        String freComWriter = request.getParameter("freComWriter");
 		        String freComContent = request.getParameter("content");
 		        int freComLevel = Integer.parseInt(request.getParameter("level"));
@@ -52,7 +58,9 @@ public class FreeBoardCommentInsertServlet extends HttpServlet {
 
 		        if (result > 0) {
 		            response.sendRedirect(request.getContextPath() + "/board/freeboardView.do?no=" + freBrdNo); 
-		        } 
+		        } else {
+		            request.getRequestDispatcher("/views/common/harmonyExceptionPage.jsp").forward(request, response);
+		        }
 		    }
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

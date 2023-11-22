@@ -29,6 +29,27 @@ public class LessonDao {
 			e.printStackTrace();
 		}
 	}
+		// 레슨게시글 강사테이블조인해서 회원번호 가져오기
+			public Lesson applyFindMemNo(Connection conn,String no){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				Lesson result=null;
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("applyFindMemNo"));
+					pstmt.setString(1, no);
+					rs=pstmt.executeQuery();
+					if(rs.next()) {
+						result = Lesson.builder()
+								.memNo(rs.getString("MEM_NO"))
+								.build();
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
 		// 검색창에 있는 레슨 다 나오게하기
 		public List<Lesson> printLessonAll(Connection conn,int cPage,int numPerpage){
 			PreparedStatement pstmt=null;

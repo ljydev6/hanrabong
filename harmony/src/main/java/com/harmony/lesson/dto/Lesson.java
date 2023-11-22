@@ -24,4 +24,5 @@ public class Lesson {
 	
 	private int viewCnt;
 	private double reviewPoint;
+	private String memNo;
 }

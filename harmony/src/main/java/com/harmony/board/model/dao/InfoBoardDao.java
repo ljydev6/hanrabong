@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -233,9 +232,212 @@ public class InfoBoardDao {
 	    
 	    return comments;
 	}
-
-
 	
+	
+	public int deleteInfoBoard(Connection conn, int boardNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteInfoBoardComment"));
+	        pstmt.setInt(1, boardNo);
+	        pstmt.executeUpdate();
+
+	        close(pstmt); 
+
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteInfoBoard"));
+	        pstmt.setInt(1, boardNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt); 
+	    }
+	    return result;
+	}
+
+	public int deleteInfoComment(Connection conn, int commentNo) {
+	    PreparedStatement pstmt = null;
+	    int result = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("deleteInfoComment"));
+	        pstmt.setInt(1, commentNo);
+	        result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(pstmt);
+	    }
+	    return result;
+	}
+	
+	
+	public List<InfoBoard> searchInfoBoards(Connection conn, String searchType, String query, int cPage, int numPerPage) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<InfoBoard> results = new ArrayList<>();
+	    String sqlQuery = "";
+
+	    int startRow = (cPage - 1) * numPerPage + 1;
+	    int endRow = cPage * numPerPage;
+
+	    switch (searchType) {
+	        case "title":
+	            sqlQuery = sql.getProperty("searchInfoBoardTitle");
+	            break;
+	        case "content":
+	            sqlQuery = sql.getProperty("searchInfoBoardContent");
+	            break;
+	        case "both":
+	            sqlQuery = sql.getProperty("searchInfoBoardBoth");
+	            break;
+	    }
+
+	    try {
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	            pstmt.setInt(3, startRow);
+	            pstmt.setInt(4, endRow);
+	        } else {
+	            pstmt.setInt(2, startRow);
+	            pstmt.setInt(3, endRow);
+	        }
+
+	        rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            results.add(getBoard(rs));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    return results;
+	}
+	
+	public int getSearchResultCount(Connection conn, String searchType, String query) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    int count = 0;
+
+	    try {
+	        String sqlKey = "";
+	        switch (searchType) {
+	            case "title":
+	                sqlKey = "countSearchInfoBoardTitle";
+	                break;
+	            case "content":
+	                sqlKey = "countSearchInfoBoardContent";
+	                break;
+	            case "both":
+	                sqlKey = "countSearchInfoBoardBoth";
+	                break;
+	        }
+
+	        String sqlQuery = sql.getProperty(sqlKey);
+	        pstmt = conn.prepareStatement(sqlQuery);
+	        pstmt.setString(1, "%" + query + "%");
+	        if ("both".equals(searchType)) {
+	            pstmt.setString(2, "%" + query + "%");
+	        }
+
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+
+	    return count;
+	}
+	
+	public String selectCategoryNameByNo(Connection conn, String no) {
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String categoryName = null;
+	    try {
+	        pstmt = conn.prepareStatement(sql.getProperty("selectCategoryNameByNo"));
+	        pstmt.setString(1, no);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            categoryName = rs.getString("INF_CAT_NAME");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        close(rs);
+	        close(pstmt);
+	    }
+	    return categoryName;
+	}
+
+	public String selectTagNameByNo(Connection conn, String no) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String tagName = null;
+        try {
+            pstmt = conn.prepareStatement(sql.getProperty("selectTagNameByNo"));
+            pstmt.setString(1, no);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                tagName = rs.getString("INF_BRD_TAG_NAME");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+        }
+        return tagName;
+    }
+	
+	 public int selectBoardCommentCount(Connection conn, int boardNo) {
+	        PreparedStatement pstmt = null;
+	        ResultSet rs = null;
+	        int commentCount = 0;
+	        try {
+	            pstmt = conn.prepareStatement(sql.getProperty("selectBoardCommentCount"));
+	            pstmt.setInt(1, boardNo);
+	            rs = pstmt.executeQuery();
+	            if (rs.next()) {
+	                commentCount = rs.getInt(1);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            close(rs);
+	            close(pstmt);
+	        }
+	        return commentCount;
+	    }
+
+	 public int updateBoard(Connection conn, InfoBoard b) {
+	        PreparedStatement pstmt=null;
+	        int result=0;
+	        try {
+	            pstmt=conn.prepareStatement(sql.getProperty("updateInfoBoard"));
+	            pstmt.setString(1, b.getInfBrdTitle());
+	            pstmt.setString(2, b.getInfBrdContent());
+	            pstmt.setString(3, b.getInfBrdTitleImg());
+	            pstmt.setString(4, b.getInfBrdRegion());
+	            pstmt.setString(5, b.getInfBrdCatNo());
+	            pstmt.setString(6, b.getInfBrdTagNo());
+	            pstmt.setInt(7, b.getInfBrdNo());
+	            result=pstmt.executeUpdate();
+	        } catch(SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            close(pstmt);
+	        }
+	        return result;
+	    }
+
 	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
 		return InfoBoard.builder()
@@ -265,7 +467,6 @@ public class InfoBoardDao {
 	            .infComLevel(rs.getInt("INF_COM_LEVEL"))
 	            .build();
 	}
-
 	
 	
 }

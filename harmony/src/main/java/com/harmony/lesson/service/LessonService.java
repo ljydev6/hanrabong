@@ -240,6 +240,21 @@ public class LessonService {
 		return result;
 	}
 	
+	// 선생님번호로 멤버번호찾기
+	public Lesson applyFindMemNo(String no) {
+		Connection conn=getConnection();
+		Lesson result=dao.applyFindMemNo(conn, no);
+		close(conn);
+		return result;
+	}
+	// 레슨신청정보와 레슨신청일시 테이블을 조인하여 레슨신청정보가져오기
+//	public LessonApply showApplyInfo(int no) {
+//		Connection conn=getConnection();
+//		LessonApply result=dao.showApplyInfo(conn, no);
+//		close(conn);
+//		return result;
+//	}
+	
 	
 	
 	
