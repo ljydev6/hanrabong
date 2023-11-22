@@ -30,6 +30,26 @@ public class LessonDao {
 		}
 	}
 		// 검색창에 있는 레슨 다 나오게하기
+			public Lesson applyFindMemNo(Connection conn,String no){
+				PreparedStatement pstmt=null;
+				ResultSet rs=null;
+				Lesson result=null;
+				try {
+					pstmt=conn.prepareStatement(sql.getProperty("applyFindMemNo"));
+					rs=pstmt.executeQuery();
+					if(rs.next()) {
+						result = Lesson.builder()
+								.memNo(rs.getString("MEM_NO"))
+								.build();
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rs);
+					close(pstmt);
+				}return result;
+			}
+		// 검색창에 있는 레슨 다 나오게하기
 		public List<Lesson> printLessonAll(Connection conn,int cPage,int numPerpage){
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;

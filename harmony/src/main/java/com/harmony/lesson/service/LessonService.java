@@ -239,6 +239,12 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
+	public Lesson applyFindMemNo(String no) {
+		Connection conn=getConnection();
+		Lesson result=dao.applyFindMemNo(conn, no);
+		close(conn);
+		return result;
+	}
 	
 	
 	
