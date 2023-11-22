@@ -17,6 +17,7 @@
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
 	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
 	LessonApply apply = (LessonApply)request.getAttribute("apply");
+	LessonApply showApplyBtn = (LessonApply)request.getAttribute("showApplyBtn");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -82,9 +83,9 @@
                 </div>
                 <%} %>
                 <!-- 현재의 게시글넘버랑 로그인한멤버넘버랑 로그인한 멤버가 신청했을때만 보여줌 -->
-                <%-- <%if(apply!=null && apply.getBoardNo()==lesson.getBoardNo()) {%>  --%>
+                <%if(apply!=null && apply.getBoardNo()==lesson.getBoardNo()) {%>
                 <button id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
-            	<%-- <%} %> --%>
+            	<%} %>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
@@ -410,8 +411,8 @@
 	
 	<script>
 		$(".comment-editor>form>textarea[name=content]").click(e=>{
-			if (<%=loginMember==null %>) {
-				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
+			if (<%=loginMember==null %>|| <%=!loginMember.getMemAuthority().equals("TEACHER")%>) {
+				alert("선생님만 이용할 수 있는 서비스입니다.");
 			}
 		});
 	</script>

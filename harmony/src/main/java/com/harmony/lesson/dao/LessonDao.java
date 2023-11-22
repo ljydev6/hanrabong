@@ -667,6 +667,25 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
+		public LessonApply showApplyBtn(Connection conn,String memNo, int boardNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			LessonApply result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("showApplyBtn"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, memNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = getLessonApply(rs);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
 		
 		private Lesson getLesson(ResultSet rs) throws SQLException {
 			return Lesson.builder()

@@ -80,12 +80,16 @@ public class LessonInfoServlet extends HttpServlet {
 		if(loginMember!=null) {
 			// 찜이력가져오기
 			SaveLesson heart = new LessonService().saveLessonConfirm(no, loginMember.getMemNo());
-			System.out.println(heart);
 			request.setAttribute("heart", heart);
 			LessonApply apply = new LessonService().showApplyInfo(loginMember.getMemNo());
 			request.setAttribute("apply", apply);
+			// 레슨신청 & 레슨신청시간 & 레슨테이블조인해서 레슨신청했으면 신청정보보기 버튼표시
+			LessonApply showApplyBtn = new LessonService().showApplyBtn(loginMember.getMemNo(),no);
+			request.setAttribute("showApplyBtn", showApplyBtn);
+			System.out.println("신청정보" + apply);
 		}
 		// 레슨신청되어있는지 확인
+		
 		
 		request.setAttribute("teacherInfo", mi);
 		request.setAttribute("time", time);
