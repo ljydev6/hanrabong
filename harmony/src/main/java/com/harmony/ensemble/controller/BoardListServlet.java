@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.harmony.common.PageBarBuilder;
 import com.harmony.ensemble.model.dto.VEnsList;
 import com.harmony.ensemble.model.service.EnsembleService;
 
@@ -49,33 +50,12 @@ public class BoardListServlet extends HttpServlet {
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
 		
-		StringBuffer pageBar=new StringBuffer();
-		if(pageNo==1) {
-			pageBar.append("<span>[이전]</span>");
-		}else {
-			pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+(pageNo-1)+"'>");
-			pageBar.append("[이전]</a>");
-		}
 		
-		while(!(pageNo>pageEnd||pageNo>totalPage)) {
-			if(cPage==pageNo) {
-				pageBar.append("<span>"+pageNo+"</span>");
-			}else {
-				pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>");
-				pageBar.append(pageNo);
-				pageBar.append("</a>");
-			}
-			pageNo++;
-		}
 		
-		if(pageNo>totalPage) {
-			pageBar.append("<span>[다음]</span>");
-		}else {
-			pageBar.append("<a href='"+request.getRequestURI()+"?cPage="+pageNo+"'>");
-			pageBar.append("[다음]");
-			pageBar.append("</a>");
-		}
 		
+		String pageBar = PageBarBuilder.pageBarBuilder(cPage, numPerpage, totalData, pageBarSize, request.getRequestURI());
+		
+
 		System.out.println(boards);
 		request.setAttribute("boards", boards); 
 		request.setAttribute("pageBar",pageBar);
