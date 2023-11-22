@@ -136,7 +136,7 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 		    	});
 		
 		function editfreeBoard(boardNo) {
-		    window.location.href = '<%=request.getContextPath()%>/board/freeBoardEdit.do?no=' + boardNo;
+		    location.replace('<%=request.getContextPath()%>/board/FreeBoardEdit.do?no=' + boardNo);
 		}
 
 		    </script>

@@ -91,12 +91,14 @@ public class FreeBoardDao {
             if (rs.next()) {
                 freeBoard = getFreeBoard(rs); 
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close(rs);
             close(pstmt);
         }
+        
         return freeBoard;
         //특정 번호(no)의 게시글을 조회
     }
