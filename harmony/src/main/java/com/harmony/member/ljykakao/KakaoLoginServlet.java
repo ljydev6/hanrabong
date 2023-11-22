@@ -36,9 +36,11 @@ public class KakaoLoginServlet extends HttpServlet {
 		Member member =null;
 		// 로그인 후 리다이렉트 될 경로 지정
          String path = request.getContextPath()+"/main.do";
+        String serverInfo = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+        System.out.println(serverInfo);
 		try {
 	        // URL에 포함된 code를 이용하여 액세스 토큰 발급
-			HashMap<String,Object> tokens =KakaoService.getKakaoService().getKakaoAccessToken(code); 
+			HashMap<String,Object> tokens =KakaoService.getKakaoService().getKakaoAccessToken(code,serverInfo); 
 	        String accessToken = String.valueOf(tokens.get("accessToken"));
 	        
 	        // 액세스 토큰을 이용하여 카카오 서버에서 유저 정보(카카오ID, 닉네임, 이메일) 받아오기

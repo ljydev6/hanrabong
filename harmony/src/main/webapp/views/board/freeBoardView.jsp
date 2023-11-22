@@ -22,6 +22,9 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 			<h3 class="free">
 				<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 			</h3>
+			<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/notice.do">자유 게시판</a>
+			</h3>
 		</div>
 	</div>
 

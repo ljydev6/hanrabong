@@ -23,6 +23,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
 import com.harmony.ensemble.model.dto.VBoardView;
+import com.harmony.ensemble.model.dto.VChkApply;
 import com.harmony.ensemble.model.dto.VEnsList;
 
 public class EnsembleDao {
@@ -38,15 +39,35 @@ public class EnsembleDao {
 	}
 
 	
+	public List<VChkApply> selectApplyByBoardNo(Connection conn, String boardNo){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<VChkApply> applyList = new ArrayList<VChkApply>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectApplyByBoardNo"));
+			pstmt.setString(1, boardNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) applyList.add(getVChkApply(rs));
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		System.out.println("dao: " + applyList);
+		return applyList;
+				
+	
+	}
+	
 	public EnsembleBoardApply selectPartIndex(Connection conn, String boardNo, String instNo
 																		, String loginMemNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		EnsembleBoardApply apply = null;
 		
-		System.out.println("dao 실험실 selectPartIndex boardNo : " + boardNo);
-		System.out.println("dao 실험실 selectPartIndex instNo : " + instNo);
-		System.out.println("dao 실험실 selectPartIndex loginMemNo : " + loginMemNo);
 		try{
 			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndex"));
 			pstmt.setString(1, boardNo);
@@ -545,18 +566,22 @@ public class EnsembleDao {
 		return seq;
 	}
 
+	private VChkApply getVChkApply(ResultSet rs) throws SQLException{
+		return VChkApply.builder()
+				.ensBoardNo(rs.getString("ENS_BOARD_NO"))
+				.instName(rs.getString("INST_NAME"))
+				.memInfoEmail(rs.getString("mem_INFO_EMAIL"))
+				.ensApproval(rs.getString("ENS_APPROVAL"))
+				.ensPartIndex(rs.getString("ENS_PART_INDEX"))
+				.build();
+	}
+	
 	private EnsembleBoardApply getApply(ResultSet rs, String loginMemNo) throws SQLException{
 		return EnsembleBoardApply.builder()
 					.ensPartIndex(rs.getString("ENS_PART_INDEX"))
 					.ensMemNo(loginMemNo)
 					.build();
 	}
-	
-//	private EnsembleBoardWantPart getWantPart(ResultSet rs) throws SQLException{
-//		return EnsembleBoardWantPart.builder()
-//					.ensInstNo(rs.getString("ENS_INST_NO"))
-//					.build();
-//	}
 	
 	private VBoardView getVBoardView(ResultSet rs) throws SQLException{
 		return VBoardView.builder()

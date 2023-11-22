@@ -19,7 +19,7 @@ InfoBoard board = (InfoBoard) request.getAttribute("board");
 		<div class="board">
 			<div class="info-container">
 				<h3 class="info-board">
-				ddd
+				
 					<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
 				</h3>
 				<h3 class="free-board">
@@ -30,46 +30,42 @@ InfoBoard board = (InfoBoard) request.getAttribute("board");
 
 		<form id="postForm"
     action='<%=request.getContextPath()%>/board/boardEditEnd.do'
-    enctype="multipart/form-data" method="post"
+    method="post"
     onsubmit="return submitPost()">
     <input type="hidden" name="no" value="<%=board.getInfBrdNo()%>">
 
-			<div class="form-field">
-				<label>카테고리</label>
-				<div class="radio-group">
-					<label><input type="radio" name="category" value="cat1">
-						공연</label> <label><input type="radio" name="category" value="cat2">
-						입시</label> <label><input type="radio" name="category" value="cat3">
-						오디션</label> <label><input type="radio" name="category"
-						value="cat4"> 버스킹</label>
+			<div class="form-field-container">
+				<div class="form-field">
+					<select name="category">
+						<option value="cat1">공연</option>
+						<option value="cat2">입시</option>
+						<option value="cat3">오디션</option>
+						<option value="cat4">버스킹</option>
+					</select>
 				</div>
-			</div>
 
-			<div class="form-field">
-				<label>태그</label>
-				<div class="radio-group">
-					<label><input type="radio" name="tag" value="tag1">
-						정보</label> <label><input type="radio" name="tag" value="tag2">
-						후기</label> <label><input type="radio" name="tag" value="tag3">
-						TIP</label> <label><input type="radio" name="tag" value="tag4">
-						이벤트</label>
+				<div class="form-field">
+					<select name="tag">
+						<option value="tag1">정보</option>
+						<option value="tag2">후기</option>
+						<option value="tag3">TIP</option>
+						<option value="tag4">이벤트</option>
+					</select>
 				</div>
-			</div>
 
-			<div class="form-field">
-				<label>지역</label>
-				<div class="radio-group">
-					<label><input type="radio" name="region" value="서울">
-						서울</label> <label><input type="radio" name="region" value="경기도">
-						경기도</label> <label><input type="radio" name="region" value="강원도">
-						강원도</label> <label><input type="radio" name="region" value="충청북도">
-						충청북도</label> <label><input type="radio" name="region" value="충청남도">
-						충청남도</label> <label><input type="radio" name="region" value="전라북도">
-						전라북도</label> <label><input type="radio" name="region" value="전라남도">
-						전라남도</label> <label><input type="radio" name="region" value="경상북도">
-						경상북도</label> <label><input type="radio" name="region" value="경상남도">
-						경상남도</label> <label><input type="radio" name="region" value="제주도">
-						제주도</label>
+				<div class="form-field">
+					<select name="region">
+						<option value="서울">서울</option>
+						<option value="경기도">경기도</option>
+						<option value="강원도">강원도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="충청남도">충청남도</option>
+						<option value="전라북도">전라북도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="경상남도">경상남도</option>
+						<option value="제주도">제주도</option>
+					</select>
 				</div>
 			</div>
 			<div class="write-title">
@@ -91,9 +87,8 @@ InfoBoard board = (InfoBoard) request.getAttribute("board");
     nhn.husky.EZCreator.createInIFrame({
       oAppRef: oEditors,
       elPlaceHolder: "bo_content",
-      sSkinURI: "<%=request.getContextPath()%>
-	/board/smarteditor2/SmartEditor2Skin.html",
-				fCreator : "createSEditor2"
+      sSkinURI: "<%=request.getContextPath()%>/board/smarteditor2/SmartEditor2Skin.html",
+	  fCreator : "createSEditor2"
 			});
 
 	function submitPost() {

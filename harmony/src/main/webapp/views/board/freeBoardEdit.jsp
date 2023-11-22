@@ -12,3 +12,17 @@ FreeBoard board = (FreeBoard) request.getAttribute("FreeBoard");
     <textarea name="content"><%=board.getFreBrdContent()%></textarea>
     <button type="submit">저장하기</button>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ include file="/views/common/footer.jsp"%>

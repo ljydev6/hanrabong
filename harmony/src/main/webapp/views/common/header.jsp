@@ -14,13 +14,24 @@
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/footerStyle.css">
 	<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/js/jquery-3.7.1.min.js"></script>
+	<style>
+	@font-face {
+	    font-family: 'GangwonEdu_OTFBoldA';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	*{
+		font-family: 'GangwonEdu_OTFBoldA';
+	}
+	</style>
 </head>
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<div class="container d-flex justify-content-between align-items-center">
 				<a class="navbar-brand logo h1 align-self-center" href="<%=request.getContextPath()%>">
-					<img src="/harmony/image/slur_logo1.png" alt="이음줄로고">
+					<img src="<%=request.getContextPath() %>/image/slur_logo1.png" alt="이음줄로고">
 				</a>
 				<div class="align-self-center navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
 					id="harmony_main_nav">
@@ -41,7 +52,7 @@
 						</li>
 					<%}else{ %>
 						<li class="nav-item">
-							<a class="nav-link btn-warning position-relative" href="<%=request.getContextPath() %>/member/myPageServlet.do">
+							<a class="nav-link btn-warning position-relative" role="button" data-bs-toggle="modal" data-bs-target="#modalMessageBox">
 								<i class="nav-icon bi bi-envelope">
 									<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
 									  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>

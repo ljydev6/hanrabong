@@ -25,7 +25,7 @@ public class KakaoService {
 		return KakaoService.kservice;
 	}
 	
-	public HashMap<String, Object> getKakaoAccessToken (String code) {
+	public HashMap<String, Object> getKakaoAccessToken (String code, String serverInfo) {
 		
 		HashMap<String, Object> tokens = new HashMap<>();
 	    String accessToken = "";
@@ -40,12 +40,12 @@ public class KakaoService {
 	        // setDoOutput()은 OutputStream으로 POST 데이터를 넘겨 주겠다는 옵션이다.
 	        // POST 요청을 수행하려면 setDoOutput()을 true로 설정한다.
 	        conn.setDoOutput(true);
-
+	        
 	        // POST 요청에서 필요한 파라미터를 OutputStream을 통해 전송
 	        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 	        String sb = "grant_type=authorization_code" +
 	                "&client_id=7a71de50fa7db8d6bb2395a8a5fba504" + // REST_API_KEY
-	                "&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do" + // REDIRECT_URI
+	                "&redirect_uri="+serverInfo+"/member/kakaoLogin.do" + // REDIRECT_URI
 	                "&code=" + code;
 	        bufferedWriter.write(sb);
 	        bufferedWriter.flush();
@@ -98,8 +98,6 @@ public class KakaoService {
 
 	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-	        int responseCode = conn.getResponseCode();
-	        
 	        InputStream stream = conn.getErrorStream();
 		    if (stream != null) {
 		    	String response = "";

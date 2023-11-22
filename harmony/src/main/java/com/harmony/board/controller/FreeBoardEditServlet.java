@@ -38,7 +38,7 @@ public class FreeBoardEditServlet extends HttpServlet {
         FreeBoard board = service.selectFreeBoardByNo(no);
 
         request.setAttribute("board", board);
-        request.getRequestDispatcher("/views/board/FreeBoardEdit.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/board/freeBoardEdit.jsp").forward(request, response);
     }
 
 	/**

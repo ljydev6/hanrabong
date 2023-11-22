@@ -259,7 +259,7 @@
 		contentType:false,
 		success:data=>{
 			alert("등록 성공");
-			location.assign('<%=request.getContextPath()%>')
+			window.location.assign('<%=request.getContextPath()%>');
 		},
 		error:(r,e)=>{
 			alert("등록 실패");
