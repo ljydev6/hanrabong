@@ -34,7 +34,7 @@
 	<div class="submit_container">
 		<input type="button" id="submit_btn" onclick="sendData();" value="신청하기">
 	</div>
-	<input type="hidden" name="boardNo" id="boardNo" value="">
+<!-- 	<input type="hidden" name="boardNo" id="boardNo" value=""> -->
 <!-- </form> -->
 
 </body>

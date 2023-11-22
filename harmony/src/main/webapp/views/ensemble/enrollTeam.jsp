@@ -6,15 +6,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
     
     
-  <script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <%@ include file="/views/common/header.jsp" %>  
 <%@ page import= "java.util.List, 
 					com.harmony.ensemble.model.dto.Genre" %>
 <%
 	List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 %>
-
-<script src="http://code.jquery.com/jquery-3.7.1.js"></script> 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/enrollTeam.css" type="text/css">
 
 <section>

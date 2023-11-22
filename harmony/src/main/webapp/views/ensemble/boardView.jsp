@@ -74,7 +74,7 @@
 				신청하기
 			</button>
 			<%if(loginMember!=null && b.getEnsWriter().equals(loginMember.getMemNo())) {%>
-				<button type="button" onclick="check_apply();" class="check_apply">
+				<button type="button" onclick="check_apply();" class="check_apply" >
 					신청자 확인
 				</button>
 			<%} %>
@@ -89,7 +89,11 @@
 const apply_btn =()=>{
 
 	open("<%=request.getContextPath()%>/ensemble/insert.do", "_blank", "width=400, height=300");
-		
+}
+
+const check_apply =()=>{
+	open("<%=request.getContextPath()%>/ensemble/chkApply.do?boardNo="+$('#boardNo').val(), "_blank", "width=400, height=300");
+
 }
 
 </script>
