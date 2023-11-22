@@ -88,10 +88,9 @@ List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 					<%if(!music.isEmpty()){ 
 					for(EnsembleTeamMusic m : music){%>
 						<%=m.getMReName() %> <br>
-						 <audio src="https://artlist.io/royalty-free-music/song/beat-blitz/116358"
-							controls></audio> <br><br>
 					<%} 
 				}%>
+						 <audio src="https://artlist.io/royalty-free-music/song/midnight/73829" controls></audio> <br><br>
 				
 				</div>
 				<div class="hr_container">
