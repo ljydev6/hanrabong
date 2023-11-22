@@ -23,7 +23,7 @@
 </style>
 </head>
 <body>
-<form action = "<%=request.getContextPath()%>/ensemble/applyEnd.do">
+<%-- <form action = "<%=request.getContextPath()%>/ensemble/applyEnd.do"> --%>
 	<div class="guide">
 		<h4>지원 파트를 선택해주세요.</h4>
 	</div>
@@ -32,26 +32,38 @@
 	</div> 
 
 	<div class="submit_container">
-		<input type="submit" id="submit_btn">
+		<input type="button" id="submit_btn" onclick="sendData();" value="신청하기">
 	</div>
-	<input type="hidden" name="boardNo" id="boardNo" value="">
-</form>
+<!-- 	<input type="hidden" name="boardNo" id="boardNo" value=""> -->
+<!-- </form> -->
 
 </body>
 </html>
 <script>
  const insts = $("#part",opener.document).text(); 
- const test =$('#boardNo').val($("#boardNo", opener.document).val())
-	console.log(test);	
+//  const test =$('#boardNo').val($("#boardNo", opener.document).val())
+// 	console.log(test);	
  
  
 	let instArr = insts.split(',');	
 	
 	for(let i of instArr){
 		console.log(i);
-		const $radio = $("<label><input type='radio' name='inst' value='" + i + "'>"+i+"</label><br>");
+		const val=i.trim();
+		const $radio = $("<label><input type='radio' name='inst' value='" + val + "'>"+val+"</label><br>");
 		$('.choice').append($radio);
-	}
+	}	
 	
+	const sendData=()=>{
+		const checkedData=$("input[type=radio]:checked").val();
+		const boardNo=$("input[type=hidden]").val();
+		$.post('<%=request.getContextPath()%>/ensemble/applyEnd.do',
+				{inst:checkedData,boardNo:$("#boardNo", opener.document).val()})
+		.done(e=>{
+			alert("신청하기 성공");
+			close();
+		})
+		
+	}
 	
  </script>

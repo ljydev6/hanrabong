@@ -1,27 +1,27 @@
-package com.harmony.ensemble.controller;
+package com.harmony.lesson.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.harmony.ensemble.model.service.EnsembleService;
+import com.harmony.lesson.dto.LessonApply;
+import com.harmony.lesson.service.LessonService;
 import com.harmony.model.dto.Member;
 
 /**
- * Servlet implementation class ApplyEnd
+ * Servlet implementation class ShowApplyInfoServlet
  */
-@WebServlet("/ensemble/applyEnd.do")
-public class ApplyEndServlet extends HttpServlet {
+@WebServlet("/lesson/showApplyInfo.do")
+public class ShowApplyInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ApplyEndServlet() {
+    public ShowApplyInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +30,18 @@ public class ApplyEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EnsembleService es = new EnsembleService();
+		int boardNo = Integer.parseInt(request.getParameter("no"));
 		
-		String wantPart = request.getParameter("inst");
-		String instNo = es.selectInstNoByName(wantPart);
-	
 		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
-		String loginMemNo = loginMember.getMemNo();
 		
-		String boardNo = request.getParameter("boardNo");
-//		System.out.println("ApplyEndServlet boardNo: "+ boardNo);
+		String memNo = loginMember.getMemNo();
+		LessonApply applyInfo = new LessonService().showApplyInfo(memNo);
 		
-		int result = es.selectPartIndex(boardNo, instNo,loginMemNo);
+		request.setAttribute("applyInfo", applyInfo);
 		
-		
-//		request.getRequestDispatcher("/views/ensemble/boardList.do").forward(request, response);
-//		response.sendRedirect(request.getContextPath());
-		
+		request.getRequestDispatcher("/views/lesson/ShowApplyInfoInfo.jsp")
+			.forward(request, response);
+	
 	}
 
 	/**

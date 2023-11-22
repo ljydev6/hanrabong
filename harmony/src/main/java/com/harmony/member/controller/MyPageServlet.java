@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.member.service.MemberService;
+import com.harmony.model.dto.GenreAll;
+import com.harmony.model.dto.InterestAll;
 import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
-import com.harmony.model.dto.MemberVideo;
 
 
 /**
@@ -41,7 +42,8 @@ public class MyPageServlet extends HttpServlet {
 //				Map.of("genre",value,"genreNo",no),
 //				Map.of("genre",value,"genreNo",no)
 //				)
-		List<String> genreAll = new MemberService().selectGenreAll(); 
+		List<GenreAll> genreAll = new MemberService().selectGenreAll(); 
+		List<InterestAll> interestAll = new MemberService().selectInterestAll();
 //		List<String> interestAll= new MemberService();
 		System.out.println(genreAll);
 //		for(int i = 0; i<mi.getMemberVideo().size(); i++) {
@@ -52,6 +54,7 @@ public class MyPageServlet extends HttpServlet {
 		System.out.println(mi);
 		request.setAttribute("MemberInfo", mi);
 		request.setAttribute("GenreAll",genreAll);
+		request.setAttribute("InterestAll",interestAll);
 //		request.setAttribute("MemberVideo", mv);
 //		request.setAttribute("mv", mv);
 		request.getRequestDispatcher("/views/member/mypage.jsp").forward(request, response);

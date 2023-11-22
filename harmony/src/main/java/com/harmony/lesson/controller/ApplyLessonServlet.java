@@ -72,7 +72,7 @@ public class ApplyLessonServlet extends HttpServlet {
 			msg = "레슨 상담 신청에 성공하셨습니다. :)";
 			loc = "/lesson/findLesson.do";
 			SendMessage.sendMessage(Message.builder().sendMem(memNo).receiveMem(applyMemNo).catCode(catType.LESSON)
-					.content("<p>새로운 레슨 신청이 도착했습니다.<p><br><p><a href=\""+request.getContextPath()+"/lesson/레슨정보보기서블렛\">[바로가기]</a></p>")
+					.content("<p>새로운 레슨 신청이 도착했습니다.<p><br><p><a href=\""+request.getContextPath()+"/lesson/showApplyInfo.do?no=applyMemNo\">[바로가기]</a></p>")
 					.build());
 		} else {
 			msg = "신청 실패 :(";
