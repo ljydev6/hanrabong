@@ -96,18 +96,11 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 
 
 
-						<%
-						if (comments != null && !comments.isEmpty()) {
-						%>
-
-
+						<%if (comments != null && !comments.isEmpty()) { %>
 						<div class="comment-text-buttons">
-							<%
-							for (InfoCommentBoard comment : comments) {
-								if (comment.getInfComLevel() == 1) {
-							%>
-
-
+							<%for (InfoCommentBoard comment : comments) {
+								if (comment.getInfComLevel() == 1) {%>
+								<!-- 댓글레벨이 1일경우 -->
 							<div class="comment-content">
 								<div>
 									<img
@@ -126,10 +119,8 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 									</div>
 								</div>
 							</div>
-							<%
-							} else {
-							%>
-
+							<!-- 댓글레벨이 2일경우 -->
+							<%} else {%>
 							<div class="reply-container">
 								<div class="reply-user">
 									<img src="<%=request.getContextPath()%>/image/board/comment_user.png"> <span><%=comment.getInfComWriter()%>
@@ -142,14 +133,10 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
 									</div>
 								</div>
-								<%
-								}
-								}
-								%>
 							</div>
-							<%
-							}
-							%>
+								<%}
+								}%>
+							<%}%>
 						</div>
 					</div>
 				</div>
@@ -158,6 +145,12 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 	</div>
 
 	<script>
+	function editBoard(boardNo) {
+	    if(confirm('게시글을 수정하시겠습니까?')) {
+	        window.location.href = '<%=request.getContextPath()%>/board/editBoard.do?no=' + boardNo;
+	    }
+	}
+	
 	function confirmDeletion(boardNo) {
 	    if(confirm('게시글을 삭제하시겠습니까?')) {
 	        window.location.href = '<%=request.getContextPath()%>/board/deleteBoard.do?no=' + boardNo;
