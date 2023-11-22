@@ -31,6 +31,9 @@ if (request.getAttribute("searchResults") != null) {
 				<h3 class="free-board">
 					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/notice.do">공지 게시판</a>
+				</h3>
 			</div>
 		</div>
 
