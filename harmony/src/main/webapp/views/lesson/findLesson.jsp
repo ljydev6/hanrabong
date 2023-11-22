@@ -17,10 +17,10 @@
             <div class="w-100 searchFilter align-items-center d-flex justify-content-between">
                 <div class="p-3" style="color: white;">카테고리</div>
             
-                <div class="filterBtns p-2">
+                <div class="filterBtns p-2 align-items-center">
                 	<label>
 						<input id="searchTitle" type="text">
-						<i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+						<i class="fa-solid fa-magnifying-glass fa-lg" style="color: white;"></i>
                 	</label>
 					<button onclick="searchOrderByViews();">조회수</button>
 					<button onclick="searchOrderByDate()">최근등록순</button>
@@ -103,10 +103,12 @@
                         <%} %>
                         <div class="lessonListTitle"><%=l.getBoardTitle() %>&nbsp;</div>
                         <div class="lessonStars">
-                        	<i class="fa-solid fa-star"></i><%=l.getReviewPoint() %>
+                        	<i class="fa-solid fa-star"></i>
+                        	<span><%=l.getReviewPoint() %></span>
                         </div>
                         <div class="lessonView">
-                        	<i class="fa-solid fa-binoculars"></i><%=l.getBoardView() %>
+                        	<i class="fa-solid fa-binoculars"></i>
+                        	<span><%=l.getBoardView() %></span>
                         </div>
                        	<%if(l.getBoardDeadline()=='N'){ %>
 							<div class="recruit">모집중</div>
@@ -128,8 +130,6 @@
 	        				type:'GET',
 	        				dataType:"json",
 	       					success:function(data){
-	       						console.log(data);
-	       						
 	       						const pageBar = $("<div>")
 	       						pageBar.append("<%=request.getAttribute("pageBar") %>");
 	       						const lessonListBox = $("<div>");
@@ -160,14 +160,23 @@
 		       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const i = $("<i>");
-		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(i);
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
+		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							
 		       						lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
@@ -217,15 +226,23 @@
 		       								       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const viewi = $("<i>");
-		       						viewi.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(viewi);
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
 		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							
 	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
@@ -274,15 +291,23 @@
 		       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const i = $("<i>");
-		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(i);
-	       							
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
+		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
@@ -318,7 +343,6 @@
 	       							let imgPath = "<%=request.getContextPath()%>/upload/lesson/"+e['boardImg'];
 	       							let goToLessonInfoPath = "location.href='<%=request.getContextPath()%>/lesson/lessonInfo.do?no=boardNo'";
 	       							goToLessonInfoPath = goToLessonInfoPath.replace('boardNo',boardNo);
-	       							console.log(goToLessonInfoPath);
 		       						const lessonList = $("<div>");
 		       						lessonList.addClass('lessonList');
 		       						lessonList.attr('onclick', goToLessonInfoPath);
@@ -332,15 +356,23 @@
 		       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const i = $("<i>");
-		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(i);
-	       							
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
+		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 		       				
@@ -404,15 +436,23 @@
 		       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const i = $("<i>");
-		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(i);
-	       							
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
+		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 	       							
@@ -460,15 +500,23 @@
 		       						
 		       						const lessonView = $("<div>");
 		       						lessonView.addClass('lessonView');
-		       						const i = $("<i>");
-		       						i.addClass('fa-solid fa-binoculars fa-sm').text(" "+e['boardView'] );
-		       						lessonView.append(i);
-	       							
+		       						const viewsi = $("<i>");
+		       						const viewsSpan = $("<span>");
+		       						
+		       						viewsi.addClass('fa-solid fa-binoculars fa-sm');
+		       						viewsSpan.text(" "+e['boardView'] );
+		       						lessonView.append(viewsi);
+		       						lessonView.append(viewsSpan);
+		       						
 		       						const lessonStars = $("<div>");
 	       							lessonStars.addClass('lessonStars');
 	       							const starsi = $("<i>");
-	       							starsi.addClass('fa-solid fa-star').text(" "+e['reviewPoint']);
+	       							const starSpan = $("<span>");
+	       							
+	       							starsi.addClass('fa-solid fa-star')
+	       							starSpan.text(" "+e['reviewPoint']);
 	       							lessonStars.append(starsi);
+	       							lessonStars.append(starSpan);
 	       							
 	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
 	       							

@@ -49,6 +49,7 @@ public class InfoBoardViewServlet extends HttpServlet {
 	    //setAttribute 로 키값과 벨류값을 가져오고
 	    //jsp에서 getAttribute를 이용해 키값을 가져와 화면에 나타냄
 		
+        
 		request.getRequestDispatcher("/views/board/infoBoardView.jsp")
 		.forward(request, response);
 	}

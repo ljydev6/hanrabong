@@ -14,6 +14,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.harmony.board.exception.BadAccessException;
 import com.harmony.board.info.model.dto.InfoBoard;
 import com.harmony.board.model.service.InfoBoardService;
+import com.harmony.model.dto.Member;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -36,6 +37,8 @@ public class InfoBoardWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	    
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			throw new BadAccessException("잘못된 접근입니다. 관리자에게 문의하세요!");
 		}else {
@@ -47,10 +50,13 @@ public class InfoBoardWriteEndServlet extends HttpServlet {
 					request, path,1024*1024*100,"UTF-8",
 					new DefaultFileRenamePolicy());
 			
+			 Member loginMember = (Member) request.getSession().getAttribute("loginMember");
+			 String memNo = loginMember.getMemNo();
+			 
 			InfoBoard b=InfoBoard.builder()
-			    .infBrdWriter(mr.getParameter("infBrdWriter"))  
+		     	.infBrdWriter(memNo)
 			    .infBrdTitle(mr.getParameter("title"))  
-			    .infBrdContent(mr.getParameter("content"))  
+			    .infBrdContent(mr.getParameter("bo_content"))  
 			    .infBrdTitleImg(mr.getFilesystemName("upfile"))  
 			    .infBrdRegion(mr.getParameter("region"))  
 			    .infBrdCatNo(mr.getParameter("category"))  

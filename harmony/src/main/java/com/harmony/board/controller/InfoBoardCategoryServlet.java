@@ -37,6 +37,8 @@ public class InfoBoardCategoryServlet extends HttpServlet {
         String region = request.getParameter("region");
 
         
+      
+        
         if (category == null) category = "";
         if (tag == null) tag = "";
         if (region == null) region = "";
@@ -56,6 +58,17 @@ public class InfoBoardCategoryServlet extends HttpServlet {
 
         List<InfoBoard> boards = new InfoBoardService().selectBoardByCategoryTagRegion(category, tag, region, cPage, numPerpage);
 
+        for (InfoBoard board : boards) {
+	        String categoryName = new InfoBoardService().selectCategoryNameByNo(board.getInfBrdCatNo());
+	        String tagName = new InfoBoardService().selectTagNameByNo(board.getInfBrdTagNo());
+	        int commentCount = new InfoBoardService().getCommentCount(board.getInfBrdNo());
+	        request.setAttribute("categoryName" + board.getInfBrdNo(), categoryName);
+	        request.setAttribute("tagName" + board.getInfBrdNo(), tagName);
+	        request.setAttribute("commentCount" + board.getInfBrdNo(), commentCount);
+
+	    }
+        
+        
         int totalData = new InfoBoardService().selectBoardCountByCategoryTagRegion(category, tag, region);
         int pageBarSize = 5;
 
