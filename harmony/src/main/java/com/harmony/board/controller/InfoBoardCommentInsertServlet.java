@@ -1,7 +1,6 @@
 package com.harmony.board.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.board.info.model.dto.InfoCommentBoard;
 import com.harmony.board.model.service.InfoBoardService;
+import com.harmony.model.dto.Member;
 
 /**
  * Servlet implementation class InfoBoardCommentInsertServlet
@@ -33,7 +33,12 @@ public class InfoBoardCommentInsertServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
     	int infBrdNo = Integer.parseInt(request.getParameter("boardRef"));
-        String infComWriter = request.getParameter("infComWriter");
+        Member loginMember = (Member) request.getSession().getAttribute("loginMember");
+        if(loginMember == null) {
+            response.sendRedirect(request.getContextPath() + "/loginServlet.do");
+            return;
+        }
+        String infComWriter = loginMember.getMemNo();
         String infComContent = request.getParameter("content");
         int infComLevel = Integer.parseInt(request.getParameter("level"));
         String infComNoRefStr = request.getParameter("infComNoRef");
