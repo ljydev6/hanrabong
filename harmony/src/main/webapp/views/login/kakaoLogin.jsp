@@ -197,7 +197,8 @@ margin-top: 150px;
   } 
  --%>
 function kakaoLogin() {
-	location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7a71de50fa7db8d6bb2395a8a5fba504&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do';
+	location.href = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=7a71de50fa7db8d6bb2395a8a5fba504&redirect_uri='+
+			'http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/member/kakaoLogin.do';
 }
 //카카오로그아웃  
 function kakaoLogout() {

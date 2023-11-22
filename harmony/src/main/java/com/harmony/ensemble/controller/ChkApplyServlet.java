@@ -15,7 +15,7 @@ import com.harmony.ensemble.model.service.EnsembleService;
 /**
  * Servlet implementation class CheckApplyServlet
  */
-@WebServlet("/ensemble/checkApply.do")
+@WebServlet("/ensemble/chkApply.do")
 public class ChkApplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,7 +37,7 @@ public class ChkApplyServlet extends HttpServlet {
 		List<VChkApply> applyList = es.selectApplyByBoardNo(boardNo);
 		
 		request.setAttribute("applyList", applyList);
-		request.getRequestDispatcher("/views/ensemble/checkApply.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/ensemble/chkApply.jsp").forward(request, response);
 	}
 
 	/**
