@@ -46,7 +46,7 @@
 								<%break; 
 								} %>
 							</td>
-							<td class="px-4 py-1 text-sm" id="list-status">
+							<td class="px-4 py-1 text-sm">
 							<%switch(r.getProCode()){ 
 								case "100": %>
 								<span class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">
@@ -54,15 +54,25 @@
 		                        </span>
 								<%break; 
 								case "200": %>
-								<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+								<span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
 		                          처리완료
 		                        </span>
 								<%break; 
+								case "300": %>
+								<span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+		                          처리지연
+		                        </span>
+		                        <%break; 
 								case "401": %>
 								<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
 		                          처리거절
 		                        </span>
 		                        <%break; 
+								case "402": %>
+								<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+		                          처리거절
+		                        </span>
+								<%break; 
 								} %>
 							</td>
 							<td class="px-4 py-1 text-xs"><%=r.getReporter() %></td>
@@ -91,7 +101,7 @@
 	<div
 		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
 		<div class="modal-content">
-			<form id="report-modal-form" method="post" onsubmit="doajax(event);">
+			<form id="report-modal-form" method="post">
 			<div class="modal-header bg-gray-50 dark:bg-gray-800">
 				<h1 class="modal-title fs-5 font-semibold tracking-wide text-left text-gray-500 dark:text-gray-400 ">신고 상세내역</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -168,8 +178,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary">처리하기</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			</div>
 			</form>
 		</div>

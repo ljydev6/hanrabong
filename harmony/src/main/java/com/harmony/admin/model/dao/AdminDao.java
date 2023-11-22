@@ -956,21 +956,4 @@ public class AdminDao {
 		}
 		return result;
 	}
-
-	public int processReport(Connection conn, Report report) {
-		PreparedStatement pstmt = null;
-		int result = -1;
-		try {
-			pstmt = conn.prepareStatement(sql.getProperty("processReport"));
-			pstmt.setString(1, report.getProCode());
-			pstmt.setString(2, report.getResult());
-			pstmt.setInt(3, report.getReportNo());
-			result = pstmt.executeUpdate();
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		return result;
-	}
 }
