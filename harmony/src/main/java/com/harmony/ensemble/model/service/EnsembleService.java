@@ -35,6 +35,14 @@ public class EnsembleService {
 		
 	}
 	
+	
+	public int changeApproval(String partIndex) {
+		Connection conn = getConnection();
+		int result = dao.changeApproval(conn, partIndex);
+		close(conn);
+		return result;
+	}
+	
 	public int selectPartIndex(String boardNo, String instNo,String loginMemNo) {
 		Connection conn = getConnection();
 		EnsembleBoardApply apply = dao.selectPartIndex(conn, boardNo, instNo, loginMemNo);

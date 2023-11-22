@@ -6,6 +6,9 @@ main{
 	height: 90vh;
 	font-family: 'Hi Melody', sans-serif;
   	font-size: 23px;
+  	
+  	display: flex;
+  justify-content: space-between; 
 }
 
 section{
@@ -22,6 +25,8 @@ section{
 	padding-top: 30%;
 	padding-bottom: 10%;
 	margin-left: 25%;
+	
+	
 }
 
 .btn_container{
@@ -47,6 +52,10 @@ section > div{
 	
 
 }
+p{
+	text-align: center;
+}
+
 
 .hr_container{
 	margin-left:26%;	

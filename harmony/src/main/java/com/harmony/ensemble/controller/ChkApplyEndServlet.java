@@ -29,13 +29,20 @@ public class ChkApplyEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json;charset=utf-8");
-		Gson gson = new Gson();
+//		response.setContentType("application/json;charset=utf-8");
+//		Gson gson = new Gson();
 		
 		EnsembleService es = new EnsembleService();
 	    
 //		gson.fromJson(request.getParameter("partIndex"), );
+		
+		String partIndex = request.getParameter("partIndex");
 	
+		int result = es.changeApproval(partIndex);
+		
+		if(result>0) System.out.println("수락 성공");
+		
+//		response.sendRedirect(request.getContextPath()+"/views/ensemble/chkApply.jsp");
 	}
 
 	/**

@@ -39,6 +39,23 @@ public class EnsembleDao {
 	}
 
 	
+	public int changeApproval(Connection conn, String partIndex) {
+		PreparedStatement pstmt = null;
+		int result=0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("changeApproval"));
+			pstmt.setString(1, partIndex);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
 	public List<VChkApply> selectApplyByBoardNo(Connection conn, String boardNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

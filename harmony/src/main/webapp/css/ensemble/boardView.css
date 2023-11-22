@@ -15,6 +15,10 @@ section{
 	display: flex;
 /*	border: 1px solid red;*/
 /*	flex-direction: row;*/
+
+
+ display: flex;
+  justify-content: space-between;
 }
 
 .title{
@@ -28,6 +32,7 @@ section{
 	display: flex;
 /*	border: 1px solid darkblue;*/
 	width: 90%;
+	
 }
 
 .teamName{
@@ -45,7 +50,6 @@ section{
     border: none;
     color:white;
     border-radius: 10%;
-/*    border: 1px solid darkblue;*/
     margin-right: 50px; 
     font-size: 18px;
 }
@@ -100,6 +104,9 @@ span{
 	padding: 2%;
 	text-align: center;
 /*	border : 1px solid blue;*/
+
+	  margin: auto; 
+
 }
 
 .board_container div{

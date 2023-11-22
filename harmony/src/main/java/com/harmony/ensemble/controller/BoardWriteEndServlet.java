@@ -43,7 +43,7 @@ public class BoardWriteEndServlet extends HttpServlet {
 		EnsembleService es = new EnsembleService();
 		
 		if(!ServletFileUpload.isMultipartContent(request)) {
-			throw new IllegalArgumentException("노!");
+			throw new IllegalArgumentException("BoardWriteEndServlet FileUpload Error");
 			
 		}else {
 				String path=getServletContext().getRealPath("/upload/ensemble/");

@@ -15,44 +15,55 @@
 </head>
 <body>
 
+<form action="<%=request.getContextPath() %>/ensemble/chkApplyEnd.do">
 
 <%if(!applyList.isEmpty()){ 
 	int index=0;
 	for(VChkApply a : applyList){%>
-		<%=a.getMemInfoEmail() %>	
-		<%=a.getInstName() %>
-		
-		<input type="hidden" value="<%=a.getEnsPartIndex() %>"  id="partIndex" name="partIndex">
-		<div>
-			<span>[</span>
-			<label>
-			    <input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='Y' style="display:none" id="<%=a.getEnsPartIndex() %>">
-				<span class="single_chk_span">수락</span>
-			</label>
-			<span>/</span>
-			<label>
-			 	<input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='N' style="display:none" id="<%=a.getEnsPartIndex() %>">
-				<span class="single_chk_span">거절</span>
-			</label>
-			<span>]</span>
+		<%if(!a.getEnsApproval().equals('Y')){ %>
+			<%=a.getMemInfoEmail() %>	
+			<%=a.getInstName() %>
+			
+			<input type="hidden" value="<%=a.getEnsPartIndex() %>"  id="partIndex" name="partIndex">
+			
+			<input type="submit" value="수락"> 
 			<br>
-		</div>
+		<% }%>
+<!-- 		<div> -->
+<!-- 			<span>[</span> -->
+<!-- 			<label> -->
+<%-- 			    <input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='Y' style="display:none" id="<%=a.getEnsPartIndex() %>"> --%>
+<!-- 				<span class="single_chk_span">수락</span> -->
+<!-- 			</label> -->
+<!-- 			<span>/</span> -->
+<!-- 			<label> -->
+<%-- 			 	<input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='N' style="display:none" id="<%=a.getEnsPartIndex() %>"> --%>
+<!-- 				<span class="single_chk_span">거절</span> -->
+<!-- 			</label> -->
+<!-- 			<span>]</span> -->
+<!-- 			<input type="button" class="permit" onclick="permit();" value="수락"> -->
+			
+<!-- 		</div> -->
 		
 		<%}	
 	} %>
 	
-		<div class="submit_container">
-			<input type="button" id="submit_btn" onclick="sendData();" value="완료">
-		</div>
+	<input type="button" onclick="close_popup();" value="닫기">
 	
 	
-
+<!-- 		<div class="submit_container"> -->
+<!-- 			<input type="button" id="submit_btn" onclick="sendData();" value="완료"> -->
+<!-- 		</div> -->
+	
+	
+</form>
 </body>
 
 <script>
 
-
-
+const close_popup =()=>{
+	window.close();
+}
 
 $(document).ready(function(){
 	$('.single_chk_span').click(function(){

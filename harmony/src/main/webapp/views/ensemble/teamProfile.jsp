@@ -102,12 +102,12 @@ List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 					<%=team.getEnsTeamInfo() %>		
 					
 				</div>
-				<div class="hr_container">
-					<hr>
-				</div>		
-				<div class="comments_container">
-					<p><b>댓글 보기</b></p>
-				</div>
+<!-- 				<div class="hr_container"> -->
+<!-- 					<hr> -->
+<!-- 				</div>		 -->
+<!-- 				<div class="comments_container"> -->
+<!-- 					<p><b>댓글 보기</b></p> -->
+<!-- 				</div> -->
 				
 			<%} %>
 			</div>
