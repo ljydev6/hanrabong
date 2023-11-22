@@ -29,7 +29,7 @@ public class LessonDao {
 			e.printStackTrace();
 		}
 	}
-		// 검색창에 있는 레슨 다 나오게하기
+		// 레슨게시글 강사테이블조인해서 회원번호 가져오기
 			public Lesson applyFindMemNo(Connection conn,String no){
 				PreparedStatement pstmt=null;
 				ResultSet rs=null;
