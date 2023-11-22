@@ -68,12 +68,12 @@ public class LessonService {
 		return result;
 	}
 	// 별점평균순정렬
-		public List<Lesson> printLessonByStarAvg(int cPage,int numPerpage){
-			Connection conn=getConnection();
-			List<Lesson> result=dao.printLessonByStarAvg(conn, cPage, numPerpage);
-			close(conn);
-			return result;
-		}
+	public List<Lesson> printLessonByStarAvg(int cPage,int numPerpage){
+		Connection conn=getConnection();
+		List<Lesson> result=dao.printLessonByStarAvg(conn, cPage, numPerpage);
+		close(conn);
+		return result;
+	}
 	public List<Lesson> printLessonByKeyword(String viewAndRecent,int cPage,int numPerpage){
 		Connection conn=getConnection();
 		List<Lesson> result=dao.printLessonByKeyword(conn, viewAndRecent, cPage, numPerpage);
@@ -142,16 +142,17 @@ public class LessonService {
 		Connection conn=getConnection();
 		int result=dao.applyLesson(conn, member);
 		int result2=dao.applyLessonTime(conn, member);
+		int result3 = dao.applyCurrentVal(conn);
 		
-		if(result>0 && result2>0) {
+		if(result>0 && result2>0 && result3>0) {
 			commit(conn);
 			// 신청정보의 currval 가져오기
-			result = dao.applyCurrentVal(conn);
 		}
 		else rollback(conn);
 		close(conn);
-		return result;
+		return result3;
 	}
+	
 	public int insertLesson(Lesson l) {
 		Connection conn=getConnection();
 		int result=dao.insertLesson(conn, l);
@@ -258,7 +259,18 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
-	
+	public LessonApply showApplyInfoByNo(String memNo) {
+		Connection conn=getConnection();
+		LessonApply result=dao.showApplyInfoByNo(conn, memNo);
+		close(conn);
+		return result;
+	}
+	public LessonApply showApplyBtn(String memNo, int boardNo) {
+		Connection conn=getConnection();
+		LessonApply result=dao.showApplyBtn(conn, memNo, boardNo);
+		close(conn);
+		return result;
+	}
 	
 	
 	

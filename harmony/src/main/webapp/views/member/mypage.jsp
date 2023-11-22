@@ -31,6 +31,8 @@
 		height:150px;
 		border-radius:100px;
 	}
+	
+	
 </style>
 <form action="<%=request.getContextPath()%>/member/mypage.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="memNo" value=<%=mi.getMemNo() %>>
@@ -43,7 +45,7 @@
 				<span>프로필사진</span>
 			</div>
 			<div class="col-8 my-content">
-				<img src="<%=request.getContextPath() %>/image/profile/profile.png"
+				<img src="<%=request.getContextPath() %>/upload/<%=mi.getProfilPhoto() %>"
 					width="150" height="150" id="profile" >
 					<input type="file" id="profiledata" name="profilephoto">
 				
@@ -118,15 +120,18 @@
 			<div class="col-4 my-title">
 				<span>악기</span>
 			</div>
-			<div class="col-8 my-content">
+			<div class="col-8 my-content d-flex row row-col-8">
 					<%if(!ia.isEmpty()){
 					for(InterestAll interest : ia){%>
+			<div class="col-auto">
 					<label>
 						<input type="checkbox" name="interest"  
 						value="<%=interest.getInstCode()%>" 
 						<%= Arrays.asList(mi.getInterest()).contains(interest.getInstName())?"checked":"" %>>
 						<%=interest.getInstName()%>
 					</label>
+				</div>
+					
 				<%	}
 				}%>
 			</div>
@@ -160,13 +165,14 @@
 				<span>연주영상</span>
 			</div>
 			<div class="col-8 my-content">
-			<input type="file" name="video" value="">
-
-			<%-- <% for(MemberVideo video : mi.getMemberVideo()) { %>
+			 <input type="file" name="video" value=""> <button type="button" class="vidoeplus">추가</button>
+			 <% for(MemberVideo video : mi.getMemberVideo()) {%>
+    		<%if(video.getVideoLink()!=null&&video.getVideoType().equals("FILE")){ %>
     <video width="320" height="240" controls>
-        <source src="<%=request.getContextPath() %>/upload/<%= video.getVideoLink() %>" type="video/mp4">
+        <source src="<%=request.getContextPath() %>/upload/<%=video.getVideoLink() %>" type="video/mp4">
     </video>
-<% } %>  --%>
+<% }
+    }%>  
 			</div>
 		</div>	
 		<div class="row">
@@ -174,7 +180,10 @@
 				<span>연주링크</span>
 			</div>
 			<div class="col-8 my-content">
-				<input type="text" name="videolink" value="">
+			<%for(MemberVideo video: mi.getMemberVideo()){ %>
+			<%if(video.getVideoType().equals("LINK")&&video.getVideoLink()!=null){%>
+				<input type="text" name="videolink" value="<%=video.getVideoLink()%>">
+				<%} }%> 
 			</div>
 		</div>	
 		<div class="row">
@@ -202,7 +211,21 @@
 		<input type="submit" value="수정하기">
 		</form>
 		
-
+	<script>
+		
+		$(".vidoeplus").click((()=>{
+			let count=0;
+			return e=>{
+			//js createElement()
+			//jquery $("<p>")
+				console.log(e.target);
+				const $input=$("<input>")
+				.attr({"type":"file","name":"videofile"+(++count)})
+				.addClass("input");
+				$(e.target).next().after($input);
+			}
+		})());
+	</script>
 
 
 

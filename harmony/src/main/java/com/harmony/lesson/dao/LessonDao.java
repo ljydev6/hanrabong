@@ -336,11 +336,12 @@ public class LessonDao {
 		}
 		public int applyCurrentVal(Connection conn) {
 			PreparedStatement pstmt=null;
+			ResultSet rs = null;
 			int result=0;
 			try {
-				pstmt=conn.prepareStatement(sql.getProperty("applyLesson"));
-				pstmt.executeQuery();
-//				result = 
+				pstmt=conn.prepareStatement(sql.getProperty("applyCurrentVal"));
+				rs = pstmt.executeQuery();
+				if(rs.next()) result=rs.getInt(1);
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -629,6 +630,24 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
+		public LessonApply showApplyInfoByNo(Connection conn,String memNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			LessonApply result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("showApplyInfoByNo"));
+				pstmt.setString(1, memNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = getLessonApply(rs);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
 		// 레슨신청정보와 레슨신청일시 테이블을 조인하여 레슨신청정보가져오기 멤버넘버로찾기
 		public LessonApply showApplyInfo(Connection conn,String memNo){
 			PreparedStatement pstmt=null;
@@ -637,6 +656,25 @@ public class LessonDao {
 			try {
 				pstmt=conn.prepareStatement(sql.getProperty("showApplyInfo"));
 				pstmt.setString(1, memNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = getLessonApply(rs);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		public LessonApply showApplyBtn(Connection conn,String memNo, int boardNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			LessonApply result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("showApplyBtn"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, memNo);
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
 					result = getLessonApply(rs);

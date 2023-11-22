@@ -153,25 +153,26 @@ public class MemberService {
 				for(MemberMusic mm:mi.getMemberMusic()) {
 					mm.setMemNo(mi.getMemNo());
 					resultMusic=dao.updateMusic(conn,mm);
-					if(resultMusic==0) {
-						rollback(conn);
-						throw new IllegalArgumentException("입력실패");
+					if(resultMusic!=0) {
+						commit(conn);
 					}
 				}
 			}else {
-				resultMusic=1;
+				rollback(conn);
+
 			}
 			if(!mi.getMemberVideo().isEmpty()) {
+				dao.deleteVideo(conn,mi.getMemNo());
 				for(MemberVideo mv:mi.getMemberVideo()) {
 					mv.setMemNo(mi.getMemNo());
-					 resultVideo=dao.updateVideo(conn,mv);
-					if(resultVideo==0) {
-						rollback(conn);
-						throw new IllegalArgumentException("입력실패");
+					 resultVideo=dao.insertVideo(conn,mv);
+					if(resultVideo!=0) {
+						commit(conn);
 					}
 				}
 			}else {
-				resultVideo=1;
+				rollback(conn);
+				
 			}
 			
 			commit(conn);

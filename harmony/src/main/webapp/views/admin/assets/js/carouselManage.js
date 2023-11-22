@@ -125,7 +125,7 @@ const doajax = (e,type)=>{
 const doreset = (e)=>{
 	const $frm = $(e.target).closest('form');
 	const $img = $frm.find('img');
-	$img.attr('src','/harmony/image/carousel/'+$frm.find('[name="oldImage"]').val());
+	$img.attr('src',contextPath+'/image/carousel/'+$frm.find('[name="oldImage"]').val());
 	$frm[0].reset();
 }
 
@@ -152,7 +152,7 @@ const insertCarousel = (form)=>{
     $.ajax({
 		type:"post",
 		enctype:'multipart/form-data',
-	    url:'/harmony/admin/ajax/carouselManage.do',
+	    url:contextPath+'/admin/ajax/carouselManage.do',
 	    data:formData,
 	    dataType:'json',
 	    processData:false,
@@ -179,7 +179,7 @@ const editCarousel = (form)=>{
     $.ajax({
 		type:"post",
 		enctype:'multipart/form-data',
-	    url:'/harmony/admin/ajax/carouselManage.do',
+	    url:contextPath+'/admin/ajax/carouselManage.do',
 	    data:formData,
 	    dataType:'json',
 	    processData:false,
@@ -204,7 +204,7 @@ const deleteCarousel = (form)=>{
     $.ajax({
 		type:"post",
 		enctype:'multipart/form-data',
-	    url:'/harmony/admin/ajax/carouselManage.do',
+	    url:contextPath+'/admin/ajax/carouselManage.do',
 	    data:formData,
 	    dataType:'json',
 	    processData:false,

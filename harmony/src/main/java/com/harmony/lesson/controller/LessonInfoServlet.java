@@ -41,8 +41,6 @@ public class LessonInfoServlet extends HttpServlet {
 		//레슨 게시글번호
 		int no = Integer.parseInt(request.getParameter("no"));
 		
-		//강사번호 가져오기
-		
 		Cookie[] cookies = request.getCookies();
 		String readLesson ="";
 		boolean readResult = false;
@@ -77,15 +75,21 @@ public class LessonInfoServlet extends HttpServlet {
 		List<LessonComment> co = new LessonService().selectReviewComment(no);
 		// 강사정보 가져오기
 		MemberInfo mi = new LessonService().selectMemberInfoByTeacherNo(tNo);
-		// 로그인한 회원번호가져오기
 		
 		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
 		if(loginMember!=null) {
 			// 찜이력가져오기
 			SaveLesson heart = new LessonService().saveLessonConfirm(no, loginMember.getMemNo());
-			System.out.println(heart);
 			request.setAttribute("heart", heart);
+			LessonApply apply = new LessonService().showApplyInfo(loginMember.getMemNo());
+			request.setAttribute("apply", apply);
+			// 레슨신청 & 레슨신청시간 & 레슨테이블조인해서 레슨신청했으면 신청정보보기 버튼표시
+			LessonApply showApplyBtn = new LessonService().showApplyBtn(loginMember.getMemNo(),no);
+			request.setAttribute("showApplyBtn", showApplyBtn);
+			System.out.println("신청정보" + apply);
 		}
+		// 레슨신청되어있는지 확인
+		
 		
 		request.setAttribute("teacherInfo", mi);
 		request.setAttribute("time", time);
