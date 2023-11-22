@@ -45,7 +45,7 @@ public class KakaoService {
 	        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 	        String sb = "grant_type=authorization_code" +
 	                "&client_id=7a71de50fa7db8d6bb2395a8a5fba504" + // REST_API_KEY
-	                "&redirect_uri=http://localhost:8080/harmony/member/kakaoLogin.do" + // REDIRECT_URI
+	                "&redirect_uri=http://14.36.141.71:10010/GDJ71_harmony_semi/member/kakaoLogin.do" + // REDIRECT_URI
 	                "&code=" + code;
 	        bufferedWriter.write(sb);
 	        bufferedWriter.flush();
