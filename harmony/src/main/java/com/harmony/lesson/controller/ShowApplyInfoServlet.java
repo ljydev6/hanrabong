@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.service.LessonService;
+import com.harmony.model.dto.Member;
 
 /**
  * Servlet implementation class ShowApplyInfoServlet
@@ -31,7 +32,15 @@ public class ShowApplyInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo = Integer.parseInt(request.getParameter("no"));
 		
-//		LessonApply ap = new LessonService().showApplyInfo(boardNo);
+		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+		
+		String memNo = loginMember.getMemNo();
+		LessonApply applyInfo = new LessonService().showApplyInfo(memNo);
+		
+		request.setAttribute("applyInfo", applyInfo);
+		
+		request.getRequestDispatcher("/views/lesson/ShowApplyInfoInfo.jsp")
+			.forward(request, response);
 	
 	}
 
