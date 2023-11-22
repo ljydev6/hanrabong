@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.harmony.model.dao.MemberDao;
+import com.harmony.model.dto.GenreAll;
+import com.harmony.model.dto.InterestAll;
 import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
 import com.harmony.model.dto.MemberMusic;
@@ -23,9 +25,15 @@ public class MemberService {
 	close(conn);
 	return result;
 	}
-	public List<String> selectGenreAll() {
+	public List<GenreAll> selectGenreAll() {
 		Connection conn =getConnection();
-		List<String> result = dao.selectGenreAll(conn);
+		List<GenreAll> result = dao.selectGenreAll(conn);
+		close(conn);
+		return result;
+	}
+	public List<InterestAll> selectInterestAll(){
+		Connection conn = getConnection();
+		List<InterestAll> result = dao.selectInterestAll(conn);
 		close(conn);
 		return result;
 	}
@@ -126,15 +134,19 @@ public class MemberService {
 		try {
 		if(resultAdd>0) {
 			if(mi.getGenre()!=null) {
-				resultGenre = dao.updateGenre(conn,mi.getMemNo(),mi);
+				dao.deleteGenre(conn,mi.getMemNo());
+				resultGenre = dao.insertGenre(conn,mi.getMemNo(),mi);
 				if(resultGenre==0) {
-					resultGenre=1;
+					rollback(conn);
+					throw new IllegalArgumentException("장르입력실패");
 				}
 			}
 			if(mi.getInterest()!=null) {
-				resultInterest =dao.updateInstrument(conn,mi.getMemNo(),mi);
+				dao.deleteInstrument(conn,mi.getMemNo());
+				resultInterest =dao.insertInstrument(conn,mi.getMemNo(),mi);
 				if(resultInterest==0) {
-					resultInterest=1;
+					rollback(conn);
+					throw new IllegalArgumentException("악기입려실패");
 				}
 			}
 			if(!mi.getMemberMusic().isEmpty()) {
@@ -161,9 +173,7 @@ public class MemberService {
 			}else {
 				resultVideo=1;
 			}
-			if(resultGenre!=1||resultMusic!=1||resultVideo!=1||resultInterest!=1) {
-				rollback(conn);
-			}
+			
 			commit(conn);
 		}else {
 			rollback(conn);

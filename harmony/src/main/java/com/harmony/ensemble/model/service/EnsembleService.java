@@ -19,6 +19,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
 import com.harmony.ensemble.model.dto.VBoardView;
+import com.harmony.ensemble.model.dto.VChkApply;
 import com.harmony.ensemble.model.dto.VEnsList;
 
 public class EnsembleService {
@@ -26,6 +27,13 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+	public List<VChkApply> selectApplyByBoardNo(String boardNo){
+		Connection conn = getConnection();
+		List<VChkApply> applyList = dao.selectApplyByBoardNo(conn, boardNo);
+		close(conn);
+		return applyList;
+		
+	}
 	
 	public int selectPartIndex(String boardNo, String instNo,String loginMemNo) {
 		Connection conn = getConnection();

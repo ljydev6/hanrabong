@@ -39,12 +39,14 @@ public class ApplyEndServlet extends HttpServlet {
 		String loginMemNo = loginMember.getMemNo();
 		
 		String boardNo = request.getParameter("boardNo");
-		System.out.println("ApplyEndServlet boardNo: "+ boardNo);
+//		System.out.println("ApplyEndServlet boardNo: "+ boardNo);
 		
 		int result = es.selectPartIndex(boardNo, instNo,loginMemNo);
 		
 		
-		request.getRequestDispatcher("/views/ensemble.boardList.jsp/").forward(request, response);
+//		request.getRequestDispatcher("/views/ensemble/boardList.do").forward(request, response);
+//		response.sendRedirect(request.getContextPath());
+		
 	}
 
 	/**
