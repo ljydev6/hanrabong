@@ -95,5 +95,8 @@
 	          </div>
           </div>
         </main>
+        <script>
+        	const contextPath = "<%=request.getContextPath()%>";
+        </script>
         <script src="<%=request.getContextPath()%>/views/admin/assets/js/carouselManage.js"></script>
 <%@ include file="/views/admin/views/common/footer.jsp" %>
