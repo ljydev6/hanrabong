@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.harmony.model.dto.GenreAll;
+import com.harmony.model.dto.InterestAll;
 import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
 import com.harmony.model.dto.MemberMusic;
 import com.harmony.model.dto.MemberVideo;
-
-import oracle.jdbc.proxy.annotation.Pre;
 
 public class MemberDao {
 	private Properties sql = new Properties();
@@ -29,16 +29,16 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
-	public List<String> selectGenreAll(Connection conn) {
+	public List<GenreAll> selectGenreAll(Connection conn) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<String> genreAll=new ArrayList<String>();
+		List<GenreAll> genreAll=new ArrayList<GenreAll>();
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("selectGenreAll"));
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
-				genreAll.add(rs.getString("GENRE_NAME"));
+				genreAll.add(getGenreAll(rs));
 			}	
 			}catch(SQLException e) {
 				e.printStackTrace();
@@ -47,7 +47,23 @@ public class MemberDao {
 				close(pstmt);
 			}return genreAll;
 		}
-	
+	public List<InterestAll> selectInterestAll(Connection conn){
+		PreparedStatement pstmt= null;
+		ResultSet rs =null;
+		List<InterestAll> interestAll = new ArrayList<InterestAll>();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectInterestAll"));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				interestAll.add(getInterestAll(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return interestAll;
+	}
 	
 	public Member selectMemberByKakaoId(Connection conn, String kakaoNum) {
 		PreparedStatement pstmt=null;
@@ -275,6 +291,33 @@ public class MemberDao {
 			close(pstmt);
 		}return mi;
 	}
+	
+	public int deleteInstrument(Connection conn, String memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteInstrument"));
+			pstmt.setString(1,memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	public int deleteGenre(Connection conn, String memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteGenre"));
+			pstmt.setString(1,memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 	public List<MemberVideo> selectMemberVideoByMemberNo(Connection conn,String memNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs= null;
@@ -422,11 +465,10 @@ public class MemberDao {
 		int result=0;
 		try{
 			pstmt=conn.prepareStatement(sql.getProperty("updateGenre"));
-//			String[] genres = mi.getGenre();
 			
 			for(String genre : mi.getGenre()) {
 			pstmt.setString(1, memNo);
-			pstmt.setString(2, genre);
+			pstmt.setString(2, genre.trim());
 			pstmt.setString(3, memNo);
 			pstmt.addBatch();
 			pstmt.clearParameters();
@@ -490,6 +532,21 @@ public class MemberDao {
 						.memKakaoNum(rs.getString("mem_kakao_num"))
 						.build();
 	
+	}
+	public static GenreAll getGenreAll(ResultSet rs) throws SQLException {
+		return GenreAll.builder()
+						.genreCode(rs.getString("GENRE_CODE"))
+						.genreName(rs.getString("GENRE_NAME"))
+//						.memNo(rs.getString("MEM_NO"))
+						.build();
+	}
+	public static InterestAll getInterestAll(ResultSet rs) throws SQLException {
+		return InterestAll.builder()
+						.instCode(rs.getString("INST_CODE"))
+						.instName(rs.getString("INST_NAME"))
+//						.memNo(rs.getString("MEM_NO"))
+						.build();
+						
 	}
 	public static MemberInfo getMemberInfo(ResultSet rs) throws SQLException{
 		return MemberInfo.builder()

@@ -3,6 +3,7 @@ package com.harmony.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -60,6 +61,9 @@ public class MypageUpdate extends HttpServlet {
 		String gender =mr.getParameter("gender");
 		String activityarea = mr.getParameter("activityarea");
 		String interest[] = mr.getParameterValues("interest");
+		Arrays.stream(interest).forEach(e->{
+			System.out.println(e);
+		});
 		String genre[] = mr.getParameterValues("genre");
 		String introduce = mr.getParameter("introduce");
 		String videolink = mr.getParameter("videolink");

@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.harmony.model.dto.MemberInfo,java.util.List,com.harmony.model.dto.MemberVideo,java.util.Arrays" %>
+<%@ page import="com.harmony.model.dto.MemberInfo,java.util.List,com.harmony.model.dto.MemberVideo,java.util.Arrays,com.harmony.model.dto.GenreAll
+					,com.harmony.model.dto.InterestAll" %>
 
 <%@ include file="/views/common/header.jsp"%>
 <%MemberInfo mi = (MemberInfo)request.getAttribute("MemberInfo"); %>
 <% List<MemberVideo> memberVideos = (List<MemberVideo>) request.getAttribute("memberVideos"); %>
-<%List<String> genreAll = (List<String>)request.getAttribute("GenreAll"); %>
+<%List<GenreAll> genreAll = (List<GenreAll>)request.getAttribute("GenreAll"); %>
+<%List<InterestAll> ia =(List<InterestAll>)request.getAttribute("InterestAll"); %>
 <style>
 	.my-title,.my-content{
 		display:flex;
@@ -29,7 +31,7 @@
 		height:150px;
 		border-radius:100px;
 	}
-</style>list for문돌려 가져오기
+</style>
 <form action="<%=request.getContextPath()%>/member/mypage.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="memNo" value=<%=mi.getMemNo() %>>
 <input type="hidden" name="email" value=<%=mi.getEmail() %>>
@@ -99,8 +101,9 @@
 				<span>성별</span>
 			</div>
 			<div class="col-8 my-content">
-				남<input type="radio" name="gender" value="남">
-				여<input type="radio" name="gender" value="여">
+				남<input type="radio" name="gender" value="남" <%=mi.getGender().equals("남")?"checked":"" %>>
+				
+				여<input type="radio" name="gender" value="여" <%=mi.getGender().equals("여")?"checked":"" %>>
 			</div>
 		</div>	
 		<div class="row">
@@ -116,15 +119,16 @@
 				<span>악기</span>
 			</div>
 			<div class="col-8 my-content">
-				<%if(mi.getInterest()!=null){
-					for(String interest : mi.getInterest()){%>
+					<%if(!ia.isEmpty()){
+					for(InterestAll interest : ia){%>
 					<label>
-						<input type="checkbox" name="interest"  value="<%=interest%>">
-						<%=interest%>
+						<input type="checkbox" name="interest"  
+						value="<%=interest.getInstCode()%>" 
+						<%= Arrays.asList(mi.getInterest()).contains(interest.getInstName())?"checked":"" %>>
+						<%=interest.getInstName()%>
 					</label>
 				<%	}
 				}%>
-				
 			</div>
 		</div>	
 		<div class="row">
@@ -133,11 +137,11 @@
 			</div>
 			<div class="col-8 my-content">
 			
-				<%if(genreAll!=null){
-					for(String genre : genreAll){%>
+				<%if(!genreAll.isEmpty()){
+					for(GenreAll genre : genreAll){%>
 					<label>
-						<input type="checkbox" name="genre"  value="<%=genre%>"<%=Arrays.stream(mi.getGenre()).anyMatch(t->t.equals(genre))?"checked":"" %>>
-						<%=genre%>
+						<input type="checkbox" name="genre"  value="<%=genre.getGenreCode()%>"<%=Arrays.stream(mi.getGenre()).anyMatch(t->t.equals(genre.getGenreName()))?"checked":"" %>>
+						<%=genre.getGenreName()%>
 					</label>
 				<%	}
 				}%>
@@ -156,12 +160,13 @@
 				<span>연주영상</span>
 			</div>
 			<div class="col-8 my-content">
-				<input type="file" name="video" value="<%=mi.getMemberVideo()%>"><!-- //포문으로 돌리자 -->
-			<% for(MemberVideo video : mi.getMemberVideo()) { %>
+			<input type="file" name="video" value="">
+
+			<%-- <% for(MemberVideo video : mi.getMemberVideo()) { %>
     <video width="320" height="240" controls>
         <source src="<%=request.getContextPath() %>/upload/<%= video.getVideoLink() %>" type="video/mp4">
     </video>
-<% } %>
+<% } %>  --%>
 			</div>
 		</div>	
 		<div class="row">
