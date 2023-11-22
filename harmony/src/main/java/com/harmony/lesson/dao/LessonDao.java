@@ -336,11 +336,12 @@ public class LessonDao {
 		}
 		public int applyCurrentVal(Connection conn) {
 			PreparedStatement pstmt=null;
+			ResultSet rs = null;
 			int result=0;
 			try {
-				pstmt=conn.prepareStatement(sql.getProperty("applyLesson"));
-				pstmt.executeQuery();
-//				result = 
+				pstmt=conn.prepareStatement(sql.getProperty("applyCurrentVal"));
+				rs = pstmt.executeQuery();
+				if(rs.next()) result=rs.getInt(1);
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}finally {
@@ -621,6 +622,24 @@ public class LessonDao {
 					result = Lesson.builder()
 							.memNo(rs.getString("MEM_NO"))
 							.build();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		public LessonApply showApplyInfoByNo(Connection conn,String memNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			LessonApply result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("showApplyInfoByNo"));
+				pstmt.setString(1, memNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = getLessonApply(rs);
 				}
 			}catch(SQLException e) {
 				e.printStackTrace();

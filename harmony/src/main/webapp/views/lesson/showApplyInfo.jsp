@@ -8,16 +8,27 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<%	
+	//내가신청한 신청정보
 	Lesson lesson = (Lesson)request.getAttribute("lesson");
 	Lesson time = (Lesson)request.getAttribute("time");
-	List<LessonApply> reviews = (List<LessonApply>)request.getAttribute("review");
-	int reviewsCount = (int)request.getAttribute("reviewsCount");
-	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
-	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
+	LessonApply lessonApply = (LessonApply)request.getAttribute("lessonApplyInfo");
 	
-	//타임스탬프형식 변환
+	Timestamp AstartTime = (Timestamp)lessonApply.getLessonStartTime();
+	Timestamp AendTime = (Timestamp)lessonApply.getLessonEndTime();
+	
+	String AstartString = String.valueOf(AstartTime);
+	String AEndString = String.valueOf(AendTime);
+	
+	String AAstartTime = AstartString.substring(11, 16);
+	String AAendTime = AEndString.substring(11, 16);
+	
+	String[] AtimeStrings = lessonApply.getLessonDay();
+	String AtimeString = Arrays.toString(AtimeStrings);
+	
+	
+	 //타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
 	Timestamp TendTime = (Timestamp)time.getLessonEndTime();
 	
@@ -39,7 +50,7 @@
 <%@ include file="/views/common/header.jsp"%>
     <script src="https://kit.fontawesome.com/8f05e1d322.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/lessonInfo.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/lesson/showApplyInfo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b314c47810b31c3c487d6f6ad04d71b1&libraries=services"></script>
 	<section class="container w-50">
 		<%if(deadline=='N'){ %>
@@ -47,60 +58,18 @@
 		<%} else {%>
 		<div>마감</div>
 		<%} %>
-        <div><h2 id="title"><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
 			<div class="upperBar">
-				<div class="category">
-					<input class="btn" value="악기 >" onclick="location.href='<%=request.getContextPath()%>/lesson/findLesson.do'" readonly>
-	                <input class="btn" readonly type="text" 
-                                      <% switch (inst) {
-                                      	case "INST_1" :%>value="드럼";break;
-                                      <% case "INST_2" :%>value="베이스";break;
-                                      <% case "INST_3" :%>value="더블베이스";break;
-                                      <% case "INST_4" :%>value="기타";break;
-                                      <% case "INST_5" :%>value="피아노";break;
-                                      <% case "INST_6" :%>value="작곡";break;
-                                      <% case "INST_7" :%>value="색소폰";break;
-                                      <% case "INST_8" :%>value="트럼펫";break;
-                                      <% case "INST_9" :%>value="플룻";break;
-                                      <% case "INST_10" :%>value="바이올린";break;
-                                      <% case "INST_11" :%>value="첼로";break;
-                                      <% case "INST_12" :%>value="퍼커션";break;
-                                      <% case "INST_13" :%>value="보컬";break;
-                                      <% case "INST_14" :%>value="믹싱(DAW)";break;
-                                      <% case "INST_15" :%>value="ETC";break;
-                                      <%} %>
-                                      >
-                 </div>
-                 <!--  -->
-                <%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
+                 <div><h2>나의 상담 신청 정보<h2></div>
                 <div class="cud">
-                	<a href="<%=request.getContextPath()%>/lesson/enrollLesson.do?boardNo=<%=lesson.getBoardNo()%>">레슨등록</a>
-                    <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
-                    <button id="deleteLesson">삭제하기</button>
+                    <button style="color: blue">상담수락</button>
+                    <button style="color: red">상담거절</button>
                 </div>
-                <%} %> 
-                <button id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
                     <div class="imgContainer w-50">
                         <div class="detailImg">
-	                        <%if(loginMember!=null){ %>
-		                        <div class="saveLessonPosition d-flex" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
-		                            <%if(heart!=null){ %>
-		                            	<i class="saveLesson fa-solid fa-heart fa-xs"></i>
-		                    			<div class="">찜하고 있어요!</div>
-			                    	<%}else{ %>
-			                    		<i class="fa-solid fa-heart fa-xs"></i>
-			                    		<div>찜해주세요 :)</div>
-			                    	<%} %>
-		                    	</div>
-	                    	<%}else{ %>
-		                    	<div class="saveLessonPosition d-flex" onclick="alert('로그인 후 이용할 수 있는 서비스입니다.')">
-		                            <i class="fa-solid fa-heart fa-xs"></i>
-		                    	</div>
-	                    	<%} %>	
                     	
                         <%if(lesson.getBoardImg()!=null) {%>
                             <img alt="이미지" src="<%=request.getContextPath()%>/upload/lesson/<%=lesson.getBoardImg()%>" width="100%">
@@ -109,16 +78,47 @@
                         <%} %>
                         </div>
                     </div>
-                        
+                    <div class="submitContainer w-50">
+                        <div class="lessonSubmit d-flex flex-column">
+                        	<%if(loginMember!=null){ %>
+                        	<input type="hidden" value="<%=loginMember.getMemNo() %>" name="memNo">
+                        	<%} %>
+                        	<input type="hidden" value="<%=lesson.getBoardNo()%>" name="boardNo">
+                            <div class="labelBox d-flex flex-column p-4 mb-4">
+                                <div class="mb-3"><h5>상담신청 정보</h5></div>
+                               	  <div>
+                                      <div>장소</div>
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lessonApply.getApplyPlace() %>">
+                                  </div>
+                                  <div>
+                                      <div>시작 시간</div>
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=AAstartTime%>">
+                                  </div>
+
+                                  <div>
+                                      <div>종료 시간</div>
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=AAendTime%>">
+                                  </div>
+                                  <div>
+                                      <div>요일</div>
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=AtimeString%>">
+                                  </div>
+                                  <div>
+                                      <div>횟수</div>
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lessonApply.getApplyNumberOfTimes()%>">
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="detailInfoSection">
                     	<div>
-	                        <div class="reviewInfo"> <i class="fa-solid fa-comment-dots"></i>&nbsp;리뷰 <%=reviewsCount %>건 &nbsp; <i class="fa-solid fa-binoculars"></i>&nbsp;조회수&nbsp;<%=lesson.getBoardView() %>회 </div>
 	                        <div class="detailInfoBar d-flex justify-content-center gap-3">
+	                        	<button>선생님정보</button>
 	                            <button id="areaBtn">지역정보</button>
 	                            <button id="lessonBtn">레슨정보</button>
 	                            <button id="teacherBtn">강사정보</button>
-	                            <button id="reviewBtn">리뷰</button>
 	                            <div class="upup"><i class="fa-regular fa-circle-up fa-lg"></i></div>
 	                        </div>
 	                      	<div class="detailsContainer mt-3" id="areaInfo">
@@ -163,17 +163,17 @@
                                   
                                   <div>
                                       <div>시작 시간</div>
-                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=startTime %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=startTime%>">
                                   </div>
 
                                   <div>
                                       <div>종료 시간</div>
-                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=endTime %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=endTime%>">
                                   </div>
                                   
                                   <div>
                                       희망 요일
-                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=timeString %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=timeString%>">
                                   </div> 
                               </div>
                           </div>
@@ -190,81 +190,11 @@
                                   	학과 <%=tInfo.getDepartment() %> <br>
                                   	재학정보 <%=tInfo.getSchoolState() %> <br>
                                   	성별 <%=tInfo.getGender() %> <br>
-                                  	경력 <%=tInfo.getMemCareer() %> 
+                                  	경력 <%=tInfo.getMemCareer() %>
                                   </div>
                               </div>
                           </div>
                           <!-- 리뷰 -->
-                          <div class="rewiewContainer" id="reviewInfo">
-                              <div class="mb-3">리뷰</div>
-                              <%for(LessonApply l : reviews){ %>
-                              <div class="avataMemberStarDate">
-                              	<div><i class="fa-solid fa-user-astronaut fa-lg"></i></div>
-                              	<div class="memberStarDate">
-                              		<div>
-                               			<%=l.getMemNo() %>
-                               		</div>
-                               		<div class="starDate">
-                               			<%for(int i=0;i<l.getReviewPoint();i++){ %>
-                               				<i class="fa-solid fa-star"></i>
-                               			<%} %>
-                                		<%=l.getReviewPoint() %> |
-                                		<%=l.getReviewEnrollDate() %>
-                               		</div>
-                              	</div>
-                              </div>
-                              
-                              <div class="reviewContent">
-                               	<div class="review">
-                               		<%=l.getReview() %>
-                               	</div>
-                               	<br>
-                               	<!-- 코멘트를 반복문으로 가져옴 -->
-                               	<%for(LessonComment co : cos){ %>
-                               	<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같으면 가져오기-->
-                               	<%if(!cos.isEmpty() && co.getReviewNo()==l.getReviewNo()) {%>
-                               	<div class="teacher-comment">
-                               		<div class="avataMemberStarDate">
-                               			<div><i class="fa-solid fa-comment-dots"></i></div>
-		                              	<div class="memberStarDate">
-		                              		<div>
-		                              			TEACHER
-		                               		</div>
-		                               		<div class="starDate">
-		                                		<%=co.getCommentDate() %>
-		                               		</div>
-		                              	</div>
-	                              	</div>
-	                              	<div class="review">
-                               			<%=co.getCommentContent() %>
-                               			<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())) {%>
-                               			<button id="deleteReply" class="btn btn-sm btn-warning" 
-                               			onclick="location.href='<%=request.getContextPath()%>/lesson/deletereply.do?reviewNo=<%=l.getReviewNo()%>&boardNo=<%=lesson.getBoardNo()%>'">삭제</button>
-                               			<%} %>
-                               		</div>
-                               	</div>
-                               	<%} %>
-                               	<%} %>
-                               	<div id="comment-container">
-									<div class="comment-editor">
-										<form action="<%=request.getContextPath() %>/lesson/insertComment.do" method="post">
-											<input type="hidden" name="boardNo" value="<%=lesson.getBoardNo()%>">
-											<input type="hidden" name="reviewNo" value="<%=l.getReviewNo()%>">
-											<textarea class="form-control" name="content" cols="55" rows="3" style="resize: none;"></textarea>
-											<br>
-											<%if(loginMember!=null && loginMember.getMemAuthority().equals("TEACHER") && lesson.getTeacherNo().equals(tInfo.getTeacherNo())){ %>
-											<!-- 등록할때 코멘트의 리뷰넘버랑 레슨신청시의 리뷰넘버랑 같게만들어서 등록-->
-											<button class="btn btn-outline-warning" type="submit" id="btn-insert">댓글등록</button>
-											<%} else{%>
-											<button class="btn btn-outline-warning" disabled>댓글등록</button>
-											<%} %>
-										</form>
-									</div>
-								</div>
-                               	<hr>
-                              </div>
-                              <%} %>
-                          </div>
                     </div>
                 </div>
             </article>

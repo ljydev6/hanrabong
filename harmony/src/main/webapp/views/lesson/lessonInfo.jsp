@@ -16,6 +16,7 @@
 	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
 	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
+	LessonApply apply = (LessonApply)request.getAttribute("apply");
 	
 	//타임스탬프형식 변환
 	Timestamp TstartTime = (Timestamp)time.getLessonStartTime();
@@ -79,8 +80,11 @@
                     <button onclick="location.href='<%=request.getContextPath()%>/lesson/updateLesson.do?no=<%=lesson.getBoardNo()%>'">수정하기</button>
                     <button id="deleteLesson">삭제하기</button>
                 </div>
-                <%} %> 
+                <%} %>
+                <!-- 현재의 게시글넘버랑 로그인한멤버넘버랑 로그인한 멤버가 신청했을때만 보여줌 -->
+                <%-- <%if(apply!=null && apply.getBoardNo()==lesson.getBoardNo()) {%>  --%>
                 <button id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
+            	<%-- <%} %> --%>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
                 <div class="imgSubmitSection d-flex gap-3">
