@@ -59,10 +59,17 @@ input{
 	color: var(--orange-color);
 }
 #searchTitle{
+	width: 100px;
 	border: none;
 	border-radius: 5px;
 	outline: none;
 }
+#searchTitle:focus-within{
+	width: 200px;
+    transform: translateX(-12%);
+    transition: all 0.3s ease-in-out;
+}
+
 .searchFilter{
 	background-color: var(--orange-color);
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
@@ -73,12 +80,18 @@ input{
 	border: none;
 	border-radius: 10px;
 }
-
-.filterBtns>button:hover{
-    scale: 1.01;
-    cursor: pointer;
-    transition: .3s;
+.fa-magnifying-glass:hover{
+	cursor: pointer;
 }
+.filterBtns>button:hover{
+    scale: 1.1;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.filterBtns>input{
+	
+}
+
 .slideToggle{
 	color: var(--orange-color);
 }
@@ -118,8 +131,13 @@ input{
 	gap: 20px;
 	margin-bottom: 3rem;
 }
-.lessonListBox>div:hover{
+/*.lessonListBox>div:hover{
 	scale: 1.02;
+	cursor: pointer;
+	transition: .5s;
+}*/
+.lessonListImageBox>img:hover{
+	scale: 1.1;
 	cursor: pointer;
 	transition: .5s;
 }
@@ -128,6 +146,9 @@ input{
 	height: 250px;
 	box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 5px;
 	position: relative;
+}
+.lessonListImageBox{
+	overflow: hidden;
 }
 .lessonListTitle{
 	margin-top: 10px;
