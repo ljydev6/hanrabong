@@ -58,8 +58,6 @@ public class AjaxCarouselManageServlet extends HttpServlet {
 		JsonObject result = new JsonObject();
 		String oldImage = mr.getParameter("oldImage");
 		String newImage = mr.getFilesystemName("newImage");
-		System.out.println(oldImage);
-		System.out.println(newImage);
 		boolean oldFileDeleteFlag = false;
 		boolean newFileDeleteFlag = false;
 		try {
@@ -72,8 +70,8 @@ public class AjaxCarouselManageServlet extends HttpServlet {
 				String crslPageLink = mr.getParameter("pagelink")!=null?mr.getParameter("pagelink"):"#";
 				Date crslWriteDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("startDate")).getTime());
 				Date crslEndDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(mr.getParameter("endDate")).getTime());
-				int crslIntervalMs = Integer.parseInt(mr.getParameter("crslIntervalMs")!=null?mr.getParameter("intervalms"):"-1");
-				int crslViewRank = Integer.parseInt(mr.getParameter("crslViewRank")!=null?mr.getParameter("viewrank"):"-1");
+				int crslIntervalMs = Integer.parseInt(mr.getParameter("crslIntervalMs")!=null?mr.getParameter("intervalms"):"4000");
+				int crslViewRank = Integer.parseInt(mr.getParameter("crslViewRank")!=null?mr.getParameter("viewrank"):"3");
 				
 				Carousel c = Carousel.builder().crslNo(crslNo)
 											   .crslName(crslName)
