@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.harmony.message.model.dto.Message;
@@ -65,4 +67,53 @@ public class MessageDao {
 		}
 		return result;
 	}
+
+	public List<Message> selectMessageByMemno(Connection conn, String memno) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Message> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectMessageByMemno"));
+			pstmt.setString(1, memno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getMessage(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private Message getMessage(ResultSet rs) throws SQLException{
+		return Message.builder()
+				.msgNo(rs.getString("MSG_NO"))
+				.receiveMem(rs.getString("MSG_RECEIVE_MEM"))
+				.sendMem(rs.getString("MSG_SEND_MEM"))
+				.content(rs.getString("MSG_CONTENT"))
+				.sendDate(rs.getDate("MSG_SEND_DATE"))
+				.readState(rs.getString("MSG_READ_STATE"))
+				.catCode(Message.catType.valueOf(rs.getString("MSG_CAT_CODE")))
+				.build();
+	}
+
+	public int readMessage(Connection conn, String msgNo) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("readMessage"));
+			pstmt.setString(1, msgNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	 
 }
