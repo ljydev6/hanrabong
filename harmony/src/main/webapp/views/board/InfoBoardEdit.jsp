@@ -87,9 +87,8 @@ InfoBoard board = (InfoBoard) request.getAttribute("board");
     nhn.husky.EZCreator.createInIFrame({
       oAppRef: oEditors,
       elPlaceHolder: "bo_content",
-      sSkinURI: "<%=request.getContextPath()%>
-	/board/smarteditor2/SmartEditor2Skin.html",
-				fCreator : "createSEditor2"
+      sSkinURI: "<%=request.getContextPath()%>/board/smarteditor2/SmartEditor2Skin.html",
+	  fCreator : "createSEditor2"
 			});
 
 	function submitPost() {

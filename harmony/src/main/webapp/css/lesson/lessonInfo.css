@@ -21,7 +21,7 @@ a{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
 	--ti-cursor-margin-left: 1em;
-	--ti-cursor-color: var(--orange-color);
+	--ti-cursor-color: white;
 }
 html,body{
 	height: 100%;
