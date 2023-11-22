@@ -12,6 +12,8 @@
 <%
 	VBoardView b = (VBoardView)request.getAttribute("board");
 %>
+
+
 <section>
 
 	<div class="board_container">
@@ -71,14 +73,13 @@
 			<button type="button" onclick="apply_btn();" class="apply_btn">
 				신청하기
 			</button>
-<%-- 			<%if(b.getEnsWriter().equals(loginMember.getMemNo()) {%> --%>
-				<button type="button" onclick="check_apply();" class="check_apply">
+			<%if(loginMember!=null && b.getEnsWriter().equals(loginMember.getMemNo())) {%>
+				<button type="button" onclick="check_apply();" class="check_apply" >
 					신청자 확인
 				</button>
-<%-- 			<%} %> --%>
+			<%} %>
 		</div>
 	</div>
-
 
 
 </section>
@@ -88,7 +89,11 @@
 const apply_btn =()=>{
 
 	open("<%=request.getContextPath()%>/ensemble/insert.do", "_blank", "width=400, height=300");
-		
+}
+
+const check_apply =()=>{
+	open("<%=request.getContextPath()%>/ensemble/chkApply.do?boardNo="+$('#boardNo').val(), "_blank", "width=400, height=300");
+
 }
 
 </script>
