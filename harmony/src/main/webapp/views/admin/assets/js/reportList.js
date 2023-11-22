@@ -9,7 +9,7 @@ $('tbody > tr').click(e=>{
 	console.log($target.attr('data-bs-value'));
 	$.ajax({
 		type:"get",
-	    url:'/harmony/admin/ajax/report.do?no='+$target.attr('data-bs-value'),
+	    url:requestPath+'/admin/ajax/report.do?no='+$target.attr('data-bs-value'),
 	    data:{},
 	    contentType:'application/json',
 	    dataType:'json',
