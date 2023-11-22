@@ -8,6 +8,6 @@ import lombok.Data;
 public class EnsembleBoardApply {
 
 	private String ensPartIndex;
-	private String ensMembeNo;
+	private String ensMemNo;
 	private String ensApproval;
 }

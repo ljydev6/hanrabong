@@ -39,7 +39,7 @@ public class AjaxFilterServlet extends HttpServlet {
 		EnsembleService es = new EnsembleService();
 	    
 		String[] values = gson.fromJson(request.getParameter("filter_values"), String[].class);
-		System.out.println(Arrays.toString(values));
+	
 		
 		List<VEnsList> result = es.filterValues(values);
 		gson.toJson(gson.toJson(result),response.getWriter());

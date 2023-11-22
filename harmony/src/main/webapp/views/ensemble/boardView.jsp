@@ -30,7 +30,8 @@
 		<div class="team_btn_container">
 			<div class="teamName">
 				<span>팀 이름 :</span>
-				<%= b.getEnsTeamName() %>		
+				<%= b.getEnsTeamName() %>
+
 			</div>
 				<button type="button" onclick="" class="team_btn">
 					팀 프로필
@@ -47,7 +48,7 @@
 		</div>
 		<div class="wantPart">
 			<span>모집 파트: </span>
-			<%= b.getInstrument() %>		
+			<span id="part"><%= b.getInstrument() %>	</span>			
 		</div>
 		<div class="location">
 			<span>장소: </span>
@@ -62,7 +63,7 @@
 			<span>등록 날짜:</span>
 			<%= b.getEnsBoardDate() %>		
 		</div>
-			<input type="hidden" value="<%=b.getEnsBoardNo() %>" name=boardNo>
+			<input type="hidden" value="<%=b.getEnsBoardNo() %>" id="boardNo">
 		<%}%>
 		
 		
@@ -70,16 +71,23 @@
 			<button type="button" onclick="apply_btn();" class="apply_btn">
 				신청하기
 			</button>
+<%-- 			<%if(b.getEnsWriter().equals(loginMember.getMemNo()) {%> --%>
+				<button type="button" onclick="check_apply();" class="check_apply">
+					신청자 확인
+				</button>
+<%-- 			<%} %> --%>
 		</div>
 	</div>
 
 
 
 </section>
+
 <script>
 
 const apply_btn =()=>{
-	open("<%=request.getContextPath()%>/ensemble/insert.do?", "_blank", "width=500, height=400");
+
+	open("<%=request.getContextPath()%>/ensemble/insert.do", "_blank", "width=400, height=300");
 		
 }
 

@@ -31,17 +31,17 @@
 								<%switch(r.getCatCode()){ 
 								case "lesson": %>
 								<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-		                          lesson
+		                          레슨
 		                        </span>
 								<%break; 
 								case "ensemble": %>
 								<span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-		                          ensemble
+		                          합주
 		                        </span>
 								<%break; 
 								case "community": %>
 								<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
-		                          community
+		                          커뮤니티
 		                        </span>
 								<%break; 
 								} %>
@@ -101,10 +101,9 @@
 	<div
 		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
 		<div class="modal-content">
-			<form>
-			<div class="modal-header">
-				<h1 class="modal-title fs-5">신고 상세내역</h1>
-				<input type="hidden" name="rptNo" value="">
+			<form id="report-modal-form" method="post">
+			<div class="modal-header bg-gray-50 dark:bg-gray-800">
+				<h1 class="modal-title fs-5 font-semibold tracking-wide text-left text-gray-500 dark:text-gray-400 ">신고 상세내역</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					aria-label="Close"></button>
 			</div>
@@ -112,46 +111,54 @@
 				<div class="container-fluid" id="modal-container">
 					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 						<div class="row mb-3 border-b px-2 py-1 d-flex flex-row">
-							<div class="col" id="category">
+							<div class="col input-group input-group-sm">
+								<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">No.</span>
+								<input class="form-control" type="text" name="rptNo" id="rptNo">
+							</div>
+							<div class="col  justify-content-center" id="category">
 								<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
 		                          lesson
 		                        </span>
 							</div>
 						</div>
-						<div class="row mb-3 border-b px-2 py-1">
-							<div class="justify-content-between d-flex flex-row">
-								<div class="col-sm-auto">
-									<div>신고자</div>
-									<div><input type="text" name="reporter" id="reporter" value="" readOnly></div>
+						<div class="row d-flex flex-row wrapmb-3 border-b px-2 py-1">
+							<div class="col input-group input-group-sm justify-content-center">
+								<div>
+									<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">신고자</span>
+									<input class="form-control" type="text" name="reporter" id="reporter" value="" readOnly>
 								</div>
-								<div class="col-sm-auto">
-								<div class="col-sm-auto">
-									<div>피신고자</div>
-									<div><input type="text" name="reporter" id="reportee" value="" readOnly></div>
+							</div>
+							<div class="col input-group input-group-sm justify-content-center">
+								<div>
+									<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">피신고자</span>
+									<input class="form-control" type="text" name="reporter" id="reportee" value="" readOnly>
 								</div>
 							</div>
 						</div>
 						<div class="row mb-3 border-b px-2 py-1 d-flex flex-col">
-							<div class="col border-b">
-								신고내용
+							<div class="col border-b px-2 py-1">
+								<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">신고내용</span>
 							</div>
 							<div class="col" id="reportContent">
 								신고내용
 							</div>
 						</div>
 						<div class="row mb-3 border-b px-2 py-1">
-							<div class="justify-content-between d-flex flex-row">
-								<div class="col-sm-auto">
-									<select id="template" onchange="">
-										<option>5일정지</option>
-										<option>일주일정지</option>
-										<option>한달정지</option>
-										<option>영구정지</option>
+							<div class="justify-content-between d-flex flex-row ">
+								<div class="col-sm-auto  d-flex flex-row">
+									<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">처리방식</span>
+									<select class="form-control" id="template" onchange="templateChange(event);">
+										<option value="5일 정지">5일정지</option>
+										<option value="일주일 정지">일주일정지</option>
+										<option value="한 달 정지">한달정지</option>
+										<option value="영구정지">영구정지</option>
+										<option value="직접 입력해주세요">기타</option>
 									</select>
 								</div>
 								<div class="col-sm-auto"></div>
-								<div class="col-sm-auto">
-									<select name="processcode" id="processcode">
+								<div class="col-sm-auto d-flex flex-row">
+									<span class="input-group-text text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">처리코드</span>
+									<select class="form-control" name="processcode" id="processcode">
 										<%for(String[] cd : processcode){ %>
 										<option value="<%=cd[0]%>"><%=cd[1] %></option>
 										<%} %>
@@ -160,11 +167,11 @@
 							</div>
 						</div>
 						<div class="row mb-3 border-b px-2 py-1 d-flex flex-col">
-							<div class="col border-b">
+							<div class="col input-group-text border-b text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
 								처리내용
 							</div>
 							<div class="col">
-								<textarea class="w-full" name="processContent" rows="3" style="resize:vertical;">처리내용</textarea>
+								<textarea class="w-full" name="processContent" rows="3" style="resize:vertical;" id="processContent">처리내용</textarea>
 							</div>
 						</div>
 					</div>
@@ -174,9 +181,8 @@
 				<button type="submit" class="btn btn-primary">Save changes</button>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			</div>
+			</form>
 		</div>
-		</form>
-	</div>
 	</div>
 </div>
 <script type="text/javascript">

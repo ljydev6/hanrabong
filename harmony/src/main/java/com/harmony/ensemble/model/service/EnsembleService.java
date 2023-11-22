@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.harmony.ensemble.model.dao.EnsembleDao;
 import com.harmony.ensemble.model.dto.EnsembleBoard;
+import com.harmony.ensemble.model.dto.EnsembleBoardApply;
 import com.harmony.ensemble.model.dto.EnsembleBoardWantPart;
 import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
@@ -25,18 +26,29 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
-	public List<EnsembleBoardWantPart> selectWantPart(String boardNo) {
-		Connection conn = getConnection();
-		List<EnsembleBoardWantPart> wantPart = dao.selectWantPart(conn, boardNo);
-		close(conn);
-		return wantPart;
-	}
 	
-	public int insertApply(String wantPart) {
+	public int selectPartIndex(String boardNo, String instNo,String loginMemNo) {
 		Connection conn = getConnection();
-		int result = dao.insertApply(conn, wantPart);
+		EnsembleBoardApply apply = dao.selectPartIndex(conn, boardNo, instNo, loginMemNo);
+		int result = insertApply(apply);
 		close(conn);
 		return result;
+	}
+	
+	
+	public int insertApply(EnsembleBoardApply apply) {
+		Connection conn = getConnection();
+		
+		int result = dao.insertApply(conn, apply);
+		close(conn);
+		return result;
+	}
+	
+	public String selectInstNoByName(String instName) {
+		Connection conn = getConnection();
+		String instNo = dao.selectInstNoByName(conn, instName);
+		close(conn);
+		return instNo;
 	}
 	
 	
