@@ -110,7 +110,7 @@
                     </div>
                     <div class="submitContainer w-50">
                         <div class="lessonSubmit d-flex flex-column">
-                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
+                        	<form id="lessonConsultSubmit" action="<%=request.getContextPath() %>/apply/applyLesson.do?teacherNo=<%=lesson.getTeacherNo() %>" method="post" onsubmit="return confirm('상담을 신청하시겠습니까?')";>
                         	<!-- 93번째줄때문에 로그인 해야함 분기처리중요!-->
                         	<%if(loginMember!=null){ %>
                         	<input type="hidden" value="<%=loginMember.getMemNo() %>" name="memNo">

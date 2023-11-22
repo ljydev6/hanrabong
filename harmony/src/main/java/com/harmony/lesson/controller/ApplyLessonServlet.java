@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.service.LessonService;
 
@@ -39,6 +40,10 @@ public class ApplyLessonServlet extends HttpServlet {
 		String memNo = request.getParameter("memNo");
 		String place = request.getParameter("place");
 		int count = Integer.parseInt(request.getParameter("count"));
+		String teacherNo = request.getParameter("teacherNo");
+		// teacherNo으로 MEM_NO가져오기
+		Lesson findMemNo = new LessonService().applyFindMemNo(teacherNo);
+		String applyMemNo=findMemNo.getMemNo();
 		
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date(System.currentTimeMillis());
@@ -69,6 +74,7 @@ public class ApplyLessonServlet extends HttpServlet {
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
+		request.setAttribute("applyMemNo", applyMemNo);
 		
 		request.getRequestDispatcher("/views/lesson/common/msg.jsp")
 			.forward(request, response);
