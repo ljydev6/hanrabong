@@ -147,6 +147,13 @@ public class InfoBoardService {
 	        close(conn);
 	        return result;
 	    }
+	 
+	 public List<InfoBoard> selectPopularBoards() {
+	        Connection conn = getConnection();
+	        List<InfoBoard> popularBoards = dao.selectPopularBoard(conn);
+	        close(conn);
+	        return popularBoards;
+	    }
 
 
 }

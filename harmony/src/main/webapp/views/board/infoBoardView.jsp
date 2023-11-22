@@ -1,20 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page
-	import="java.util.List,com.harmony.board.info.model.dto.InfoBoard,com.harmony.board.info.model.dto.InfoCommentBoard"%>
+<%@ page import="java.util.List,com.harmony.board.info.model.dto.InfoBoard,com.harmony.board.info.model.dto.InfoCommentBoard,com.harmony.model.dto.Member" %>
 <%
 InfoBoard board = (InfoBoard) request.getAttribute("InfoBoard");
 List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute("comments");
 %>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <%@ include file="/views/common/header.jsp"%>
-
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
-
+<%
+    String loggedInUser = loginMember != null ? loginMember.getMemNo() : null;
+%>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoboardView.css"
@@ -30,7 +28,7 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 				<h3 class="free-board">
 					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 				</h3>
-				<h3 class="free-board">
+				<h3 class="notice-board">
 					<a href="<%=request.getContextPath()%>/notice.do">공지 게시판</a>
 				</h3>
 			</div>
@@ -40,11 +38,11 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 			<div class="infoboardview">
 				<div class="header">
 					<div class="boradselect">
-						<a href="#">정보 게시판</a> > <a href="#">공연</a>
+						<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a> > <a href="#"><%= request.getAttribute("categoryName") %></a>
 					</div>
 					<div class="title">
 						<h1>
-							<span class="highlight">[정보]</span>
+							<span class="highlight">[<%= request.getAttribute("tagName") %>]</span>
 							<%=board.getInfBrdTitle()%></h1>
 						<p>
 							지역 |
@@ -56,7 +54,7 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 					<div class="profile-info">
 						<img
 							src="<%=request.getContextPath()%>/image/board/write-user.png"
-							class="write-user"> <span>작성자 | MEM_81</span>
+							class="write-user"> <span>작성자 | <%=board.getInfBrdWriter()%></span>
 					</div>
 					<div class="profile-icon">
 						<span> <a href="#comments-section"><img
@@ -65,15 +63,24 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 				</div>
 
 				<div class="post-content">
-					<p><%=board.getInfBrdContent()%></p>
-				</div>
+                <p><%=board.getInfBrdContent()%></p>
+
+                <% if (board.getInfBrdTitleImg() != null && !board.getInfBrdTitleImg().isEmpty()) { %>
+                    <div class="attached-image">
+                        <img src="<%=request.getContextPath()%>/upload/board/<%=board.getInfBrdTitleImg()%>">
+                    </div>
+                <% } %>
+                </div>
 
 				<div class="post-buttons">
-					<button class="post-edit-btn"
-						onclick="editBoard(<%=board.getInfBrdNo()%>)">글 수정</button>
-					<button class="post-delete-btn"
-						onclick="confirmDeletion(<%=board.getInfBrdNo()%>)">글 삭제</button>
-				</div>
+    <% 
+    // 게시글 작성자 또는 어드민"temp001"인 경우에만 수정, 삭제 버튼 표시
+    if ("temp001".equals(loggedInUser) || board.getInfBrdWriter().equals(loggedInUser)) { 
+    %>
+        <button class="post-edit-btn" onclick="editBoard(<%=board.getInfBrdNo()%>)">글 수정</button>
+        <button class="post-delete-btn" onclick="confirmDeletion(<%=board.getInfBrdNo()%>)">글 삭제</button>
+    <% } %>
+</div>
 
 				<div class="comment-container" id="comments-section">
 					<div class="comment-form">
@@ -103,7 +110,6 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 						<div class="comment-text-buttons">
 							<%for (InfoCommentBoard comment : comments) {
 								if (comment.getInfComLevel() == 1) {%>
-								<!-- 댓글레벨이 1일경우 -->
 							<div class="comment-content">
 								<div>
 									<img
@@ -116,13 +122,18 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 										<p><%=comment.getInfComContent()%></p>
 									</div>
 									<div class="buttons-container">
-										<button class="btn-reply" value="<%=comment.getInfComNo()%>">답글</button>
-										<button class="delete-btn"
-											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
-									</div>
+               
+                    <button class="btn-reply" value="<%=comment.getInfComNo()%>">답글</button>
+                     <% 
+                // 댓글 작성자 또는 어드민인 경우에만 수정, 삭제 버튼 표시
+                if ("temp001".equals(loggedInUser) || comment.getInfComWriter().equals(loggedInUser)) { 
+                %>
+                    <button class="delete-btn"
+                        onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+                <% } %>
+            </div>
 								</div>
 							</div>
-							<!-- 댓글레벨이 2일경우 -->
 							<%} else {%>
 							<div class="reply-container">
 								<div class="reply-user">
@@ -132,8 +143,13 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 								<div class="reply-comment">
 									<p><%=comment.getInfComContent()%></p>
 									<div class="buttons-container">
+									   <% 
+    // 게시글 작성자 또는 어드민"temp001"인 경우에만 수정, 삭제 버튼 표시
+    if ("temp001".equals(loggedInUser) || board.getInfBrdWriter().equals(loggedInUser)) { 
+    %>
 										<button class="delete-btn"
 											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
+									   <% } %>
 									</div>
 								</div>
 							</div>

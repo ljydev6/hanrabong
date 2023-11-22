@@ -12,9 +12,7 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoCommunityWrite.css"
 	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
+
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/board/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -22,22 +20,27 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 	
 	
 <div class="content">
-    <div class="main">
-        <div class="board">
-            <div class="info-container">
-                <h3 class="info-board">
-                    <a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
-                </h3>
-                <h3 class="free-board">
-                    <a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
-                </h3>
-            </div>
-        </div>
+	<div class="main">
+		<div class="board">
+			<div class="info-container">
+				<h3 class="info-board">
+					<a href="<%=request.getContextPath()%>/infoBoardList.do">정보 게시판</a>
+				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
+				</h3>
+				<h3 class="notice-board">
+					<a href="<%=request.getContextPath()%>/notice.do">공지 게시판</a>
+				</h3>
+			</div>
+		</div>
+
+<div class="main-container">
 
         <form id="postForm" action='<%=request.getContextPath()%>/board/boardWriteEnd.do' enctype="multipart/form-data"
             method="post" onsubmit="return submitPost()">
             <div class="infopostwrite">
-                <h3>게시판 글쓰기</h3>
+                <h3>정보게시판 글쓰기</h3>
             </div>
             <div class="form-field-container">
 
@@ -82,14 +85,16 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
             <div class="write-title">
                 <input type="text" id="post-title" name="title" placeholder="제목을 입력해 주세요.">
             </div>
+            
             <div class="post-write">
                 <textarea class="form-control" rows="20" name="bo_content" id="bo_content"
                     style="width:100%;"></textarea>
             </div>
+            
             <div class="post-attach">
-                    <label>파일 # </label>
+                    <label>이미지 # </label>
                 <div class="post-input">
-                    <input type="file" name="upfile" />
+                    <input type="file" name="upfile" >
                 </div>
             </div>
             <div class="post-submit">
@@ -98,6 +103,8 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
         </form>
     </div>
 </div>
+</div>
+
 
 <script>
 	

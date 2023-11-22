@@ -91,6 +91,21 @@
     transition: all 0.3s ease; 
 }
 
+.info-board{
+    background-color: #FFFACD;
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+.free-board{
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
 
 .write-title{
 	margin-top: 10px;
@@ -113,9 +128,8 @@
     border-bottom: 1.5px solid rgb(139, 139, 139); 
     margin-bottom: 20px;
 }
-select:focus option:first-child {
-    display: none;
-}
+
+
 .form-field-container {
 	display: flex;
 	flex-direction: row;
