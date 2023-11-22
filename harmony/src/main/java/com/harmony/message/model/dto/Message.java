@@ -13,7 +13,7 @@ public class Message {
 	private String sendMem;
 	private String content;
 	private Date sendDate;
-	private Date readDate;
+	private String readState;
 	private catType catCode;
 	
 	public enum catType{

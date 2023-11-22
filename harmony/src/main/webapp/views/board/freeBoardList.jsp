@@ -39,6 +39,9 @@ String pageBar = (String) request.getAttribute("pageBar");
 				<h3 class="free-board">
 					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/notice.do">자유 게시판</a>
+				</h3>
 			</div>
 		</div>
 

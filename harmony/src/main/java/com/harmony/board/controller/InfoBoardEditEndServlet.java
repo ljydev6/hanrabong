@@ -31,9 +31,18 @@ public class InfoBoardEditEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+		String noParam = request.getParameter("no");
+		System.out.println(noParam);
+	    if (noParam == null || noParam.equals("")) {
+	        // no 파라미터가 없거나 비어있는 경우, 에러 페이지로 리다이렉트
+	        request.getRequestDispatcher("/views/error.jsp").forward(request, response);
+	        return;
+	    }
+		
 		int no = Integer.parseInt(request.getParameter("no"));
 		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		String content = request.getParameter("bo_content");
 		String region = request.getParameter("region");
 		String category = request.getParameter("category");
 		String tag = request.getParameter("tag");
@@ -57,7 +66,7 @@ public class InfoBoardEditEndServlet extends HttpServlet {
 
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/lesson/common/msg.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

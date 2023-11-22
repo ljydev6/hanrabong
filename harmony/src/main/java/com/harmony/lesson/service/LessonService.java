@@ -143,7 +143,11 @@ public class LessonService {
 		int result=dao.applyLesson(conn, member);
 		int result2=dao.applyLessonTime(conn, member);
 		
-		if(result>0 && result2>0) commit(conn);
+		if(result>0 && result2>0) {
+			commit(conn);
+			// 신청정보의 currval 가져오기
+			result = dao.applyCurrentVal(conn);
+		}
 		else rollback(conn);
 		close(conn);
 		return result;
@@ -248,12 +252,12 @@ public class LessonService {
 		return result;
 	}
 	// 레슨신청정보와 레슨신청일시 테이블을 조인하여 레슨신청정보가져오기
-//	public LessonApply showApplyInfo(int no) {
-//		Connection conn=getConnection();
-//		LessonApply result=dao.showApplyInfo(conn, no);
-//		close(conn);
-//		return result;
-//	}
+	public LessonApply showApplyInfo(String memNo) {
+		Connection conn=getConnection();
+		LessonApply result=dao.showApplyInfo(conn, memNo);
+		close(conn);
+		return result;
+	}
 	
 	
 	

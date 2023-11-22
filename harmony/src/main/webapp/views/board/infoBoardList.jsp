@@ -31,6 +31,9 @@ if (request.getAttribute("searchResults") != null) {
 				<h3 class="free-board">
 					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 				</h3>
+				<h3 class="free-board">
+					<a href="<%=request.getContextPath()%>/notice.do">공지 게시판</a>
+				</h3>
 			</div>
 		</div>
 
@@ -83,6 +86,12 @@ if (request.getAttribute("searchResults") != null) {
 				<%
 				if (!boards.isEmpty()) {
 					for (InfoBoard post : boards) {
+						// 이미지 파일 이름 가져오기
+						String titleImgName = post.getInfBrdTitleImg();
+						// 이미지 파일의 전체 URL 생성 (만약 이미지가 있다면)
+						String titleImgUrl = (titleImgName != null && !titleImgName.isEmpty())
+						? request.getContextPath() + "/upload/board/" + titleImgName
+						: null;
 				%>
 				<div class="individual-post">
 					<a
@@ -96,13 +105,18 @@ if (request.getAttribute("searchResults") != null) {
 									<h3><%=post.getInfBrdTitle()%></h3>
 									<p><%=post.getInfBrdContent()%></p>
 								</section>
-								<%--<p class="post-writer"><%=post.getInfBrdWriter()%></p>--%>
 								<p class="post-writer"><%=post.getInfBrdWriter()%></p>
 								<p class="post-region"><%=post.getInfBrdRegion()%></p>
 							</div>
-							<img src="<%=request.getContextPath()%>/image/board/No1.png">
+							<!-- 게시글 타이틀 이미지 삽입 (이미지가 있을 때만) -->
+							<%
+							if (titleImgUrl != null) {
+							%>
+							<img src="<%=titleImgUrl%>">
+							<%
+							}
+							%>
 						</div>
-
 						<div class="post-footer">
 							<div class="view-comment">
 								<div class="views-comments-container">
@@ -118,6 +132,7 @@ if (request.getAttribute("searchResults") != null) {
 				}
 				%>
 			</div>
+
 
 			<form action="<%=request.getContextPath()%>/board/InfoBoardSearch.do"
 				method="get" class="search-form">

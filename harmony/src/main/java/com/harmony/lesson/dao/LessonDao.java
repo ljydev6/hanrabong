@@ -29,27 +29,7 @@ public class LessonDao {
 			e.printStackTrace();
 		}
 	}
-		// 레슨게시글 강사테이블조인해서 회원번호 가져오기
-			public Lesson applyFindMemNo(Connection conn,String no){
-				PreparedStatement pstmt=null;
-				ResultSet rs=null;
-				Lesson result=null;
-				try {
-					pstmt=conn.prepareStatement(sql.getProperty("applyFindMemNo"));
-					pstmt.setString(1, no);
-					rs=pstmt.executeQuery();
-					if(rs.next()) {
-						result = Lesson.builder()
-								.memNo(rs.getString("MEM_NO"))
-								.build();
-					}
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}finally {
-					close(rs);
-					close(pstmt);
-				}return result;
-			}
+		
 		// 검색창에 있는 레슨 다 나오게하기
 		public List<Lesson> printLessonAll(Connection conn,int cPage,int numPerpage){
 			PreparedStatement pstmt=null;
@@ -354,6 +334,19 @@ public class LessonDao {
 				close(pstmt);
 			}return result;
 		}
+		public int applyCurrentVal(Connection conn) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("applyLesson"));
+				pstmt.executeQuery();
+//				result = 
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
 		public int applyLessonTime(Connection conn, LessonApply m) {
 			PreparedStatement pstmt=null;
 			int result=0;
@@ -615,6 +608,46 @@ public class LessonDao {
 				close(pstmt);
 			} return m;
 		}
+		// 레슨게시글 강사테이블조인해서 회원번호 가져오기
+		public Lesson applyFindMemNo(Connection conn,String no){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			Lesson result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("applyFindMemNo"));
+				pstmt.setString(1, no);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = Lesson.builder()
+							.memNo(rs.getString("MEM_NO"))
+							.build();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
+		// 레슨신청정보와 레슨신청일시 테이블을 조인하여 레슨신청정보가져오기 멤버넘버로찾기
+		public LessonApply showApplyInfo(Connection conn,String memNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			LessonApply result=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("showApplyInfo"));
+				pstmt.setString(1, memNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = getLessonApply(rs);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+		}
 		
 		private Lesson getLesson(ResultSet rs) throws SQLException {
 			return Lesson.builder()
@@ -650,6 +683,9 @@ public class LessonDao {
 					.applyNumberOfTimes(rs.getInt("apply_number_of_times"))
 					.applyDate(rs.getDate("apply_date"))
 					.applyAccept(rs.getString("apply_accept").charAt(0))
+					.lessonStartTime(rs.getTimestamp("LESSON_START_TIME"))
+					.lessonEndTime(rs.getTimestamp("LESSON_END_TIME"))
+					.lessonDay(rs.getString("LESSON_DAY_OF_WEEK").split(","))
 					.build();
 		}
 		private LessonApply getLessonApplyReview(ResultSet rs) throws SQLException {

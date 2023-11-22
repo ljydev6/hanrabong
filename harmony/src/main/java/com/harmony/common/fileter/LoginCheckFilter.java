@@ -21,6 +21,11 @@ import com.harmony.model.dto.Member;
 public class LoginCheckFilter extends HttpFilter implements Filter {
        
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3963319287910930360L;
+
+	/**
      * @see HttpFilter#HttpFilter()
      */
     public LoginCheckFilter() {
