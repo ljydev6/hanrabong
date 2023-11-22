@@ -43,11 +43,19 @@ public class MessageService {
 		return result;
 	}
 	
-	public int readMessage(String msgNo) {
+	public Message selectMessageByMessageNo(int messageNo) {
 		Connection conn = getConnection();
-		int result = MessageDao.getDao().readMessage(conn, msgNo);
-		if(result>0)commit(conn);
-		else rollback(conn);
+		Message result = MessageDao.getDao().selectMessageByMessageNo(conn, messageNo);
+		if(result != null && result.getReadState().equals("NOTREAD")) {
+			int readstate = MessageDao.getDao().readMessage(conn, messageNo);
+			if(readstate >0) {
+				commit(conn);
+				result.setReadState("READ");
+			}else {
+				rollback(conn);
+			}
+		}
+		close(conn);
 		return result;
 	}
 	

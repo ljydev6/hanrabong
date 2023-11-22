@@ -100,16 +100,36 @@ public class MessageDao {
 				.build();
 	}
 
-	public int readMessage(Connection conn, String msgNo) {
+	public int readMessage(Connection conn, int msgNo) {
 		PreparedStatement pstmt = null;
 		int result = -1;
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("readMessage"));
-			pstmt.setString(1, msgNo);
+			pstmt.setInt(1, msgNo);
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Message selectMessageByMessageNo(Connection conn, int messageNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Message result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectMessageByMessageNo"));
+			pstmt.setInt(1, messageNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getMessage(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return result;
