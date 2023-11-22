@@ -90,8 +90,7 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 		nhn.husky.EZCreator.createInIFrame({
 		  oAppRef: oEditors,
 		  elPlaceHolder: "bo_content",
-		  sSkinURI: "<%=request.getContextPath()%>
-	/board/smarteditor2/SmartEditor2Skin.html",
+		  sSkinURI: "<%=request.getContextPath()%>/board/smarteditor2/SmartEditor2Skin.html",
 				fCreator : "createSEditor2"
 			});
 
