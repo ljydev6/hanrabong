@@ -35,7 +35,7 @@
 				<%= b.getEnsTeamName() %>
 
 			</div>
-				<button type="button" onclick="" class="team_btn">
+				<button type="button" onclick="location.assign('<%=request.getContextPath() %>/ensemble/profileFromBoard.do?teamNo=<%=b.getEnsTeamNo() %>')" class="team_btn">
 					팀 프로필
 				</button>
 			</div>

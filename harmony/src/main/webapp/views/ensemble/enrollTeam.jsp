@@ -19,12 +19,12 @@
 <div class="enroll_container">
 	<div>
 		<span>팀명</span>
-		<input type="text" id="teamName">
+		<input type="text" id="teamName" >
 	</div>
 
 	<div>	
 		<label for="genre">장르</label>
-		<select name="genre" id="genre">
+		<select name="genre" id="genre" >
 			<%if(!genre.isEmpty()) {
 				for(Genre g : genre){ %>
 					<option value="<%=g.getGenreCode() %>"><%=g.getGenreName() %></option>

@@ -592,6 +592,7 @@ public class EnsembleDao {
 						.ensDetail(rs.getString("ENS_DETAIL"))
 						.ensBoardDate(rs.getTimestamp("ENS_BOARD_DATE"))
 						.ensBoardTitle(rs.getString("ENS_BOARD_TITLE"))
+						.ensTeamNo(rs.getString("ENS_TEAM_NO"))
 						.ensTeamName(rs.getString("ENS_TEAM_NAME"))
 						.ensTeamType(rs.getString("ENS_TEAM_TYPE"))
 						.genreName(rs.getString("GENRE_NAME"))

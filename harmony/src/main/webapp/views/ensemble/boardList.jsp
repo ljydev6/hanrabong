@@ -17,7 +17,7 @@
 <main>
 <aside>
 
-	<div class="menu_bar">
+	<div class="menu_bar ">
 
 	<h3 class="toggle1">구분</h3>
     <ul>

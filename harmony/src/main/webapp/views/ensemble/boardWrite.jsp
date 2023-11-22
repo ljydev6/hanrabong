@@ -19,7 +19,7 @@
 <div class="boardContainer">
 		<div>
 			<span class="title_span">제목</span>
-			<input type="text" name="title" id="title">
+			<input type="text" name="title" id="title" class="form-control">
 		</div>
 		
 		
@@ -100,18 +100,18 @@
 						<span class="title_span">지역</span>
 					</td>
 					<td>	
-						<input type="text" name="location" id="location"><br>
+						<input type="text" name="location" id="location" class="form-control"><br>
 					</td>		
 				<tr>	
 					<td>
 						<span class="title_span">장소</span>
 					</td>
 					<td>	
-						<input type="text" id="sample6_postcode" placeholder="우편번호">
+						<input type="text" id="sample6_postcode" placeholder="우편번호" class="form-control">
 					</td>
 				
 					<td>
-						<input type="button" onclick="sample6_execDaumPostcode()" id="addr_btn" value="주소 검색"><br>
+						<input type="button" onclick="sample6_execDaumPostcode()" id="addr_btn" value="주소 검색" class="form-control"><br>
 					</td>
 				</tr>	
 				<tr>	
@@ -119,9 +119,9 @@
 			<!-- 			<input type="text" id="sample6_detailAddress" placeholder="상세주소"><br> -->
 					</td>
 					<td>
-						<input type="text" id="sample6_address" placeholder="주소"><br>
+						<input type="text" id="sample6_address" placeholder="주소" class="form-control"><br>
 				
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+						<input type="text" id="sample6_extraAddress" placeholder="참고항목" class="form-control">
 					</td>
 				</tr>
 			</table>
@@ -185,7 +185,7 @@
 	
 		<div>
 			<p class="title_span">상세 설명</p>
-			  <textarea rows="5" cols="50" name="detail" id="detail"></textarea>
+			  <textarea rows="5" cols="50" name="detail" id="detail" class="form-control"></textarea>
 		</div>
 	
 		<div class="btn_container">

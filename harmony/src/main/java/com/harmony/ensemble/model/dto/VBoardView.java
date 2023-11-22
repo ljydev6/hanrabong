@@ -16,6 +16,7 @@ public class VBoardView {
 	private String ensDetail;
 	private Timestamp ensBoardDate;
 	private String ensBoardTitle;
+	private String ensTeamNo;
 	private String ensTeamName;
 	private String ensTeamType;
 	private String genreName;
