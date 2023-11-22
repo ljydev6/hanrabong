@@ -12,7 +12,9 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoCommunityWrite.css"
 	type="text/css">
-
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/board/smarteditor2/js/HuskyEZCreator.js"
 	charset="utf-8"></script>
@@ -34,45 +36,41 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 			action='<%=request.getContextPath()%>/board/boardWriteEnd.do'
 			enctype="multipart/form-data" method="post"
 			onsubmit="return submitPost()">
+			<div class="form-field-container">
+				<div class="form-field">
+					<select name="category">
+						<option value="cat1">공연</option>
+						<option value="cat2">입시</option>
+						<option value="cat3">오디션</option>
+						<option value="cat4">버스킹</option>
+					</select>
+				</div>
 
-			<div class="form-field">
-				<label>카테고리</label>
-				<div class="radio-group">
-					<label><input type="radio" name="category" value="cat1">
-						공연</label> <label><input type="radio" name="category" value="cat2">
-						입시</label> <label><input type="radio" name="category" value="cat3">
-						오디션</label> <label><input type="radio" name="category"
-						value="cat4"> 버스킹</label>
+				<div class="form-field">
+					<select name="tag">
+						<option value="tag1">정보</option>
+						<option value="tag2">후기</option>
+						<option value="tag3">TIP</option>
+						<option value="tag4">이벤트</option>
+					</select>
+				</div>
+
+				<div class="form-field">
+					<select name="region">
+						<option value="서울">서울</option>
+						<option value="경기도">경기도</option>
+						<option value="강원도">강원도</option>
+						<option value="충청북도">충청북도</option>
+						<option value="충청남도">충청남도</option>
+						<option value="전라북도">전라북도</option>
+						<option value="전라남도">전라남도</option>
+						<option value="경상북도">경상북도</option>
+						<option value="경상남도">경상남도</option>
+						<option value="제주도">제주도</option>
+					</select>
 				</div>
 			</div>
 
-			<div class="form-field">
-				<label>태그</label>
-				<div class="radio-group">
-					<label><input type="radio" name="tag" value="tag1">
-						정보</label> <label><input type="radio" name="tag" value="tag2">
-						후기</label> <label><input type="radio" name="tag" value="tag3">
-						TIP</label> <label><input type="radio" name="tag" value="tag4">
-						이벤트</label>
-				</div>
-			</div>
-
-			<div class="form-field">
-				<label>지역</label>
-				<div class="radio-group">
-					<label><input type="radio" name="region" value="서울">
-						서울</label> <label><input type="radio" name="region" value="경기도">
-						경기도</label> <label><input type="radio" name="region" value="강원도">
-						강원도</label> <label><input type="radio" name="region" value="충청북도">
-						충청북도</label> <label><input type="radio" name="region" value="충청남도">
-						충청남도</label> <label><input type="radio" name="region" value="전라북도">
-						전라북도</label> <label><input type="radio" name="region" value="전라남도">
-						전라남도</label> <label><input type="radio" name="region" value="경상북도">
-						경상북도</label> <label><input type="radio" name="region" value="경상남도">
-						경상남도</label> <label><input type="radio" name="region" value="제주도">
-						제주도</label>
-				</div>
-			</div>
 			<div class="write-title">
 				<input type="text" id="post-title" name="title"
 					placeholder="제목을 입력해 주세요.">
@@ -97,37 +95,40 @@ List<InfoBoard> boards = (List<InfoBoard>) request.getAttribute("boards");
 				fCreator : "createSEditor2"
 			});
 
-	function submitPost() {
-		oEditors.getById["bo_content"].exec("UPDATE_CONTENTS_FIELD", []);
+		function submitPost() {
+			oEditors.getById["bo_content"].exec("UPDATE_CONTENTS_FIELD", []);
+			
+			var category = document.querySelector('select[name="category"]').value;
+			if (category === "") {
+				alert("카테고리를 선택해주세요.");
+				return false;
+			}
 
-		if (!document.querySelector('input[name="category"]:checked')) {
-			alert("카테고리를 선택해주세요.");
-			return false;
+			var tag = document.querySelector('select[name="tag"]').value;
+			if (tag === "") {
+				alert("태그를 선택해주세요.");
+				return false;
+			}
+
+			var region = document.querySelector('select[name="region"]').value;
+			if (region === "") {
+				alert("지역을 선택해주세요.");
+				return false;
+			}
+
+			var title = document.getElementById("post-title").value.trim();
+			if (title === "") {
+				alert("제목을 입력해주세요.");
+				return false;
+			}
+
+			var content = document.getElementById("bo_content").value.trim();
+			if (content === "") {
+				alert("본문을 입력해주세요.");
+				return false;
+			}
+
+			return true;
 		}
-
-		if (!document.querySelector('input[name="tag"]:checked')) {
-			alert("태그를 선택해주세요.");
-			return false;
-		}
-
-		if (!document.querySelector('input[name="region"]:checked')) {
-			alert("지역을 선택해주세요.");
-			return false;
-		}
-
-		var title = document.getElementById("post-title").value.trim();
-		if (title === "") {
-			alert("제목을 입력해주세요.");
-			return false;
-		}
-
-		var content = document.getElementById("bo_content").value.trim();
-		if (content === "") {
-			alert("본문을 입력해주세요.");
-			return false;
-		}
-
-		return true;
-	}
 </script>
 <%@ include file="/views/common/footer.jsp"%>
