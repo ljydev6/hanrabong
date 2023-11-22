@@ -272,6 +272,19 @@ public class MemberDao {
 			close(pstmt);
 		}return result;
 	}
+	public int deleteVideo(Connection conn,String memNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteVideo"));
+			pstmt.setString(1, memNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 	public MemberInfo selectMemberInfo(Connection conn,String memNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -537,14 +550,12 @@ public class MemberDao {
 		return GenreAll.builder()
 						.genreCode(rs.getString("GENRE_CODE"))
 						.genreName(rs.getString("GENRE_NAME"))
-//						.memNo(rs.getString("MEM_NO"))
 						.build();
 	}
 	public static InterestAll getInterestAll(ResultSet rs) throws SQLException {
 		return InterestAll.builder()
 						.instCode(rs.getString("INST_CODE"))
 						.instName(rs.getString("INST_NAME"))
-//						.memNo(rs.getString("MEM_NO"))
 						.build();
 						
 	}

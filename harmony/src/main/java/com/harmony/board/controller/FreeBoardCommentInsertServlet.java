@@ -38,7 +38,7 @@ public class FreeBoardCommentInsertServlet extends HttpServlet {
 		            response.sendRedirect(request.getContextPath() + "/loginServlet.do");
 		            return;
 		        }
-		        String freComWriter = request.getParameter("freComWriter");
+		        String freComWriter = loginMember.getMemNo();
 		        String freComContent = request.getParameter("content");
 		        int freComLevel = Integer.parseInt(request.getParameter("level"));
 		        String freComRefNoStr = request.getParameter("freComNoRef");

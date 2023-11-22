@@ -43,10 +43,8 @@
     transition: all 0.3s ease; 
 }
 
-/* 정보 게시판 선택 백그라운드 */
+/* 정보 게시판*/
 .info-board{
-    background-color: #FFFACD;
-    border-radius: 8px;
     padding: 10px;
     padding-left: 10px;
     padding-right: 50px;
@@ -54,6 +52,8 @@
 
 /* 자유게시판 선택안되어 있을때 */
 .free-board{
+	background-color: #FFFACD;
+    border-radius: 8px;
     padding: 10px;
     padding-left: 10px;
     padding-right: 50px;
@@ -91,7 +91,6 @@
     transition: all 0.3s ease; 
 }
 
-
 .write-title{
 	margin-top: 10px;
     margin-bottom: 4px;
@@ -108,14 +107,13 @@
     margin-bottom: 8px;
 }
 
-.infopostwrite{
+.freepostwrite{
     width: 100%;
     border-bottom: 1.5px solid rgb(139, 139, 139); 
     margin-bottom: 20px;
 }
-select:focus option:first-child {
-    display: none;
-}
+
+
 .form-field-container {
 	display: flex;
 	flex-direction: row;

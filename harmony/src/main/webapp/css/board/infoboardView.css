@@ -1,10 +1,3 @@
-
-/* 폰트 적용 전체 */
-*{
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-
 /* 카테고리 전체 div  */
 .main {
     display: flex;
@@ -24,6 +17,8 @@
     display: flex;
     flex-direction: column;
     width: 35%;
+    height: 200px;
+
 }
 
 /* 정보게시판 자유게시판 DIV*/
@@ -32,6 +27,13 @@
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    height: 200px;
+}
+
+.info-container > h3{
+	display: flex;
+	align-items: center;
+	height: 55px;
 }
 
 /* 게시판 부분 DIV */
@@ -58,12 +60,20 @@
     padding-right: 50px;
 }
 
+.notice-board{
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
 /* 게시판에 마우스올리면 호버효과 */
 .info-container > h3 a:hover {
     color: #EC8F5E;
     transform: scale(1.1); 
 }
  
+
+  
 
 
 

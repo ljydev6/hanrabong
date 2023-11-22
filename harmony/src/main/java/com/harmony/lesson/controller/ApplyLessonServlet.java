@@ -65,9 +65,12 @@ public class ApplyLessonServlet extends HttpServlet {
 				.lessonDay(day)
 				.build();
 		
+		
+		
 		// 레슨신청되어있는지 확인
 		LessonApply result2 = new LessonService().showApplyInfo(memNo);
 		String msg,loc;
+		
 		// 레슨신청
 		
 		if (result2==null) {

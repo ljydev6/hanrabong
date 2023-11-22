@@ -43,6 +43,19 @@ public class InfoBoardViewServlet extends HttpServlet {
         InfoBoard b = infoBoardService.selectBoardByNo(no);
         List<InfoCommentBoard> comments = infoBoardService.selectBoardComments(no);
 
+        
+        
+        InfoBoard board = new InfoBoardService().selectBoardByNo(no);
+
+     // 카테고리와 태그 이름 조회
+     String categoryName = new InfoBoardService().selectCategoryNameByNo(board.getInfBrdCatNo());
+     String tagName = new InfoBoardService().selectTagNameByNo(board.getInfBrdTagNo());
+
+     // 요청 속성에 설정
+     request.setAttribute("InfoBoard", board);
+     request.setAttribute("categoryName", categoryName);
+     request.setAttribute("tagName", tagName);
+        
         request.setAttribute("InfoBoard", b);
         request.setAttribute("comments", comments);
         //setAttribute로 jsp의 getAttribute에 보냄(InfoBoard)

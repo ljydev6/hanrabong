@@ -2,7 +2,6 @@ package com.harmony.admin.controller.ajax;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,6 @@ import com.harmony.admin.service.AdminService;
 import com.harmony.common.exception.HarmonyException;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.oreilly.servlet.multipart.MultipartParser;
 
 /**
  * Servlet implementation class AjaxCarouselManageServlet

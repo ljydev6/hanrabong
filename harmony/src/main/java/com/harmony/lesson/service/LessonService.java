@@ -265,7 +265,12 @@ public class LessonService {
 		close(conn);
 		return result;
 	}
-	
+	public LessonApply showApplyBtn(String memNo, int boardNo) {
+		Connection conn=getConnection();
+		LessonApply result=dao.showApplyBtn(conn, memNo, boardNo);
+		close(conn);
+		return result;
+	}
 	
 	
 	

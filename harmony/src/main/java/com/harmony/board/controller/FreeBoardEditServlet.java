@@ -33,6 +33,7 @@ public class FreeBoardEditServlet extends HttpServlet {
 		
 		
 		int no = Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
 
         FreeBoardService service = new FreeBoardService();
         FreeBoard board = service.selectFreeBoardByNo(no);

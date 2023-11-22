@@ -12,9 +12,6 @@ if (request.getAttribute("searchResults") != null) {
 %>
 
 <%@ include file="/views/common/header.jsp"%>
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-	rel="stylesheet">
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/board/infoCommunity.css"
@@ -31,11 +28,13 @@ if (request.getAttribute("searchResults") != null) {
 				<h3 class="free-board">
 					<a href="<%=request.getContextPath()%>/freeBoardList.do">자유 게시판</a>
 				</h3>
-				<h3 class="free-board">
+				<h3 class="notice-board">
 					<a href="<%=request.getContextPath()%>/notice.do">공지 게시판</a>
 				</h3>
 			</div>
 		</div>
+		
+		
 
 		<div class="main-container">
 			<div class="filter">

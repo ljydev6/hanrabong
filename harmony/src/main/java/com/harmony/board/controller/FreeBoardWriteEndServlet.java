@@ -55,7 +55,7 @@ public class FreeBoardWriteEndServlet extends HttpServlet {
 					.freBrdWriter(memNo)
 					/* .freBrdWriter(mr.getParameter("freBrdWriter")) */
 				    .freBrdTitle(mr.getParameter("title"))  
-				    .freBrdContent(mr.getParameter("content"))  
+				    .freBrdContent(mr.getParameter("bo_content"))  
 				    .freBrdTitleImg(mr.getFilesystemName("upfile"))  
 				    .build();
 

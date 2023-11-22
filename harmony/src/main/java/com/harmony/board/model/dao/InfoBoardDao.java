@@ -437,6 +437,26 @@ public class InfoBoardDao {
 	        }
 	        return result;
 	    }
+	 
+	 
+	 public List<InfoBoard> selectPopularBoard(Connection conn) {
+		    PreparedStatement pstmt = null;
+		    ResultSet rs = null;
+		    List<InfoBoard> popularBoards = new ArrayList<>();
+		    try {
+		        pstmt = conn.prepareStatement(sql.getProperty("selectPopularBoard"));
+		        rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		            popularBoards.add(getBoard(rs));
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        close(rs);
+		        close(pstmt);
+		    }
+		    return popularBoards;
+		}
 
 	
 	private InfoBoard getBoard(ResultSet rs) throws SQLException {
