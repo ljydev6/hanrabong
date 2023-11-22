@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.harmony.lesson.dto.Lesson;
 import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.service.LessonService;
+import com.harmony.message.controller.SendMessage;
+import com.harmony.message.model.dto.Message;
+import com.harmony.message.model.dto.Message.catType;
 
 /**
  * Servlet implementation class ApplyLesson
@@ -68,6 +71,9 @@ public class ApplyLessonServlet extends HttpServlet {
 		if(result>0) {
 			msg = "레슨 상담 신청에 성공하셨습니다. :)";
 			loc = "/lesson/findLesson.do";
+			SendMessage.sendMessage(Message.builder().sendMem(memNo).receiveMem(applyMemNo).catCode(catType.LESSON)
+					.content("<p>새로운 레슨 신청이 도착했습니다.<p><br><p><a href=\""+request.getContextPath()+"/lesson/레슨정보보기서블렛\">[바로가기]</a></p>")
+					.build());
 		} else {
 			msg = "신청 실패 :(";
 			loc = "/lesson/findLesson.do";

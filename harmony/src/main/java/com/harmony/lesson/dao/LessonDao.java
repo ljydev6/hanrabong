@@ -36,6 +36,7 @@ public class LessonDao {
 				Lesson result=null;
 				try {
 					pstmt=conn.prepareStatement(sql.getProperty("applyFindMemNo"));
+					pstmt.setString(1, no);
 					rs=pstmt.executeQuery();
 					if(rs.next()) {
 						result = Lesson.builder()
