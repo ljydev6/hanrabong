@@ -2,6 +2,9 @@
 
 section{
 	display: flex;
+	height: 90vh;
+  	justify-content: center;
+  	align-items: center; 
 	margin-left: 33%;
 	margin-right: 30%;
 	font-family: 'Hi Melody', sans-serif;

@@ -37,11 +37,13 @@ public class ChkApplyEndServlet extends HttpServlet {
 //		gson.fromJson(request.getParameter("partIndex"), );
 		
 		String partIndex = request.getParameter("partIndex");
-	
+		String boardNo = request.getParameter("boardNo");
+		
 		int result = es.changeApproval(partIndex);
 		
 		if(result>0) System.out.println("수락 성공");
 		
+		response.sendRedirect(request.getContextPath()+"/ensemble/chkApply.do?boardNo="+boardNo);
 //		response.sendRedirect(request.getContextPath()+"/views/ensemble/chkApply.jsp");
 	}
 

@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.css">
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/navbarStyle.css">
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/css/footerStyle.css">
+	<script src="<%=request.getContextPath() %>/js/popper.min.js"></script>
 	<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/js/jquery-3.7.1.min.js"></script>
 	<style>

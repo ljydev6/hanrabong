@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/views/common/header.jsp" %>  
     
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,19 +15,21 @@ page import="java.util.List,
 			com.harmony.ensemble.model.dto.EnsembleTeamMusic,
 			com.harmony.ensemble.model.dto.EnsembleTeamVideo,
 			com.harmony.ensemble.model.dto.Genre,
-			com.harmony.ensemble.model.dto.EnsembleTeamComment" 
+			com.harmony.ensemble.model.dto.EnsembleTeamComment,
+			com.harmony.ensemble.model.dto.MemberProfile" 
 %>
+<script src="https://kit.fontawesome.com/a6c64592e2.js" crossorigin="anonymous"></script>
 <%
 EnsembleTeam team=(EnsembleTeam)request.getAttribute("team");
 List<EnsembleTeamTime> time = (List<EnsembleTeamTime>)request.getAttribute("time");
 List<EnsembleTeamMusic> music = (List<EnsembleTeamMusic>)request.getAttribute("music");
 List<EnsembleTeamVideo> video = (List<EnsembleTeamVideo>)request.getAttribute("video");
 List<Genre> genre = (List<Genre>)request.getAttribute("genre");
-// List<EnsembleTeamComment> comments=(List<EnsembleTeamComment>)request.getAttribute("comments");
+List<MemberProfile> members = (List<MemberProfile>)request.getAttribute("members");
+
 %>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/teamProfile.css" type="text/css">
 
-<%@ include file="/views/common/header.jsp" %>  
 
 <main>
 <input type="hidden" name="teamNo" value="<%=team.getEnsTeamNo()%>">
@@ -88,10 +92,9 @@ List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 					<%if(!music.isEmpty()){ 
 					for(EnsembleTeamMusic m : music){%>
 						<%=m.getMReName() %> <br>
-						 <audio src="https://artlist.io/royalty-free-music/song/beat-blitz/116358"
-							controls></audio> <br><br>
 					<%} 
 				}%>
+						 <audio src="https://artlist.io/royalty-free-music/song/midnight/73829" controls></audio> <br><br>
 				
 				</div>
 				<div class="hr_container">
@@ -114,7 +117,36 @@ List<Genre> genre = (List<Genre>)request.getAttribute("genre");
 		</section>		
 	<aside>
 		<div class="mem_profile_container">
+			<br><br>
 			<p><b>멤버 프로필</b></p>
+			<%if(!members.isEmpty()){ 
+				for(MemberProfile m : members){%>
+					<div class="profile_card">
+						<br>
+							<div class="hr_container">
+								<hr>
+							</div>
+						<br>
+						<i class="fa-solid fa-user"></i>
+						<%=m.getEnsMemPosition() %>
+						<br>
+						<a href="<%=request.getContextPath()%>">
+							<%=m.getMemInfoEmail() %>
+						</a>
+						<br>
+						<%=m.getInstName() %>
+						<br>
+						<span>가입 날짜 :</span>
+						<%=m.getEnsMemJoinDate() %>
+						<br>
+							<div class="hr_container">
+								<hr>
+							</div>
+						<br>
+					</div>
+					
+			<%	}
+			} %>
 		</div>
 	</aside>
 </main>

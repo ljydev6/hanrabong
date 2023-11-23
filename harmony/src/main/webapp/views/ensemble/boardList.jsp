@@ -167,38 +167,7 @@
 				   <span class="inst_chk_span">제주</span>
 			   </li>
 			</ul>
-			<!-- <h3 class="toggle1">요일</h3>
-			<ul>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="mon" style="display:none">
-				   <span class="inst_chk_span">월</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="tues" style="display:none">
-				   <span class="inst_chk_span">화</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="wednes" style="display:none">
-				   <span class="inst_chk_span">수</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="thurs" style="display:none">
-				   <span class="inst_chk_span">목</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="fri" style="display:none">
-				   <span class="inst_chk_span">금</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="satur" style="display:none">
-				   <span class="inst_chk_span">토</span>
-			   </li>
-			   <li>
-				   <input class="inst_chk" type="checkbox" name="inst" value="sun" style="display:none">
-				   <span class="inst_chk_span">일</span>
-			   </li>
-			   
-			</ul> -->
+		
 		</div>
 
 </aside>
@@ -259,17 +228,7 @@
 </main>
 
 <script>
-/* $('.inst_chk').on('change', function(){
-	alert("체크");
-};
-*/
 
-/* $('.inst_chk_span').on('change', function() {
-    alert("체크");
-}); */
-/* $('.inst_chk_span').onchange = function(){
-	alert("체크");
-} */
 $(document).ready(function() {
 	
    $('.inst_chk').on('change', function() {
@@ -347,47 +306,7 @@ $(document).ready(function() {
 		   			}
 		   		});
 	   	   
-	  	   
-	   	<%--    h3.text("<%=b.getEnsBoardTitle()%>");
-	   	   h5.text("<%=b.getEnsTeamType() %>");
-	   	   h4.text("<%=b.getEnsTeamName() %>");
-	   	   
-	   	   li1.text("<%=b.getGenreName() %>");
-	   	   li2.text("<%=b.getInstrument() %>");
-	   	   li3.text("<%=b.getEnsLocation() %>"); --%>
-	   	   
-	   	   
-	   	   
-		<%--    	    
-	   	    $('.board_container').remove();
-	   	   <%if(!filterBoard.isEmpty()){  
-  				for(VEnsList b:filterBoard){%> 		
-	   	    %('.board_container').append('
-							   	    <div class="board_list" onclick="location.assign('<%=request.getContextPath()%>/ensemble/boardView.do?ensBoardNo=<%=b.getEnsBoardNo()%>')">
-						   	        	<div class="list_top_container">
-						   		        	<div class="title_container">
-						   			       		<h3><%=b.getEnsBoardTitle()%></h3>
-						   			      	
-						   		        	</div>
-						   		        	<div class="type_container">
-						   		        			<h5><%=b.getEnsTeamType() %></h5>
-						   		        	</div>
-						   	        	</div>
-						   	        	<div class="img_container">
-						   		        	<img src = "https://previews.123rf.com/images/valentint/valentint1702/valentint170201265/71753888-%EC%9D%8C%ED%91%9C-%EC%95%84%EC%9D%B4%EC%BD%98%EC%9E%85%EB%8B%88%EB%8B%A4-%ED%9D%B0%EC%83%89-%EB%B0%94%ED%83%95%EC%97%90-%EC%A3%BC%ED%99%A9%EC%83%89-%EC%9D%B8%ED%84%B0%EB%84%B7-%EB%B2%84%ED%8A%BC%EC%9E%85%EB%8B%88%EB%8B%A4.jpg" 
-						   		        	style="width=80px; height:80px; border-radius: 50%;" class="profile_img">
-						   	      			<h4><%=b.getEnsTeamName() %></h4>
-						   	        	</div>
-						   	       		<hr>
-						   	       		<ul>
-						   	       			<li><%=b.getGenreName() %></li>
-						   	       			<li><%=b.getInstrument() %></li>
-						   	       			<li><%=b.getEnsLocation() %></li>
-						   	       		</ul>
-						   	        </div>
-						   			<%}
-						   		}%>
-						   	    		'); --%>
+
 	   	    
 	   	 }); 
   

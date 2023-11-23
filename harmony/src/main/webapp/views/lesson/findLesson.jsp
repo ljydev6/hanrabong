@@ -179,7 +179,7 @@
 	       							lessonStars.append(starSpan);
 	       							
 	       							
-		       						lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+		       						lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 		       				
 		       						lessonListBox.append(lessonList);
 		       						
@@ -245,7 +245,7 @@
 	       							lessonStars.append(starSpan);
 	       							
 	       							
-	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -309,7 +309,7 @@
 	       							lessonStars.append(starsi);
 	       							lessonStars.append(starSpan);
 	       							
-	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -374,7 +374,7 @@
 	       							lessonStars.append(starsi);
 	       							lessonStars.append(starSpan);
 	       							
-	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 		       				
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -454,7 +454,7 @@
 	       							lessonStars.append(starsi);
 	       							lessonStars.append(starSpan);
 	       							
-	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 	       							
 		       						lessonListBox.append(lessonList);
 	       						});
@@ -518,7 +518,7 @@
 	       							lessonStars.append(starsi);
 	       							lessonStars.append(starSpan);
 	       							
-	       							lessonList.append(recruit).append(lessonStars).append(lessonView).append(lessonListImageBox).append(lessonListTitle);
+	       							lessonList.append(lessonListImageBox).append(lessonListTitle).append(recruit).append(lessonStars).append(lessonView);
 	       							
 		       						lessonListBox.append(lessonList);
 	       						});
