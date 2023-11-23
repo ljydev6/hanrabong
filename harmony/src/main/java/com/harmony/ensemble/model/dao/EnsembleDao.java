@@ -212,7 +212,7 @@ public class EnsembleDao {
 	public int insertApply(Connection conn, EnsembleBoardApply apply) {
 		PreparedStatement pstmt = null;
 		int result=0;
-		System.out.println("신청확인: " + apply);
+		
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertApply"));
 			pstmt.setString(1, apply.getEnsPartIndex());

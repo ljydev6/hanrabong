@@ -103,7 +103,8 @@ public class EnsembleService {
 	public int selectPartIndex(String boardNo, String instNo,String loginMemNo) {
 		Connection conn = getConnection();
 		EnsembleBoardApply apply = dao.selectPartIndex(conn, boardNo, instNo, loginMemNo);
-		int result = insertApply(apply);
+		System.out.println("서비스 apply: "+ apply);
+		int result = insertApply(apply); //아래 메소드 호출
 		close(conn);
 		return result;
 	}
@@ -111,7 +112,6 @@ public class EnsembleService {
 	
 	public int insertApply(EnsembleBoardApply apply) {
 		Connection conn = getConnection();
-		
 		int result = dao.insertApply(conn, apply);
 		close(conn);
 		return result;

@@ -88,19 +88,14 @@
 <script>
 
 const delete_board =()=>{
-// 	$.ajax({
-<%-- 			url: "<%=request.getContextPath()%>/ensemble/deleteBoard.do", --%>
-// 			type : "post",
-// 			traditional: true,
-// 			datatype: "json",
-// 			data : {boardNo:$('#board_no').val() ,wantParts:JSON.stringify($('#want_part'))},
-// 			success : data=>{
-			
-// 			}
-// 		});				
 	
+	let result = confirm('정말 삭제하시겠습니까?');
 	
-	location.assign('<%=request.getContextPath()%>/ensemble/deleteBoard.do?boardNo='+$('#boardNo').val());
+	if(result){
+		location.assign('<%=request.getContextPath()%>/ensemble/deleteBoard.do?boardNo='+$('#boardNo').val());		
+	}	else{
+		
+	}
 }
 
 

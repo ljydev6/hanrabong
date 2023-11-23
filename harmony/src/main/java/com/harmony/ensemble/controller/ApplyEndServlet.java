@@ -34,12 +34,15 @@ public class ApplyEndServlet extends HttpServlet {
 		
 		String wantPart = request.getParameter("inst");
 		String instNo = es.selectInstNoByName(wantPart);
+		
 	
 		Member loginMember = (Member)request.getSession().getAttribute("loginMember");
 		String loginMemNo = loginMember.getMemNo();
 		
 		String boardNo = request.getParameter("boardNo");
 //		System.out.println("ApplyEndServlet boardNo: "+ boardNo);
+		
+	
 		
 		int result = es.selectPartIndex(boardNo, instNo,loginMemNo);
 		
