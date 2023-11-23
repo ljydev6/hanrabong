@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -73,10 +72,9 @@ public class PaymentModule {
             result.append(line);
         }
         
-
         JsonElement element = JsonParser.parseString(result.toString());
-
-        accessToken = element.getAsJsonObject().get("access_token").getAsString();
+        JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+        accessToken = response.getAsJsonObject().get("access_token").getAsString();
         
         bufferedReader.close();
         bufferedWriter.close();
@@ -95,18 +93,28 @@ public class PaymentModule {
 		try {
 			
 			//기존에 등록된 사전 등록 정보가 있는지 확인
-			URL url = new URL(requestURL+"/"+payHisCode);
+			URL url = new URL(requestURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Content-Type", "application/json; utf-8");
 	        conn.setRequestProperty("Accept", "application/json");
 	        conn.setRequestProperty("Authorization", "Bearer "+accessToken);
-	        conn.setDoOutput(false);
+	        conn.setDoOutput(true);
+	        
+	        Gson gson = new Gson();
+	        JsonObject json = new JsonObject();
+	        
+	        json.addProperty("merchant_uid", payHisCode);
+
+	        // POST 요청에서 필요한 파라미터를 OutputStream을 통해 전송
+	        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+	        bufferedWriter.write(gson.toJson(json));
+	        bufferedWriter.flush();
+	        
 	        
 	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
-			
+			System.out.println(responseCode);
 	        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        String line = "";
 	        StringBuilder result = new StringBuilder();
@@ -142,7 +150,6 @@ public class PaymentModule {
  	        bufferedWriter.flush();
  	        
  	        int responseCode = conn.getResponseCode();
- 	        System.out.println("responseCode : " + responseCode);
  			
  	        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
  	        String line = "";
@@ -151,11 +158,7 @@ public class PaymentModule {
  	        while ((line = bufferedReader.readLine()) != null) {
  	            result.append(line);
  	        }
- 	        
- 	        JsonElement element = JsonParser.parseString(result.toString());
- 	        String message = element.getAsJsonObject().get("response").getAsString();
- 	        System.out.println("prepare message : "+message);
- 	        
+ 	        System.out.println("Method(Post) result : " + result.toString());
         	}catch(Exception e) {
         		e.printStackTrace();
         	}
@@ -190,10 +193,6 @@ public class PaymentModule {
      	        while ((line = bufferedReader.readLine()) != null) {
      	            result.append(line);
      	        }
-     	        
-     	        JsonElement element = JsonParser.parseString(result.toString());
-     	        String message = element.getAsJsonObject().get("message").getAsString();
-     	        System.out.println("prepare message : "+message);
      	        
         	}catch(Exception e) {
         		e.printStackTrace();
@@ -240,12 +239,7 @@ public class PaymentModule {
  	        while ((line = bufferedReader.readLine()) != null) {
  	            result.append(line);
  	        }
- 	        
- 	        JsonElement element = JsonParser.parseString(result.toString());
- 	        String message = element.getAsJsonObject().get("response").getAsString();
- 	        code = element.getAsJsonObject().get("code").getAsString();
- 	        System.out.println("prepare message : "+message);
- 	        
+ 	        System.out.println("refund result : "+result.toString());
         	}catch(Exception e) {
         		e.printStackTrace();
         	}

@@ -1,6 +1,10 @@
 package com.harmony.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -38,6 +42,13 @@ public class AdminRefundManageServlet extends HttpServlet {
 				pageBarSize = Integer.parseInt(c.getValue());
 			}
 		}
+		String type = request.getParameter("type");
+		String keyword = request.getParameter("keyword");
+		List<Map<String,String>> filters = new ArrayList<>();
+		if(type!=null && keyword!=null) {
+			filters.add(Map.of(type, keyword));
+		}
+		request.getRequestDispatcher("/views/admin/views/refundManage.jsp").forward(request, response);
 	}
 
 	/**

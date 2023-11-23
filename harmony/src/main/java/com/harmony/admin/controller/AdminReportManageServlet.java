@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.harmony.admin.model.dto.ReportList;
 import com.harmony.admin.service.AdminService;
 import com.harmony.common.PageBarBuilder;
+import com.harmony.payment.service.PaymentService;
 
 /**
  * Servlet implementation class AdminReportManageServlet
@@ -53,13 +54,13 @@ public class AdminReportManageServlet extends HttpServlet {
 		if(type!=null && keyword!=null) {
 			filters.add(Map.of(type, keyword));
 		}
-		int totalData = AdminService.getService().getReportTotalData(type,keyword);
-		List<ReportList> reportList = AdminService.getService().selectReportList(type,keyword,cPage,numPerPage);
-		List<String[]> processcode = AdminService.getService().getReportProCode();
-		request.setAttribute("processcode", processcode);
-		request.setAttribute("reportList", reportList);
-		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, totalData, pageBarSize, request.getRequestURI(),filters));
-		request.getRequestDispatcher("/views/admin/views/reportManage.jsp").forward(request, response);
+//		int totalData = PaymentService.getService().getRefundTotalData(type,keyword);
+//		List<RefundList> reportList = PaymentService.getService().selectRefundList(type,keyword,cPage,numPerPage);
+//		List<String[]> processcode = PaymentService.getService().getRefundProCode();
+//		request.setAttribute("processcode", processcode);
+//		request.setAttribute("reportList", reportList);
+//		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, totalData, pageBarSize, request.getRequestURI(),filters));
+//		request.getRequestDispatcher("/views/admin/views/reportManage.jsp").forward(request, response);
 	}
 
 	/**

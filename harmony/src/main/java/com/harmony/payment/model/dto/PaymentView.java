@@ -24,6 +24,7 @@ public class PaymentView {
 	private String teacherEmail;
 	private String teacherIntroduce;
 	private String paymentStatus;
+	private String payHisNo;
 	@Builder.Default
 	private List<PaymentApplyDate> dates = new ArrayList<>();
 }

@@ -70,9 +70,12 @@
 				</div>
 				<div class="d-flex justify-content-center">
 					<%if(view.getPaymentStatus()!=null && !view.getPaymentStatus().equals("100")){ %>
-					<h3 class="h3" style="color: white; background-color: #ffc107; border-radius: 10px">이미 결제된 요청입니다.</h3>
+					<button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#refundmodal" 
+					<%=view.getPaymentStatus().equals("110")||view.getPaymentStatus().equals("210")||view.getPaymentStatus().equals("310")||view.getPaymentStatus().equals("410")||view.getPaymentStatus().equals("411")?"disabled":"" %>
+					>환불하기</button>
+					
 					<%}else if(view.getStatus().equals("Y")){ %>
-					<button class="btn btn-warning btn-lg" onclick="">결제하기</button>
+					<button class="btn btn-warning btn-lg" onclick="payment();">결제하기</button>
 					<%}else if(view.getStatus().equals("C")){ %>
 					<span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="강사가 확인중입니다.">
 					  <button class="btn btn-warning btn-lg" type="button" disabled>결제하기</button>
@@ -133,19 +136,119 @@ geocoder.addressSearch('<%=view.getPlace()%>', function(result, status) {
 <script>
 	IMP.init('imp42878223');
 	
-	const payment = ()=>{
-		const applyNo = $('#applyNo').val();
-		
-	};
+const payment = ()=>{
+	const applyNo = $('#applyNo').val();
+	console.log(applyNo);
+	const totalprice = $('#totalprice').val();
+	console.log(totalprice);
+	$.ajax({
+		type:"post",
+	    url:'<%=request.getContextPath()%>/payment/ajax/prepare.do',
+	    data:{applyNo:applyNo},
+	    dataType:'json',
+	    success:function(result){
+	    	console.log(result)
+			requestPay(result.merchantUid, totalprice);
+	    },
+	    error:function(e){
+	        console.log("error : ", e);
+	        alert('조회 중 오류가 발생하였습니다.');
+	        
+	    }
+    });
+};
 	
-function requestPay() {
+function requestPay(payhisno, totalprice) {
     IMP.request_pay({
       pg: "kcp.{AO09C}",
-      merchant_uid: "ORD20180131-0000011",   // 주문번호
-      amount: 64900,                         // 숫자 타입
-    }, function (rsp) { // callback
-      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+      merchant_uid: payhisno,   // 주문번호
+      amount: totalprice,                         // 숫자 타입
+    }, function (rsp) {
+    	if(rsp.success){
+    		console.log(rsp.imp_uid);
+    		console.log(rsp.merchant_uid);
+    	$.ajax({
+    		type:"post",
+    	    url:'<%=request.getContextPath()%>/payment/ajax/payend.do',
+    	    data:{merchant_uid:rsp.merchant_uid,
+    	    	imp_uid:rsp.imp_uid},
+    	    dataType:'json',
+    	    success:function(data){
+    	    	console.log(data);
+    	    	if(data.result == 'success'){
+    	    		alert('결제가 성공하였습니다.');
+    	    		location.reload(true);
+    	    	}else{
+    	    		alert('결제에 실패하였습니다.');
+    	    		
+    	    	}
+    	    },
+    	    error:function(e){
+    	        console.log("error : ", e);
+    	        alert('조회 중 오류가 발생하였습니다.');
+    	        
+    	    }
+        });
+    	}
     });
   }
+</script>
+<div class="modal fade" id="refundmodal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div
+		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		<div class="modal-content">
+			<form id="refund-modal-form" method="post" onsubmit="refundRequest(event);">
+			<div class="modal-header bg-gray-50 dark:bg-gray-800">
+				<h1 class="modal-title fs-5 font-semibold tracking-wide text-left text-gray-500 dark:text-gray-400 ">환불신청하기</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid" id="modal-container">
+					<div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+						<div class="row mb-3 border-b px-3 py-1 d-flex flex-column">
+							<div class="col input-group-text">
+								환불사유
+							</div>
+							<div class="col">
+								<input type="hidden" name="payHisNo" value="<%=view.getPayHisNo()%>" id="payHisNo">
+								<textarea class="form-control w-full" name="refundReason" rows="3" style="resize:vertical;" id="refundReason"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-danger">환불신청</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+
+const refundRequest = (e)=>{
+	e.preventDefault();
+	$.ajax({
+		type:"post",
+	    url:'<%=request.getContextPath()%>/refund/request.do',
+	    data:{payHisNo:$('#payHisNo').val(),refundReason:$('#refundReason').val()},
+	    dataType:'json',
+	    success:function(data){
+	    	console.log("success : ", data);
+	    	alert('성공적으로 신청되었습니다.');
+	    	location.reload(true);
+	    },
+	    error:function(e){
+	        console.log("error : ", e);
+	        alert('신청중 오류가 발생하였습니다.');
+	        
+	    }
+    });
+	
+};
+
 </script>
 <%@ include file="/views/common/footer.jsp"%>

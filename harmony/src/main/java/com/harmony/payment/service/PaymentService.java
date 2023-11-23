@@ -21,5 +21,46 @@ public class PaymentService {
 		close(conn);
 		return result;
 	}
+
+	public String insertHistory(int applyNo, int totalAmount) {
+		Connection conn = getConnection();
+		String payHisNo = null;
+		int result = PaymentDao.getDao().selectPaymentInfoCount(conn,applyNo);
+		if(result==0) {
+			result = PaymentDao.getDao().insertPayment(conn, applyNo, totalAmount);
+			if(result>0) {
+				payHisNo = PaymentDao.getDao().getPayHisNo(conn);
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}else {
+			payHisNo = PaymentDao.getDao().selectPaymentNoByApplyNo(conn,applyNo);
+		}
+		close(conn);
+		return payHisNo;
+	}
+
+	public int updatePayment(String merchant_uid, String imp_uid) {
+		Connection conn = getConnection();
+		int result = PaymentDao.getDao().updatePaymentSuccess(conn,merchant_uid,imp_uid);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int requestRefund(String payHisNo, String refundReason) {
+		Connection conn = getConnection();
+		int paymentResult = PaymentDao.getDao().updateRefundRequest(conn,payHisNo);
+		int refundResult = PaymentDao.getDao().insertRefundRequest(conn,payHisNo,refundReason);
+		int result = paymentResult * refundResult;
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 	
 }

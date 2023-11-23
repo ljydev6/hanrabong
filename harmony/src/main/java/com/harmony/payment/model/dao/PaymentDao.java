@@ -31,12 +31,13 @@ public class PaymentDao {
 		return PaymentDao.dao;
 	}
 	
-	public int insertPayment(Connection conn, int applyNo) {
+	public int insertPayment(Connection conn, int applyNo, int totalAmount) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertPayment"));
 			pstmt.setInt(1, applyNo);
+			pstmt.setInt(2, totalAmount);
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -93,6 +94,113 @@ public class PaymentDao {
 				.teacherEmail(rs.getString("TEACHER_EMAIL"))
 				.teacherIntroduce(rs.getString("TEACHER_INTRODUCE"))
 				.paymentStatus(rs.getString("PAYSTATE"))
+				.payHisNo(rs.getString("PAYHISNO"))
 				.build();
+	}
+	
+	public String getPayHisNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getPayHisNo"));
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int selectPaymentInfoCount(Connection conn, int applyNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectPaymentInfoCount"));
+			pstmt.setInt(1, applyNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public String selectPaymentNoByApplyNo(Connection conn, int applyNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String result = null;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectPaymentNoByApplyNo"));
+			pstmt.setInt(1, applyNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updatePaymentSuccess(Connection conn, String merchant_uid, String imp_uid) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("updatePaymentSuccess"));
+			pstmt.setString(1, imp_uid);
+			pstmt.setString(2, merchant_uid);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateRefundRequest(Connection conn, String payHisNo) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("updateRefundRequest"));
+			pstmt.setString(1, payHisNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertRefundRequest(Connection conn, String payHisNo, String refundReason) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("insertRefundRequest"));
+			pstmt.setString(1, payHisNo);
+			pstmt.setString(2, refundReason);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }
