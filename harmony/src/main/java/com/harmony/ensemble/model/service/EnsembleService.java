@@ -28,6 +28,14 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+//	
+//	public int deleteBoard(String boardNo) {
+//		Connection conn = getConnection();
+//		int result = dao.deleteBoard(conn, boardNo);
+//		close(conn);
+//		return result;
+//	}
+	
 	public List<VChkApply> selectApplyByBoardNo(String boardNo){
 		Connection conn = getConnection();
 		List<VChkApply> applyList = dao.selectApplyByBoardNo(conn, boardNo);
@@ -35,8 +43,6 @@ public class EnsembleService {
 		return applyList;
 		
 	}
-	
-
 	
 	public List<MemberProfile> selectMemProfile(String teamNo){
 		Connection conn = getConnection();

@@ -39,7 +39,22 @@ public class EnsembleDao {
 		}
 	}
 
-	
+//	
+//	public int deleteBoard(Connection conn, String boardNo) {
+//		PreparedStatement pstmt = null;
+//		int result = 0;
+//		try {
+//			pstmt = conn.prepareStatement(sql.getProperty("deleteBoard"));
+//			pstmt.setString(1, boardNo);
+//			result = pstmt.executeUpdate();
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			close(pstmt);
+//		}
+//		return result;
+//	}
+//	
 	public List<MemberProfile> selectMemProfile(Connection conn, String teamNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
