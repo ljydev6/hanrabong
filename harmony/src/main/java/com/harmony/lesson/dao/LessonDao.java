@@ -673,8 +673,8 @@ public class LessonDao {
 			LessonApply result=null;
 			try {
 				pstmt=conn.prepareStatement(sql.getProperty("showApplyBtn"));
-				pstmt.setInt(1, boardNo);
-				pstmt.setString(2, memNo);
+				pstmt.setString(1, memNo);
+				pstmt.setInt(2, boardNo);
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
 					result = getLessonApply(rs);

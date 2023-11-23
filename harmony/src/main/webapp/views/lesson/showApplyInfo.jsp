@@ -13,10 +13,10 @@
 	Lesson lesson = (Lesson)request.getAttribute("lesson");
 	Lesson time = (Lesson)request.getAttribute("time");
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
-	LessonApply lessonApply = (LessonApply)request.getAttribute("lessonApplyInfo");
+	LessonApply showApplyBtn = (LessonApply)request.getAttribute("showApplyBtn");
 	
-	Timestamp AstartTime = (Timestamp)lessonApply.getLessonStartTime();
-	Timestamp AendTime = (Timestamp)lessonApply.getLessonEndTime();
+	Timestamp AstartTime = (Timestamp)showApplyBtn.getLessonStartTime();
+	Timestamp AendTime = (Timestamp)showApplyBtn.getLessonEndTime();
 	
 	String AstartString = String.valueOf(AstartTime);
 	String AEndString = String.valueOf(AendTime);
@@ -24,7 +24,7 @@
 	String AAstartTime = AstartString.substring(11, 16);
 	String AAendTime = AEndString.substring(11, 16);
 	
-	String[] AtimeStrings = lessonApply.getLessonDay();
+	String[] AtimeStrings = showApplyBtn.getLessonDay();
 	String AtimeString = Arrays.toString(AtimeStrings);
 	
 	
@@ -60,10 +60,10 @@
 		<%} %>
 		<div class="container">
 			<div class="upperBar">
-                 <div><h2>나의 상담 신청 정보<h2></div>
+                <h2 style="color: white;">나의 상담 신청 정보</h2>
                 <div class="cud">
-                    <button style="color: blue">상담수락</button>
-                    <button style="color: red">상담거절</button>
+                    <button style="color: #98B629">상담수락</button>
+                    <button style="color: #2F4858">상담거절</button>
                 </div>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
@@ -88,7 +88,7 @@
                                 <div class="mb-3"><h5>상담신청 정보</h5></div>
                                	  <div>
                                       <div>장소</div>
-                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lessonApply.getApplyPlace() %>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=showApplyBtn.getApplyPlace() %>">
                                   </div>
                                   <div>
                                       <div>시작 시간</div>
@@ -105,7 +105,7 @@
                                   </div>
                                   <div>
                                       <div>횟수</div>
-                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=lessonApply.getApplyNumberOfTimes()%>">
+                                      <input readonly class="btn btn-outline-warning" type="text" value="<%=showApplyBtn.getApplyNumberOfTimes()%>">
                                   </div>
                             </div>
                         </div>

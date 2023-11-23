@@ -20,6 +20,7 @@ a{
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
+	--navy-color : #2F4858;
 	--ti-cursor-margin-left: 1em;
 	--ti-cursor-color: white;
 }
@@ -53,6 +54,9 @@ button:focus, .btn{
 	justify-content: space-around;
 	align-items: center;
 	background-color: var(--orange-color);
+}
+.upperBar>h2{
+	margin-top: 12px;
 }
 
 .cud>button{

@@ -12,6 +12,7 @@
 :root{
 	/* color */
 	--orange-color: #f19066;
+	--navy-color : #2F4858;
 }
 button:hover{
     scale: 1.02;
