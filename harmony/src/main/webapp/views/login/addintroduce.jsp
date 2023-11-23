@@ -92,7 +92,7 @@
 					
 					<p class="border-bottom pb-3">
 						<label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="남">
+						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="남" checked>
 					&nbsp;	여 &nbsp; <input class="w3-radio" id="gender2" name="gender" type="radio" value="여">
 						
 					</p>
