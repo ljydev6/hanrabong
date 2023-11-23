@@ -3,9 +3,11 @@ package com.harmony.payment.service;
 import static com.harmony.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.harmony.payment.model.dao.PaymentDao;
 import com.harmony.payment.model.dto.PaymentView;
+import com.harmony.payment.model.dto.RefundList;
 
 public class PaymentService {
 	private static PaymentService service = new PaymentService();
@@ -60,6 +62,34 @@ public class PaymentService {
 		}else {
 			rollback(conn);
 		}
+		return result;
+	}
+
+	public int getRefundTotalData(String type, String keyword) {
+		Connection conn = getConnection();
+		int result = PaymentDao.getDao().getRefundTotalData(conn,type,keyword);
+		close(conn);
+		return result;
+	}
+
+	public List<RefundList> selectRefundList(String type, String keyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<RefundList> target = PaymentDao.getDao().selectRefundList(conn, type, keyword, cPage, numPerPage);
+		close(conn);
+		return target;
+	}
+
+	public List<String[]> getStateCode() {
+		Connection conn = getConnection();
+		List<String[]> result = PaymentDao.getDao().getStateCode(conn);
+		close(conn);
+		return result;
+	}
+
+	public RefundList selectRefundByNo(int no) {
+		Connection conn = getConnection();
+		RefundList result = PaymentDao.getDao().selectRefundByNo(conn, no);
+		close(conn);
 		return result;
 	}
 	

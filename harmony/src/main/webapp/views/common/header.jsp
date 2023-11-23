@@ -77,7 +77,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="btn nav-link btn-warning" href="https://kauth.kakao.com/oauth/logout?client_id=7a71de50fa7db8d6bb2395a8a5fba504&logout_redirect_uri=http://localhost:8080/harmony/logout.do">로그아웃</a>
+							<a class="btn nav-link btn-warning" href="https://kauth.kakao.com/oauth/logout?client_id=7a71de50fa7db8d6bb2395a8a5fba504&logout_redirect_uri=http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/logout.do">로그아웃</a>
 						</li>
 					<%} %>
 					</ul>

@@ -8,10 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.harmony.payment.model.dto.PaymentApplyDate;
 import com.harmony.payment.model.dto.PaymentView;
+import com.harmony.payment.model.dto.RefundList;
 
 public class PaymentDao {
 	
@@ -199,6 +202,119 @@ public class PaymentDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getRefundTotalData(Connection conn, String type, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		String query = sql.getProperty("getRefundTotalData");
+		query = query.replace("#where", type!=null?type+" = ? ":"");
+		try {
+			pstmt = conn.prepareStatement(query);
+			if(type!=null) {
+				pstmt.setString(1, keyword);
+			}
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<RefundList> selectRefundList(Connection conn, String type, String keyword, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<RefundList> result = new ArrayList<>();
+		int startData = (cPage -1)*numPerPage +1;
+		int endData = cPage * numPerPage;
+		String query = sql.getProperty("selectRefundList");
+		query = query.replace("#where", type!=null?type+" = ?":"");
+		try {
+			pstmt = conn.prepareStatement(query);
+			int count = 1;
+			if(type!=null) {
+				pstmt.setString(count++, keyword);
+			}
+			pstmt.setInt(count++, startData);
+			pstmt.setInt(count++, endData);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(getRefundList(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	private RefundList getRefundList(ResultSet rs) throws SQLException{
+		return RefundList.builder()
+				.refundHisNo(rs.getInt("REFUND_HIS_NO"))
+				.payHisNo(rs.getString("PAYHISNO"))
+				.refundReqDate(rs.getDate("REFUND_REQ_DATE"))
+				.refundReason(rs.getString("REFUND_REASON"))
+				.refundState(rs.getString("STATE_DETAIL"))
+				.refundStateCode(rs.getString("STATE_CODE"))
+				.applyNo(rs.getInt("APPLY_NO"))
+				.impUid(rs.getString("IMP_UID"))
+				.price(rs.getInt("PRICE"))
+				.payReqDate(rs.getDate("PAY_REQ_DATE"))
+				.build();
+	}
+
+	public List<String[]> getStateCode(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String[]> result = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("getStateCode"));
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String code = rs.getString("PAY_STATE_CODE");
+				String name = rs.getString("PAY_STATE_NAME");
+				if(Integer.parseInt(code)%100<10) {
+					continue;
+				}
+				result.add(new String[] {code, name});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public RefundList selectRefundByNo(Connection conn, int no) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		RefundList result = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectRefundByNo"));
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = getRefundList(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
 			close(pstmt);
 		}
 		return result;

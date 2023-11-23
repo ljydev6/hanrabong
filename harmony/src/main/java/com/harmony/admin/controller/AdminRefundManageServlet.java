@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.harmony.common.PageBarBuilder;
+import com.harmony.payment.model.dto.RefundList;
+import com.harmony.payment.service.PaymentService;
+
 /**
  * Servlet implementation class AdminRefundManageServlet
  */
@@ -48,6 +52,15 @@ public class AdminRefundManageServlet extends HttpServlet {
 		if(type!=null && keyword!=null) {
 			filters.add(Map.of(type, keyword));
 		}
+		
+		List<RefundList> refund = PaymentService.getService().selectRefundList(type, keyword, cPage, numPerPage);
+		request.setAttribute("refundList", refund);
+		
+		List<String[]>stateCodes = PaymentService.getService().getStateCode();
+		request.setAttribute("stateCodes", stateCodes);
+		
+		request.setAttribute("pageBar", PageBarBuilder.pageBarBuilder(cPage, numPerPage, numPerPage, pageBarSize, request.getRequestURI(), filters));
+		
 		request.getRequestDispatcher("/views/admin/views/refundManage.jsp").forward(request, response);
 	}
 
