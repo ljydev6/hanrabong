@@ -66,7 +66,6 @@ public class ApplyLessonServlet extends HttpServlet {
 				.build();
 		
 		
-		
 		// 레슨신청되어있는지 확인
 		LessonApply result2 = new LessonService().showApplyInfo(memNo);
 		String msg,loc;
@@ -76,10 +75,11 @@ public class ApplyLessonServlet extends HttpServlet {
 		if (result2==null) {
 			int result = new LessonService().applyLesson(applyMem);
 			if(result>0) {
+				
 				msg = "레슨 상담 신청에 성공하셨습니다. :)";
 				loc = "/lesson/findLesson.do";
 				SendMessage.sendMessage(Message.builder().sendMem(memNo).receiveMem(applyMemNo).catCode(catType.LESSON)
-						.content("<p>새로운 레슨 신청이 도착했습니다.<p><br><p><a href=\""+request.getContextPath()+"/lesson/showApplyInfo.do?no=applyMemNo\">[바로가기]</a></p>")
+						.content("<p>새로운 레슨 신청이 도착했습니다.<p><br><p><a href=\""+request.getContextPath()+"/lesson/showApplyInfo.do?no="+boardNo+"\">[바로가기]</a></p>")
 						.build());
 			} else {
 				msg = "신청실패 :(";
