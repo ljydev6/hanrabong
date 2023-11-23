@@ -1,24 +1,23 @@
-package com.harmony.admin.controller;
+package com.harmony.admin.controller.ajax;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdminRefundManageServlet
+ * Servlet implementation class AjaxRefundManageServlet
  */
-@WebServlet("/admin/manage/refund.do")
-public class AdminRefundManageServlet extends HttpServlet {
+@WebServlet("/admin/refund/refund.do")
+public class AjaxRefundManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminRefundManageServlet() {
+    public AjaxRefundManageServlet() {
         super();
     }
 
@@ -26,18 +25,7 @@ public class AdminRefundManageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cPage = Integer.parseInt(request.getParameter("cPage")!=null?request.getParameter("cPage"):"1");
-		Cookie[] cookies = request.getCookies();
-		int numPerPage = 10;
-		int pageBarSize = 5;
-		for(Cookie c : cookies) {
-			if(c.getName().equals("admin_report_numPerPage")) {
-				numPerPage = Integer.parseInt(c.getValue());
-			}
-			if(c.getName().equals("admin_report_pageBarSize")) {
-				pageBarSize = Integer.parseInt(c.getValue());
-			}
-		}
+		request.getRequestDispatcher("/views/admin/views/refundManage.jsp").forward(request, response);
 	}
 
 	/**
