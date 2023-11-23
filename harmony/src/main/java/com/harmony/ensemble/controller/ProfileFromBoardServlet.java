@@ -14,6 +14,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
+import com.harmony.ensemble.model.dto.MemberProfile;
 import com.harmony.ensemble.model.service.EnsembleService;
 import com.harmony.model.dto.Member;
 
@@ -44,6 +45,7 @@ EnsembleService es = new EnsembleService();
 		
 		String teamNo = request.getParameter("teamNo");
 		
+		System.out.println("체크체크"+teamNo);
 		//팀 번호로 팀 정보 가져오기
 		EnsembleTeam team= es.selectTeamByNo(teamNo);
 //		List<EnsembleTeam> comments=es.selectTeamComment(teamNo);
@@ -65,6 +67,9 @@ EnsembleService es = new EnsembleService();
 		
 		List<EnsembleTeamVideo> video = es.selectVideos(teamNo);
 		request.setAttribute("video", video);
+		
+		List<MemberProfile> members = es.selectMemProfile(teamNo);
+		request.setAttribute("members", members);
 		
 		
 		request.getRequestDispatcher("/views/ensemble/teamProfile.jsp").forward(request, response);

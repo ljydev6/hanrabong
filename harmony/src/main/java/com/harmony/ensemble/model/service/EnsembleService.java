@@ -18,6 +18,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.MemberProfile;
 import com.harmony.ensemble.model.dto.VBoardView;
 import com.harmony.ensemble.model.dto.VChkApply;
 import com.harmony.ensemble.model.dto.VEnsList;
@@ -27,12 +28,27 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+//	
+//	public int deleteBoard(String boardNo) {
+//		Connection conn = getConnection();
+//		int result = dao.deleteBoard(conn, boardNo);
+//		close(conn);
+//		return result;
+//	}
+	
 	public List<VChkApply> selectApplyByBoardNo(String boardNo){
 		Connection conn = getConnection();
 		List<VChkApply> applyList = dao.selectApplyByBoardNo(conn, boardNo);
 		close(conn);
 		return applyList;
 		
+	}
+	
+	public List<MemberProfile> selectMemProfile(String teamNo){
+		Connection conn = getConnection();
+		List<MemberProfile> result = dao.selectMemProfile(conn, teamNo);
+		close(conn);
+		return result;
 	}
 	
 	
