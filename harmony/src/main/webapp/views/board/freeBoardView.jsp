@@ -124,7 +124,7 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 										<button class="btn-reply" value="<%=comment.getFreComNo()%>">답글</button>
 										 <% 
     // 게시글 작성자 또는 어드민"temp001"인 경우에만 수정, 삭제 버튼 표시
-    if ("temp001".equals(loggedInUser) || board.getFreBrdWriter().equals(loggedInUser)) { 
+    if ("temp001".equals(loggedInUser) || comment.getFreComWriter().equals(loggedInUser)) { 
     %>
 										<button class="delete-btn"
 											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/freeCommentDelete.do', <%=comment.getFreComNo()%>, <%=board.getFreBrdNo()%>)">삭제</button>
@@ -143,7 +143,7 @@ List<FreeCommentBoard> comments = (List<FreeCommentBoard>) request.getAttribute(
 									<div class="buttons-container">
 																		 <% 
     // 게시글 작성자 또는 어드민"temp001"인 경우에만 수정, 삭제 버튼 표시
-    if ("temp001".equals(loggedInUser) || board.getFreBrdWriter().equals(loggedInUser)) { 
+    if ("temp001".equals(loggedInUser) || comment.getFreComWriter().equals(loggedInUser)) { 
     %>
 										<button class="delete-btn"
 											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/freeCommentDelete.do', <%=comment.getFreComNo()%>, <%=board.getFreBrdNo()%>)">삭제</button>

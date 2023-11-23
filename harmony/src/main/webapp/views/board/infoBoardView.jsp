@@ -145,7 +145,7 @@ List<InfoCommentBoard> comments = (List<InfoCommentBoard>) request.getAttribute(
 									<div class="buttons-container">
 									   <% 
     // 게시글 작성자 또는 어드민"temp001"인 경우에만 수정, 삭제 버튼 표시
-    if ("temp001".equals(loggedInUser) || board.getInfBrdWriter().equals(loggedInUser)) { 
+    if ("temp001".equals(loggedInUser) || comment.getInfComWriter().equals(loggedInUser)) { 
     %>
 										<button class="delete-btn"
 											onclick="confirmCommentDeletion('<%=request.getContextPath()%>/board/deleteComment.do', <%=comment.getInfComNo()%>, <%=board.getInfBrdNo()%>)">삭제</button>
