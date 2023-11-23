@@ -38,23 +38,93 @@ public class EnsembleDao {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
+	public List<String> partIndexForDelete(Connection conn, String boardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<String> result = new ArrayList<String>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndex"));
+			pstmt.setString(1, boardNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) result.add(rs.getString("ENS_PART_INDEX"));
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
 
-//	
-//	public int deleteBoard(Connection conn, String boardNo) {
-//		PreparedStatement pstmt = null;
-//		int result = 0;
-//		try {
-//			pstmt = conn.prepareStatement(sql.getProperty("deleteBoard"));
-//			pstmt.setString(1, boardNo);
-//			result = pstmt.executeUpdate();
-//		}catch(SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			close(pstmt);
-//		}
-//		return result;
-//	}
-//	
+	public int deleteWantPart(Connection conn, String boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteWantPart"));
+			pstmt.setString(1, boardNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteApply(Connection conn, String partIndex) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteApply"));
+			pstmt.setString(1, partIndex);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteBoard(Connection conn, String boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("deleteBoard"));
+			pstmt.setString(1, boardNo);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		System.out.println("dao 글 삭제 결과: "+result);
+		return result;
+	}
+	
+	public String selectPartIndex(Connection conn, String boardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String partIndex = "";
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndex"));
+			pstmt.setString(1, boardNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) partIndex = rs.getString("ENS_PART_INDEX"); 
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return partIndex;
+	}
+	
 	public List<MemberProfile> selectMemProfile(Connection conn, String teamNo){
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -142,6 +212,7 @@ public class EnsembleDao {
 	public int insertApply(Connection conn, EnsembleBoardApply apply) {
 		PreparedStatement pstmt = null;
 		int result=0;
+		System.out.println("신청확인: " + apply);
 		try {
 			pstmt = conn.prepareStatement(sql.getProperty("insertApply"));
 			pstmt.setString(1, apply.getEnsPartIndex());
