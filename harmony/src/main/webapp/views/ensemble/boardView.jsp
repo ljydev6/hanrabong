@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
     
-    
+<script src="https://kit.fontawesome.com/a6c64592e2.js" crossorigin="anonymous"></script>    
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/ensemble/boardView.css" type="text/css">
 <%@ include file="/views/common/header.jsp" %>  
 <%@ page import = "com.harmony.ensemble.model.dto.VBoardView" %>
@@ -29,56 +29,50 @@
 			</div>
 		</div>
 		<div class="team_container">
-		<div class="team_btn_container">
 			<div class="teamName">
 				<span>팀 이름 :</span>
 				<%= b.getEnsTeamName() %>
-
+				<i class="fa-solid fa-users-line icon" onclick="location.assign('<%=request.getContextPath() %>/ensemble/profileFromBoard.do?teamNo=<%=b.getEnsTeamNo() %>')"></i>
 			</div>
-				<button type="button" onclick="location.assign('<%=request.getContextPath() %>/ensemble/profileFromBoard.do?teamNo=<%=b.getEnsTeamNo() %>')" class="team_btn">
-					팀 프로필
-				</button>
+			<div class="writer">
+				<span>팀 리더 : </span>
+				<%= b.getEnsWriter()%>	
 			</div>
-		</div>
-		<div class="writer">
-			<span>팀 리더 : </span>
-			<%= b.getEnsWriter()%>	
-		</div>
-		<div class="genre">
-			<span>장르 : </span>
-			<%= b.getGenreName() %>
-		</div>
-		<div class="wantPart">
-			<span>모집 파트: </span>
-			<span id="part"><%= b.getInstrument() %>	</span>			
-		</div>
-		<div class="location">
-			<span>장소: </span>
-			<%= b.getEnsLocation() %> <br>
-			<%= b.getEnsPlace() %>		
-		</div>	
-		<div class="detail">
-			<span>상세 설명: </span>
-			<%= b.getEnsDetail() %>		
-		</div>
-		<div class="date">
-			<span>등록 날짜:</span>
-			<%= b.getEnsBoardDate() %>		
-		</div>
-			<input type="hidden" value="<%=b.getEnsBoardNo() %>" id="boardNo">
-		<%}%>
+			<div class="genre">
+				<span>장르 : </span>
+				<%= b.getGenreName() %>
+			</div>
+			<div class="wantPart">
+				<span>모집 파트: </span>
+				<span id="part"><%= b.getInstrument() %>	</span>			
+			</div>
+			<div class="location">
+				<span>장소: </span>
+				<%= b.getEnsLocation() %> <br>
+				<%= b.getEnsPlace() %>		
+			</div>	
+			<div class="detail">
+				<span>상세 설명: </span>
+				<%= b.getEnsDetail() %>		
+			</div>
+			<div class="date">
+				<span>등록 날짜:</span>
+				<%= b.getEnsBoardDate() %>		
+			</div>
+				<input type="hidden" value="<%=b.getEnsBoardNo() %>" id="boardNo">
+			<%}%>
 		
 		
-		<div class="apply_container">
-			<button type="button" onclick="apply_btn();" class="apply_btn">
-				신청하기
-			</button>
-			<%if(loginMember!=null && b.getEnsWriter().equals(loginMember.getMemNo())) {%>
-				<button type="button" onclick="check_apply();" class="check_apply" >
-					신청자 확인
+			<div class="apply_container">
+				<button type="button" onclick="apply_btn();" class="apply_btn">
+					신청하기
 				</button>
-			<%} %>
-		</div>
+				<%if(loginMember!=null && b.getEnsWriter().equals(loginMember.getMemNo())) {%>
+					<button type="button" onclick="check_apply();" class="check_apply" >
+						신청자 확인
+					</button>
+				<%} %>
+			</div>
 	</div>
 
 
