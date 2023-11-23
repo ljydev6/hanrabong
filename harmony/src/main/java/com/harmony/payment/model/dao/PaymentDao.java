@@ -319,4 +319,34 @@ public class PaymentDao {
 		}
 		return result;
 	}
+
+	public int refundSuccess(Connection conn, String payHisCode) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("refundSuccess"));
+			pstmt.setString(1, payHisCode);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int refundReject(Connection conn, String payHisCode) {
+		PreparedStatement pstmt = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("refundReject"));
+			pstmt.setString(1, payHisCode);
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

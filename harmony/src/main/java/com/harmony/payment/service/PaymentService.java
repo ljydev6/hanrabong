@@ -92,5 +92,23 @@ public class PaymentService {
 		close(conn);
 		return result;
 	}
+
+	public int refundSuccess(String payHisCode, int refundHisNo) {
+		Connection conn = getConnection();
+		int result = PaymentDao.getDao().refundSuccess(conn, payHisCode);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return 0;
+	}
+
+	public int refundreject(String payHisCode, int refundHisNo) {
+		Connection conn = getConnection();
+		int result = PaymentDao.getDao().refundReject(conn, payHisCode);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return 0;
+	}
 	
 }

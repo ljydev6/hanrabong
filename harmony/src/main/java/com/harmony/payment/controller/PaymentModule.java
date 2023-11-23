@@ -150,6 +150,7 @@ public class PaymentModule {
  	        bufferedWriter.flush();
  	        
  	        int responseCode = conn.getResponseCode();
+ 	        System.out.println(responseCode);
  			
  	        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
  	        String line = "";
@@ -206,7 +207,7 @@ public class PaymentModule {
 		checkAcessToken();
 		
 		boolean refundResult = false;
-		String code = "";
+		int code = -1;
 		int responseCode =0;
 		String requestURL = "https://api.iamport.kr/payments/cancel";
 		
@@ -239,12 +240,14 @@ public class PaymentModule {
  	        while ((line = bufferedReader.readLine()) != null) {
  	            result.append(line);
  	        }
- 	        System.out.println("refund result : "+result.toString());
+ 	        	System.out.println("refund result : "+result.toString());
+ 	        	JsonElement portOneResult = JsonParser.parseString(result.toString());
+ 	        	code = portOneResult.getAsJsonObject().get("code").getAsInt();
         	}catch(Exception e) {
         		e.printStackTrace();
         	}
-			
-		if(responseCode==200 && code.equals("0")) {
+		System.out.println("code");
+		if(responseCode==200 && code==0) {
 			refundResult = true;
 		}
 		
