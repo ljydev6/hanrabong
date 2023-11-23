@@ -60,7 +60,7 @@ public class FreeBoardEditEndServlet extends HttpServlet {
 	        }
 
 	        String title = mr.getParameter("title");
-	        String content = mr.getParameter("content");
+	        String content = mr.getParameter("bo_content");
 
 	        FreeBoard board = FreeBoard.builder()
 	            .freBrdNo(no)

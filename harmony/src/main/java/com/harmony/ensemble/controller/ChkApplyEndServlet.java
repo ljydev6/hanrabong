@@ -29,12 +29,13 @@ public class ChkApplyEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.setContentType("application/json;charset=utf-8");
-//		Gson gson = new Gson();
+		response.setContentType("application/json;charset=utf-8");
+		Gson gson = new Gson();
 		
 		EnsembleService es = new EnsembleService();
 	    
-//		gson.fromJson(request.getParameter("partIndex"), );
+		String[] wantParts = gson.fromJson(request.getParameter("wantParts"), String[].class);
+		
 		
 		String partIndex = request.getParameter("partIndex");
 		String boardNo = request.getParameter("boardNo");

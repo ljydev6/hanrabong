@@ -28,10 +28,51 @@ public class EnsembleService {
 	private EnsembleDao dao = new EnsembleDao();
 
 	
+	public int deleteBoard(String boardNo) {
+		Connection conn = getConnection();
+		
+		List<String> partIndexes = dao.partIndexForDelete(conn, boardNo);
+		
+		int result=-1;
+		int result2=-1;
+		int result3=-1;
+		int result4=-1;
+		
+		if(!partIndexes.isEmpty()) {
+				for(String part : partIndexes) {
+					result = dao.deleteApply(conn, part);
+				}
+			}else {
+				rollback(conn);
+				throw new IllegalArgumentException("파트인덱스 빔");
+			}
+
+		
+		if(result>=0) {
+			result2 = dao.deleteWantPart(conn, boardNo);
+			
+			}else {
+				rollback(conn);
+				throw new IllegalArgumentException("신청테이블 삭제 실패");
+			}
+		
+		if(result2>=0) {
+			result3 = dao.deleteBoard(conn, boardNo);
+			}else {
+				rollback(conn);
+				throw new IllegalArgumentException("글테이블 삭제 실패");
+			}
+			
+		
+		close(conn);
+		System.out.println("글 삭제 성공");
+		return result3;
+	
+	}
 //	
-//	public int deleteBoard(String boardNo) {
+//	public int deleteWantPart(String boardNo) {
 //		Connection conn = getConnection();
-//		int result = dao.deleteBoard(conn, boardNo);
+//		int result = dao.deleteWantPart(conn, boardNo);
 //		close(conn);
 //		return result;
 //	}
@@ -62,7 +103,8 @@ public class EnsembleService {
 	public int selectPartIndex(String boardNo, String instNo,String loginMemNo) {
 		Connection conn = getConnection();
 		EnsembleBoardApply apply = dao.selectPartIndex(conn, boardNo, instNo, loginMemNo);
-		int result = insertApply(apply);
+		System.out.println("서비스 apply: "+ apply);
+		int result = insertApply(apply); //아래 메소드 호출
 		close(conn);
 		return result;
 	}
@@ -70,7 +112,6 @@ public class EnsembleService {
 	
 	public int insertApply(EnsembleBoardApply apply) {
 		Connection conn = getConnection();
-		
 		int result = dao.insertApply(conn, apply);
 		close(conn);
 		return result;

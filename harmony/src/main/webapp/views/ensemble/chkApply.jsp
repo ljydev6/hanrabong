@@ -29,21 +29,7 @@
 			<input type="submit" value="수락"> 
 			<br>
 		<% }%>
-<!-- 		<div> -->
-<!-- 			<span>[</span> -->
-<!-- 			<label> -->
-<%-- 			    <input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='Y' style="display:none" id="<%=a.getEnsPartIndex() %>"> --%>
-<!-- 				<span class="single_chk_span">수락</span> -->
-<!-- 			</label> -->
-<!-- 			<span>/</span> -->
-<!-- 			<label> -->
-<%-- 			 	<input type='radio' class="single_chk" name='chk_btn<%=index++ %>' value='N' style="display:none" id="<%=a.getEnsPartIndex() %>"> --%>
-<!-- 				<span class="single_chk_span">거절</span> -->
-<!-- 			</label> -->
-<!-- 			<span>]</span> -->
-<!-- 			<input type="button" class="permit" onclick="permit();" value="수락"> -->
-			
-<!-- 		</div> -->
+
 		
 		<%}	
 	} %>
@@ -76,18 +62,6 @@ $(document).ready(function(){
 	});
 });
 		
-// 		$.ajax({
-<%-- 			url: "<%=request.getContextPath()%>/ensemble/chkApplyEnd.do", --%>
-// 			method: 'POST,
-// 			data: {
-// 					$data.forEach((d,i)=>{
-				
-// 				$('#partIndex'):JSON.stringify($('.single_chk').val())
-			
-// 					}
-// 			}
-			
-// 		});	
 </script>
 
 </html>

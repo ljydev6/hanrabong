@@ -46,6 +46,8 @@
 				<span>모집 파트: </span>
 				<span id="part"><%= b.getInstrument() %>	</span>			
 			</div>
+					<input type="hidden" id="want_part" value="<%=b.getInstrument() %>">
+					<input type="hidden" id="board_no" value="<%=b.getEnsBoardNo() %>"> 
 			<div class="location">
 				<span>장소: </span>
 				<%= b.getEnsLocation() %> <br>
@@ -72,7 +74,7 @@
 					<button type="button" onclick="check_apply();" class="check_apply" >
 						신청자 확인
 					</button>
-					<button type="button" onclick="location.assign('<%=request.getContextPath() %>/ensemble/deleteBoard.do?boardNo=<%=b.getEnsBoardNo() %>')" class="delete_board">
+					<button type="button" onclick="delete_board();" class="delete_board">
 						글 삭제
 					</button>
 					
@@ -84,6 +86,18 @@
 </section>
 
 <script>
+
+const delete_board =()=>{
+	
+	let result = confirm('정말 삭제하시겠습니까?');
+	
+	if(result){
+		location.assign('<%=request.getContextPath()%>/ensemble/deleteBoard.do?boardNo='+$('#boardNo').val());		
+	}	else{
+		
+	}
+}
+
 
 const apply_btn =()=>{
 
