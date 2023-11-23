@@ -14,7 +14,7 @@
 		justify-content: center;
 		align-items: center;
 		min-height:100px;
-		border:1px solid red;
+		
 	}
 	.my-content{
 		justify-content: center;
@@ -45,10 +45,11 @@
 				<span>프로필사진</span>
 			</div>
 			<div class="col-8 my-content">
-				<img src="<%=request.getContextPath() %>/upload/<%=mi.getProfilPhoto() %>"
-					width="150" height="150" id="profile" >
-					<input type="file" id="profiledata" name="profilephoto">
 				
+				<%-- <img src="<%=request.getContextPath() %>/upload/<%=mi.getProfilPhoto() %>"
+					width="150" height="150" id="profile" >
+				 --%>
+					<input type="file" id="profiledata" name="profilephoto" ><a>바꿀거면 눌러</a>
 					<script>
 						$("#profile").click(e=>{
 							$("#profiledata").click();
@@ -165,10 +166,11 @@
 				<span>연주영상</span>
 			</div>
 			<div class="col-8 my-content">
-			 <input type="file" name="video" value=""> <button type="button" class="vidoeplus">추가</button>
+			
+			 <input type="file" name="video" value=""> 
 			 <% for(MemberVideo video : mi.getMemberVideo()) {%>
     		<%if(video.getVideoLink()!=null&&video.getVideoType().equals("FILE")){ %>
-    <video width="320" height="240" controls>
+    <video width="320" height="240" controls >
         <source src="<%=request.getContextPath() %>/upload/<%=video.getVideoLink() %>" type="video/mp4">
     </video>
 <% }
@@ -180,18 +182,30 @@
 				<span>연주링크</span>
 			</div>
 			<div class="col-8 my-content">
-			<%for(MemberVideo video: mi.getMemberVideo()){ %>
+			<%boolean isVideoLinkCreated = false;
+			for(MemberVideo video: mi.getMemberVideo()){ %>
 			<%if(video.getVideoType().equals("LINK")&&video.getVideoLink()!=null){%>
-				<input type="text" name="videolink" value="<%=video.getVideoLink()%>">
-				<%} }%> 
+					 <input type="text" name="videolink" value="<%=video.getVideoLink()%>">
+				<%
+					isVideoLinkCreated= true;
+					break;
+			}
+			}
+			if(!isVideoLinkCreated){
+			%>
+					<input type="text" name="videolink">
+			<%
+			}
+			%>		
 			</div>
 		</div>	
 		<div class="row">
 			<div class="col-4 my-title">
 				<span>음원</span>
+				
 			</div>
 			<div class="col-8 my-content">
-				<input type="text" name="music" value="<%=mi.getAge()%>">
+				<input type="text" name="music1" value="문의 : 010-3618-8520" readonly>
 			</div>
 		</div>	
 		<div class="row">
@@ -199,44 +213,17 @@
 				<span>음원링크</span>
 			</div>
 			<div class="col-8 my-content">
-				<input type="text" name="musiclink" value="<%=mi.getAge()%>">
+				<input type="text" name="musiclink1" value="문의 : 010-3618-8520" readonly>
 			</div>
 		</div>	
 		
 		
 		</div>		
 	</div>
-	</div>
-</div>
+	
 		<input type="submit" value="수정하기">
 		</form>
 		
-	<script>
-		
-		$(".vidoeplus").click((()=>{
-			let count=0;
-			return e=>{
-			//js createElement()
-			//jquery $("<p>")
-				console.log(e.target);
-				const $input=$("<input>")
-				.attr({"type":"file","name":"videofile"+(++count)})
-				.addClass("input");
-				$(e.target).next().after($input);
-			}
-		})());
-	</script>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -136,6 +136,7 @@ public class MemberService {
 			if(mi.getGenre()!=null) {
 				dao.deleteGenre(conn,mi.getMemNo());
 				resultGenre = dao.insertGenre(conn,mi.getMemNo(),mi);
+				commit(conn);
 				if(resultGenre==0) {
 					rollback(conn);
 					throw new IllegalArgumentException("장르입력실패");
@@ -144,6 +145,7 @@ public class MemberService {
 			if(mi.getInterest()!=null) {
 				dao.deleteInstrument(conn,mi.getMemNo());
 				resultInterest =dao.insertInstrument(conn,mi.getMemNo(),mi);
+				commit(conn);
 				if(resultInterest==0) {
 					rollback(conn);
 					throw new IllegalArgumentException("악기입려실패");
