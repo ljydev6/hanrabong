@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %>   
+<%@ include file="/views/common/header.jsp" %>  
+<%@ page import="com.harmony.model.dto.MemberInfo" %> 
+<%MemberInfo mi = (MemberInfo)request.getSession().getAttribute("MemberInfo"); %>
 <style>
 .container2 {
   width: 100%;
@@ -29,7 +31,7 @@
 	<table class="pofileTable">
 		<tr>
 			<td>나이</td>
-			<td>19</td>
+			<td></td>
 		</tr>
 		<tr>
 			<td>성별</td>

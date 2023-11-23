@@ -35,7 +35,7 @@ public class MyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = (Member)request.getSession().getAttribute("loginMember");
+		Member m = (Member)request.getSession().getAttribute("loginMember"); 
 		System.out.println(m);
 		MemberInfo mi = new MemberService().selectMemberInfo(m.getMemNo());
 //		List genreList=List.of(Map.of("genre",value,"genreNo",no),
@@ -57,6 +57,7 @@ public class MyPageServlet extends HttpServlet {
 		request.setAttribute("InterestAll",interestAll);
 //		request.setAttribute("MemberVideo", mv);
 //		request.setAttribute("mv", mv);
+		System.out.println("이거 진짜 내가찾는거다"+mi);
 		request.getRequestDispatcher("/views/member/mypage.jsp").forward(request, response);
 		
 	}

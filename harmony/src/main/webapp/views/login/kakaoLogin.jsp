@@ -125,10 +125,10 @@ margin-top: 150px;
             
             <div class="login_etc">
                 <div class="checkbox">
-                <input type="checkbox" name="" id=""> Remember Me?
+             
                 </div>
                 <div class="forgot_pw">
-                <a href="">Forgot Password?</a>
+               
             </div>
             </div>
             <div>
