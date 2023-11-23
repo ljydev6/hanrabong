@@ -38,18 +38,17 @@
 <input type="hidden" name="memNo" value=<%=mi.getMemNo() %>>
 <input type="hidden" name="email" value=<%=mi.getEmail() %>>
 <div class="cont_personal" >
-	<h3>마이페이지</h3>
-	<div class="container mypage-container">
+	<div class="container mypage-container"> <h3>마이페이지</h3>
 		<div class="row">
 			<div class="col-4 my-title">
 				<span>프로필사진</span>
 			</div>
 			<div class="col-8 my-content">
 				
-				<%-- <img src="<%=request.getContextPath() %>/upload/<%=mi.getProfilPhoto() %>"
+			 <img src="<%=request.getContextPath() %>/upload/<%=mi.getProfilPhoto() %>"
 					width="150" height="150" id="profile" >
-				 --%>
-					<input type="file" id="profiledata" name="profilephoto" ><a>바꿀거면 눌러</a>
+				
+					<input type="file" id="profiledata" name="profilephoto" >
 					<script>
 						$("#profile").click(e=>{
 							$("#profiledata").click();
@@ -217,11 +216,11 @@
 			</div>
 		</div>	
 		
+		<input type="submit" value="수정하기">
 		
 		</div>		
 	</div>
 	
-		<input type="submit" value="수정하기">
 		</form>
 		
 

@@ -81,11 +81,8 @@ public class MypageUpdate extends HttpServlet {
 			String filetype=filename.substring(0,5);
 			File file = mr.getFile(filename);
 			if(filetype.equals("video")){
-
 					memberVideo.add(MemberVideo.builder().memNo(memNo).videoType("FILE").videoLink(rename).build());					
-
 					memberVideo.add(MemberVideo.builder().memNo(memNo).videoType("LINK").videoLink(videolink).build());					
-
 			}else if(filetype.equals("music")) {
 			memberMusic.add(MemberMusic.builder().memNo(memNo).musicType("FILE").musicLink(rename).build());
 			memberMusic.add(MemberMusic.builder().memNo(memNo).musicType("LINK").musicLink(musiclink).build());
