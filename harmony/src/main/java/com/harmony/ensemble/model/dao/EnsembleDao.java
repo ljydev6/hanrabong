@@ -47,7 +47,7 @@ public class EnsembleDao {
 		ResultSet rs = null;
 		List<String> result = new ArrayList<String>();
 		try {
-			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndex"));
+			pstmt = conn.prepareStatement(sql.getProperty("selectPartIndexforDelete"));
 			pstmt.setString(1, boardNo);
 			rs = pstmt.executeQuery();
 			while(rs.next()) result.add(rs.getString("ENS_PART_INDEX"));
