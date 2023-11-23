@@ -64,6 +64,7 @@ public class MemberService {
 	}
 	public int addintroduce(MemberInfo mi) { 
 		Connection conn = getConnection();
+		System.out.println("찐확인"+mi);
 		MemberInfo result= null;
 		int resultAdd = dao.addintroduce(conn,mi);
 		int resultGenre = 0;
@@ -108,10 +109,11 @@ public class MemberService {
 			}else {
 				resultVideo=1;
 			}
-			if(resultGenre!=1||resultMusic!=1||resultVideo!=1||resultInterest!=1) {
-				rollback(conn);
-			}
-			commit(conn);
+//			if(resultGenre!=1||resultMusic!=1||resultVideo!=1||resultInterest!=1) {
+//				rollback(conn);
+//				throw new IllegalArgumentException("여기서입력실패");//
+//			}
+//			commit(conn);
 		}else {
 			rollback(conn);
 			throw new IllegalArgumentException("입력실패");
@@ -120,7 +122,8 @@ public class MemberService {
 			e.printStackTrace();
 		}finally {
 			close(conn);
-		}		
+		}
+		System.out.println(resultAdd);
 		return resultAdd;
 	}
 	public int UpdateIntroduce(MemberInfo mi) { 
@@ -136,6 +139,7 @@ public class MemberService {
 			if(mi.getGenre()!=null) {
 				dao.deleteGenre(conn,mi.getMemNo());
 				resultGenre = dao.insertGenre(conn,mi.getMemNo(),mi);
+				commit(conn);
 				if(resultGenre==0) {
 					rollback(conn);
 					throw new IllegalArgumentException("장르입력실패");
@@ -144,6 +148,7 @@ public class MemberService {
 			if(mi.getInterest()!=null) {
 				dao.deleteInstrument(conn,mi.getMemNo());
 				resultInterest =dao.insertInstrument(conn,mi.getMemNo(),mi);
+				commit(conn);
 				if(resultInterest==0) {
 					rollback(conn);
 					throw new IllegalArgumentException("악기입려실패");

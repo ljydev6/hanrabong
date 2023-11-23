@@ -41,6 +41,7 @@
 		<div class="w3-container w3-card-4">
 			<div class="w3-center w3-large w3-margin-top">
 				<h3>추가정보 입력</h3>
+				<h4>안하면 불이익이 있을수도 있고 없을수도 있습니다</h4>
 			</div>
 			<div>
 				<form id="myForm" action="<%=request.getContextPath() %>/member/addIntroduceServlet.do" method="post" enctype="multipart/form-data">
@@ -73,7 +74,7 @@
 					</p>
 					<p>
 						<label>나이</label> 
-						<input class="w3-input" type="number" id="age" name="age"> 
+						<input class="w3-input" type="number" id="age" name="age" placeholder="필수입력값입니다" > 
 					</p>
 					<p>
 						<label>학교</label> 
@@ -92,8 +93,8 @@
 					
 					<p class="border-bottom pb-3">
 						<label>성별</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="남">
-					&nbsp;	여 &nbsp; <input class="w3-radio" id="gender2" name="gender" type="radio" value="여">
+						남 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="남" checked>
+					&nbsp;	여 &nbsp; <input class="w3-radio" id="gender" name="gender" type="radio" value="여">
 						
 					</p>
 				
@@ -102,8 +103,6 @@
 						<input class="w3-input" type="text" id="sample5_address" name="activityarea" placeholder="주소">
 					<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
 					<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-							
-
 					</p>
 					<p>
 						<label>관심장르</label>

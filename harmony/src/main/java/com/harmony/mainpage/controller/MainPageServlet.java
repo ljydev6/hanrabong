@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.harmony.admin.model.dto.Carousel;
 import com.harmony.admin.service.AdminService;
+import com.harmony.model.dto.MemberInfo;
 
 /**
  * Servlet implementation class MainPageServlet

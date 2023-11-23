@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'iceHimchan-Rg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceHimchan-Rg.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+	font-family: 'iceHimchan-Rg';
+}
 /* 카테고리 전체 div  */
 .main {
     display: flex;
@@ -135,6 +145,7 @@
 .post-content p {
     font-size: 16px;
     color: #495057;
+    margin-right: 20px;
 }
 
 /* 게시글 작성자 */
