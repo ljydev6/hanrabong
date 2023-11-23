@@ -8,10 +8,13 @@
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
+	--navy-color : #2F4858;
 	--ti-cursor-margin-left: 1em;
 	--ti-cursor-color: white;
 }
-
+.zindex{
+	z-index: 999;
+}
 *{
 	box-sizing: border-box;
 	font-family: 'GangwonEdu_OTFBoldA';

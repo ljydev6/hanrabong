@@ -20,6 +20,7 @@ a{
 :root{
 	--coral-color: #f19066;
 	--orange-color: rgb(255, 185, 1);
+	--navy-color : #2F4858;
 	--ti-cursor-margin-left: 1em;
 	--ti-cursor-color: white;
 }
@@ -29,10 +30,15 @@ html,body{
 div{
 	transition: all 0.5s;
 }
-
+.zindex{
+	z-index: 999;
+}
 button:focus, .btn{ 	
     border: none;
     outline:none;
+}
+.colorNavy{
+	color: var(--navy-color);
 }
 .btn-warning:not(li>a){
 	color: white;
@@ -140,6 +146,9 @@ button{
 	align-items: center;
 	margin-bottom: 15px;
 }
+.labelBox>label>div{
+	color: var(--navy-color);
+}
 .lessonSubmit{
 	position : relative;
 	height: 100%;
@@ -166,6 +175,7 @@ input[type=submit],input[type=button]{
 	justify-content: center;
 	height: 50px;
 	align-items: center;
+	color: var(--navy-color);
 }
 
 .detailInfoBar{

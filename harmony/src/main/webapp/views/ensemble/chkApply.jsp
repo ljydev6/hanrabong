@@ -20,12 +20,12 @@
 <%if(!applyList.isEmpty()){ 
 	int index=0;
 	for(VChkApply a : applyList){%>
-		<%if(!a.getEnsApproval().equals('Y')){ %>
+		<%if(!a.getEnsApproval().equals("Y")){ %>
 			<%=a.getMemInfoEmail() %>	
 			<%=a.getInstName() %>
 			
 			<input type="hidden" value="<%=a.getEnsPartIndex() %>"  id="partIndex" name="partIndex">
-			
+			<input type="hidden" value="<%=a.getEnsBoardNo() %>"  name="boardNo">
 			<input type="submit" value="수락"> 
 			<br>
 		<% }%>
@@ -73,6 +73,8 @@ $(document).ready(function(){
 		
 		console.log($('.single_chk').val());
 
+	});
+});
 		
 // 		$.ajax({
 <%-- 			url: "<%=request.getContextPath()%>/ensemble/chkApplyEnd.do", --%>
@@ -86,18 +88,6 @@ $(document).ready(function(){
 // 			}
 			
 // 		});	
-	});
-});
-
-		
-		
-
-	
-	
-	
-}
-
-
 </script>
 
 </html>

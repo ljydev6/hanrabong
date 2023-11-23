@@ -12,13 +12,26 @@ section{
 }
 
 .top_container{
+	 display: flex;
+/*	 justify-content: space-between;*/
+	 justify-content: center;
+	 align-items: center; 
+}
+
+.team_container{
 	display: flex;
-/*	border: 1px solid red;*/
-/*	flex-direction: row;*/
+	flex-direction: column;
+	justify-content: center;
+	align-items: center; 
+	
+}
 
+.teamName{
+	width: 80%;
+}
 
- display: flex;
-  justify-content: space-between;
+i:hover{
+	cursor: pointer;
 }
 
 .title{
@@ -35,10 +48,10 @@ section{
 	
 }
 
-.teamName{
-	width: 80%;
-/*	border: 1px solid darkblue;*/
-	padding-left: 20%;
+
+
+div{
+	justify-content: center;
 }
 
 .team_btn{

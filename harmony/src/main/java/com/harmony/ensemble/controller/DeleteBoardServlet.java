@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.harmony.ensemble.model.service.EnsembleService;
 
 /**
- * Servlet implementation class ChkApplyEndServlet
+ * Servlet implementation class DeleteBoardServlet
  */
-@WebServlet("/ensemble/chkApplyEnd.do")
-public class ChkApplyEndServlet extends HttpServlet {
+@WebServlet("/ensemble/deleteBoard.do")
+public class DeleteBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChkApplyEndServlet() {
+    public DeleteBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +28,11 @@ public class ChkApplyEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		response.setContentType("application/json;charset=utf-8");
-//		Gson gson = new Gson();
-		
-		EnsembleService es = new EnsembleService();
-	    
-//		gson.fromJson(request.getParameter("partIndex"), );
-		
-		String partIndex = request.getParameter("partIndex");
-		String boardNo = request.getParameter("boardNo");
-		
-		int result = es.changeApproval(partIndex);
-		
-		if(result>0) System.out.println("수락 성공");
-		
-		response.sendRedirect(request.getContextPath()+"/ensemble/chkApply.do?boardNo="+boardNo);
-//		response.sendRedirect(request.getContextPath()+"/views/ensemble/chkApply.jsp");
+//		EnsembleService es = new EnsembleService();
+//		String boardNo = request.getParameter("boardNo");
+//		int result = es.deleteBoard(boardNo);
+//		if(result>0) System.out.println("글 삭제 성공");
+//		else System.out.println("글 삭제 실패");
 	}
 
 	/**
