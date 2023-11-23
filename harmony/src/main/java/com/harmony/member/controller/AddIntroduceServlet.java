@@ -3,7 +3,6 @@ package com.harmony.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -12,14 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.harmony.board.exception.BadAccessException;
 import com.harmony.member.service.MemberService;
-import com.harmony.model.dto.Member;
 import com.harmony.model.dto.MemberInfo;
-
 import com.harmony.model.dto.MemberMusic;
 import com.harmony.model.dto.MemberVideo;
 import com.oreilly.servlet.MultipartRequest;
@@ -44,7 +42,7 @@ public class AddIntroduceServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
 		if(!ServletFileUpload.isMultipartContent(request)){
 			throw new BadAccessException("잘못된접근입니다. 관리자에게 문의하세요");
 		}else {
@@ -69,6 +67,9 @@ public class AddIntroduceServlet extends HttpServlet {
 		String videolink = mr.getParameter("videolink");
 		String musiclink = mr.getParameter("musiclink");
 		String memCareer = mr.getParameter("memcareer");
+		System.out.println(memNo);
+		System.out.println(gender);
+		System.out.println(name);
 			List<MemberVideo> memberVideo =new ArrayList<>();
 			List<MemberMusic> memberMusic =new ArrayList<>();
 			
@@ -113,8 +114,10 @@ public class AddIntroduceServlet extends HttpServlet {
 	
 		 int result = new MemberService().addintroduce(mi);
 		 if(result>0) {
+//			 session.setAttribute("member", mi);
 			 System.out.println("나의확인용"+mi);
-			response.sendRedirect(request.getContextPath()+"/main.do");
+//			 request.getRequestDispatcher("/main.do").forward(request, response);
+				response.sendRedirect(request.getContextPath()+"/main.do"); 
 		 }
 		}
 		

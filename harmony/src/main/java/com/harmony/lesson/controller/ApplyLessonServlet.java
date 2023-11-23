@@ -66,8 +66,10 @@ public class ApplyLessonServlet extends HttpServlet {
 				.build();
 		
 		
+		
 		// 레슨신청되어있는지 확인
-		LessonApply result2 = new LessonService().showApplyInfo(memNo);
+		LessonApply result2 =new LessonService().showApplyBtn(memNo,boardNo);
+		//LessonApply result2 = new LessonService().showApplyInfo(memNo);
 		String msg,loc;
 		
 		// 레슨신청
@@ -85,7 +87,8 @@ public class ApplyLessonServlet extends HttpServlet {
 				msg = "신청실패 :(";
 				loc = "/lesson/findLesson.do";
 			}
-		} else {
+		}
+		else {
 			msg = "이미 상담신청이 되어있습니다 :(";
 			loc = "/lesson/findLesson.do";
 		}
