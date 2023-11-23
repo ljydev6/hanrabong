@@ -16,7 +16,6 @@
 	List<LessonComment> cos = (List<LessonComment>)request.getAttribute("co");
 	MemberInfo tInfo = (MemberInfo)request.getAttribute("teacherInfo");
 	SaveLesson heart = (SaveLesson)request.getAttribute("heart");
-	LessonApply apply = (LessonApply)request.getAttribute("apply");
 	LessonApply showApplyBtn = (LessonApply)request.getAttribute("showApplyBtn");
 	
 	//타임스탬프형식 변환
@@ -49,7 +48,7 @@
 		<%} else {%>
 		<div>마감</div>
 		<%} %>
-        <div><h2 id="title"><%=lesson.getBoardTitle() %></h2></div>
+        <div><h2 id="title" style="color: #2F4858"><%=lesson.getBoardTitle() %></h2></div>
 		<div class="container">
 			<div class="upperBar">
 				<div class="category">
@@ -83,8 +82,8 @@
                 </div>
                 <%} %>
                 <!-- 현재의 게시글넘버랑 로그인한멤버넘버랑 로그인한 멤버가 신청했을때만 보여줌 -->
-                <%if(apply!=null && apply.getBoardNo()==lesson.getBoardNo()) {%>
-                <button id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
+                <%if(showApplyBtn!=null && showApplyBtn.getBoardNo()==lesson.getBoardNo()) {%>
+                <button style="color: #2F4858" id="showApplyInfo" onclick="location.href='<%=request.getContextPath()%>/lesson/showApplyInfo.do?no=<%=lesson.getBoardNo()%>'">신청정보보기</button>
             	<%} %>
             </div>
 			<article class="lessonInfo d-flex flex-column gap-2">
@@ -95,10 +94,10 @@
 		                        <div class="saveLessonPosition d-flex" onclick="location.replace('<%=request.getContextPath()%>/lesson/savelesson.do?boardNo=<%=lesson.getBoardNo()%>&memNo=<%=loginMember.getMemNo()%>')">
 		                            <%if(heart!=null){ %>
 		                            	<i class="saveLesson fa-solid fa-heart fa-xs"></i>
-		                    			<div class="">찜하고 있어요!</div>
+		                    			<div style="color: #98B629">찜하고 있어요!</div>
 			                    	<%}else{ %>
-			                    		<i class="fa-solid fa-heart fa-xs"></i>
-			                    		<div>찜해주세요 :)</div>
+			                    		<i class="fa-solid fa-heart fa-xs" style="color: #006776"></i>
+			                    		<div style="color: #006776">찜해주세요 :)</div>
 			                    	<%} %>
 		                    	</div>
 	                    	<%}else{ %>
@@ -123,7 +122,7 @@
                         	<%} %>
                         	<input type="hidden" value="<%=lesson.getBoardNo()%>" name="boardNo">
                             <div class="labelBox d-flex flex-column p-4 mb-4">
-                                <div class="mb-3"><h5>레슨상담신청</h5></div>
+                                <div style="color: #2F4858" class="mb-3"><h5>레슨상담신청</h5></div>
                                 <label>
                                     <div>장소</div>
                                     <select class="form-select" name="place" id="place" required>
@@ -243,11 +242,11 @@
                           	</div>
                				<div class="detailsContainer">
                               <div class="detailsContainer_title" id="lessonInfo">
-                                  <div>레슨정보</div>
+                                  <div class="colorNavy">레슨정보</div>
                               </div>
                               <div class="detailsContainer_content">
                                   <div> 
-                                      <div>레슨 악기</div>
+                                      <div class="colorNavy">레슨 악기</div>
                                       <input readonly class="btn btn-outline-warning" type="text" 
                                       <% switch (inst) {
                                       	case "INST_1" :%>value="드럼";break;
@@ -269,22 +268,22 @@
                                       >
                                   </div>
                                   <div>
-                                      <div>레슨비(회당)</div>
+                                      <div class="colorNavy">레슨비(회당)</div>
                                       <input readonly class="btn btn-outline-warning" type="text" value="<%=lesson.getBoardPrice() %>">
                                   </div>
                                   
                                   <div>
-                                      <div>시작 시간</div>
+                                      <div class="colorNavy">시작 시간</div>
                                       <input readonly class="btn btn-outline-warning" type="text" value="<%=startTime %>">
                                   </div>
 
                                   <div>
-                                      <div>종료 시간</div>
+                                      <div class="colorNavy">종료 시간</div>
                                       <input readonly class="btn btn-outline-warning" type="text" value="<%=endTime %>">
                                   </div>
                                   
                                   <div>
-                                      희망 요일
+                                      <div class="colorNavy">희망 요일</div> 
                                       <input readonly class="btn btn-outline-warning" type="text" value="<%=timeString %>">
                                   </div> 
                               </div>
@@ -292,17 +291,17 @@
                             <!-- 강사정보 -->
                           <div class="detailsContainer">
                               <div class="detailsContainer_title" id="teacherInfo">
-                                  <div>강사정보</div>
+                                  <div class="colorNavy">강사정보</div>
                               </div>
                               <div class="detailsContainer_content">
-                                  <div>
+                                  <div class="colorNavy">
                                   	활동지역 <%=tInfo.getActivityArea() %> <br>
                                   	한줄소개 <%=tInfo.getIntroduce() %> <br>
                                   	학교 <%=tInfo.getSchool() %> <br>
                                   	학과 <%=tInfo.getDepartment() %> <br>
                                   	재학정보 <%=tInfo.getSchoolState() %> <br>
-                                  	성별 <%=tInfo.getGender() %> <br>
-                                  	경력 <%=tInfo.getMemCareer() %> 
+                                  	경력 
+                                  	<%=tInfo.getMemCareer() %> 
                                   </div>
                               </div>
                           </div>
@@ -411,8 +410,8 @@
 	
 	<script>
 		$(".comment-editor>form>textarea[name=content]").click(e=>{
-			if (<%=loginMember==null %>|| <%=!loginMember.getMemAuthority().equals("TEACHER")%>) {
-				alert("선생님만 이용할 수 있는 서비스입니다.");
+			if (<%=loginMember==null %>) {
+				alert("로그인 후 선생님만 이용할 수 있는 서비스입니다.");
 			}
 		});
 	</script>

@@ -55,6 +55,8 @@ public class ShowApplyInfoServlet extends HttpServlet {
 			memNo = loginMember.getMemNo();
 			LessonApply applyInfo = new LessonService().showApplyInfo(memNo);
 			request.setAttribute("applyInfo", applyInfo);
+			LessonApply showApplyBtn = new LessonService().showApplyBtn(loginMember.getMemNo(),boardNo);
+			request.setAttribute("showApplyBtn", showApplyBtn);
 		}
 		
 		request.setAttribute("teacherInfo", mi);
