@@ -135,6 +135,8 @@
 .post-content p {
     font-size: 16px;
     color: #495057;
+    margin-right: 20px;
+
 }
 
 /* 게시글 작성자 */
@@ -216,7 +218,6 @@
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
     background-color: #fff;
 }
-
 
 /* 셀렉트 박스 호버 스타일 */
 .filter select:hover {
