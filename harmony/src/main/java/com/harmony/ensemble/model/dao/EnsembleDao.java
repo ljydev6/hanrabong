@@ -22,6 +22,7 @@ import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
 import com.harmony.ensemble.model.dto.Inst;
+import com.harmony.ensemble.model.dto.MemberProfile;
 import com.harmony.ensemble.model.dto.VBoardView;
 import com.harmony.ensemble.model.dto.VChkApply;
 import com.harmony.ensemble.model.dto.VEnsList;
@@ -38,6 +39,28 @@ public class EnsembleDao {
 		}
 	}
 
+	
+	public List<MemberProfile> selectMemProfile(Connection conn, String teamNo){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MemberProfile> members = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql.getProperty("selectMemProfile"));
+			pstmt.setString(1, teamNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) members.add(getMembers(rs));
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return members;
+	}
+	
 	
 	public int changeApproval(Connection conn, String partIndex) {
 		PreparedStatement pstmt = null;
@@ -592,6 +615,23 @@ public class EnsembleDao {
 				.ensPartIndex(rs.getString("ENS_PART_INDEX"))
 				.build();
 	}
+	
+	private MemberProfile getMembers(ResultSet rs) throws SQLException{
+		return MemberProfile.builder()
+					.ensInstCode(rs.getString("ENS_INST_CODE"))
+					.ensTeamNo(rs.getString("ENS_TEAM_NO"))
+					.ensMemNo(rs.getString("ENS_MEM_NO"))
+					.ensMemJoinDate(rs.getDate("ENS_MEM_JOIN_DATE"))
+					.ensMemDropDate(rs.getDate("ENS_MEM_DROP_DATE"))
+					.ensMemPosition(rs.getString("ENS_MEM_POSITION"))
+					.memInfoEmail(rs.getString("MEM_INFO_EMAIL"))
+					.memInfoGender(rs.getString("MEM_INFO_GENDER"))
+					.memInfoAge(rs.getString("MEM_INFO_AGE"))
+					.memInfoIntroduce(rs.getString("MEM_INFO_INTRODUCE"))
+					.instName(rs.getString("INST_NAME"))
+					.build();
+	}
+	
 	
 	private EnsembleBoardApply getApply(ResultSet rs, String loginMemNo) throws SQLException{
 		return EnsembleBoardApply.builder()

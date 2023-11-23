@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.harmony.ensemble.model.dto.EnsembleMember;
 import com.harmony.ensemble.model.dto.EnsembleTeam;
 import com.harmony.ensemble.model.dto.EnsembleTeamMusic;
 import com.harmony.ensemble.model.dto.EnsembleTeamTime;
 import com.harmony.ensemble.model.dto.EnsembleTeamVideo;
 import com.harmony.ensemble.model.dto.Genre;
+import com.harmony.ensemble.model.dto.MemberProfile;
 import com.harmony.ensemble.model.service.EnsembleService;
 import com.harmony.model.dto.Member;
 
@@ -65,6 +67,10 @@ public class TeamProfileServlet extends HttpServlet {
 		
 		List<EnsembleTeamVideo> video = es.selectVideos(teamNo);
 		request.setAttribute("video", video);
+		
+		List<MemberProfile> members = es.selectMemProfile(teamNo);
+		request.setAttribute("members", members);
+		
 		
 		
 		request.getRequestDispatcher("/views/ensemble/teamProfile.jsp").forward(request, response);

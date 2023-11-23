@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 section{
-	height: 90vh;
 	display: flex;
+	height: 90vh;
   	justify-content: center;
   	align-items: center; 
 	font-family: 'Hi Melody', sans-serif;
