@@ -14,6 +14,7 @@ import com.harmony.lesson.dto.LessonApply;
 import com.harmony.lesson.dto.LessonComment;
 import com.harmony.lesson.dto.SaveLesson;
 import com.harmony.model.dto.MemberInfo;
+import com.harmony.payment.model.dao.PaymentDao;
 
 
 public class LessonService {
@@ -146,6 +147,7 @@ public class LessonService {
 		
 		if(result>0 && result2>0 && result3>0) {
 			commit(conn);
+			result3 = PaymentDao.getDao().getCurrval(conn);
 			// 신청정보의 currval 가져오기
 		}
 		else rollback(conn);

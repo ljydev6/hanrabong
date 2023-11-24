@@ -349,4 +349,23 @@ public class PaymentDao {
 		}
 		return result;
 	}
+
+	public int getCurrval(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = -1;
+		try {
+			pstmt = conn.prepareStatement("SELECT LES_APPLY_SEQ.CURRVAL FROM DUAL");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
 }
