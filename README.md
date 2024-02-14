@@ -17,11 +17,4 @@
           </div>
     </div>
     <div align= "center">
-    <h2 style="border-bottom: 1px solid #21262d; color: #c9d1d9;"> 🧑‍💻 Contact me </h2> <br> 
-    <div align= "center"> <a href=https://bocando.tistory.com> <img src="https://img.shields.io/badge/Tistory-000000?style=plastic&logo=Tistory&logoColor=white&link=https://bocando.tistory.com"> </a>
-         <a href=https://www.notion.so/b2c87cd6bf2a4efeaab832ee85ab2e3d> <img src="https://img.shields.io/badge/Notion-000000?style=plastic&logo=Notion&logoColor=white&link=https://www.notion.so/b2c87cd6bf2a4efeaab832ee85ab2e3d"> </a>
-         <a href=mailto:stuctu99@gmail.com> <img src="https://img.shields.io/badge/Gmail-EA4335?style=plastic&logo=Gmail&logoColor=white&link=mailto:stuctu99@gmail.com"> </a>
-          </div>  <br> 
-    <div align= "center">  </div> 
-    </div>
-    
+
